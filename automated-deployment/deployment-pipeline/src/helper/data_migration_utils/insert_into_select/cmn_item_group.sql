@@ -1,0 +1,6 @@
+INSERT INTO cmn.item_group(oid, item_group_code, name_en, name_bn, uom_oid, traditional, maintained_as, status, hs_code, item_category_oid, is_consumable, created_by, created_on, updated_by, updated_on, office_oid, is_deleted)
+SELECT oid, item_group_code, name_en, name_bn, uom_oid, traditional, maintained_as, status, hs_code, item_category_oid, is_consumable, created_by, created_on, updated_by, updated_on, office_oid, is_deleted
+FROM dblink('dbname=grp_bcc_live',
+'SELECT oid, item_group_code, name_en, name_bn, uom_oid, traditional, maintained_as, status, hs_code, item_category_oid, is_consumable, created_by, created_on, updated_by, updated_on, office_oid, is_deleted
+FROM cmn.item_group')
+AS x(oid character varying, item_group_code character varying, name_en character varying, name_bn character varying, uom_oid character varying, traditional character varying, maintained_as character varying, status character varying, hs_code character varying, item_category_oid character varying, is_consumable character varying, created_by character varying, created_on timestamp without time zone, updated_by character varying, updated_on timestamp without time zone, office_oid character varying, is_deleted character varying);

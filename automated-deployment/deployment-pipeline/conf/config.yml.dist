@@ -1,0 +1,33 @@
+# all paths are relative to this file location
+dirs:
+  template-dir:   '../template'
+  output-dir:     '../out'
+  log-dir:        '../out/log'
+  image-dir:     '../out/image'
+  source-dir:  '/home/dipto/Documents/repos'
+
+  output-dir:    '../out'
+  log-dir:       '../out/log'
+  image-dir:     '../out/image'
+
+files:
+  google-cred:   './credential.json'
+  output-json:   'deployment-pipeline.json'
+  log-json:      'deployment-log.json'
+
+mq-for-log:
+  enabled:       false
+  host:          '127.0.0.1'
+  port:          6379
+  queue-name:    'log-queue'
+
+deployment:
+  configuration:
+    gsheet:      'GRP__Configuration__Parameter'
+    module:      'reader.pipeline_reader'
+    class:       'PipelineReader'
+  log-writer:
+    module:      'writer.log_writer'
+    class:       'LogWriter'
+    args:
+      file-path: 'deployment-log'

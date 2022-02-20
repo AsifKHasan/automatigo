@@ -1,0 +1,6 @@
+INSERT INTO inv.store(store_id, store_in_charge, store_keeper, store_name, bn_store_name, store_location, store_code, store_status, opening_date, comment, owned_by, created_date, is_deleted, project_id, user_id, employee_id, proxy_user_id, org_id, office_id)
+SELECT store_id, store_in_charge, store_keeper, store_name, bn_store_name, store_location, store_code, store_status, opening_date, comment, owned_by, created_date, is_deleted, project_id, user_id, employee_id, proxy_user_id, org_id, office_id
+FROM dblink('dbname=grp_bcc_live',
+'SELECT store_id, store_in_charge, store_keeper, store_name, bn_store_name, store_location, store_code, store_status, opening_date, comment, owned_by, created_date, is_deleted, project_id, user_id, employee_id, proxy_user_id, org_id, office_id
+FROM inv.store')
+AS x(store_id uuid, store_in_charge uuid, store_keeper uuid, store_name character varying, bn_store_name character varying, store_location character varying, store_code character varying, store_status boolean, opening_date timestamp without time zone, comment character varying, owned_by uuid, created_date timestamp without time zone, is_deleted boolean, project_id uuid, user_id uuid, employee_id uuid, proxy_user_id uuid, org_id uuid, office_id uuid);

@@ -1,0 +1,761 @@
+{
+    "cmn.office_layer": [
+        "cmn.office_origin",
+        "cmn.office_origin_unit",
+        "cmn.office"
+    ],
+    "cmn.office_unit_category": [
+        "cmn.office_origin_unit",
+        "cmn.office_unit"
+    ],
+    "cmn.post": [
+        "cmn.office_unit_post",
+        "cmn.office_post",
+        "cmn.entitlement"
+    ],
+    "cmn.office_origin": [
+        "cmn.office_origin_unit"
+    ],
+    "cmn.geo_country": [
+        "hrm.employee_training_info",
+        "cmn.geo_division",
+        "hrm.address_info",
+        "hrm.employee_foreign_travel"
+    ],
+    "cmn.geo_division": [
+        "hrm.address_info",
+        "cmn.geo_district"
+    ],
+    "cmn.office_unit_post": [
+        "cmn.office_unit_post",
+        "hrm.employee_office"
+    ],
+    "cmn.geo_district": [
+        "cmn.geo_upazila",
+        "cmn.geo_thana",
+        "cmn.city_corporation_ward",
+        "hrm.address_info",
+        "cmn.city_corporation"
+    ],
+    "cmn.city_corporation": [
+        "cmn.city_corporation_ward"
+    ],
+    "cmn.geo_upazila": [
+        "cmn.municipality_ward",
+        "cmn.geo_union",
+        "cmn.municipality"
+    ],
+    "cmn.geo_thana": [],
+    "cmn.office_unit": [
+        "cmn.office_unit_post",
+        "cmn.office_unit",
+        "hrm.employee_office"
+    ],
+    "cmn.office_origin_unit_post": [],
+    "cmn.municipality_ward": [],
+    "cmn.uom_category": [
+        "cmn.uom"
+    ],
+    "cmn.uom": [
+        "cmn.uom_conversion",
+        "cmn.entitlement"
+    ],
+    "cmn.economic_code_description": [
+        "cmn.economic_code"
+    ],
+    "cmn.economic_code": [],
+    "cmn.item_group_feature": [],
+    "cmn.item_category": [
+        "cmn.item_group",
+        "cmn.item_category"
+    ],
+    "cmn.item_group": [
+        "cmn.store_item_setup_mapping",
+        "cmn.entitlement"
+    ],
+    "cmn.item_group_feature_mapping": [],
+    "cmn.item": [],
+    "cmn.item_feature": [],
+    "cmn.entitlement_type": [
+        "cmn.entitlement"
+    ],
+    "cmn.office_origin_unit": [
+        "cmn.office_origin_unit_post"
+    ],
+    "cmn.review_job_type": [],
+    "cmn.review_action_type": [
+        "cmn.review_action_detail",
+        "cmn.review_action"
+    ],
+    "cmn.review_action": [
+        "cmn.review_action_detail"
+    ],
+    "cmn.review_action_detail": [],
+    "cmn.store_designation": [
+        "cmn.store_employee"
+    ],
+    "cmn.party_type": [
+        "cmn.donor_info",
+        "cmn.donee_info"
+    ],
+    "cmn.donor_info": [],
+    "cmn.vendor": [],
+    "cmn.store": [
+        "cmn.store_employee",
+        "cmn.store_item_setup_mapping"
+    ],
+    "cmn.committee_type_setup": [
+        "cmn.committee_setup"
+    ],
+    "cmn.committee_setup": [
+        "hrm.investigation_team_setup",
+        "cmn.committee_setup_line"
+    ],
+    "cmn.allowance_setup": [],
+    "cmn.prepare_salary_bill": [],
+    "cmn.document_type": [
+        "cmn.document"
+    ],
+    "cmn.document": [],
+    "cmn.deduction_setup": [],
+    "cmn.payroll_process": [],
+    "cmn.loan_sanction": [],
+    "cmn.donee_info": [],
+    "cmn.directory": [
+        "cmn.file"
+    ],
+    "cmn.file": [
+        "cmn.file_request"
+    ],
+    "cmn.email": [
+        "cmn.email_recipient",
+        "cmn.email_attachment"
+    ],
+    "cmn.email_recipient": [],
+    "cmn.email_attachment": [],
+    "cmn.message": [
+        "cmn.smstracker"
+    ],
+    "cmn.smstracker": [],
+    "cmn.notification": [
+        "cmn.notification_recipient"
+    ],
+    "cmn.notification_recipient": [],
+    "cmn.request": [
+        "cmn.file_request"
+    ],
+    "cmn.stakeholder": [],
+    "cmn.store_item_setup_mapping": [],
+    "cmn.office_post": [],
+    "cmn.office": [
+        "cmn.office_origin_unit",
+        "cmn.office_unit",
+        "cmn.store",
+        "cmn.office_post",
+        "sec.office_module",
+        "hrm.employee_office",
+        "cmn.entitlement",
+        "cmn.office_origin",
+        "cmn.office"
+    ],
+    "cmn.fiscal_year": [],
+    "cmn.committee_setup_line": [
+        "hrm.attendance_penalty_committee",
+        "hrm.recruitment_committee"
+    ],
+    "cmn.uom_conversion": [],
+    "cmn.city_corporation_ward": [],
+    "cmn.entitlement": [],
+    "cmn.municipality": [
+        "cmn.municipality_ward"
+    ],
+    "cmn.file_request": [],
+    "cmn.geo_union": [
+        "cmn.geo_union_ward",
+        "cmn.geo_post_office"
+    ],
+    "cmn.store_employee": [],
+    "cmn.geo_union_ward": [],
+    "cmn.geo_post_office": [],
+    "sec.grp_module": [
+        "sec.grp_user_role",
+        "sec.grp_submodule",
+        "sec.office_module",
+        "sec.grp_role"
+    ],
+    "sec.grp_submodule": [
+        "sec.grp_feature"
+    ],
+    "sec.office_module": [],
+    "sec.service": [
+        "sec.resource"
+    ],
+    "sec.access_token": [],
+    "sec.grp_user": [
+        "hrm.employee_medical_info",
+        "hrm.employee_leave_application",
+        "hrm.holiday",
+        "hrm.cadre",
+        "hrm.weekend",
+        "hrm.employee_language_skill",
+        "hrm.language",
+        "hrm.rejoining_application",
+        "hrm.employee_foreign_travel",
+        "hrm.employee_other_services",
+        "hrm.forbidden_pair",
+        "hrm.employee_additional_prof_qualification",
+        "hrm.leave_type",
+        "hrm.employee_probation",
+        "hrm.batch",
+        "hrm.employee_office",
+        "hrm.employeel_leave_details",
+        "hrm.employee_personal_info",
+        "hrm.employee_training_info",
+        "hrm.employment_type",
+        "hrm.grade",
+        "hrm.employee_award",
+        "hrm.employee_publication",
+        "hrm.employee_spouse_info",
+        "hrm.leave_type_reason",
+        "hrm.employee_confirmation",
+        "hrm.leave_condition",
+        "hrm.employee_children_info",
+        "hrm.employee_master_info",
+        "hrm.allowed_leave",
+        "hrm.employee_disciplinary_action",
+        "hrm.employee_education_qualification",
+        "hrm.address_info",
+        "hrm.employee_leave_approval"
+    ],
+    "sec.component_resource": [],
+    "sec.grp_role": [
+        "sec.grp_user_role",
+        "sec.grp_role_permission"
+    ],
+    "sec.grp_user_role": [],
+    "sec.resource": [
+        "sec.component_resource"
+    ],
+    "sec.grp_feature": [
+        "sec.grp_subfeature"
+    ],
+    "sec.component": [
+        "sec.component_resource",
+        "sec.grp_role_permission"
+    ],
+    "sec.grp_role_permission": [],
+    "sec.grp_subfeature": [
+        "sec.component"
+    ],
+    "hrm.employee_in_queue_for_promotion_or_posting": [],
+    "hrm.deputation_info": [],
+    "hrm.attendance_penalty_committee": [
+        "hrm.penalty_committee_list"
+    ],
+    "hrm.rules_of_award_publication": [],
+    "hrm.investigation_team_setup": [],
+    "hrm.penalty_committee_list": [],
+    "hrm.employee_training_info": [],
+    "hrm.employee_office": [
+        "hrm.employee_leave_approval",
+        "hrm.employee_office"
+    ],
+    "hrm.batch": [
+        "hrm.employee_master_info"
+    ],
+    "hrm.grade": [
+        "hrm.employee_master_info"
+    ],
+    "hrm.address_info": [
+        "hrm.employee_personal_info"
+    ],
+    "hrm.employee_leave_approval": [],
+    "hrm.employee_spouse_info": [],
+    "hrm.pending_participation_confirmation": [],
+    "hrm.recruitment_committee": [],
+    "hrm.employee_personal_info": [],
+    "hrm.training_type": [
+        "hrm.survey_for_trainer",
+        "hrm.trainee_result",
+        "hrm.organisational_training",
+        "hrm.in_service_training",
+        "hrm.survey_for_trainee",
+        "hrm.survey_questionnaire_for_trainee",
+        "hrm.survey_questionnaire_for_trainer",
+        "hrm.pending_participation_confirmation",
+        "hrm.foreign_training"
+    ],
+    "hrm.in_service_training": [],
+    "hrm.employee_children_info": [],
+    "hrm.employee_education_qualification": [],
+    "hrm.exam_configuration": [
+        "hrm.call_for_exam"
+    ],
+    "hrm.survey_questionnaire_for_trainee": [
+        "hrm.survey_for_trainer",
+        "hrm.survey_for_trainee"
+    ],
+    "hrm.organisational_training": [],
+    "hrm.employee_award": [],
+    "hrm.employee_disciplinary_action": [],
+    "hrm.employee_language_skill": [],
+    "hrm.job_circular": [
+        "hrm.call_for_exam",
+        "hrm.recruitment_result",
+        "hrm.job_circular_approval",
+        "hrm.application_form_for_recruitment",
+        "hrm.select_candidate"
+    ],
+    "hrm.application_form_for_recruitment": [
+        "hrm.recruitment_result",
+        "hrm.select_candidate",
+        "hrm.create_short_list",
+        "hrm.admit_card",
+        "hrm.exam_venue"
+    ],
+    "hrm.recruitment_result": [],
+    "hrm.call_for_exam": [
+        "hrm.admit_card",
+        "hrm.exam_venue"
+    ],
+    "hrm.admit_card": [],
+    "hrm.employee_medical_info": [],
+    "hrm.rules_regarding_attendance": [],
+    "hrm.penalty_for_attendance": [
+        "hrm.justify_against_penalty"
+    ],
+    "hrm.rules_regarding_acr_apa": [],
+    "hrm.justify_against_penalty": [],
+    "hrm.employee_evaluation_category_setup": [],
+    "hrm.create_short_list": [
+        "hrm.exam_venue"
+    ],
+    "hrm.employee_perf_summary": [],
+    "hrm.offense_setup": [],
+    "hrm.award_setup": [],
+    "hrm.publication_setup": [],
+    "hrm.promotion_detail": [],
+    "hrm.posting_and_promotion_committee_setup": [],
+    "hrm.acr_under_controlling_auth": [
+        "hrm.acr_under_counter_signing_auth"
+    ],
+    "hrm.at_meeting_or_events": [],
+    "hrm.employeel_leave_details": [],
+    "hrm.rejoining_application": [],
+    "hrm.acr_under_counter_signing_auth": [],
+    "hrm.acr_medical_report": [],
+    "hrm.acr_summary": [],
+    "hrm.acr_main_report": [],
+    "hrm.investigation_under_controlling_auth": [],
+    "hrm.investigation_under_appointing_auth": [],
+    "hrm.leave_type": [
+        "hrm.leave_type_reason",
+        "hrm.forbidden_pair",
+        "hrm.leave_condition",
+        "hrm.employeel_leave_details",
+        "hrm.allowed_leave"
+    ],
+    "hrm.award_application": [],
+    "hrm.leave_condition": [],
+    "hrm.publication_application": [],
+    "hrm.forbidden_pair": [],
+    "hrm.exam_venue": [],
+    "hrm.survey_questionnaire_for_trainer": [],
+    "hrm.job_circular_approval": [],
+    "hrm.rules_regarding_posting": [],
+    "hrm.rules_regarding_promotion": [],
+    "hrm.employee_publication": [],
+    "hrm.holiday": [],
+    "hrm.weekend": [],
+    "hrm.cadre": [
+        "hrm.employee_master_info",
+        "hrm.grade"
+    ],
+    "hrm.employment_type": [
+        "hrm.employee_office"
+    ],
+    "hrm.investigation_team_feedback": [],
+    "hrm.employee_other_services": [],
+    "hrm.employee_master_info": [
+        "hrm.investigation_team_setup",
+        "hrm.deputation_info",
+        "hrm.pension_procedure_for_employee",
+        "hrm.promotion_detail",
+        "hrm.employee_medical_info",
+        "hrm.job_circular_approval",
+        "hrm.daily_attendance",
+        "hrm.acr_medical_report",
+        "hrm.award_application",
+        "hrm.posting_info",
+        "hrm.publication_application",
+        "hrm.vesting_of_magisterial_power",
+        "hrm.apply_for_prl",
+        "hrm.employee_leave_application",
+        "hrm.rules_regarding_promotion",
+        "hrm.investigation_under_appointing_auth",
+        "hrm.rules_regarding_attendance",
+        "hrm.employee_language_skill",
+        "hrm.pending_participation_confirmation",
+        "hrm.acr_under_controlling_ministry",
+        "hrm.rules_regarding_posting",
+        "hrm.employee_foreign_travel",
+        "hrm.at_leave",
+        "hrm.termination",
+        "hrm.rejoining_application",
+        "hrm.rules_regarding_training",
+        "hrm.employee_additional_prof_qualification",
+        "hrm.employee_probation",
+        "hrm.trainer_detail",
+        "hrm.investigation_team_feedback",
+        "hrm.at_meeting_or_events",
+        "hrm.survey_for_trainee",
+        "hrm.employee_office",
+        "hrm.employeel_leave_details",
+        "hrm.employee_personal_info",
+        "hrm.employee_training_info",
+        "hrm.acr_under_controlling_auth",
+        "hrm.employee_publication",
+        "hrm.rules_regarding_discipline",
+        "hrm.employee_award",
+        "hrm.rules_of_award_publication",
+        "hrm.employee_spouse_info",
+        "hrm.acr_under_counter_signing_auth",
+        "hrm.trainee_result",
+        "hrm.employee_in_queue_for_promotion_or_posting",
+        "hrm.posting_and_promotion_committee_setup",
+        "hrm.employee_confirmation",
+        "hrm.acr_summary",
+        "hrm.employee_children_info",
+        "hrm.investigation_under_controlling_auth",
+        "hrm.rules_regarding_acr_apa",
+        "hrm.survey_for_trainer",
+        "hrm.justify_against_penalty",
+        "hrm.attendance_penalty_committee",
+        "hrm.employee_disciplinary_action",
+        "hrm.create_short_list",
+        "hrm.penalty_for_attendance",
+        "hrm.acr_main_report",
+        "hrm.recruitment_committee",
+        "hrm.rules_of_vesting_magisterial_power",
+        "hrm.employee_education_qualification",
+        "hrm.rules_regarding_recruitment",
+        "hrm.employee_leave_approval"
+    ],
+    "hrm.employee_additional_prof_qualification": [],
+    "hrm.rules_regarding_training": [],
+    "hrm.leave_type_reason": [
+        "hrm.allowed_leave"
+    ],
+    "hrm.allowed_leave": [
+        "hrm.employee_leave_application"
+    ],
+    "hrm.survey_for_trainer": [],
+    "hrm.rules_regarding_recruitment": [],
+    "hrm.daily_attendance": [
+        "hrm.at_leave"
+    ],
+    "hrm.at_leave": [],
+    "hrm.rules_regarding_discipline": [],
+    "hrm.apply_for_prl": [],
+    "hrm.pension_procedure_for_employee": [],
+    "hrm.termination": [],
+    "hrm.vesting_of_magisterial_power": [],
+    "hrm.employee_leave_application": [
+        "hrm.employee_leave_approval",
+        "hrm.rejoining_application"
+    ],
+    "hrm.foreign_training": [],
+    "hrm.language": [
+        "hrm.employee_language_skill"
+    ],
+    "hrm.employee_probation": [],
+    "hrm.employee_confirmation": [],
+    "hrm.employee_foreign_travel": [],
+    "hrm.trainee_result": [],
+    "hrm.trainer_detail": [
+        "hrm.survey_for_trainer",
+        "hrm.survey_questionnaire_for_trainer",
+        "hrm.survey_for_trainee"
+    ],
+    "hrm.posting_info": [],
+    "hrm.acr_under_controlling_ministry": [],
+    "hrm.select_candidate": [
+        "hrm.final_selection"
+    ],
+    "hrm.final_selection": [],
+    "hrm.rules_of_vesting_magisterial_power": [],
+    "hrm.survey_for_trainee": [],
+    "inv.damage_requisition_items": [],
+    "inv.committee_type": [],
+    "inv.category": [],
+    "inv.uom_category": [],
+    "inv.uom_conversion": [],
+    "inv.committee": [],
+    "inv.committee_details": [],
+    "inv.item": [
+        "inv.item_feature",
+        "inv.item_requisition_issue",
+        "inv.store_item_requisition_detail"
+    ],
+    "inv.item_feature": [],
+    "inv.entitlement_items": [
+        "inv.entitlements",
+        "inv.item_requisition_details",
+        "inv.entitlement_item_features"
+    ],
+    "inv.item_requisition_receivers": [],
+    "inv.store_item_setup_mapping": [],
+    "inv.item_in_out": [
+        "inv.damage_requisition_items",
+        "inv.inspections",
+        "inv.item_in_out"
+    ],
+    "inv.store_designation": [],
+    "inv.common_attachment": [],
+    "inv.item_stock": [],
+    "inv.store_employee": [],
+    "inv.store_item_requisition": [
+        "inv.material_delivery_detail",
+        "inv.store_item_requisition_detail"
+    ],
+    "inv.item_setup": [
+        "inv.item_setup_feature",
+        "inv.item",
+        "inv.entitlement_items"
+    ],
+    "inv.entitlements": [
+        "inv.entitlement_quantities"
+    ],
+    "inv.entitlement_item_features": [],
+    "inv.unit": [],
+    "inv.damage_types": [
+        "inv.damage_requisition_items"
+    ],
+    "inv.entitlement_types": [
+        "inv.entitlements"
+    ],
+    "inv.item_requisition": [
+        "inv.item_requisition_receivers"
+    ],
+    "inv.item_issue_return": [],
+    "inv.item_issue_return_details": [],
+    "inv.direct_stock_in": [
+        "inv.direct_stock_in_detail"
+    ],
+    "inv.direct_stock_in_detail": [],
+    "inv.damage_requisitions": [
+        "inv.damage_requisition_items"
+    ],
+    "inv.entitlement_quantities": [],
+    "inv.gate_pass": [],
+    "inv.physical_inventory": [],
+    "inv.opening_stock": [],
+    "inv.direct_stock_out": [
+        "inv.direct_stock_out_detail"
+    ],
+    "inv.direct_stock_out_detail": [],
+    "inv.employee_pending_action_counts": [],
+    "inv.gate_pass_file": [],
+    "inv.gate_pass_item": [],
+    "inv.material_delivery": [
+        "inv.material_delivery_detail"
+    ],
+    "inv.physical_inventory_details": [],
+    "inv.purchase_item_delivery_location": [],
+    "inv.purchase_item_return": [],
+    "inv.purchase_order": [],
+    "inv.entitlement_requisitions": [],
+    "inv.reorder_level": [],
+    "inv.review_action_type": [],
+    "inv.review_action": [
+        "inv.review_action_detail"
+    ],
+    "inv.emails": [],
+    "inv.push_notifications": [],
+    "inv.purchase_order_detail_feature": [],
+    "inv.purchase_requisition_details": [],
+    "inv.purchase_requisition_detail_feature": [],
+    "inv.notifications": [],
+    "inv.review_job_type": [],
+    "inv.tbl_file": [],
+    "inv.requests": [],
+    "inv.tbl_sms": [],
+    "inv.party_person": [],
+    "inv.facility": [],
+    "inv.facility_type": [],
+    "inv.office_type": [],
+    "inv.party": [],
+    "inv.party_bank_detail": [],
+    "inv.party_business_type": [],
+    "inv.party_contact_information": [],
+    "inv.party_organization": [],
+    "inv.party_role_assignment": [],
+    "inv.party_type": [],
+    "inv.authorities": [],
+    "inv.user_role_mappings": [],
+    "inv.party_role": [],
+    "inv.party_skill": [],
+    "inv.authority_authority_mappings": [],
+    "inv.role_authority_mappings": [],
+    "inv.roles": [],
+    "inv.item_feature_group": [
+        "inv.item_feature_category"
+    ],
+    "inv.purchase_requisition": [],
+    "inv.inspection_results": [
+        "inv.inspections"
+    ],
+    "inv.item_setup_feature": [
+        "inv.item_feature",
+        "inv.entitlement_item_features"
+    ],
+    "inv.item_requisition_details": [
+        "inv.item_requisition_detail_feature",
+        "inv.item_requisition_issue"
+    ],
+    "inv.view_item_opening_stock": [],
+    "inv.store": [
+        "inv.damage_requisitions",
+        "inv.item_requisition_issue",
+        "inv.store_item_setup_mapping"
+    ],
+    "inv.uom": [
+        "inv.item_requisition_issue",
+        "inv.store_item_requisition_detail",
+        "inv.damage_requisition_items",
+        "inv.inspection_results",
+        "inv.entitlement_quantities",
+        "inv.item_in_out",
+        "inv.entitlement_requisitions"
+    ],
+    "inv.purchase_order_detail": [],
+    "inv.material_delivery_detail_track": [],
+    "inv.inspections": [
+        "inv.purchase_order_detail"
+    ],
+    "inv.material_delivery_detail": [
+        "inv.material_delivery_detail_track"
+    ],
+    "inv.item_feature_category": [],
+    "inv.review_action_detail": [],
+    "inv.store_item_requisition_detail": [
+        "inv.material_delivery_detail"
+    ],
+    "inv.item_requisition_detail_feature": [],
+    "inv.item_requisition_issue": [],
+    "ast.temporary_item": [
+        "ast.temporary_item_detail",
+        "ast.asset_information"
+    ],
+    "ast.requisition_type": [
+        "ast.direct_in_line",
+        "ast.purchase_requisition",
+        "ast.direct_out",
+        "ast.direct_in",
+        "ast.item_requisition",
+        "ast.asset_allocation"
+    ],
+    "ast.requisition_purpose": [
+        "ast.item_requisition"
+    ],
+    "ast.asset_information_details": [],
+    "ast.item_requisition": [
+        "ast.item_requisition_detail",
+        "ast.purchase_requisition_detail",
+        "ast.asset_allocation"
+    ],
+    "ast.item_requisition_detail": [],
+    "ast.asset_allocation": [
+        "ast.direct_out",
+        "ast.asset_return",
+        "ast.direct_in_line",
+        "ast.asset_allocation_details"
+    ],
+    "ast.ast_role": [],
+    "ast.ast_user_role": [],
+    "ast.expert_decision": [
+        "ast.maitenance_detail",
+        "ast.disposal_detail"
+    ],
+    "ast.maitenance_detail": [],
+    "ast.disposal_detail": [],
+    "ast.direct_in": [
+        "ast.direct_in_line"
+    ],
+    "ast.direct_in_line": [],
+    "ast.asset_allocation_details": [
+        "ast.asset_return_line"
+    ],
+    "ast.asset_information": [
+        "ast.asset_information_details",
+        "ast.direct_out_line",
+        "ast.expert_decision",
+        "ast.asset_return_line",
+        "ast.direct_in_line",
+        "ast.asset_allocation_details"
+    ],
+    "ast.temporary_item_detail": [],
+    "ast.asset_return": [
+        "ast.asset_return_line"
+    ],
+    "ast.purchase_requisition": [
+        "ast.purchase_requisition_detail"
+    ],
+    "ast.purchase_requisition_detail": [],
+    "ast.direct_out": [
+        "ast.direct_out_line"
+    ],
+    "ast.asset_return_line": [],
+    "ast.direct_out_line": [],
+    "prc.annual_procurement_plan": [
+        "prc.app_package"
+    ],
+    "prc.app_package": [],
+    "prc.component_url_notification": [],
+    "prc.approving_authority": [
+        "prc.app_package"
+    ],
+    "prc.budget_type": [
+        "prc.annual_procurement_plan"
+    ],
+    "prc.package_type": [
+        "prc.app_package"
+    ],
+    "prc.procurement_nature": [
+        "prc.app_package"
+    ],
+    "prc.procurement_method": [
+        "prc.app_package"
+    ],
+    "prc.procurement_type": [
+        "prc.app_package"
+    ],
+    "prc.procurement_project": [],
+    "prc.economic_code_description": [
+        "prc.economic_code"
+    ],
+    "prc.economic_code": [],
+    "prc.fiscal_year": [],
+    "prc.vendor": [],
+    "prc.requisition_declaration": [
+        "prc.consolidate_requisition",
+        "prc.annual_procurement_plan",
+        "prc.requisition_information"
+    ],
+    "prc.requisition_information": [
+        "prc.requisition_detail"
+    ],
+    "prc.consolidate_requisition": [
+        "prc.consolidate_requisition_detail"
+    ],
+    "prc.spot_purchase_detail": [],
+    "prc.spot_purchase_info": [],
+    "prc.work_order_info": [
+        "prc.work_order_detail"
+    ],
+    "prc.work_order_detail": [],
+    "prc.notification_of_award": [],
+    "prc.procurement_contract": [],
+    "prc.consolidate_requisition_detail": [],
+    "prc.requisition_detail": []
+}

@@ -1,0 +1,6 @@
+INSERT INTO inv.opening_stock(id, store_id, item_id, uom_id, opening_qty, reserved_qty, qa_inspection_qty, blocked_qty, item_rate, currency_uom_id, comments, is_deleted, created_at, updated_at, user_id, employee_id, proxy_user_id, org_id, opening_stock_date, created_by, last_modified_by)
+SELECT id, store_id, item_id, uom_id, opening_qty, reserved_qty, qa_inspection_qty, blocked_qty, item_rate, currency_uom_id, comments, is_deleted, created_at, updated_at, user_id, employee_id, proxy_user_id, org_id, opening_stock_date, created_by, last_modified_by
+FROM dblink('dbname=grp_bcc_live',
+'SELECT id, store_id, item_id, uom_id, opening_qty, reserved_qty, qa_inspection_qty, blocked_qty, item_rate, currency_uom_id, comments, is_deleted, created_at, updated_at, user_id, employee_id, proxy_user_id, org_id, opening_stock_date, created_by, last_modified_by
+FROM inv.opening_stock')
+AS x(id uuid, store_id uuid, item_id uuid, uom_id uuid, opening_qty numeric, reserved_qty numeric, qa_inspection_qty numeric, blocked_qty numeric, item_rate numeric, currency_uom_id uuid, comments character varying, is_deleted boolean, created_at timestamp without time zone, updated_at timestamp without time zone, user_id uuid, employee_id uuid, proxy_user_id uuid, org_id uuid, opening_stock_date timestamp without time zone, created_by uuid, last_modified_by uuid);

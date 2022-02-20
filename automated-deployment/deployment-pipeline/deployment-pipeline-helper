@@ -1,0 +1,54 @@
+export USERNAME=
+export PASSWD=
+
+# graphViz
+dot -Tpng -o../out/image/grp-deployment-diagram.png ../out/image/grp-deployment-diagram.gv
+neato -Tpng -o../out/image/grp-deployment-diagram.png ../out/image/grp-deployment-diagram.gv
+twopi -Tpng -o../out/image/grp-deployment-diagram.png ../out/image/grp-deployment-diagram.gv
+circo -Tpng -o../out/image/grp-deployment-diagram.png ../out/image/grp-deployment-diagram.gv
+fdp -Tpng -o../out/image/grp-deployment-diagram.png ../out/image/grp-deployment-diagram.gv
+sfdp -Tpng -o../out/image/grp-deployment-diagram.png ../out/image/grp-deployment-diagram.gv
+patchwork -Tpng -o../out/image/grp-deployment-diagram.png ../out/image/grp-deployment-diagram.gv
+
+dot -Tpng -o../template/functional-testing-spec.png ../template/functional-testing-spec.gv
+
+
+
+# blockdiag Python
+actdiag -a -T png -o ../template/activity.png ../template/activity.diag
+
+
+# diagrams.js - http://flowchart.js.org/
+npm install -g diagrams
+diagrams flowchart ../template/input.flowchart ../template/flowchart.svg
+
+
+
+# cytoscape.js - https://js.cytoscape.org/
+# https://github.com/cytoscape/cytoscape.js-tutorials/blob/master/electron_twitter/2016-07-24-cytoscape-electron.md
+npm install -g cytoscape
+
+
+# mermaid.js - https://mermaid-js.github.io/mermaid/
+npm install -g mermaid
+npm install -g mermaid.cli
+
+mmdc -i ../template/input.mmd -o ../template/output.svg
+mmdc -i ../template/input.mmd -o ../template/output.png -b transparent
+
+
+# bpmn.js - https://github.com/bpmn-io/bpmn-js
+npm install -g bpmn-js
+npm install -g bpmn-js-cli
+npm install -g bpmn-js-cli-modeling-dsl
+
+
+# mxgraph -
+npm install -g mxgraph
+npm install -g jdom
+
+node helloworld.js > helloworld.html
+
+
+# cherrypi
+pip install cherrypy

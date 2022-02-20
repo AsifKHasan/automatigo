@@ -1,0 +1,6 @@
+INSERT INTO cmn.smstracker(oid, created_by, created_on, updated_by, updated_on, row_status, emp_id, org_id, field_type, m_id, trial_count, status, status_code, error_code, contact_no, message_id, scheduled_time, time)
+SELECT oid, created_by, created_on, updated_by, updated_on, row_status, emp_id, org_id, field_type, m_id, trial_count, status, status_code, error_code, contact_no, message_id, scheduled_time, time
+FROM dblink('dbname=grp_bcc_live',
+'SELECT oid, created_by, created_on, updated_by, updated_on, row_status, emp_id, org_id, field_type, m_id, trial_count, status, status_code, error_code, contact_no, message_id, scheduled_time, time
+FROM cmn.smstracker')
+AS x(oid character varying, created_by character varying, created_on timestamp without time zone, updated_by character varying, updated_on timestamp without time zone, row_status character varying, emp_id character varying, org_id character varying, field_type character varying, m_id character varying, trial_count numeric, status character varying, status_code character varying, error_code character varying, contact_no character varying, message_id character varying, scheduled_time timestamp without time zone, time timestamp without time zone);

@@ -1,0 +1,6 @@
+INSERT INTO hrm.leave_type(oid, name_en, name_bn, need_rejoining, waiting_amount_for_activation, waiting_unit_for_activation, initialized_on, valid_till, rule_no, rule_detail, created_by, created_on, updated_by, updated_on, is_deleted)
+SELECT oid, name_en, name_bn, need_rejoining, waiting_amount_for_activation, waiting_unit_for_activation, initialized_on, valid_till, rule_no, rule_detail, created_by, created_on, updated_by, updated_on, is_deleted
+FROM dblink('dbname=grp_bcc_live',
+'SELECT oid, name_en, name_bn, need_rejoining, waiting_amount_for_activation, waiting_unit_for_activation, initialized_on, valid_till, rule_no, rule_detail, created_by, created_on, updated_by, updated_on, is_deleted
+FROM hrm.leave_type')
+AS x(oid character varying, name_en character varying, name_bn character varying, need_rejoining character varying, waiting_amount_for_activation numeric, waiting_unit_for_activation character varying, initialized_on timestamp without time zone, valid_till timestamp without time zone, rule_no character varying, rule_detail character varying, created_by character varying, created_on timestamp without time zone, updated_by character varying, updated_on timestamp without time zone, is_deleted character varying);

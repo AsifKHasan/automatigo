@@ -1,0 +1,6 @@
+INSERT INTO inv.party_contact_information(id, user_id, employee_id, proxy_user_id, org_id, created_at, updated_at, is_deleted, created_by, last_modified_by, name, address1, address2, email, phone, attention, contact_type, city, src_entity_type, src_entity_id, country_id)
+SELECT id, user_id, employee_id, proxy_user_id, org_id, created_at, updated_at, is_deleted, created_by, last_modified_by, name, address1, address2, email, phone, attention, contact_type, city, src_entity_type, src_entity_id, country_id
+FROM dblink('dbname=grp_bcc_live',
+'SELECT id, user_id, employee_id, proxy_user_id, org_id, created_at, updated_at, is_deleted, created_by, last_modified_by, name, address1, address2, email, phone, attention, contact_type, city, src_entity_type, src_entity_id, country_id
+FROM inv.party_contact_information')
+AS x(id uuid, user_id uuid, employee_id uuid, proxy_user_id uuid, org_id uuid, created_at timestamp without time zone, updated_at timestamp without time zone, is_deleted boolean, created_by uuid, last_modified_by uuid, name character varying, address1 text, address2 text, email character varying, phone character varying, attention character varying, contact_type character varying, city character varying, src_entity_type character varying, src_entity_id uuid, country_id uuid);

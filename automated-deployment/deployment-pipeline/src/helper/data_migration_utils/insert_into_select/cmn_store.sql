@@ -1,0 +1,6 @@
+INSERT INTO cmn.store(oid, store_code, name_en, name_bn, location, contact_number, description, status, opening_date, is_deleted, created_by, created_on, updated_by, updated_on, office_oid, store_in_charge_oid, store_keeper_oid, owned_by_oid)
+SELECT oid, store_code, name_en, name_bn, location, contact_number, description, status, opening_date, is_deleted, created_by, created_on, updated_by, updated_on, office_oid, store_in_charge_oid, store_keeper_oid, owned_by_oid
+FROM dblink('dbname=grp_bcc_live',
+'SELECT oid, store_code, name_en, name_bn, location, contact_number, description, status, opening_date, is_deleted, created_by, created_on, updated_by, updated_on, office_oid, store_in_charge_oid, store_keeper_oid, owned_by_oid
+FROM cmn.store')
+AS x(oid character varying, store_code character varying, name_en character varying, name_bn character varying, location text, contact_number character varying, description text, status character varying, opening_date timestamp without time zone, is_deleted character varying, created_by character varying, created_on timestamp without time zone, updated_by character varying, updated_on timestamp without time zone, office_oid character varying, store_in_charge_oid character varying, store_keeper_oid character varying, owned_by_oid character varying);

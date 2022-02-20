@@ -1,0 +1,6 @@
+INSERT INTO hrm.job_circular(oid, post_oid, position_name, project, number_of_position, job_type, educational_qualification, age_duration, application_fee, other_qualification, least_experience, preferable_district_to_attend_exam, date_of_exam)
+SELECT oid, post_oid, position_name, project, number_of_position, job_type, educational_qualification, age_duration, application_fee, other_qualification, least_experience, preferable_district_to_attend_exam, date_of_exam
+FROM dblink('dbname=grp_bcc_live',
+'SELECT oid, post_oid, position_name, project, number_of_position, job_type, educational_qualification, age_duration, application_fee, other_qualification, least_experience, preferable_district_to_attend_exam, date_of_exam
+FROM hrm.job_circular')
+AS x(oid character varying, post_oid character varying, position_name character varying, project character varying, number_of_position character varying, job_type character varying, educational_qualification character varying, age_duration character varying, application_fee character varying, other_qualification character varying, least_experience character varying, preferable_district_to_attend_exam character varying, date_of_exam timestamp without time zone);

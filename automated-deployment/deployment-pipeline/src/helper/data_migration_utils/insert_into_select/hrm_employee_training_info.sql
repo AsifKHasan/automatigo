@@ -1,0 +1,6 @@
+INSERT INTO hrm.employee_training_info(oid, employee_oid, course_title, training_institution_name, training_from, training_till, training_type, grade, geo_country_oid, source_of_fund, created_by, created_on, updated_by, updated_on, is_deleted)
+SELECT oid, employee_oid, course_title, training_institution_name, training_from, training_till, training_type, grade, geo_country_oid, source_of_fund, created_by, created_on, updated_by, updated_on, is_deleted
+FROM dblink('dbname=grp_bcc_live',
+'SELECT oid, employee_oid, course_title, training_institution_name, training_from, training_till, training_type, grade, geo_country_oid, source_of_fund, created_by, created_on, updated_by, updated_on, is_deleted
+FROM hrm.employee_training_info')
+AS x(oid character varying, employee_oid character varying, course_title character varying, training_institution_name character varying, training_from timestamp without time zone, training_till timestamp without time zone, training_type character varying, grade character varying, geo_country_oid character varying, source_of_fund character varying, created_by character varying, created_on timestamp without time zone, updated_by character varying, updated_on timestamp without time zone, is_deleted character varying);

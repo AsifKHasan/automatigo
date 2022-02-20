@@ -1,0 +1,20 @@
+# all paths are relative to this file location
+workers:
+  gsheet-log-writer:
+    active:            true
+    module:            'worker.gsheet_log_writer'
+    class:             'GsheetLogWriter'
+    args:
+      cred-json:       './credential.json'
+      gsheet-name:     'GRP__Configuration__Parameter'
+      worksheet-name:  'build-log'
+  mq-log-listener:
+    active:            true
+    module:            'worker.mq_log_listener'
+    class:             'MqLogListener'
+    args:
+      host:            '127.0.0.1'
+      port:            6379
+      queue-name:      'log-queue'
+    processors:
+      - gsheet-log-writer

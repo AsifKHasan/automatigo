@@ -1,0 +1,31 @@
+# chrome, firefox, edge, ie,
+driver:           'chrome'
+firefox-path:     'C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe'
+
+# how many seconds of delay is default after each work under a workflow
+default-seconds:
+  # how many seconds of delay is default after each work under a workflow
+  between-work:   0
+  # how many seconds to wait for an element
+  element-wait:   30
+
+# all paths are relative to this file location
+dirs:
+  output-dir:     '../out'
+
+files:
+  google-cred:    './credential.json'
+  output-json:    'MEM__test-case__create-meeting.json'
+
+test:
+  case:           'BCC-Quarterly-PIC-meeting-01'
+  data:
+    gsheet:       'MEM__test-case__create-meeting'
+    module:       'helper.gsheet.gsheet_reader_create_meeting'
+    class:        'CreateMeetingGsheetReader'
+  driver:
+    module:       'helper.selenium.selenium_create_meeting'
+    class:        'CreateMeetingDriver'
+  log-writer:
+    module:       'helper.xlsx.xlsx_writer_create_meeting'
+    class:        'CreateMeetingXlsxLogWriter'

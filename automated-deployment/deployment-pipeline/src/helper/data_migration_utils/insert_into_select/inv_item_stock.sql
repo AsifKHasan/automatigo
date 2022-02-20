@@ -1,0 +1,6 @@
+INSERT INTO inv.item_stock(id, item_id, uom_id, current_qty, opening_qty, reserved_qty, qa_inspection_qty, blocked_qty, stock_date, store_id, fiscal_year_id, is_deleted, created_at, updated_at, user_id, employee_id, proxy_user_id, org_id, created_by, last_modified_by)
+SELECT id, item_id, uom_id, current_qty, opening_qty, reserved_qty, qa_inspection_qty, blocked_qty, stock_date, store_id, fiscal_year_id, is_deleted, created_at, updated_at, user_id, employee_id, proxy_user_id, org_id, created_by, last_modified_by
+FROM dblink('dbname=grp_bcc_live',
+'SELECT id, item_id, uom_id, current_qty, opening_qty, reserved_qty, qa_inspection_qty, blocked_qty, stock_date, store_id, fiscal_year_id, is_deleted, created_at, updated_at, user_id, employee_id, proxy_user_id, org_id, created_by, last_modified_by
+FROM inv.item_stock')
+AS x(id uuid, item_id uuid, uom_id uuid, current_qty numeric, opening_qty numeric, reserved_qty numeric, qa_inspection_qty numeric, blocked_qty numeric, stock_date timestamp without time zone, store_id uuid, fiscal_year_id uuid, is_deleted boolean, created_at timestamp without time zone, updated_at timestamp without time zone, user_id uuid, employee_id uuid, proxy_user_id uuid, org_id uuid, created_by uuid, last_modified_by uuid);

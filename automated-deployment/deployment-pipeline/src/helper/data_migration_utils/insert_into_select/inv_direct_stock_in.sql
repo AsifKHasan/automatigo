@@ -1,0 +1,6 @@
+INSERT INTO inv.direct_stock_in(id, store_id, reference_no, memo_no, supplier, status, direct_stock_in_date, type, approved_by, approval_date, comments, is_deleted, created_at, updated_at, user_id, employee_id, proxy_user_id, org_id, created_by, last_modified_by)
+SELECT id, store_id, reference_no, memo_no, supplier, status, direct_stock_in_date, type, approved_by, approval_date, comments, is_deleted, created_at, updated_at, user_id, employee_id, proxy_user_id, org_id, created_by, last_modified_by
+FROM dblink('dbname=grp_bcc_live',
+'SELECT id, store_id, reference_no, memo_no, supplier, status, direct_stock_in_date, type, approved_by, approval_date, comments, is_deleted, created_at, updated_at, user_id, employee_id, proxy_user_id, org_id, created_by, last_modified_by
+FROM inv.direct_stock_in')
+AS x(id uuid, store_id uuid, reference_no character varying, memo_no character varying, supplier character varying, status character varying, direct_stock_in_date timestamp without time zone, type character varying, approved_by uuid, approval_date timestamp without time zone, comments character varying, is_deleted boolean, created_at timestamp without time zone, updated_at timestamp without time zone, user_id uuid, employee_id uuid, proxy_user_id uuid, org_id uuid, created_by uuid, last_modified_by uuid);

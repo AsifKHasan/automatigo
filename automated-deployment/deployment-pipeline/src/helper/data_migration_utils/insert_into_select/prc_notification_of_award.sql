@@ -1,0 +1,6 @@
+INSERT INTO prc.notification_of_award(oid, tender_code, package_no, file_path, status, reference_description, consultant_name, consultant_address, date_of_publication, created_by, created_on, updated_by, updated_on, office_oid, vendor_oid)
+SELECT oid, tender_code, package_no, file_path, status, reference_description, consultant_name, consultant_address, date_of_publication, created_by, created_on, updated_by, updated_on, office_oid, vendor_oid
+FROM dblink('dbname=grp_bcc_live',
+'SELECT oid, tender_code, package_no, file_path, status, reference_description, consultant_name, consultant_address, date_of_publication, created_by, created_on, updated_by, updated_on, office_oid, vendor_oid
+FROM prc.notification_of_award')
+AS x(oid character varying, tender_code character varying, package_no character varying, file_path character varying, status character varying, reference_description character varying, consultant_name character varying, consultant_address character varying, date_of_publication date, created_by character varying, created_on timestamp without time zone, updated_by character varying, updated_on timestamp without time zone, office_oid character varying, vendor_oid character varying);

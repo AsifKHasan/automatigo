@@ -1,0 +1,37 @@
+sudo vim /etc/pf.conf
+pass in proto tcp from any to any port 5672
+pass in proto tcp from any to any port 6379
+sudo pfctl -f /etc/pf.conf
+
+from rsmq import RedisSMQ
+
+messages = [
+    {
+        "type": "debug",
+        "time": "2019-11-25T02:07:15.005378",
+        "msg": "repo : mem-app pull successful",
+        "context_0": "grp-app",
+        "context_1": "mem-app"
+    },
+    {
+        "type": "info",
+        "time": "2019-11-25T02:07:15.005554",
+        "msg": "repo : mem-app done",
+        "context_0": "grp-app",
+        "context_1": "mem-app",
+        "elapsed_from_1": 2.705268144607544
+    }
+]
+
+# Create controller.
+queue = RedisSMQ(host='127.0.0.1', port=6379, qname='log-queue')
+queue.deleteQueue().exceptions(False).execute()
+
+# Create Queue with default visibility timeout of 20 and delay of 0
+queue.createQueue(delay=0).vt(20).execute()
+
+# Send a message with a 2 second delay
+for message in messages:
+    message_id = queue.sendMessage(delay=2).message(message).execute()
+    print('message {0} sent'.format(message_id))
+    time.sleep(5)

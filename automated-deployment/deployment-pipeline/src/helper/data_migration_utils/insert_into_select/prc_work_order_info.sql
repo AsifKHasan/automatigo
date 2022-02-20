@@ -1,0 +1,6 @@
+INSERT INTO prc.work_order_info(oid, work_order_code, order_issue_date, expected_delivery_date, remarks, status, created_by, created_on, updated_by, updated_on, amount, terms_and_conditions_oid, fiscal_year_oid, office_oid, app_oid, work_order_for, vendor_oid)
+SELECT oid, work_order_code, order_issue_date, expected_delivery_date, remarks, status, created_by, created_on, updated_by, updated_on, amount, terms_and_conditions_oid, fiscal_year_oid, office_oid, app_oid, work_order_for, vendor_oid
+FROM dblink('dbname=grp_bcc_live',
+'SELECT oid, work_order_code, order_issue_date, expected_delivery_date, remarks, status, created_by, created_on, updated_by, updated_on, amount, terms_and_conditions_oid, fiscal_year_oid, office_oid, app_oid, work_order_for, vendor_oid
+FROM prc.work_order_info')
+AS x(oid character varying, work_order_code character varying, order_issue_date date, expected_delivery_date date, remarks text, status character varying, created_by character varying, created_on timestamp without time zone, updated_by character varying, updated_on timestamp without time zone, amount numeric, terms_and_conditions_oid character varying, fiscal_year_oid character varying, office_oid character varying, app_oid character varying, work_order_for character varying, vendor_oid character varying);

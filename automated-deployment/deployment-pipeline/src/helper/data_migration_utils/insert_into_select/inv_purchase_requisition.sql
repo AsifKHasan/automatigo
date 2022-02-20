@@ -1,0 +1,6 @@
+INSERT INTO inv.purchase_requisition(id, requisition_by, requisition_ref_no, requisition_date, approved_by, approval_date, remarks, is_complete, status, store_id, purpose, is_deleted, created_at, updated_at, user_id, employee_id, proxy_user_id, org_id, created_by, last_modified_by)
+SELECT id, requisition_by, requisition_ref_no, requisition_date, approved_by, approval_date, remarks, is_complete, status, store_id, purpose, is_deleted, created_at, updated_at, user_id, employee_id, proxy_user_id, org_id, created_by, last_modified_by
+FROM dblink('dbname=grp_bcc_live',
+'SELECT id, requisition_by, requisition_ref_no, requisition_date, approved_by, approval_date, remarks, is_complete, status, store_id, purpose, is_deleted, created_at, updated_at, user_id, employee_id, proxy_user_id, org_id, created_by, last_modified_by
+FROM inv.purchase_requisition')
+AS x(id uuid, requisition_by uuid, requisition_ref_no character varying, requisition_date timestamp without time zone, approved_by uuid, approval_date timestamp without time zone, remarks character varying, is_complete boolean, status character varying, store_id uuid, purpose character varying, is_deleted boolean, created_at timestamp without time zone, updated_at timestamp without time zone, user_id uuid, employee_id uuid, proxy_user_id uuid, org_id uuid, created_by uuid, last_modified_by uuid);

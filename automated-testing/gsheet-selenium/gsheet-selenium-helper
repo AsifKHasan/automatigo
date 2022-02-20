@@ -1,0 +1,75 @@
+python3 -m pip install --upgrade pip
+
+pip3 install pillow --upgrade
+pip3 install python-docx --upgrade
+pip3 install lxml --upgrade
+pip3 install pygsheets --upgrade
+pip3 install PyDrive --upgrade
+pip3 install oauth2client --upgrade
+pip3 install argparse --upgrade
+pip3 install pandas --upgrade
+pip3 install numpy --upgrade
+pip3 install httplib2 --upgrade
+pip3 install jinja2 --upgrade
+pip3 install latex --upgrade
+
+pip3 install pyaml --upgrade
+pip3 install PyYAML --upgrade
+pip3 install xlsxwriter --upgrade
+pip3 install openpyxl --upgrade
+pip3 install latex2pdf --upgrade
+
+pip install selenium --upgrade
+
+
+Chrome:   https://sites.google.com/a/chromium.org/chromedriver/downloads
+Firefox:  https://github.com/mozilla/geckodriver/releases
+Edge:     https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/
+Safari:   https://webkit.org/blog/6900/webdriver-support-in-safari-10/
+
+
+
+from selenium import webdriver
+
+browser = webdriver.Chrome(executable_path='../drivers/chromedriver.exe')
+browser = webdriver.Firefox(executable_path='../drivers/geckodriver.exe')
+browser = webdriver.Edge(executable_path='../drivers/MicrosoftWebDriver.exe')
+browser = webdriver.Ie(executable_path='../drivers/IEDriverServer.exe')
+
+
+
+
+
+
+
+from oauth2client.service_account import ServiceAccountCredentials
+from pydrive.auth import GoogleAuth
+from pydrive.drive import GoogleDrive
+import httplib2
+
+import json
+import os
+import shutil
+import sys
+import time
+import datetime
+import argparse
+
+from pygsheets.custom_types import *
+import pygsheets
+import pandas as pd
+import numpy as np
+
+_CREDENTIAL = '../conf/credential.json'
+_GOOGLE_SHEET_NAME = 'MEM__test-case__create-meeting'
+_G = pygsheets.authorize(service_account_file=_CREDENTIAL)
+_sheet = _G.open(_GOOGLE_SHEET_NAME)
+
+ws_title = 'workflow'
+self.info('reading worksheet: {0}'.format(ws_title))
+ws = _sheet.worksheet('title', ws_title)
+df = ws.get_as_df(has_header=True, index_colum=None, start='B2', end='H{}'.format(ws.rows))
+
+
+df.process = pd.Series(df.process).fillna(method='ffill')
+df.work = pd.Series(df.work).fillna(method='ffill')

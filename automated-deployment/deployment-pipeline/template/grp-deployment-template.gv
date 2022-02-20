@@ -1,0 +1,112 @@
+{% set container_label_width = 30 %}
+{% set max_nodes_in_a_row = 5 %}
+{% set max_hosts_in_a_row = 2 %}
+
+digraph G {
+    ratio=fill
+    # dpi=600
+    center=true
+    compound=true
+    rankdir=LR
+    # newrank=true
+    graph [fontsize=12 nodesep=0.1 ranksep=0.1 splines=ortho concentrate=true margin="0.2"]
+    labelloc=t; style=rounded; bgcolor=none; color="#404040"; penwidth=0.5; fontname=Helvetica; fontsize=18; fontcolor="#606060";
+    label="GRP Live Deployment";
+
+    # render each stakeholder as a cluster
+    {% set stakeholder_list = [] %}
+    {% for stakeholder in d|reverse() %}
+        {% set stakeholder_data = d[stakeholder] %}
+        {% set stakeholder_id = stakeholder|replace("-", "_") %}
+        {% do stakeholder_list.append(stakeholder_id) %}
+        subgraph cluster_{{ stakeholder_id }} {
+            graph [margin="10";]
+            labelloc=b; style=rounded; bgcolor="#F0F0F0"; color="#B0B0B0"; penwidth=0.5; fontname=Helvetica; fontsize=16; fontcolor="#606060";
+            label="{{ stakeholder|center(container_label_width) }}"
+
+            # render blocks for each category of VM
+            {% set vm_type_list = [] %}
+            {% for vm_type in stakeholder_data %}
+                {% set vm_type_data = stakeholder_data[vm_type] %}
+                {% set vm_type_id = [stakeholder, vm_type]|join("_")|replace("-", "_") %}
+                {% do vm_type_list.append(vm_type_id) %}
+                subgraph cluster_{{ vm_type_id }} {
+                    graph [margin="10";]
+                    labelloc=b; style=rounded; bgcolor="#F8F8F8"; color="#B0B0B0"; penwidth=0.5; fontname=Helvetica; fontsize=16; fontcolor="#606060";
+                    label="{{ [vm_type, 'VMs']|join(' ')|center(container_label_width) }}"
+
+                    # render VM's under the category
+                    {% set host_list = [] %}
+                    {% for host_name in vm_type_data %}
+                        {% set host_name_data = vm_type_data[host_name] %}
+                        {% set host_id = [stakeholder, host_name]|join("_")|replace("-", "_") %}
+                        {% do host_list.append(host_id) %}
+                        subgraph cluster_{{ host_id }} {
+                            graph [margin="10";]
+                            labelloc=b; style=rounded; bgcolor="#FFFFFF"; color="#D0D0D0"; penwidth=0.5; fontname=Helvetica; fontsize=12; fontcolor="#606060";
+                            label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="0">
+                              <TR>
+                                <TD BGCOLOR="#F8F8F8" ALIGN="CENTER" VALIGN="MIDDLE" BALIGN="CENTER" CELLSPACING="0" CELLPADDING="1" BORDER="1" SIDES="B">
+                                  <FONT COLOR="#606060" FACE="Helvetica" POINT-SIZE="12">
+                                    {{ host_name|center(container_label_width) }}
+                                  </FONT>
+                                </TD>
+                              </TR>
+                              <TR>
+                                <TD BGCOLOR="#F8F8F8" ALIGN="CENTER" VALIGN="MIDDLE" BALIGN="CENTER" CELLSPACING="0" CELLPADDING="1" BORDER="0">
+                                  <FONT COLOR="#606060" FACE="Helvetica" POINT-SIZE="8">
+                                    {{ ['(', host_name_data["memory-gb"], 'GB,', host_name_data["cpu-core"], 'core', ')']|join(" ")|center(container_label_width) }}
+                                  </FONT>
+                                </TD>
+                              </TR> </TABLE>>;
+
+                            node [shape=box; style=filled; fillcolor="#F0F0F0"; penwidth=0.5; color="#A0A0A0"; fontname=Courier; fontsize=10; fontcolor="#606060"; margin="0.2,0.4"; height="0.1"]
+
+                            # nodes are containers, we place them in four nodes in a row max
+                            {% set node_list = [] %}
+                            {% for container_name in host_name_data["docker-containers"] %}
+                                {% set container_name_data = host_name_data["docker-containers"][container_name] %}
+                                {% set node_name = [host_id, container_name]|join("_")|replace("-", "_") %}
+                                {% do node_list.append(node_name) %}
+                                {{ node_name }} [ label="{{ [container_name, container_name_data["port"]]|join(":")|center(container_label_width) }}"; ]
+                            {% endfor %}
+
+                            # invisible host-name level node for horizontal order, this is required only if we do not have any node in the host
+                            {% if node_list|length < max_nodes_in_a_row %}
+                                {% set nodes_to_add = max_nodes_in_a_row - node_list|length %}
+                                {% for i in range(nodes_to_add) %}
+                                    {% set node_name = [host_id, i]|join("_")|replace("-", "_") %}
+                                    {% do node_list.append(node_name) %}
+                                    {{ node_name }} [label="{{ node_name|center(container_label_width) }}"; color=none; height="0.01"; style="invis"; ]
+                                {% endfor %}
+                            {% endif %}
+
+                            # order containers inside vm cluster horizontally
+                            {% for nodes in node_list|batch(max_nodes_in_a_row)|reject("none") %}
+                                {% if nodes|length != 1 %}
+                                    {{ nodes|join(" -> ") }} [ constraint=true; style="invis"; ]
+                                {% endif %}
+                            {% endfor %}
+                        }
+                    {% endfor %}
+
+                    # order vm's inside vm-type cluster horizontally
+                    {% for hosts in host_list|batch(max_hosts_in_a_row)|reject("none") %}
+                        {% if hosts|length != 1 %}
+                            {{ hosts|join(" -> ") }} [ constraint=true; style="invis"; ]
+                        {% endif %}
+                    {% endfor %}
+
+                    # invisible vm-type level node for vertical order
+                    {{ vm_type_id }} [shape=point color=none]
+                }
+            {% endfor %}
+        }
+        # invisible stakeholder level node for vertical order
+        {{ stakeholder_id }} [shape=point color=none]
+    {% endfor %}
+
+    # order clusters vertically
+    # {{ stakeholder_list|join(" -> ") }} [ constraint=true; style="invis"; ]
+    # { rank=same; {{ stakeholder_list|join(" -> ") }} [ constraint=true; style="invis"; ] }
+}

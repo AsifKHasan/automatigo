@@ -1,0 +1,642 @@
+Total Tables = 324
+['prc.spot_purchase_detail', 'prc.spot_purchase_info', 'prc.work_order_info', 'prc.work_order_detail', 'prc.notification_of_award', 'prc.procurement_contract', 'prc.economic_code_description', 'prc.economic_code', 'prc.fiscal_year', 'prc.vendor', 'prc.requisition_declaration', 'prc.consolidate_requisition', 'prc.consolidate_requisition_detail', 'prc.requisition_information', 'prc.requisition_detail', 'prc.component_url_notification', 'prc.approving_authority', 'prc.budget_type', 'prc.package_type', 'prc.procurement_nature', 'prc.procurement_method', 'prc.procurement_type', 'prc.procurement_project', 'prc.annual_procurement_plan', 'prc.app_package', 'ast.ast_role', 'ast.ast_user_role', 'ast.requisition_purpose', 'ast.temporary_item', 'ast.temporary_item_detail', 'ast.asset_information', 'ast.asset_information_details', 'ast.expert_decision', 'ast.disposal_detail', 'ast.maitenance_detail', 'ast.requisition_type', 'ast.direct_in', 'ast.purchase_requisition', 'ast.item_requisition', 'ast.asset_allocation', 'ast.asset_allocation_details', 'ast.asset_return', 'ast.asset_return_line', 'ast.direct_in_line', 'ast.purchase_requisition_detail', 'ast.item_requisition_detail', 'ast.direct_out', 'ast.direct_out_line', 'inv.store', 'inv.uom', 'inv.view_item_opening_stock', 'inv.inspection_results', 'inv.item_feature_group', 'inv.item_feature_category', 'inv.purchase_requisition', 'inv.party_role_assignment', 'inv.party_type', 'inv.authorities', 'inv.user_role_mappings', 'inv.party_role', 'inv.party_skill', 'inv.authority_authority_mappings', 'inv.role_authority_mappings', 'inv.roles', 'inv.party_person', 'inv.facility', 'inv.facility_type', 'inv.office_type', 'inv.party', 'inv.party_bank_detail', 'inv.party_business_type', 'inv.party_contact_information', 'inv.party_organization', 'inv.reorder_level', 'inv.review_action_type', 'inv.review_action', 'inv.review_action_detail', 'inv.emails', 'inv.push_notifications', 'inv.purchase_order_detail_feature', 'inv.purchase_requisition_details', 'inv.purchase_requisition_detail_feature', 'inv.notifications', 'inv.review_job_type', 'inv.tbl_file', 'inv.requests', 'inv.tbl_sms', 'inv.gate_pass', 'inv.physical_inventory', 'inv.opening_stock', 'inv.direct_stock_out', 'inv.direct_stock_out_detail', 'inv.employee_pending_action_counts', 'inv.gate_pass_file', 'inv.gate_pass_item', 'inv.material_delivery', 'inv.physical_inventory_details', 'inv.purchase_item_delivery_location', 'inv.purchase_item_return', 'inv.purchase_order', 'inv.entitlement_requisitions', 'inv.unit', 'inv.damage_types', 'inv.entitlement_types', 'inv.item_requisition', 'inv.item_issue_return', 'inv.item_issue_return_details', 'inv.direct_stock_in', 'inv.direct_stock_in_detail', 'inv.damage_requisitions', 'inv.store_designation', 'inv.common_attachment', 'inv.item_stock', 'inv.store_employee', 'inv.store_item_requisition', 'inv.item_setup', 'inv.item_setup_feature', 'inv.store_item_setup_mapping', 'inv.item_in_out', 'inv.inspections', 'inv.purchase_order_detail', 'inv.damage_requisition_items', 'inv.committee_type', 'inv.category', 'inv.uom_category', 'inv.uom_conversion', 'inv.committee', 'inv.committee_details', 'inv.item', 'inv.store_item_requisition_detail', 'inv.material_delivery_detail', 'inv.material_delivery_detail_track', 'inv.item_feature', 'inv.entitlement_items', 'inv.entitlement_item_features', 'inv.entitlements', 'inv.entitlement_quantities', 'inv.item_requisition_details', 'inv.item_requisition_issue', 'inv.item_requisition_detail_feature', 'inv.item_requisition_receivers', 'hrm.employee_perf_summary', 'hrm.offense_setup', 'hrm.award_setup', 'hrm.publication_setup', 'hrm.employee_evaluation_category_setup', 'hrm.job_circular', 'hrm.application_form_for_recruitment', 'hrm.select_candidate', 'hrm.final_selection', 'hrm.recruitment_result', 'hrm.exam_configuration', 'hrm.call_for_exam', 'hrm.admit_card', 'hrm.training_type', 'hrm.organisational_training', 'hrm.survey_questionnaire_for_trainee', 'hrm.in_service_training', 'hrm.foreign_training', 'sec.service', 'sec.resource', 'sec.access_token', 'sec.grp_user', 'hrm.cadre', 'hrm.grade', 'hrm.weekend', 'hrm.employment_type', 'hrm.batch', 'hrm.employee_other_services', 'hrm.employee_master_info', 'hrm.deputation_info', 'hrm.employee_publication', 'hrm.trainee_result', 'hrm.publication_application', 'hrm.job_circular_approval', 'hrm.employee_probation', 'hrm.rules_of_vesting_magisterial_power', 'hrm.employee_award', 'hrm.promotion_detail', 'hrm.investigation_team_feedback', 'hrm.employee_education_qualification', 'hrm.award_application', 'hrm.acr_medical_report', 'hrm.employee_spouse_info', 'hrm.posting_and_promotion_committee_setup', 'hrm.penalty_for_attendance', 'hrm.acr_main_report', 'hrm.create_short_list', 'hrm.exam_venue', 'hrm.apply_for_prl', 'hrm.rules_regarding_posting', 'hrm.acr_under_controlling_ministry', 'hrm.pension_procedure_for_employee', 'hrm.vesting_of_magisterial_power', 'hrm.employee_confirmation', 'hrm.rules_regarding_training', 'hrm.at_meeting_or_events', 'hrm.employee_disciplinary_action', 'hrm.pending_participation_confirmation', 'hrm.employee_children_info', 'hrm.investigation_under_controlling_auth', 'hrm.employee_additional_prof_qualification', 'hrm.rules_regarding_acr_apa', 'hrm.rules_regarding_discipline', 'hrm.rules_of_award_publication', 'hrm.daily_attendance', 'hrm.acr_under_controlling_auth', 'hrm.acr_under_counter_signing_auth', 'hrm.rules_regarding_recruitment', 'hrm.investigation_under_appointing_auth', 'hrm.justify_against_penalty', 'hrm.at_leave', 'hrm.posting_info', 'hrm.termination', 'hrm.employee_in_queue_for_promotion_or_posting', 'hrm.rules_regarding_attendance', 'hrm.rules_regarding_promotion', 'hrm.acr_summary', 'hrm.trainer_detail', 'hrm.survey_questionnaire_for_trainer', 'hrm.survey_for_trainee', 'hrm.survey_for_trainer', 'hrm.employee_medical_info', 'hrm.holiday', 'hrm.language', 'hrm.employee_language_skill', 'hrm.leave_type', 'hrm.forbidden_pair', 'hrm.leave_type_reason', 'hrm.allowed_leave', 'hrm.employee_leave_application', 'hrm.rejoining_application', 'hrm.leave_condition', 'hrm.employeel_leave_details', 'sec.grp_module', 'sec.grp_role', 'sec.grp_submodule', 'sec.grp_feature', 'sec.grp_subfeature', 'sec.component', 'sec.grp_role_permission', 'sec.component_resource', 'sec.grp_user_role', 'cmn.fiscal_year', 'cmn.request', 'cmn.stakeholder', 'cmn.directory', 'cmn.file', 'cmn.file_request', 'cmn.email', 'cmn.email_recipient', 'cmn.email_attachment', 'cmn.message', 'cmn.smstracker', 'cmn.notification', 'cmn.notification_recipient', 'cmn.committee_type_setup', 'cmn.committee_setup', 'cmn.committee_setup_line', 'hrm.attendance_penalty_committee', 'hrm.penalty_committee_list', 'hrm.recruitment_committee', 'hrm.investigation_team_setup', 'cmn.allowance_setup', 'cmn.prepare_salary_bill', 'cmn.document_type', 'cmn.document', 'cmn.deduction_setup', 'cmn.payroll_process', 'cmn.loan_sanction', 'cmn.review_job_type', 'cmn.review_action_type', 'cmn.review_action', 'cmn.review_action_detail', 'cmn.store_designation', 'cmn.party_type', 'cmn.donee_info', 'cmn.donor_info', 'cmn.vendor', 'cmn.item_group_feature', 'cmn.item_category', 'cmn.item_group', 'cmn.item_group_feature_mapping', 'cmn.item', 'cmn.item_feature', 'cmn.entitlement_type', 'cmn.uom_category', 'cmn.uom', 'cmn.uom_conversion', 'cmn.economic_code_description', 'cmn.economic_code', 'cmn.geo_country', 'hrm.employee_training_info', 'cmn.geo_division', 'cmn.geo_district', 'cmn.geo_upazila', 'cmn.municipality', 'cmn.municipality_ward', 'cmn.geo_union', 'cmn.geo_union_ward', 'cmn.geo_post_office', 'cmn.city_corporation', 'cmn.geo_thana', 'cmn.city_corporation_ward', 'hrm.employee_foreign_travel', 'hrm.address_info', 'hrm.employee_personal_info', 'cmn.office_layer', 'cmn.office', 'cmn.office_origin', 'sec.office_module', 'cmn.store', 'cmn.store_employee', 'cmn.store_item_setup_mapping', 'cmn.office_unit_category', 'cmn.office_origin_unit', 'cmn.office_origin_unit_post', 'cmn.office_unit', 'cmn.post', 'cmn.entitlement', 'cmn.office_unit_post', 'hrm.employee_office', 'hrm.employee_leave_approval', 'cmn.office_post']
+Truncated Table prc.spot_purchase_detail
+Migrated data for table prc.spot_purchase_detail
+Truncated Table prc.spot_purchase_info
+Migrated data for table prc.spot_purchase_info
+Truncated Table prc.work_order_info
+Migrated data for table prc.work_order_info
+Truncated Table prc.work_order_detail
+Migrated data for table prc.work_order_detail
+Truncated Table prc.notification_of_award
+Migrated data for table prc.notification_of_award
+Truncated Table prc.procurement_contract
+Migrated data for table prc.procurement_contract
+Table : prc.economic_code_description migration FAILED
+Table : prc.economic_code migration FAILED
+Table : prc.fiscal_year migration FAILED
+Table : prc.vendor migration FAILED
+Truncated Table prc.requisition_declaration
+Migrated data for table prc.requisition_declaration
+Truncated Table prc.consolidate_requisition
+Migrated data for table prc.consolidate_requisition
+Truncated Table prc.consolidate_requisition_detail
+Migrated data for table prc.consolidate_requisition_detail
+Truncated Table prc.requisition_information
+Migrated data for table prc.requisition_information
+Truncated Table prc.requisition_detail
+Migrated data for table prc.requisition_detail
+Truncated Table prc.component_url_notification
+Migrated data for table prc.component_url_notification
+Truncated Table prc.approving_authority
+Migrated data for table prc.approving_authority
+Truncated Table prc.budget_type
+Migrated data for table prc.budget_type
+Truncated Table prc.package_type
+Migrated data for table prc.package_type
+Truncated Table prc.procurement_nature
+Migrated data for table prc.procurement_nature
+Truncated Table prc.procurement_method
+Migrated data for table prc.procurement_method
+Truncated Table prc.procurement_type
+Migrated data for table prc.procurement_type
+Truncated Table prc.procurement_project
+Migrated data for table prc.procurement_project
+Truncated Table prc.annual_procurement_plan
+Migrated data for table prc.annual_procurement_plan
+Truncated Table prc.app_package
+Migrated data for table prc.app_package
+Table : ast.ast_role migration FAILED
+Table : ast.ast_user_role migration FAILED
+Truncated Table ast.requisition_purpose
+Migrated data for table ast.requisition_purpose
+Truncated Table ast.temporary_item
+Migrated data for table ast.temporary_item
+Truncated Table ast.temporary_item_detail
+Migrated data for table ast.temporary_item_detail
+Truncated Table ast.asset_information
+Migrated data for table ast.asset_information
+Truncated Table ast.asset_information_details
+Migrated data for table ast.asset_information_details
+Truncated Table ast.expert_decision
+Migrated data for table ast.expert_decision
+Truncated Table ast.disposal_detail
+Migrated data for table ast.disposal_detail
+Truncated Table ast.maitenance_detail
+Migrated data for table ast.maitenance_detail
+Truncated Table ast.requisition_type
+Migrated data for table ast.requisition_type
+Truncated Table ast.direct_in
+Migrated data for table ast.direct_in
+Truncated Table ast.purchase_requisition
+Migrated data for table ast.purchase_requisition
+Truncated Table ast.item_requisition
+Migrated data for table ast.item_requisition
+Truncated Table ast.asset_allocation
+Migrated data for table ast.asset_allocation
+Truncated Table ast.asset_allocation_details
+Migrated data for table ast.asset_allocation_details
+Truncated Table ast.asset_return
+Migrated data for table ast.asset_return
+Truncated Table ast.asset_return_line
+Migrated data for table ast.asset_return_line
+Truncated Table ast.direct_in_line
+Migrated data for table ast.direct_in_line
+Truncated Table ast.purchase_requisition_detail
+Migrated data for table ast.purchase_requisition_detail
+Truncated Table ast.item_requisition_detail
+Migrated data for table ast.item_requisition_detail
+Truncated Table ast.direct_out
+Migrated data for table ast.direct_out
+Truncated Table ast.direct_out_line
+Migrated data for table ast.direct_out_line
+Truncated Table inv.store
+Migrated data for table inv.store
+Truncated Table inv.uom
+Migrated data for table inv.uom
+Table : inv.view_item_opening_stock migration FAILED
+Truncated Table inv.inspection_results
+Migrated data for table inv.inspection_results
+Truncated Table inv.item_feature_group
+Migrated data for table inv.item_feature_group
+Truncated Table inv.item_feature_category
+Migrated data for table inv.item_feature_category
+Truncated Table inv.purchase_requisition
+Migrated data for table inv.purchase_requisition
+Truncated Table inv.party_role_assignment
+Migrated data for table inv.party_role_assignment
+Truncated Table inv.party_type
+Migrated data for table inv.party_type
+Truncated Table inv.authorities
+Migrated data for table inv.authorities
+Truncated Table inv.user_role_mappings
+Migrated data for table inv.user_role_mappings
+Truncated Table inv.party_role
+Migrated data for table inv.party_role
+Truncated Table inv.party_skill
+Migrated data for table inv.party_skill
+Truncated Table inv.authority_authority_mappings
+Migrated data for table inv.authority_authority_mappings
+Truncated Table inv.role_authority_mappings
+Migrated data for table inv.role_authority_mappings
+Truncated Table inv.roles
+Migrated data for table inv.roles
+Truncated Table inv.party_person
+Migrated data for table inv.party_person
+Truncated Table inv.facility
+Migrated data for table inv.facility
+Truncated Table inv.facility_type
+Migrated data for table inv.facility_type
+Truncated Table inv.office_type
+Migrated data for table inv.office_type
+Truncated Table inv.party
+Migrated data for table inv.party
+Truncated Table inv.party_bank_detail
+Migrated data for table inv.party_bank_detail
+Truncated Table inv.party_business_type
+Migrated data for table inv.party_business_type
+Truncated Table inv.party_contact_information
+Migrated data for table inv.party_contact_information
+Truncated Table inv.party_organization
+Migrated data for table inv.party_organization
+Truncated Table inv.reorder_level
+Migrated data for table inv.reorder_level
+Truncated Table inv.review_action_type
+Migrated data for table inv.review_action_type
+Truncated Table inv.review_action
+Migrated data for table inv.review_action
+Truncated Table inv.review_action_detail
+Migrated data for table inv.review_action_detail
+Truncated Table inv.emails
+Migrated data for table inv.emails
+Truncated Table inv.push_notifications
+Migrated data for table inv.push_notifications
+Truncated Table inv.purchase_order_detail_feature
+Migrated data for table inv.purchase_order_detail_feature
+Truncated Table inv.purchase_requisition_details
+Migrated data for table inv.purchase_requisition_details
+Truncated Table inv.purchase_requisition_detail_feature
+Migrated data for table inv.purchase_requisition_detail_feature
+Truncated Table inv.notifications
+Migrated data for table inv.notifications
+Truncated Table inv.review_job_type
+Migrated data for table inv.review_job_type
+Truncated Table inv.tbl_file
+Migrated data for table inv.tbl_file
+Truncated Table inv.requests
+Migrated data for table inv.requests
+Truncated Table inv.tbl_sms
+Migrated data for table inv.tbl_sms
+Truncated Table inv.gate_pass
+Migrated data for table inv.gate_pass
+Truncated Table inv.physical_inventory
+Migrated data for table inv.physical_inventory
+Truncated Table inv.opening_stock
+Migrated data for table inv.opening_stock
+Truncated Table inv.direct_stock_out
+Migrated data for table inv.direct_stock_out
+Truncated Table inv.direct_stock_out_detail
+Migrated data for table inv.direct_stock_out_detail
+Truncated Table inv.employee_pending_action_counts
+Migrated data for table inv.employee_pending_action_counts
+Truncated Table inv.gate_pass_file
+Migrated data for table inv.gate_pass_file
+Truncated Table inv.gate_pass_item
+Migrated data for table inv.gate_pass_item
+Truncated Table inv.material_delivery
+Migrated data for table inv.material_delivery
+Truncated Table inv.physical_inventory_details
+Migrated data for table inv.physical_inventory_details
+Truncated Table inv.purchase_item_delivery_location
+Migrated data for table inv.purchase_item_delivery_location
+Truncated Table inv.purchase_item_return
+Migrated data for table inv.purchase_item_return
+Truncated Table inv.purchase_order
+Migrated data for table inv.purchase_order
+Truncated Table inv.entitlement_requisitions
+Migrated data for table inv.entitlement_requisitions
+Truncated Table inv.unit
+Migrated data for table inv.unit
+Truncated Table inv.damage_types
+Migrated data for table inv.damage_types
+Truncated Table inv.entitlement_types
+Migrated data for table inv.entitlement_types
+Truncated Table inv.item_requisition
+Migrated data for table inv.item_requisition
+Truncated Table inv.item_issue_return
+Migrated data for table inv.item_issue_return
+Truncated Table inv.item_issue_return_details
+Migrated data for table inv.item_issue_return_details
+Truncated Table inv.direct_stock_in
+Migrated data for table inv.direct_stock_in
+Truncated Table inv.direct_stock_in_detail
+Migrated data for table inv.direct_stock_in_detail
+Truncated Table inv.damage_requisitions
+Migrated data for table inv.damage_requisitions
+Truncated Table inv.store_designation
+Migrated data for table inv.store_designation
+Truncated Table inv.common_attachment
+Migrated data for table inv.common_attachment
+Truncated Table inv.item_stock
+Migrated data for table inv.item_stock
+Truncated Table inv.store_employee
+Migrated data for table inv.store_employee
+Truncated Table inv.store_item_requisition
+Migrated data for table inv.store_item_requisition
+Truncated Table inv.item_setup
+Migrated data for table inv.item_setup
+Truncated Table inv.item_setup_feature
+Migrated data for table inv.item_setup_feature
+Truncated Table inv.store_item_setup_mapping
+Migrated data for table inv.store_item_setup_mapping
+Truncated Table inv.item_in_out
+Migrated data for table inv.item_in_out
+Truncated Table inv.inspections
+Migrated data for table inv.inspections
+Truncated Table inv.purchase_order_detail
+Migrated data for table inv.purchase_order_detail
+Truncated Table inv.damage_requisition_items
+Migrated data for table inv.damage_requisition_items
+Truncated Table inv.committee_type
+Migrated data for table inv.committee_type
+Truncated Table inv.category
+Migrated data for table inv.category
+Truncated Table inv.uom_category
+Migrated data for table inv.uom_category
+Truncated Table inv.uom_conversion
+Migrated data for table inv.uom_conversion
+Truncated Table inv.committee
+Migrated data for table inv.committee
+Truncated Table inv.committee_details
+Migrated data for table inv.committee_details
+Truncated Table inv.item
+Migrated data for table inv.item
+Truncated Table inv.store_item_requisition_detail
+Migrated data for table inv.store_item_requisition_detail
+Truncated Table inv.material_delivery_detail
+Migrated data for table inv.material_delivery_detail
+Truncated Table inv.material_delivery_detail_track
+Migrated data for table inv.material_delivery_detail_track
+Truncated Table inv.item_feature
+Migrated data for table inv.item_feature
+Truncated Table inv.entitlement_items
+Migrated data for table inv.entitlement_items
+Truncated Table inv.entitlement_item_features
+Migrated data for table inv.entitlement_item_features
+Truncated Table inv.entitlements
+Migrated data for table inv.entitlements
+Truncated Table inv.entitlement_quantities
+Migrated data for table inv.entitlement_quantities
+Truncated Table inv.item_requisition_details
+Migrated data for table inv.item_requisition_details
+Truncated Table inv.item_requisition_issue
+Migrated data for table inv.item_requisition_issue
+Truncated Table inv.item_requisition_detail_feature
+Migrated data for table inv.item_requisition_detail_feature
+Table : inv.item_requisition_receivers migration FAILED
+Truncated Table hrm.employee_perf_summary
+Migrated data for table hrm.employee_perf_summary
+Truncated Table hrm.offense_setup
+Migrated data for table hrm.offense_setup
+Truncated Table hrm.award_setup
+Migrated data for table hrm.award_setup
+Truncated Table hrm.publication_setup
+Migrated data for table hrm.publication_setup
+Truncated Table hrm.employee_evaluation_category_setup
+Migrated data for table hrm.employee_evaluation_category_setup
+Truncated Table hrm.job_circular
+Migrated data for table hrm.job_circular
+Truncated Table hrm.application_form_for_recruitment
+Migrated data for table hrm.application_form_for_recruitment
+Truncated Table hrm.select_candidate
+Migrated data for table hrm.select_candidate
+Truncated Table hrm.final_selection
+Migrated data for table hrm.final_selection
+Truncated Table hrm.recruitment_result
+Migrated data for table hrm.recruitment_result
+Truncated Table hrm.exam_configuration
+Migrated data for table hrm.exam_configuration
+Truncated Table hrm.call_for_exam
+Migrated data for table hrm.call_for_exam
+Truncated Table hrm.admit_card
+Migrated data for table hrm.admit_card
+Truncated Table hrm.training_type
+Migrated data for table hrm.training_type
+Truncated Table hrm.organisational_training
+Migrated data for table hrm.organisational_training
+Truncated Table hrm.survey_questionnaire_for_trainee
+Migrated data for table hrm.survey_questionnaire_for_trainee
+Truncated Table hrm.in_service_training
+Migrated data for table hrm.in_service_training
+Truncated Table hrm.foreign_training
+Migrated data for table hrm.foreign_training
+Truncated Table sec.service
+Migrated data for table sec.service
+Truncated Table sec.resource
+Migrated data for table sec.resource
+Truncated Table sec.access_token
+Migrated data for table sec.access_token
+Truncated Table sec.grp_user
+Migrated data for table sec.grp_user
+Truncated Table hrm.cadre
+Migrated data for table hrm.cadre
+Truncated Table hrm.grade
+Migrated data for table hrm.grade
+Truncated Table hrm.weekend
+Migrated data for table hrm.weekend
+Truncated Table hrm.employment_type
+Migrated data for table hrm.employment_type
+Truncated Table hrm.batch
+Migrated data for table hrm.batch
+Truncated Table hrm.employee_other_services
+Migrated data for table hrm.employee_other_services
+Truncated Table hrm.employee_master_info
+Migrated data for table hrm.employee_master_info
+Truncated Table hrm.deputation_info
+Migrated data for table hrm.deputation_info
+Truncated Table hrm.employee_publication
+Migrated data for table hrm.employee_publication
+Truncated Table hrm.trainee_result
+Migrated data for table hrm.trainee_result
+Truncated Table hrm.publication_application
+Migrated data for table hrm.publication_application
+Truncated Table hrm.job_circular_approval
+Migrated data for table hrm.job_circular_approval
+Truncated Table hrm.employee_probation
+Migrated data for table hrm.employee_probation
+Truncated Table hrm.rules_of_vesting_magisterial_power
+Migrated data for table hrm.rules_of_vesting_magisterial_power
+Truncated Table hrm.employee_award
+Migrated data for table hrm.employee_award
+Truncated Table hrm.promotion_detail
+Migrated data for table hrm.promotion_detail
+Truncated Table hrm.investigation_team_feedback
+Migrated data for table hrm.investigation_team_feedback
+Truncated Table hrm.employee_education_qualification
+Migrated data for table hrm.employee_education_qualification
+Truncated Table hrm.award_application
+Migrated data for table hrm.award_application
+Truncated Table hrm.acr_medical_report
+Migrated data for table hrm.acr_medical_report
+Truncated Table hrm.employee_spouse_info
+Migrated data for table hrm.employee_spouse_info
+Truncated Table hrm.posting_and_promotion_committee_setup
+Migrated data for table hrm.posting_and_promotion_committee_setup
+Truncated Table hrm.penalty_for_attendance
+Migrated data for table hrm.penalty_for_attendance
+Truncated Table hrm.acr_main_report
+Migrated data for table hrm.acr_main_report
+Truncated Table hrm.create_short_list
+Migrated data for table hrm.create_short_list
+Truncated Table hrm.exam_venue
+Migrated data for table hrm.exam_venue
+Truncated Table hrm.apply_for_prl
+Migrated data for table hrm.apply_for_prl
+Truncated Table hrm.rules_regarding_posting
+Migrated data for table hrm.rules_regarding_posting
+Truncated Table hrm.acr_under_controlling_ministry
+Migrated data for table hrm.acr_under_controlling_ministry
+Truncated Table hrm.pension_procedure_for_employee
+Migrated data for table hrm.pension_procedure_for_employee
+Truncated Table hrm.vesting_of_magisterial_power
+Migrated data for table hrm.vesting_of_magisterial_power
+Truncated Table hrm.employee_confirmation
+Migrated data for table hrm.employee_confirmation
+Truncated Table hrm.rules_regarding_training
+Migrated data for table hrm.rules_regarding_training
+Truncated Table hrm.at_meeting_or_events
+Migrated data for table hrm.at_meeting_or_events
+Truncated Table hrm.employee_disciplinary_action
+Migrated data for table hrm.employee_disciplinary_action
+Truncated Table hrm.pending_participation_confirmation
+Migrated data for table hrm.pending_participation_confirmation
+Truncated Table hrm.employee_children_info
+Migrated data for table hrm.employee_children_info
+Truncated Table hrm.investigation_under_controlling_auth
+Migrated data for table hrm.investigation_under_controlling_auth
+Truncated Table hrm.employee_additional_prof_qualification
+Migrated data for table hrm.employee_additional_prof_qualification
+Truncated Table hrm.rules_regarding_acr_apa
+Migrated data for table hrm.rules_regarding_acr_apa
+Truncated Table hrm.rules_regarding_discipline
+Migrated data for table hrm.rules_regarding_discipline
+Truncated Table hrm.rules_of_award_publication
+Migrated data for table hrm.rules_of_award_publication
+Truncated Table hrm.daily_attendance
+Migrated data for table hrm.daily_attendance
+Truncated Table hrm.acr_under_controlling_auth
+Migrated data for table hrm.acr_under_controlling_auth
+Truncated Table hrm.acr_under_counter_signing_auth
+Migrated data for table hrm.acr_under_counter_signing_auth
+Truncated Table hrm.rules_regarding_recruitment
+Migrated data for table hrm.rules_regarding_recruitment
+Truncated Table hrm.investigation_under_appointing_auth
+Migrated data for table hrm.investigation_under_appointing_auth
+Truncated Table hrm.justify_against_penalty
+Migrated data for table hrm.justify_against_penalty
+Truncated Table hrm.at_leave
+Migrated data for table hrm.at_leave
+Truncated Table hrm.posting_info
+Migrated data for table hrm.posting_info
+Truncated Table hrm.termination
+Migrated data for table hrm.termination
+Truncated Table hrm.employee_in_queue_for_promotion_or_posting
+Migrated data for table hrm.employee_in_queue_for_promotion_or_posting
+Truncated Table hrm.rules_regarding_attendance
+Migrated data for table hrm.rules_regarding_attendance
+Truncated Table hrm.rules_regarding_promotion
+Migrated data for table hrm.rules_regarding_promotion
+Truncated Table hrm.acr_summary
+Migrated data for table hrm.acr_summary
+Truncated Table hrm.trainer_detail
+Migrated data for table hrm.trainer_detail
+Truncated Table hrm.survey_questionnaire_for_trainer
+Migrated data for table hrm.survey_questionnaire_for_trainer
+Truncated Table hrm.survey_for_trainee
+Migrated data for table hrm.survey_for_trainee
+Truncated Table hrm.survey_for_trainer
+Migrated data for table hrm.survey_for_trainer
+Truncated Table hrm.employee_medical_info
+Migrated data for table hrm.employee_medical_info
+Truncated Table hrm.holiday
+Migrated data for table hrm.holiday
+Truncated Table hrm.language
+Migrated data for table hrm.language
+Truncated Table hrm.employee_language_skill
+Migrated data for table hrm.employee_language_skill
+Truncated Table hrm.leave_type
+Migrated data for table hrm.leave_type
+Truncated Table hrm.forbidden_pair
+Migrated data for table hrm.forbidden_pair
+Truncated Table hrm.leave_type_reason
+Migrated data for table hrm.leave_type_reason
+Truncated Table hrm.allowed_leave
+Migrated data for table hrm.allowed_leave
+Truncated Table hrm.employee_leave_application
+Migrated data for table hrm.employee_leave_application
+Truncated Table hrm.rejoining_application
+Migrated data for table hrm.rejoining_application
+Truncated Table hrm.leave_condition
+Migrated data for table hrm.leave_condition
+Truncated Table hrm.employeel_leave_details
+Migrated data for table hrm.employeel_leave_details
+Truncated Table sec.grp_module
+Migrated data for table sec.grp_module
+Truncated Table sec.grp_role
+Migrated data for table sec.grp_role
+Truncated Table sec.grp_submodule
+Migrated data for table sec.grp_submodule
+Truncated Table sec.grp_feature
+Migrated data for table sec.grp_feature
+Truncated Table sec.grp_subfeature
+Migrated data for table sec.grp_subfeature
+Truncated Table sec.component
+Migrated data for table sec.component
+Truncated Table sec.grp_role_permission
+Migrated data for table sec.grp_role_permission
+Truncated Table sec.component_resource
+Migrated data for table sec.component_resource
+Truncated Table sec.grp_user_role
+Migrated data for table sec.grp_user_role
+Truncated Table cmn.fiscal_year
+Migrated data for table cmn.fiscal_year
+Truncated Table cmn.request
+Migrated data for table cmn.request
+Truncated Table cmn.stakeholder
+Migrated data for table cmn.stakeholder
+Truncated Table cmn.directory
+Migrated data for table cmn.directory
+Truncated Table cmn.file
+Migrated data for table cmn.file
+Truncated Table cmn.file_request
+Migrated data for table cmn.file_request
+Truncated Table cmn.email
+Migrated data for table cmn.email
+Truncated Table cmn.email_recipient
+Migrated data for table cmn.email_recipient
+Truncated Table cmn.email_attachment
+Migrated data for table cmn.email_attachment
+Truncated Table cmn.message
+Migrated data for table cmn.message
+Truncated Table cmn.smstracker
+Migrated data for table cmn.smstracker
+Truncated Table cmn.notification
+Migrated data for table cmn.notification
+Truncated Table cmn.notification_recipient
+Migrated data for table cmn.notification_recipient
+Truncated Table cmn.committee_type_setup
+Migrated data for table cmn.committee_type_setup
+Truncated Table cmn.committee_setup
+Migrated data for table cmn.committee_setup
+Truncated Table cmn.committee_setup_line
+Migrated data for table cmn.committee_setup_line
+Truncated Table hrm.attendance_penalty_committee
+Migrated data for table hrm.attendance_penalty_committee
+Truncated Table hrm.penalty_committee_list
+Migrated data for table hrm.penalty_committee_list
+Truncated Table hrm.recruitment_committee
+Migrated data for table hrm.recruitment_committee
+Truncated Table hrm.investigation_team_setup
+Migrated data for table hrm.investigation_team_setup
+Truncated Table cmn.allowance_setup
+Migrated data for table cmn.allowance_setup
+Truncated Table cmn.prepare_salary_bill
+Migrated data for table cmn.prepare_salary_bill
+Truncated Table cmn.document_type
+Migrated data for table cmn.document_type
+Truncated Table cmn.document
+Migrated data for table cmn.document
+Truncated Table cmn.deduction_setup
+Migrated data for table cmn.deduction_setup
+Truncated Table cmn.payroll_process
+Migrated data for table cmn.payroll_process
+Truncated Table cmn.loan_sanction
+Migrated data for table cmn.loan_sanction
+Truncated Table cmn.review_job_type
+Migrated data for table cmn.review_job_type
+Truncated Table cmn.review_action_type
+Migrated data for table cmn.review_action_type
+Truncated Table cmn.review_action
+Migrated data for table cmn.review_action
+Truncated Table cmn.review_action_detail
+Migrated data for table cmn.review_action_detail
+Truncated Table cmn.store_designation
+Migrated data for table cmn.store_designation
+Truncated Table cmn.party_type
+Migrated data for table cmn.party_type
+Truncated Table cmn.donee_info
+Migrated data for table cmn.donee_info
+Truncated Table cmn.donor_info
+Migrated data for table cmn.donor_info
+Truncated Table cmn.vendor
+Migrated data for table cmn.vendor
+Truncated Table cmn.item_group_feature
+Migrated data for table cmn.item_group_feature
+Truncated Table cmn.item_category
+Migrated data for table cmn.item_category
+Truncated Table cmn.item_group
+Migrated data for table cmn.item_group
+Truncated Table cmn.item_group_feature_mapping
+Migrated data for table cmn.item_group_feature_mapping
+Truncated Table cmn.item
+Migrated data for table cmn.item
+Truncated Table cmn.item_feature
+Migrated data for table cmn.item_feature
+Truncated Table cmn.entitlement_type
+Migrated data for table cmn.entitlement_type
+Truncated Table cmn.uom_category
+Migrated data for table cmn.uom_category
+Truncated Table cmn.uom
+Migrated data for table cmn.uom
+Truncated Table cmn.uom_conversion
+Migrated data for table cmn.uom_conversion
+Truncated Table cmn.economic_code_description
+Migrated data for table cmn.economic_code_description
+Truncated Table cmn.economic_code
+Migrated data for table cmn.economic_code
+Truncated Table cmn.geo_country
+Migrated data for table cmn.geo_country
+Truncated Table hrm.employee_training_info
+Migrated data for table hrm.employee_training_info
+Truncated Table cmn.geo_division
+Migrated data for table cmn.geo_division
+Truncated Table cmn.geo_district
+Migrated data for table cmn.geo_district
+Truncated Table cmn.geo_upazila
+Migrated data for table cmn.geo_upazila
+Truncated Table cmn.municipality
+Migrated data for table cmn.municipality
+Truncated Table cmn.municipality_ward
+Migrated data for table cmn.municipality_ward
+Truncated Table cmn.geo_union
+Migrated data for table cmn.geo_union
+Truncated Table cmn.geo_union_ward
+Migrated data for table cmn.geo_union_ward
+Truncated Table cmn.geo_post_office
+Migrated data for table cmn.geo_post_office
+Truncated Table cmn.city_corporation
+Migrated data for table cmn.city_corporation
+Truncated Table cmn.geo_thana
+Migrated data for table cmn.geo_thana
+Truncated Table cmn.city_corporation_ward
+Migrated data for table cmn.city_corporation_ward
+Truncated Table hrm.employee_foreign_travel
+Migrated data for table hrm.employee_foreign_travel
+Truncated Table hrm.address_info
+Migrated data for table hrm.address_info
+Truncated Table hrm.employee_personal_info
+Migrated data for table hrm.employee_personal_info
+Truncated Table cmn.office_layer
+Migrated data for table cmn.office_layer
+Truncated Table cmn.office
+Migrated data for table cmn.office
+Truncated Table cmn.office_origin
+Migrated data for table cmn.office_origin
+Truncated Table sec.office_module
+Migrated data for table sec.office_module
+Truncated Table cmn.store
+Migrated data for table cmn.store
+Truncated Table cmn.store_employee
+Migrated data for table cmn.store_employee
+Truncated Table cmn.store_item_setup_mapping
+Migrated data for table cmn.store_item_setup_mapping
+Truncated Table cmn.office_unit_category
+Migrated data for table cmn.office_unit_category
+Truncated Table cmn.office_origin_unit
+Migrated data for table cmn.office_origin_unit
+Truncated Table cmn.office_origin_unit_post
+Migrated data for table cmn.office_origin_unit_post
+Truncated Table cmn.office_unit
+Migrated data for table cmn.office_unit
+Truncated Table cmn.post
+Migrated data for table cmn.post
+Truncated Table cmn.entitlement
+Migrated data for table cmn.entitlement
+Truncated Table cmn.office_unit_post
+Migrated data for table cmn.office_unit_post
+Truncated Table hrm.employee_office
+Migrated data for table hrm.employee_office
+Truncated Table hrm.employee_leave_approval
+Migrated data for table hrm.employee_leave_approval
+Truncated Table cmn.office_post
+Migrated data for table cmn.office_post
