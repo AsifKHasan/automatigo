@@ -34,4 +34,4 @@ termcolor
 PyRSMQ
 pyzmq
 
-locustio
+locust
