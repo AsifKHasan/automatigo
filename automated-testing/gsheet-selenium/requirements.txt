@@ -1,5 +1,6 @@
 argparse
 PyYAML
+pyaml
 lxml
 httplib2
 pillow
@@ -13,5 +14,4 @@ xlsxwriter
 openpyxl
 jinja2
 latex
-latex2pdf
 selenium

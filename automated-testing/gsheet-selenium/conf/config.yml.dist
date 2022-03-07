@@ -13,19 +13,34 @@ default-seconds:
 dirs:
   output-dir:     '../out'
 
+# file locations
 files:
+  # location of Google service account credential
   google-cred:    './credential.json'
-  output-json:    'MEM__test-case__create-meeting.json'
+  # location of json generated from the gsheet
+  output-json:    'output_json_name.json'
 
+# test case related parameters
 test:
-  case:           'BCC-Quarterly-PIC-meeting-01'
+  # the *case* to execute from *test-case* worksheet
+  case:           'test_case_name'
+  # test cases may have different structures in data, parameters to get those data
   data:
-    gsheet:       'MEM__test-case__create-meeting'
-    module:       'helper.gsheet.gsheet_reader_create_meeting'
-    class:        'CreateMeetingGsheetReader'
+    # the gsheet where the test cases are
+    gsheet:       'gsheet_name'
+    # the Python module to read the data for the test case (under src/helper/gsheet)
+    module:       'helper.gsheet.gsheet_reader_xyz'
+    # the Python GsheetReader class to read the data for the test case
+    class:        'XyzGsheetReader'
+  # Selenium driver related parameters
   driver:
-    module:       'helper.selenium.selenium_create_meeting'
-    class:        'CreateMeetingDriver'
+    # the Python module for Selenium driver for the test case (under src/helper/selenium)
+    module:       'helper.selenium.selenium_xyz'
+    # the Python SeleniumDriver class specific for the test case
+    class:        'XyzDriver'
+  # log related parameters
   log-writer:
-    module:       'helper.xlsx.xlsx_writer_create_meeting'
-    class:        'CreateMeetingXlsxLogWriter'
+    # the Python module for writing logs for the test case (under src/helper/xlsx)
+    module:       'helper.xlsx.xlsx_writer_xyz'
+    # the Python XlsxLogWriter class specific for the test case
+    class:        'XyzXlsxLogWriter'
