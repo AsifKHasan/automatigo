@@ -8,6 +8,8 @@ import time
 import datetime
 import xlsxwriter
 
+from helper.logger import *
+
 class XlsxLogWriter(object):
 
     def worksheet_formats(self):
@@ -35,4 +37,4 @@ class XlsxLogWriter(object):
             self._workbook.close()
 
         self.end_time = int(round(time.time() * 1000))
-        print("Log-writer took {} seconds".format((self.end_time - self.start_time)/1000))
+        info("Log-writer took {} seconds".format((self.end_time - self.start_time)/1000))

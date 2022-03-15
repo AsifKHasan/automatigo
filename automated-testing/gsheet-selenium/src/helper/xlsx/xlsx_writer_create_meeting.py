@@ -7,6 +7,7 @@ import datetime
 import xlsxwriter
 
 from helper.xlsx.xlsx_writer import XlsxLogWriter
+from helper.logger import *
 
 headers = [
     ('A',  1, '#'             , 'center'  ,   5),

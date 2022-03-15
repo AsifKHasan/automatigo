@@ -16,7 +16,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.action_chains import ActionChains
 
 from helper.utils import *
-
+from helper.logger import *
 
 class SeleniumDriver(object):
 
