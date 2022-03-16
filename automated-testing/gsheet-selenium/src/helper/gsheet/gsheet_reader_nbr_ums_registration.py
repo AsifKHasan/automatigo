@@ -7,12 +7,14 @@ from helper.gsheet.gsheet_reader import GsheetReader
 from helper.logger import *
 
 WS_LIST = {
+    'login':    {'start-col': 'B', 'end-col': 'D', 'numerize': True},
 }
 
 class NbrUmsRegistrationGsheetReader(GsheetReader):
 
     def read_gsheet(self, context):
         self.WORKSHEETS = z = {**self.WORKSHEETS, **WS_LIST}
+        
 
         # workflow
         ws_name = 'workflow'
