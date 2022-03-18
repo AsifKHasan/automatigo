@@ -16,6 +16,7 @@ import traceback
 from datetime import datetime
 
 from helper.gsheet.gsheet_helper import GsheetHelper
+from helper.logger import *
 
 class SeleniumFromGsheet(object):
 
@@ -37,7 +38,7 @@ class SeleniumFromGsheet(object):
         self._gsheet_reader = test_case_reader(self._CONFIG['context'])
         try:
             try:
-                self._data, self._gsheet_log = self._gsheet_reader.read_gsheet(self._CONFIG['context'])
+                self._data, self._gsheet_log = self._gsheet_reader.read_gsheet()
             except Exception as e:
                 self._gsheet_log.append({'type': 'error', 'time': datetime.now().isoformat(), 'msg': str(e)})
                 traceback.print_exc()
@@ -96,7 +97,7 @@ class SeleniumFromGsheet(object):
 
     def tear_down(self):
         self.end_time = int(round(time.time() * 1000))
-        print("script took {} seconds".format((self.end_time - self.start_time)/1000))
+        info("script took {} seconds".format((self.end_time - self.start_time)/1000))
 
 if __name__ == '__main__':
     # construct the argument parse and parse the arguments

@@ -92,7 +92,6 @@ def generate_resource_worksheet(sheet, data, ws_title):
                     current_row = current_row + 2
 
 def render_heading1(sheet, ws, current_row, heading):
-    # print(heading)
     cell = ws.cell((current_row + 1, 1))
     cell.value = heading
     cell.horizontal_alignment = HorizontalAlignment.LEFT
@@ -104,7 +103,6 @@ def render_heading1(sheet, ws, current_row, heading):
     return current_row
 
 def render_heading2(sheet, ws, current_row, heading):
-    # print('....', heading)
     cell = ws.cell((current_row + 1, 1))
     cell.value = heading
     cell.horizontal_alignment = HorizontalAlignment.LEFT

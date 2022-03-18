@@ -20,6 +20,17 @@ from helper.logger import *
 
 class SeleniumDriver(object):
 
+    ''' if any of the activity under any of the processes has a data-key, then this work needs data
+    '''
+    def this_work_needs_data(self, work_name):
+        for process_name, process in self._workflow[work_name].items():
+            for activity in process:
+                if 'data-key' in activity:
+                    return True
+
+        return False
+
+
     def drive(self, data):
         self._all_case = data['test-case']
         self._workflow = data['workflow']
@@ -43,13 +54,22 @@ class SeleniumDriver(object):
             self._current_work = work_name
             self._log[self._current_work] = {}
 
-            # the work may or may not need data, if data is needed there should be a function to get data for that work data
+            # the work may or may not need data
             work_data = None
-            func_name = '{0}_data'.format(work_name.replace('-', '_'))
+            if self.this_work_needs_data(work_name):
+                # data is needed. if there is a data key in the test-case dictionary with the same name as the wor, that is the data
+                if work_name in self._case:
+                    debug(f"base data found for work [{work_name}]")
+                    work_data = self._case[work_name]
 
-            # check whether the function is implemented, if implemented call it to have the data for the work
-            if is_method(self.__class__, func_name):
-                work_data = (method_by_name(self.__class__, func_name))(self, self._case)
+                else:
+                    # there may be a function to get data for that work data
+                    func_name = '{0}_data'.format(work_name.replace('-', '_'))
+
+                    # check whether the function is implemented, if implemented call it to have the data for the work
+                    if is_method(self.__class__, func_name):
+                        debug(f"function geneareted data found for work [{work_name}]")
+                        work_data = (method_by_name(self.__class__, func_name))(self, self._case)
 
             # if the data is a dict, we just perform the work once
             if work_data is None or isinstance(work_data, dict):
@@ -76,7 +96,6 @@ class SeleniumDriver(object):
         return self._log
 
     def perform_work(self, work_name, work_data, index=0):
-        # pprint.pprint(work_data)
         for process in self._workflow[work_name]:
             self._current_process = process
             if index != 0:
@@ -313,7 +332,6 @@ class SeleniumDriver(object):
         if self._current_process:
             self._log[self._current_work][self._current_process_with_index].append(data)
         else:
-            print(self._current_work, data)
             self._log[self._current_work].append(data)
 
         if console:
@@ -332,7 +350,7 @@ class SeleniumDriver(object):
             self._browser.close()
 
         self.end_time = int(round(time.time() * 1000))
-        print("Selenium took {} seconds".format((self.end_time - self.start_time) / 1000))
+        info("Selenium took {} seconds".format((self.end_time - self.start_time) / 1000))
 
     def load(self, url):
         if self._config['driver'] == 'firefox':
