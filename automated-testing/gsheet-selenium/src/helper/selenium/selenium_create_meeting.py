@@ -1,6 +1,7 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 '''
 '''
+
 from datetime import datetime
 from helper.selenium.selenium_driver import SeleniumDriver
 from helper.utils import *

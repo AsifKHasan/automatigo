@@ -5,7 +5,7 @@ set echo off
 
 # the scripts are in src directory
 pushd src
-./selenium-from-gsheet.py --config '../conf/config.yml'
+python selenium-from-gsheet.py --config "../conf/config.yml"
 
 if [ ${?} -ne 0 ]; then
   popd && exit ${?}

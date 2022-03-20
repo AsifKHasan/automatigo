@@ -1,6 +1,7 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 '''
 '''
+
 from helper.gsheet.gsheet_reader import GsheetReader
 
 WS_LIST = {

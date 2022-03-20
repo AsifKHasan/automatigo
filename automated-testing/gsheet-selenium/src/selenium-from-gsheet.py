@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 '''
 usage:
 ./selenium-from-gsheet.py --config '../conf/config.yml'

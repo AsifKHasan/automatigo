@@ -1,6 +1,7 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 '''
 '''
+
 import pygsheets
 from pygsheets.custom_types import *
 

@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+'''
+'''
+
 '''
     get_part_of_text is for getting an initial portion of a (supposedly) long text for search in a drop down
     it first tries to take out the leading portion upto a ','
