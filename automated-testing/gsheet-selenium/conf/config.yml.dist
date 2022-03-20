@@ -40,7 +40,7 @@ test:
     class:        'XyzDriver'
   # log related parameters
   log-writer:
-    # the Python module for writing logs for the test case (under src/helper/xlsx)
+    # the Python module for writing logs for the test case (under src/helper/xlsx), you may use the default parent class helper.xlsx.xlsx_writer.XlsxLogWriter
     module:       'helper.xlsx.xlsx_writer_xyz'
     # the Python XlsxLogWriter class specific for the test case
     class:        'XyzXlsxLogWriter'

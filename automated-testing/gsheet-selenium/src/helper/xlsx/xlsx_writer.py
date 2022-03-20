@@ -21,6 +21,10 @@ headers = [
 
 class XlsxLogWriter(object):
 
+    ''' you can override this method in cjild classes if you want to change behavior based on test case
+        in the child method, you may just call parent by
+        super().write(log)
+    '''
     def write(self, log):
         self._log = log
 
