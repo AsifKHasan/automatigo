@@ -4,7 +4,7 @@
 set echo off
 
 # append driver directory to PATH
-export PATH=$PATH:$(pwd)/driver
+export PATH=$PATH:$(pwd)/drivers
 
 # the scripts are in src directory
 pushd src
