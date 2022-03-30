@@ -11,11 +11,11 @@ assuming you are in the directory ```gsheet-selenium```, if not cd to the direct
 
   * line 30 *test/data/gsheet* should be the gsheet name of your test spec
 
-  * line 32 *test/data/module* you should specify the exact module path for this test spec, you will find module files under src/helper/gsheet folder
-  * line 34 *test/data/class* you should specify the class name for this test spec, you will find module files under src/helper/gsheet folder
+  * line 32 *test/data/module* you should specify the exact module name (.py file name without extension) for this test spec, you will find module files under ```src/helper/gsheet``` folder
+  * line 34 *test/data/class* you should specify the class name for this test spec, you will find module files under ```src/helper/gsheet``` folder
 
-  * line 38 *test/driver/module* you should specify the exact module path for this test spec, you will find module files under src/helper/selenium folder
-  * line 40 *test/driver/class* you should specify the class name for this test spec, you will find module files under src/helper/selenium folder
+  * line 38 *test/driver/module* you should specify the exact module name (.py file name without extension) for this test spec, you will find module files under ```src/helper/selenium``` folder
+  * line 40 *test/driver/class* you should specify the class name for this test spec, you will find module files under ```src/helper/selenium``` folder
 
   * line 44 *test/log-writer/module* you may specify as *helper.xlsx.xlsx_writer* if you do not have any custom writer for this test spec
   * line 46 *test/log-writer/class* you may specify as *XlsxLogWriter* if you do not have any custom writer for this test spec
