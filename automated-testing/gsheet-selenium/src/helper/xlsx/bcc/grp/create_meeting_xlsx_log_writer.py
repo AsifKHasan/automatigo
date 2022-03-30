@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 '''
 '''
-from helper.xlsx.xlsx_writer import XlsxLogWriter
+from helper.xlsx.xlsx_log_writer import XlsxLogWriter
 
 class CreateMeetingXlsxLogWriter(XlsxLogWriter):
 

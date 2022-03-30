@@ -3,7 +3,7 @@
 
 set echo off
 
-# append driver directory to PATH
+# append drivers directory to PATH
 export PATH=$PATH:$(pwd)/drivers
 
 # the scripts are in src directory

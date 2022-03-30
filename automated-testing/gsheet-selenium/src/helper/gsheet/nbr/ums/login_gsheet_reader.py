@@ -8,7 +8,7 @@ WS_LIST = {
     'login':    {'start-col': 'B', 'end-col': 'D', 'data': 'scalar', 'numerize': True},
 }
 
-class NbrUmsLoginGsheetReader(GsheetReader):
+class LoginGsheetReader(GsheetReader):
 
     def read_gsheet(self):
         return super().read_gsheet(WS_LIST)

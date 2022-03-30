@@ -7,7 +7,7 @@ from helper.selenium.selenium_driver import SeleniumDriver
 from helper.utils import *
 
 
-class CreateMeetingDriver(SeleniumDriver):
+class CreateMeetingSeleniumDriver(SeleniumDriver):
 
     def login_data(self, case):
         return {'user-id': case['user-id'], 'password': case['password']}
