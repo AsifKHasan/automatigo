@@ -9,16 +9,16 @@ assuming you are in the directory ```gsheet-selenium```, if not cd to the direct
 5. make a copy of ```gsheet-selenium/conf/config.yml.dist``` to ```gsheet-selenium/conf/config.yml```
 6. edit ```gsheet-selenium/conf/config.yml``` as per your test specification
 
-  * line 23 *test/data/gsheet* should be the gsheet name of your test case
+  * line 30 *test/data/gsheet* should be the gsheet name of your test spec
 
-  * line 24 *test/data/module* you should specify the exact module path for this test case, you will find module files under src/helper/gsheet folder
-  * line 25 *test/data/class* you should specify the class name for this test case, you will find module files under src/helper/gsheet folder
+  * line 32 *test/data/module* you should specify the exact module path for this test spec, you will find module files under src/helper/gsheet folder
+  * line 34 *test/data/class* you should specify the class name for this test spec, you will find module files under src/helper/gsheet folder
 
-  * line 27 *test/driver/module* you should specify the exact module path for this test case, you will find module files under src/helper/selenium folder
-  * line 28 *test/driver/class* you should specify the class name for this test case, you will find module files under src/helper/selenium folder
+  * line 38 *test/driver/module* you should specify the exact module path for this test spec, you will find module files under src/helper/selenium folder
+  * line 40 *test/driver/class* you should specify the class name for this test spec, you will find module files under src/helper/selenium folder
 
-  * line 30 *test/log-writer/module* you may specify as *helper.xlsx.xlsx_writer* if you do not have any custom writer for this test
-  * line 31 *test/log-writer/class* you may specify as *XlsxLogWriter* if you do not have any custom writer for this test
+  * line 44 *test/log-writer/module* you may specify as *helper.xlsx.xlsx_writer* if you do not have any custom writer for this test spec
+  * line 46 *test/log-writer/class* you may specify as *XlsxLogWriter* if you do not have any custom writer for this test spec
 
 ## Webdriver locations
 * Chrome:   https://sites.google.com/chromium.org/driver/
