@@ -2,14 +2,14 @@
 driver:           'chrome'
 firefox-path:     'C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe'
 
-# how many seconds of delay is default after each work under a workflow
+# how many seconds of delay is default after each work under a workflow/spec
 default-seconds:
-  # how many seconds of delay is default after each work under a workflow
+  # how many seconds of delay is default after each work under a workflow/spec
   between-work:   0
   # how many seconds to wait for an element
   element-wait:   30
 
-# all paths are relative to this file location
+# all paths are relative to this file's location
 dirs:
   output-dir:     '../out'
 
@@ -26,21 +26,21 @@ test:
   case:           'test_case_name'
   # test cases may have different structures in data, parameters to get those data
   data:
-    # the gsheet where the test cases are
-    gsheet:       'gsheet_name'
-    # the Python module to read the data for the test case (under src/helper/gsheet)
+    # the gsheet where the test specs are
+    gsheet:       'test_spec_gsheet_name'
+    # the Python module to read the data for the test spec (under src/helper/gsheet)
     module:       'helper.gsheet.gsheet_reader_xyz'
-    # the Python GsheetReader class to read the data for the test case
+    # the Python GsheetReader class to read the data for the test spec
     class:        'XyzGsheetReader'
   # Selenium driver related parameters
   driver:
-    # the Python module for Selenium driver for the test case (under src/helper/selenium)
+    # the Python module for Selenium driver for the test spec (under src/helper/selenium)
     module:       'helper.selenium.selenium_xyz'
-    # the Python SeleniumDriver class specific for the test case
+    # the Python SeleniumDriver class specific for the test spec
     class:        'XyzDriver'
   # log related parameters
   log-writer:
-    # the Python module for writing logs for the test case (under src/helper/xlsx), you may use the default parent class helper.xlsx.xlsx_writer.XlsxLogWriter
+    # the Python module for writing logs for the test spec (under src/helper/xlsx), you may use the default parent class helper.xlsx.xlsx_writer.XlsxLogWriter
     module:       'helper.xlsx.xlsx_writer_xyz'
-    # the Python XlsxLogWriter class specific for the test case
+    # the Python XlsxLogWriter class specific for the test spec
     class:        'XyzXlsxLogWriter'
