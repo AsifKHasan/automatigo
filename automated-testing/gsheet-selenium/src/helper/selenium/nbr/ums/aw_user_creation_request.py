@@ -4,6 +4,6 @@
 
 from helper.selenium.selenium_driver import SeleniumDriver
 
-class AwUserCreationRequestSeleniumDriver(SeleniumDriver):
+class AwUserCreationRequest(SeleniumDriver):
 
     pass

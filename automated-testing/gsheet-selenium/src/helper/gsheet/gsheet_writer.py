@@ -53,9 +53,9 @@ def render_resource_days(sheet, ws, current_row, role_days):
 
     # footer row, add a formula for Total at col C in row current_row + 1
     current_row = current_row + 1
-    cell = ws.cell('C{0}'.format(current_row + 1))
-    cell.formula = '=sum(C{0}:C{1})'.format(data_start_row + 1, data_end_row + 1)
-    cell = ws.cell('B{0}'.format(current_row + 1))
+    cell = ws.cell(f"C{current_row + 1}")
+    cell.formula = f"=sum(C{data_start_row + 1}:C{data_end_row + 1})"
+    cell = ws.cell(f"B{current_row + 1}")
     cell.value = 'Subtotal'
 
     # format footer

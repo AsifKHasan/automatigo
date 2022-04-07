@@ -11,6 +11,8 @@ from googleapiclient import discovery
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 
+from helper.logger import *
+
 class GsheetHelper(object):
 
     def init(self, config):
@@ -19,7 +21,7 @@ class GsheetHelper(object):
         _G = pygsheets.authorize(service_account_file=config['files']['google-cred'])
 
         self._context['_G'] = _G
-        sheet = _G.open(config['test']['data']['gsheet'])
+        sheet = _G.open(config['test-spec']['spec-file'])
         self._context['gsheet'] = sheet
 
         credentials = ServiceAccountCredentials.from_json_keyfile_name(config['files']['google-cred'], scopes=['https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/spreadsheets'])
@@ -31,6 +33,5 @@ class GsheetHelper(object):
         gauth.credentials = credentials
 
         self._context['drive'] = GoogleDrive(gauth)
-        self._context['tmp-dir'] = config['dirs']['temp-dir']
 
         return self._context

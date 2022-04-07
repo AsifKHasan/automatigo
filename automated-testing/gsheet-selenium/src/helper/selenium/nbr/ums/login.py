@@ -4,6 +4,6 @@
 
 from helper.selenium.selenium_driver import SeleniumDriver
 
-class LoginSeleniumDriver(SeleniumDriver):
+class Login(SeleniumDriver):
 
     pass

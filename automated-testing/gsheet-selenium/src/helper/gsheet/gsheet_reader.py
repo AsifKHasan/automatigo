@@ -19,7 +19,7 @@ from helper.logger import *
 
 WORKSHEETS = {
         'workflow':      {'start-col': 'A', 'end-col': 'H', 'numerize': True},
-        'test-case':     {'start-col': 'B', 'end-col': 'G', 'numerize': True},
+        'test-case':     {'start-col': 'A', 'end-col': 'E', 'numerize': True},
     }
 
 def list_of_dict(g):
@@ -43,18 +43,18 @@ class GsheetReader(object):
     '''
     def __del__(self):
         self.end_time = int(round(time.time() * 1000))
-        info("gsheet took {} seconds".format((self.end_time - self.start_time)/1000))
+        info(f"gsheet took {(self.end_time - self.start_time)/1000} seconds")
 
 
     '''
     '''
     def df_from_worksheet(self, ws_title, ws_spec):
-        self.info('reading worksheet: {0}'.format(ws_title))
+        self.info(f"reading worksheet: {ws_title}")
         ws = self._config['gsheet'].worksheet('title', ws_title)
         if ws_spec['numerize']:
-            return ws.get_as_df(has_header=True, index_colum=None, empty_value=None, numerize=True, start='{0}2'.format(ws_spec['start-col']), end='{0}{1}'.format(ws_spec['end-col'], ws.rows))
+            return ws.get_as_df(has_header=True, index_colum=None, empty_value=None, numerize=True, start=f"{ws_spec['start-col']}2", end=f"{ws_spec['end-col']}{ws.rows}")
         else:
-            return ws.get_as_df(has_header=True, index_colum=None, empty_value=None, numerize=False, start='{0}2'.format(ws_spec['start-col']), end='{0}{1}'.format(ws_spec['end-col'], ws.rows))
+            return ws.get_as_df(has_header=True, index_colum=None, empty_value=None, numerize=False, start=f"{ws_spec['start-col']}2", end=f"{ws_spec['end-col']}{ws.rows}")
 
 
     '''
@@ -82,12 +82,13 @@ class GsheetReader(object):
         # a worksheet named *test-case* must be there
         ws_name = 'test-case'
         df = self.df_from_worksheet(ws_name, WORKSHEETS[ws_name])
+        df = df[df['skip'] != 'Yes']
         self._cases = df.set_index('case').T.to_dict('dict')
 
         # read the other worksheets
         for ws_name, ws_spec in ws_dict.items():
             df = self.df_from_worksheet(ws_name, ws_spec)
-            df = df[df['case'] != '']
+            df = df[df['case'].isin(self._cases.keys())]
             if ws_spec['data'] == 'scalar':
                 data = df.set_index('case').T.to_dict('dict')
 

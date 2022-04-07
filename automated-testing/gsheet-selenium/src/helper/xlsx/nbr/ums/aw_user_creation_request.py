@@ -3,7 +3,7 @@
 '''
 from helper.xlsx.xlsx_log_writer import XlsxLogWriter
 
-class CreateMeetingXlsxLogWriter(XlsxLogWriter):
+class AwUserCreationRequest(XlsxLogWriter):
 
     def write(self, log):
         super().write(log)

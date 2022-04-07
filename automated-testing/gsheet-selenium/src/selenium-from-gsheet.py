@@ -13,6 +13,7 @@ import platform
 import argparse
 import importlib
 import traceback
+from pathlib import Path
 from datetime import datetime
 
 from helper.gsheet.gsheet_helper import GsheetHelper
@@ -22,20 +23,22 @@ class SeleniumFromGsheet(object):
 
     def __init__(self, config_path):
         self.start_time = int(round(time.time() * 1000))
-        self._config_path = os.path.abspath(config_path)
+        self._config_path = Path(config_path).resolve()
         self._data = {}
 
     def run(self):
         self.set_up()
 
-        # read the test data from gsheet
-        # gsheet-helper
+        # authenticate with Google
         self._gsheet_helper = GsheetHelper()
         self._CONFIG['context'] = self._gsheet_helper.init(self._CONFIG)
 
         self._gsheet_log = []
-        test_case_reader = getattr(importlib.import_module(self._CONFIG['test']['data']['module']), self._CONFIG['test']['data']['class'])
-        self._gsheet_reader = test_case_reader(self._CONFIG['context'])
+        # read the test-spec gsheet
+        test_spec_gsheet_reader = getattr(importlib.import_module(self._CONFIG['test-spec']['module'].format('gsheet')), self._CONFIG['test-spec']['class'])
+        self._gsheet_reader = test_spec_gsheet_reader(self._CONFIG['context'])
+        self._CONFIG['files']['gsheet-log-json'] = Path(f"{self._CONFIG['dirs']['output-dir']}/{self._CONFIG['test-spec']['spec-file']}.log.json")
+        self._CONFIG['files']['output-json'] = Path(f"{self._CONFIG['dirs']['output-dir']}/{self._CONFIG['test-spec']['spec-file']}.data.json")
         try:
             try:
                 self._data, self._gsheet_log = self._gsheet_reader.read_gsheet()
@@ -48,45 +51,55 @@ class SeleniumFromGsheet(object):
 
         self.save_json(self._CONFIG['files']['output-json'], self._data)
 
-        # drive the test through Selenium
-        self._selenium_log = {'-': []}
-        test_case_driver = getattr(importlib.import_module(self._CONFIG['test']['driver']['module']), self._CONFIG['test']['driver']['class'])
-        self._selenium_driver = test_case_driver(self._CONFIG)
-        try:
+        if len(self._data['test-case'].keys()) == 0:
+            warn(f"no test case to run")
+
+        # drive the test through Selenium, do these for all selected cases
+        for test_case_name in self._data['test-case'].keys():
+            info(f"BEGIN test-case {test_case_name}")
+
+            test_case_output_dir = Path(f"{self._CONFIG['dirs']['output-dir']}/{test_case_name}")
+            test_case_tmp_dir = Path(f"{test_case_output_dir}/tmp")
+            test_case_tmp_dir.mkdir(parents=True, exist_ok=True)
+            selenium_log_json_path = Path(f"{test_case_output_dir}/{test_case_name}.log.json")
+            test_log_xlsx_path = Path(f"{test_case_output_dir}/{test_case_name}.log.xlsx")
+
+            self._selenium_log = {'-': []}
+            test_spec_selenium_driver = getattr(importlib.import_module(self._CONFIG['test-spec']['module'].format('selenium')), self._CONFIG['test-spec']['class'])
+            self._selenium_driver = test_spec_selenium_driver(self._CONFIG, test_case_tmp_dir)
             try:
-                self._selenium_log = self._selenium_driver.drive(self._data)
-            except Exception as e:
-                self._selenium_log['-'].append({'type': 'error', 'time': datetime.now().isoformat(), 'msg': str(e)})
-                traceback.print_exc()
-        finally:
-            del self._selenium_driver
-            self.save_json(self._CONFIG['files']['selenium-log-json'], self._selenium_log)
+                try:
+                    self._selenium_log = self._selenium_driver.drive(test_case_name, self._data)
+                except Exception as e:
+                    self._selenium_log['-'].append({'type': 'error', 'time': datetime.now().isoformat(), 'msg': str(e)})
+                    traceback.print_exc()
+            finally:
+                del self._selenium_driver
+                self.save_json(selenium_log_json_path, self._selenium_log)
 
-        # generate xlsx test log
-        test_log_writer = getattr(importlib.import_module(self._CONFIG['test']['log-writer']['module']), self._CONFIG['test']['log-writer']['class'])
-        self._log_writer = test_log_writer(self._CONFIG)
-        try:
-            self._log_writer.write(self._selenium_log)
-        finally:
-            del self._log_writer
+            # generate xlsx test log
+            test_spec_xlsx_log_writer = getattr(importlib.import_module(self._CONFIG['test-spec']['module'].format('xlsx')), self._CONFIG['test-spec']['class'])
+            self._log_writer = test_spec_xlsx_log_writer(test_log_xlsx_path)
+            try:
+                self._log_writer.write(self._selenium_log)
+            finally:
+                del self._log_writer
 
+            info(f"END   test-case {test_case_name}")
+
+        # finally tear down everything
         self.tear_down()
 
     def set_up(self):
         # configuration
         self._CONFIG = yaml.load(open(self._config_path, 'r', encoding='utf-8'), Loader=yaml.FullLoader)
-        config_dir = os.path.dirname(self._config_path)
+        config_dir = self._config_path.parent
 
-        self._CONFIG['dirs']['output-dir'] = os.path.abspath('{0}/{1}'.format(config_dir, self._CONFIG['dirs']['output-dir']))
-        self._CONFIG['dirs']['temp-dir'] = os.path.abspath('{0}/tmp'.format(self._CONFIG['dirs']['output-dir']))
-        if not os.path.exists(self._CONFIG['dirs']['temp-dir']):
-            os.makedirs(self._CONFIG['dirs']['temp-dir'])
+        self._CONFIG['test-spec']['spec-file'] = f"test-spec__{self._CONFIG['test-spec']['spec-file']}"
+        self._CONFIG['dirs']['output-dir'] = Path(f"{config_dir}/{self._CONFIG['dirs']['output-dir']}/{self._CONFIG['test-spec']['spec-file']}")
+        self._CONFIG['dirs']['output-dir'].mkdir(parents=True, exist_ok=True)
 
-        self._CONFIG['files']['google-cred'] = os.path.abspath('{0}/{1}'.format(config_dir, self._CONFIG['files']['google-cred']))
-        self._CONFIG['files']['output-json'] = os.path.abspath('{0}/{1}'.format(self._CONFIG['dirs']['output-dir'], self._CONFIG['files']['output-json']))
-        self._CONFIG['files']['gsheet-log-json'] = os.path.abspath('{0}/{1}.log.json'.format(self._CONFIG['dirs']['output-dir'], self._CONFIG['test']['data']['gsheet']))
-        self._CONFIG['files']['selenium-log-json'] = os.path.abspath('{0}/{1}.log.json'.format(self._CONFIG['dirs']['output-dir'], self._CONFIG['test']['case']))
-        self._CONFIG['files']['test-log-xlsx'] = os.path.abspath('{0}/{1}.xlsx'.format(self._CONFIG['dirs']['output-dir'], self._CONFIG['test']['case']))
+        self._CONFIG['files']['google-cred'] = Path(f"{config_dir}/{self._CONFIG['files']['google-cred']}")
 
         # the os platform Windows, Linux, Darwin etc.
         self._CONFIG['platform'] = platform.system()
@@ -97,7 +110,7 @@ class SeleniumFromGsheet(object):
 
     def tear_down(self):
         self.end_time = int(round(time.time() * 1000))
-        info("script took {} seconds".format((self.end_time - self.start_time)/1000))
+        info(f"script took {(self.end_time - self.start_time)/1000} seconds")
 
 if __name__ == '__main__':
     # construct the argument parse and parse the arguments

@@ -35,7 +35,7 @@ class XlsxLogWriter(object):
     def write_worksheet(self, work_name, work_log):
         ws = self._workbook.add_worksheet(work_name)
         for i in range(0, len(headers)):
-            ws.set_column('{0}:{0}'.format(headers[i][0]), headers[i][4], self.cell_format[headers[i][3]])
+            ws.set_column(f"{headers[i][0]}:{headers[i][0]}", headers[i][4], self.cell_format[headers[i][3]])
             ws.write(1, headers[i][1] - 1, headers[i][2])
 
         # freeze and hide
@@ -56,12 +56,12 @@ class XlsxLogWriter(object):
                 self.write_log_line(ws, log_line)
 
         # conditional formatting
-        ws.conditional_format('A3:G{0}'.format(self._current_row), {'type': 'formula', 'criteria': '=$C3="warn"', 'format': self.yellow_fill})
-        ws.conditional_format('A3:G{0}'.format(self._current_row), {'type': 'formula', 'criteria': '=$C3="error"', 'format': self.red_fill})
+        ws.conditional_format(f"A3:G{self._current_row}", {'type': 'formula', 'criteria': '=$C3="warn"', 'format': self.yellow_fill})
+        ws.conditional_format(f"A3:G{self._current_row}", {'type': 'formula', 'criteria': '=$C3="error"', 'format': self.red_fill})
 
     def write_process_block(self, ws, process_name, process_log):
         merge_format = self._workbook.add_format({'align': 'left', 'bg_color': 'E0E0E0'})
-        ws.merge_range('B{0}:F{0}'.format(self._current_row + 1), process_name, merge_format)
+        ws.merge_range(f"B{self._current_row + 1}:F{self._current_row + 1}", process_name, merge_format)
         self._current_row = self._current_row + 1
         for log_line in process_log:
             self.write_log_line(ws, log_line)
@@ -92,10 +92,9 @@ class XlsxLogWriter(object):
 
         self.bottom_border = self._workbook.add_format({'bottom': 2, 'bottom_color': '080808'})
 
-    def __init__(self, config):
+    def __init__(self, xlsx_path):
         self.start_time = int(round(time.time() * 1000))
-        self._config = config
-        self._workbook = xlsxwriter.Workbook(self._config['files']['test-log-xlsx'])
+        self._workbook = xlsxwriter.Workbook(xlsx_path)
 
         self.worksheet_formats()
 
@@ -104,4 +103,4 @@ class XlsxLogWriter(object):
             self._workbook.close()
 
         self.end_time = int(round(time.time() * 1000))
-        info("Log-writer took {} seconds".format((self.end_time - self.start_time)/1000))
+        info(f"Log-writer took {(self.end_time - self.start_time)/1000} seconds")

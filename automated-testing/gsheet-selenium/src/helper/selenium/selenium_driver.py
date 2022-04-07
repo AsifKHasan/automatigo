@@ -32,16 +32,12 @@ class SeleniumDriver(object):
         return False
 
 
-    def drive(self, data):
+    def drive(self, case_name, data):
         self._all_case = data['test-case']
         self._workflow = data['workflow']
 
-        if self._config['test']['case'] in self._all_case:
-            self.info('test case {0} found in data'.format(self._config['test']['case']))
-            self._case = self._all_case[self._config['test']['case']]
-        else:
-            self.error('test case {0} not found in data'.format(self._config['test']['case']))
-            return self._log
+        self.info(f"test case {case_name} found in data")
+        self._case = data['test-case'][case_name]
 
         # hit url, this is the begining of timing
         self._begining = int(round(time.time() * 1000))
@@ -65,7 +61,7 @@ class SeleniumDriver(object):
 
                 else:
                     # there may be a function to get data for that work data
-                    func_name = '{0}_data'.format(work_name.replace('-', '_'))
+                    func_name = f"{work_name.replace('-', '_')}_data"
 
                     # check whether the function is implemented, if implemented call it to have the data for the work
                     if is_method(self.__class__, func_name):
@@ -100,14 +96,14 @@ class SeleniumDriver(object):
         for process in self._workflow[work_name]:
             self._current_process = process
             if index != 0:
-                self._current_process_with_index =  '{0}-{1}'.format(self._current_process, index)
+                self._current_process_with_index =  f"{self._current_process}-{index}"
             else:
                 self._current_process_with_index = self._current_process
 
             self._log[self._current_work][self._current_process_with_index] = []
 
             if not self.perform_process(work_name, self._current_process, work_data):
-                self.error('{0} failed'.format(work_name))
+                self.error(f"{work_name} failed")
                 return False
 
         return True
@@ -115,18 +111,18 @@ class SeleniumDriver(object):
     def perform_process(self, work_name, process_name, work_data):
         work = self._workflow[work_name][process_name]
         if work is None:
-            self.warn('nothing to do for process {0} of {1}'.format(process_name, work_name))
+            self.warn(f"nothing to do for process {process_name} of {work_name}")
             return True
 
         # perform activities
-        self.info('{0} process starting for {1}'.format(process_name, work_name))
+        self.info(f"{process_name} process starting for {work_name}")
         for activity in work:
 
             if activity['action'] is None:
                 continue
 
             if 'data-key' in activity and activity['data-key'] in work_data and work_data[activity['data-key']] is None:
-                self.warn('skipping action for {0}'.format(work_name))
+                self.warn(f"skipping action for {work_name}")
                 continue
 
             # the xpath may contain a placeholder, handle it
@@ -147,20 +143,18 @@ class SeleniumDriver(object):
                         wait = WebDriverWait(self._browser, float(self._config['default-seconds']['element-wait']))
                         elements = wait.until(EC.visibility_of_element_located((By.XPATH, xpath)))
                     except Exception as e:
-                        self.error('{0} timeout for xpath {1} : {2}'.format(activity['action'], xpath, str(e)),
-                                   timing=True, activity=activity)
-                        traceback.print_exc()
+                        self.error(f"{activity['action']} timeout for xpath {xpath} : {str(e)}", timing=True, activity=activity)
+                        # traceback.print_exc()
+                        print(e)
                         return False
 
                 else:
-                    self.warn('xpath is required for action {0}'.format(activity['action']), timing=True,
-                              activity=activity)
+                    self.warn(f"xpath is required for action {activity['action']}", timing=True, activity=activity)
                     continue
 
                 # check we have found anything
                 if elements is None or (isinstance(elements, list) and len(elements) == 0):
-                    self.error('{0} not found for xpath {1}'.format(activity['action'], activity['xpath']), timing=True,
-                               activity=activity)
+                    self.error(f"{activity['action']} not found for xpath {activity['xpath']}", timing=True, activity=activity)
                     return False
 
                 # element found, perform action
@@ -172,13 +166,12 @@ class SeleniumDriver(object):
                 # entry
                 if activity['action'] == 'entry':
                     try:
-                        self.debug('sending keys for entry : {0}'.format(work_data[activity['data-key']]), activity=activity)
+                        self.debug(f"sending keys for entry : {work_data[activity['data-key']]}", activity=activity)
                         element.send_keys(work_data[activity['data-key']])
                     except Exception as e:
-                        self.error(
-                            '{0} failed for xpath {1} : {2}'.format(activity['action'], xpath, str(e)),
-                            timing=True, activity=activity)
-                        traceback.print_exc()
+                        self.error(f"{activity['action']} failed for xpath {xpath} : {str(e)}", timing=True, activity=activity)
+                        # traceback.print_exc()
+                        print(e)
                         return False
 
                 # click
@@ -187,10 +180,9 @@ class SeleniumDriver(object):
                         target = ActionChains(self._browser).move_to_element(element)
                         target.click(element).perform()
                     except Exception as e:
-                        self.error(
-                            '{0} failed for xpath {1} : {2}'.format(activity['action'], xpath, str(e)),
-                            timing=True, activity=activity)
-                        traceback.print_exc()
+                        self.error(f"{activity['action']} failed for xpath {xpath} : {str(e)}", timing=True, activity=activity)
+                        # traceback.print_exc()
+                        print(e)
                         return False
 
                 # hover
@@ -199,10 +191,9 @@ class SeleniumDriver(object):
                         hover = ActionChains(self._browser).move_to_element(element)
                         hover.perform()
                     except Exception as e:
-                        self.error(
-                            '{0} failed for xpath {1} : {2}'.format(activity['action'], xpath, str(e)),
-                            timing=True, activity=activity)
-                        traceback.print_exc()
+                        self.error(f"{activity['action']} failed for xpath {xpath} : {str(e)}", timing=True, activity=activity)
+                        # traceback.print_exc()
+                        print(e)
                         return False
 
                 # select
@@ -212,10 +203,9 @@ class SeleniumDriver(object):
                         # target.click(element).perform()
                         element.click()
                     except Exception as e:
-                        self.error(
-                            '{0} failed for xpath {1} : {2}'.format(activity['action'], xpath, str(e)),
-                            timing=True, activity=activity)
-                        traceback.print_exc()
+                        self.error(f"{activity['action']} failed for xpath {xpath} : {str(e)}", timing=True, activity=activity)
+                        # traceback.print_exc()
+                        print(e)
                         return False
 
                 # check
@@ -228,10 +218,9 @@ class SeleniumDriver(object):
                         else:
                             continue
                     except Exception as e:
-                        self.error(
-                            '{0} failed for xpath {1} : {2}'.format(activity['action'], xpath, str(e)),
-                            timing=True, activity=activity)
-                        traceback.print_exc()
+                        self.error(f"{activity['action']} failed for xpath {xpath} : {str(e)}", timing=True, activity=activity)
+                        # traceback.print_exc()
+                        print(e)
                         return False
 
             # wait-presence
@@ -240,9 +229,9 @@ class SeleniumDriver(object):
                     wait = WebDriverWait(self._browser, float(self._config['default-seconds']['element-wait']))
                     elements = wait.until(EC.presence_of_element_located((By.XPATH, xpath)))
                 except Exception as e:
-                    self.error('{0} failed for xpath {1} : {2}'.format(activity['action'], xpath, str(e)),
-                               timing=True, activity=activity)
-                    traceback.print_exc()
+                    self.error(f"{activity['action']} failed for xpath {xpath} : {str(e)}", timing=True, activity=activity)
+                    # traceback.print_exc()
+                    print(e)
                     return False
 
             # wait-visible
@@ -251,9 +240,9 @@ class SeleniumDriver(object):
                     wait = WebDriverWait(self._browser, float(self._config['default-seconds']['element-wait']))
                     elements = wait.until(EC.visibility_of_element_located((By.XPATH, xpath)))
                 except Exception as e:
-                    self.error('{0} failed for xpath {1} : {2}'.format(activity['action'], xpath, str(e)),
-                               timing=True, activity=activity)
-                    traceback.print_exc()
+                    self.error(f"{activity['action']} failed for xpath {xpath} : {str(e)}", timing=True, activity=activity)
+                    # traceback.print_exc()
+                    print(e)
                     return False
 
             # wait-clickable
@@ -262,9 +251,9 @@ class SeleniumDriver(object):
                     wait = WebDriverWait(self._browser, float(self._config['default-seconds']['element-wait']))
                     elements = wait.until(EC.element_to_be_clickable((By.XPATH, xpath)))
                 except Exception as e:
-                    self.error('{0} failed for xpath {1} : {2}'.format(activity['action'], xpath, str(e)),
-                               timing=True, activity=activity)
-                    traceback.print_exc()
+                    self.error(f"{activity['action']} failed for xpath {xpath} : {str(e)}", timing=True, activity=activity)
+                    # traceback.print_exc()
+                    print(e)
                     return False
 
             # wait-selectable
@@ -273,36 +262,32 @@ class SeleniumDriver(object):
                     wait = WebDriverWait(self._browser, float(self._config['default-seconds']['element-wait']))
                     elements = wait.until(EC.element_to_be_selected((By.XPATH, xpath)))
                 except Exception as e:
-                    self.error('{0} failed for xpath {1} : {2}'.format(activity['action'], xpath, str(e)),
-                               timing=True, activity=activity)
-                    traceback.print_exc()
+                    self.error(f"{activity['action']} failed for xpath {xpath} : {str(e)}", timing=True, activity=activity)
+                    # traceback.print_exc()
+                    print(e)
                     return False
 
             # screen-shot
             elif activity['action'] == 'screen-shot':
-                file_path = '{0}/{1}-{2}__{3}.png'.format(self._config['dirs']['temp-dir'],
-                                                          str(self._work_sequence).zfill(2),
-                                                          str(self._image_sequence).zfill(3), activity['image'])
+                file_path = f"{self._tmp_dir}/{str(self._work_sequence).zfill(2)}-{str(self._image_sequence).zfill(3)}__{activity['image']}.png"
                 self._browser.get_screenshot_as_file(file_path)
-                self.debug('{0} taken at {1}'.format(activity['action'], file_path), timing=True, activity=activity)
+                self.debug(f"{activity['action']} taken at {file_path}", timing=True, activity=activity)
                 self._image_sequence = self._image_sequence + 1
                 continue
 
             # delay
             elif activity['action'] == 'delay':
                 time.sleep(float(activity['seconds']))
-                self.debug('{0} performed for {1} seconds'.format(activity['action'], float(activity['seconds'])),
-                           timing=True, activity=activity)
+                self.debug(f"{activity['action']} performed for {activity['seconds']} seconds", timing=True, activity=activity)
                 continue
 
             else:
-                self.warn('action {0} not supported yet'.format(activity['action']), timing=True, activity=activity)
+                self.warn(f"action {activity['action']} not supported yet", timing=True, activity=activity)
                 continue
 
-            self.debug('{0} passed for xpath {1}'.format(activity['action'], xpath), timing=True,
-                       activity=activity)
+            self.debug(f"{activity['action']} passed for xpath {xpath}", timing=True, activity=activity)
 
-        self.info('{0} check passed for {1}'.format(process_name, work_name))
+        self.info(f"{process_name} check passed for {work_name}")
         return True
 
     def mark_activity_time(self):
@@ -336,22 +321,24 @@ class SeleniumDriver(object):
             self._log[self._current_work].append(data)
 
         if console:
-            print('{0} {1:<6} {2}'.format(data['time'], data['type'], data['msg']))
+            print(f"{data['time']} {data['type']:<6} {data['msg']}")
 
-    def __init__(self, config):
+    def __init__(self, config, tmp_dir):
         self._config = config
+        self._tmp_dir = tmp_dir
         self._log = {}
         self._current_work = '-'
         self._log[self._current_work] = []
         self._current_process = None
         self.start_time = int(round(time.time() * 1000))
+        self._browser = None
 
     def __del__(self):
         if self._browser:
             self._browser.close()
 
         self.end_time = int(round(time.time() * 1000))
-        info("Selenium took {} seconds".format((self.end_time - self.start_time) / 1000))
+        info(f"Selenium took {(self.end_time - self.start_time) / 1000} seconds")
 
     def load(self, url):
         if self._config['driver'] == 'firefox':
@@ -377,12 +364,12 @@ class SeleniumDriver(object):
         self._browser.implicitly_wait(0)
 
         try:
-            self.info('loading {0}'.format(url))
+            self.info(f"loading {url}")
             self.mark_activity_time()
             self._browser.get(url)
-            self.info('loaded {0}'.format(url), timing=True)
+            self.info(f"loaded {url}", timing=True)
             return True
         except Exception as e:
-            self.error('load failed {0}'.format(url), timing=True)
+            self.error(f"load failed {url}", timing=True)
             self.error(str(e))
             return False

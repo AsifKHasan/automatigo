@@ -13,7 +13,7 @@ WS_LIST = {
     'attendee':      {'start-col': 'B', 'end-col': 'P', 'data': 'tabular', 'numerize': True},
 }
 
-class CreateMeetingGsheetReader(GsheetReader):
+class CreateMeeting(GsheetReader):
 
     def read_gsheet(self):
         return super().read_gsheet(WS_LIST)

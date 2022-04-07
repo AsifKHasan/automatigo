@@ -33,6 +33,6 @@ def log(level, msg, console=True):
     data = {'type': level, 'time': datetime.now().isoformat(), 'msg': msg}
 
     if console:
-        text = '{0} {1:<6} {2}'.format(data['time'], data['type'], data['msg'])
+        text = f"{data['time']} {data['type']:<6} {data['msg']}"
         # print(text)
         print(colored(text, log_color[data['type']]['color'], log_color[data['type']]['highlight'], attrs=log_color[data['type']]['attrs']))
