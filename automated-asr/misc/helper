@@ -1,0 +1,2 @@
+cd D:\projects\asif@github\automatigo\automated-asr\src
+split-audio.py --audio somoy-tv

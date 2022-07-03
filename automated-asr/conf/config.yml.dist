@@ -1,0 +1,8 @@
+# directory where the input and outputs are
+output-dir:     "../out"
+
+# MAX seconds allowed for output audio
+MAX-AUDIO-SECONDS-ALLOWED:  25
+
+# MIN seconds allowed for output audio
+MIN-AUDIO-SECONDS-ALLOWED:  5

@@ -129,7 +129,7 @@ dmypy.json
 .pyre/
 
 # custom
-out/
+out
 credential.json
 config.yml
 *.exe

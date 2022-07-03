@@ -1,0 +1,5 @@
+requests3
+requests
+pydub
+webrtcvad
+rhasspy-silence
