@@ -67,7 +67,7 @@ def split_segments(sound, segments, config):
     i = 0
     for segment in segments:
         segment_start, segment_end = segment[0], segment[1]
-        duration_seconds = (segment_end - segment_start) /1000
+        duration_seconds = segment[2] /1000
         output_file = output_file_format.format(i, segment[3])
         chunk = sound[segment_start:segment_end]
         chunk.export(output_file, format="wav")

@@ -16,9 +16,68 @@ CONFIG_PATH = '../conf/config.yml'
 
 ''' do the processing
 '''
-def process(config):
+def process_manually(config):
+    # open as sound
+    sound = open_as_sound(config)
+    print(printable_info(sound, config['input-audio-file']))
 
-    # opne as sound
+    if len(config['segments']) == 0:
+        print(f"{Fore.YELLOW}.. no segments defined")
+        return []
+
+    config['segments'] = sorted(config['segments'])
+
+    # generate the segments
+    segments = []
+    last_segment_start = config['segments'][0] * 1000
+    for second in config['segments'][1:]:
+        this_segment_start = second * 1000
+        this_segment_duration = this_segment_start - last_segment_start
+        if this_segment_duration > 0:
+            # a new segment to be generated
+            segment = [last_segment_start, this_segment_start, this_segment_duration, 'voiced']
+            segments.append(segment)
+
+        else:
+            pass
+
+        last_segment_start = this_segment_start
+
+    # the last segment
+    this_segment_duration = sound.duration_seconds * 1000 - last_segment_start
+    if this_segment_duration > 0:
+        segment = [last_segment_start, sound.duration_seconds * 1000, this_segment_duration, 'voiced']
+        segments.append(segment)
+
+
+    i = 0
+    for segment in segments:
+        if segment[3] == 'voiced':
+            print(f"{Fore.GREEN}.. {i:>3}. {segment[3]} - {(segment[0]/1000):6.2f} : {(segment[1]/1000):6.2f}  -  duration : {(segment[2]/1000):6.2f}")
+        else:
+            print(f"{Fore.RED}.. {i:>3}. {segment[3]} - {(segment[0]/1000):6.2f} : {(segment[1]/1000):6.2f}  -  duration : {(segment[2]/1000):6.2f}")
+
+        i = i + 1
+
+    print()
+
+
+    # split by segments
+    audio_files = split_segments(sound, segments, config)
+
+
+    # do the asr
+    do_asr_on_files(audio_files)
+
+    return audio_files
+
+
+
+''' do the processing
+'''
+def process_automatically(config):
+
+    # open as sound
     sound = open_as_sound(config)
     print(printable_info(sound, config['input-audio-file']))
 
@@ -52,7 +111,13 @@ def process(config):
     # do the asr
     do_asr_on_files(audio_files)
 
+    return audio_files
 
+
+
+''' write output
+'''
+def write_output(config, audio_files):
     # write output
     with open(config['asr-output-file'], "w", encoding="utf-8") as f:
         for audio_file in audio_files:
@@ -74,7 +139,7 @@ def process(config):
 
 ''' configure environment
 '''
-def configure(file_name):
+def configure(file_name, segments):
     config_path = Path(CONFIG_PATH).resolve()
     config = yaml.load(open(config_path, 'r', encoding='utf-8'), Loader=yaml.FullLoader)
     output_dir = config['output-dir']
@@ -86,6 +151,8 @@ def configure(file_name):
 
     config['asr-output-file'] = f"{config['output-dir']}/{config['asr-output-file']}"
 
+    config['segments'] = segments
+
     return config
 
 
@@ -93,6 +160,14 @@ def configure(file_name):
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument("-a", "--audio", required=True, help="audio file name to process, without extension, wav assumed")
+    ap.add_argument("-s", "--segments", required=False, nargs="*", type=float, help="list of floats (seconds where audio is to be splitted manually)")
     args = vars(ap.parse_args())
-    config = configure(args["audio"])
-    process(config)
+
+    config = configure(args["audio"], args["segments"])
+    
+    if config['segments']:
+        audio_files = process_manually(config)
+    else:
+        audio_files = process_automatically(config)
+
+    write_output(config, audio_files)

@@ -1,6 +1,6 @@
-cd D:\projects\asif@github\automatigo\automated-asr\src
-split-audio.py --audio somoy-tv
+cd D:\projects\asif@github\automatigo\automated-asr
+text-from-audio.bat somoy-tv
 
 
-cd /home/asif/projects/asif@github/automatigo/automated-asr/src
-./split-audio.py --audio somoy-tv
+cd /home/asif/projects/asif@github/automatigo/automated-asr
+./text-from-audio.bat somoy-tv
