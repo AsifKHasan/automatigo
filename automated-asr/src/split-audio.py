@@ -6,6 +6,8 @@ import yaml
 import datetime
 import argparse
 from pathlib import Path
+from colorama import Fore
+from colorama import Style
 
 from audio.audio_util import *
 
@@ -20,31 +22,53 @@ def process(config):
     sound = open_as_sound(config)
     print(printable_info(sound, config['input-audio-file']))
 
-    # identify segments
+
+    # identify silent segments
+    silent_segments = identify_silent_segments(sound, config)
+    print(f".. {len(silent_segments)} silent segments found")
+
+    # identify non-silent segments
+    nonsilent_segments = identify_nonsilent_segments(sound, config)
+    print(f".. {len(nonsilent_segments)} voiced segments found")
+
+    segments = sorted(nonsilent_segments + silent_segments)
+
+    i = 0
+    for segment in segments:
+        if segment[3] == 'voiced':
+            print(f"{Fore.GREEN}.. {i:>3}. {segment[3]} - {(segment[0]/1000):6.2f} : {(segment[1]/1000):6.2f}  -  duration : {(segment[2]/1000):6.2f}")
+        else:
+            print(f"{Fore.RED}.. {i:>3}. {segment[3]} - {(segment[0]/1000):6.2f} : {(segment[1]/1000):6.2f}  -  duration : {(segment[2]/1000):6.2f}")
+
+        i = i + 1
+
+    print()
+
 
     # split by segments
+    audio_files = split_segments(sound, segments, config)
+
 
     # do the asr
+    do_asr_on_files(audio_files)
+
 
     # write output
-    # with open('out.txt', "w", encoding="utf-8") as f:
-    #     for audio_file in audio_files:
-    #         f.write(f"audio    : {audio_file['file']}")
-    #         f.write('\n')
+    with open(config['asr-output-file'], "w", encoding="utf-8") as f:
+        for audio_file in audio_files:
+            if 'asr-response' in audio_file:
+                f.write(f"audio        : {audio_file['file']}")
+                f.write('\n')
 
-    #         f.write(f"duration : {audio_file['duration']:6.2f} secoonds")
-    #         f.write('\n')
+                f.write(f"duration     : {audio_file['duration']:6.2f} secoonds")
+                f.write('\n')
 
-    #         json_response = get_text_from_audio(audio_file['file'])
-    #         audio_file['text'] = json_response['text']
-    #         audio_file['seconds'] = json_response['processingTime']
+                f.write(f"processed in : {audio_file['asr-response']['processingTime']}")
+                f.write('\n')
 
-    #         f.write(audio_file['seconds'])
-    #         f.write('\n')
-
-    #         # f.write(audio_file['text'].encode('utf-8').decode(sys.stdout.encoding))
-    #         f.write(audio_file['text'])
-    #         f.write('\n\n')
+                # f.write(audio_file['text'].encode('utf-8').decode(sys.stdout.encoding))
+                f.write(audio_file['asr-response']['text'])
+                f.write('\n\n')
 
 
 
@@ -59,6 +83,8 @@ def configure(file_name):
 
     config['input-audio-file'] = f"{config['audio-data-dir']}/{file_name}.wav"
     config['output-file-format'] = f"{config['audio-out-dir']}/{file_name}-"
+
+    config['asr-output-file'] = f"{config['output-dir']}/{config['asr-output-file']}"
 
     return config
 
