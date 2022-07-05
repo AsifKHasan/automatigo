@@ -25,37 +25,23 @@ def process_manually(config):
         print(f"{Fore.YELLOW}.. no segments defined")
         return []
 
-    config['segments'] = sorted(config['segments'])
-
     # generate the segments
     segments = []
-    last_segment_start = config['segments'][0] * 1000
-    for second in config['segments'][1:]:
-        this_segment_start = second * 1000
-        this_segment_duration = this_segment_start - last_segment_start
+    for segment in config['segments']:
+        this_segment_start = segment[0] * 1000
+        this_segment_end = segment[1] * 1000
+        this_segment_duration = this_segment_end - this_segment_start
         if this_segment_duration > 0:
-            # a new segment to be generated
-            segment = [last_segment_start, this_segment_start, this_segment_duration, 'voiced']
-            segments.append(segment)
-
+            segments.append([this_segment_start, this_segment_end, this_segment_duration, 'voiced'])
         else:
-            pass
-
-        last_segment_start = this_segment_start
-
-    # the last segment
-    this_segment_duration = sound.duration_seconds * 1000 - last_segment_start
-    if this_segment_duration > 0:
-        segment = [last_segment_start, sound.duration_seconds * 1000, this_segment_duration, 'voiced']
-        segments.append(segment)
-
+            print(f"segment start {this_segment_start} is greater than segment end {this_segment_end}")
 
     i = 0
     for segment in segments:
         if segment[3] == 'voiced':
-            print(f"{Fore.GREEN}.. {i:>3}. {segment[3]} - {(segment[0]/1000):6.2f} : {(segment[1]/1000):6.2f}  -  duration : {(segment[2]/1000):6.2f}")
+            print(f"{Fore.GREEN}.. {i:>3}. {segment[3]} - {(segment[0]/1000):6.2f} : {(segment[1]/1000):6.2f}  -  duration : {(segment[2]/1000):6.2f}{Style.RESET_ALL}")
         else:
-            print(f"{Fore.RED}.. {i:>3}. {segment[3]} - {(segment[0]/1000):6.2f} : {(segment[1]/1000):6.2f}  -  duration : {(segment[2]/1000):6.2f}")
+            print(f"{Fore.RED}.. {i:>3}. {segment[3]} - {(segment[0]/1000):6.2f} : {(segment[1]/1000):6.2f}  -  duration : {(segment[2]/1000):6.2f}{Style.RESET_ALL}")
 
         i = i + 1
 
@@ -95,9 +81,9 @@ def process_automatically(config):
     i = 0
     for segment in segments:
         if segment[3] == 'voiced':
-            print(f"{Fore.GREEN}.. {i:>3}. {segment[3]} - {(segment[0]/1000):6.2f} : {(segment[1]/1000):6.2f}  -  duration : {(segment[2]/1000):6.2f}")
+            print(f"{Fore.GREEN}.. {i:>3}. {segment[3]} - {(segment[0]/1000):6.2f} : {(segment[1]/1000):6.2f}  -  duration : {(segment[2]/1000):6.2f}{Style.RESET_ALL}")
         else:
-            print(f"{Fore.RED}.. {i:>3}. {segment[3]} - {(segment[0]/1000):6.2f} : {(segment[1]/1000):6.2f}  -  duration : {(segment[2]/1000):6.2f}")
+            print(f"{Fore.RED}.. {i:>3}. {segment[3]} - {(segment[0]/1000):6.2f} : {(segment[1]/1000):6.2f}  -  duration : {(segment[2]/1000):6.2f}{Style.RESET_ALL}")
 
         i = i + 1
 
@@ -151,7 +137,33 @@ def configure(file_name, segments):
 
     config['asr-output-file'] = f"{config['output-dir']}/{config['asr-output-file']}"
 
-    config['segments'] = segments
+    if segments:
+        segment_list = []
+        pairs = segments.split(' ')
+        if len(pairs) > 1:
+            for pair in pairs[1:]:
+                splitted = pair.split(':')
+                if len(splitted) == 2:
+                    try:
+                        segment_start = float(splitted[0])
+                    except:
+                        print(f"can not convert {splitted[0]} to anumber")
+                        continue
+
+                    try:
+                        segment_end = float(splitted[1])
+                    except:
+                        print(f"can not convert {splitted[1]} to anumber")
+                        continue
+                
+                    segment_list.append([segment_start, segment_end])
+
+                else:
+                    print(f"can not determine range from : {pair}")
+                    continue
+
+        if len(segment_list):
+            config['segments'] = sorted(segment_list)
 
     return config
 
@@ -160,7 +172,7 @@ def configure(file_name, segments):
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument("-a", "--audio", required=True, help="audio file name to process, without extension, wav assumed")
-    ap.add_argument("-s", "--segments", required=False, nargs="*", type=float, help="list of floats (seconds where audio is to be splitted manually)")
+    ap.add_argument("-s", "--segments", required=False, help="list of segments (start_seconds:end_seconds) where audio is to be splitted manually, must be quoted")
     args = vars(ap.parse_args())
 
     config = configure(args["audio"], args["segments"])
