@@ -112,13 +112,9 @@ def write_output(config, audio_files):
                 f.write(f"audio        : {audio_file['file']}")
                 f.write('\n')
 
-                f.write(f"duration     : {audio_file['duration']:6.2f} secoonds")
+                f.write(f"duration     : {audio_file['duration']:6.2f} secoonds, {audio_file['asr-response']['processingTime']}")
                 f.write('\n')
 
-                f.write(f"processed in : {audio_file['asr-response']['processingTime']}")
-                f.write('\n')
-
-                # f.write(audio_file['text'].encode('utf-8').decode(sys.stdout.encoding))
                 f.write(audio_file['asr-response']['text'])
                 f.write('\n\n')
 
