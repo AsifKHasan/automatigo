@@ -2,8 +2,7 @@
 
 import json
 import requests
-from pydub import AudioSegment, silence
-
+from pydub import AudioSegment, silence, scipy_effects
 
 ''' return sound object from the input audio file
 '''
@@ -17,10 +16,22 @@ def open_as_sound(config):
 
 
 
-''' identify silent segments
+''' apply filters as specified in the config
 '''
-def identify_silent_segments(sound, config):
+def filter(sound, config):
+
+    new_sound = scipy_effects.high_pass_filter(sound, 500, order=3)
+
+    return new_sound
+
+
+
+''' identify segments
+'''
+def identify_segments(sound, config):
     segments = []
+    silent_segment_count = 0
+    voiced_segment_count = 0
 
     input_audio_file = config['input-audio-file']
 
@@ -31,31 +42,37 @@ def identify_silent_segments(sound, config):
     silence_thresh = config['silence-thresh']
     seek_step = config['seek-step']
 
-    segments = silence.detect_silence(sound, min_silence_len=min_silence_len, silence_thresh=silence_thresh, seek_step=seek_step)
-    segments = [[segment[0], segment[1], segment[1] - segment[0], 'silent'] for segment in segments]
-
-    return segments
+    audio_ms_to_keep_before = config['audio-ms-to-keep-before']
+    audio_ms_to_keep_after = config['audio-ms-to-keep-after']
 
 
+    # silent segments
+    silent_segments = silence.detect_silence(sound, min_silence_len=min_silence_len, silence_thresh=silence_thresh, seek_step=seek_step)
+    silent_segments = [[segment[0], segment[1], segment[1] - segment[0], 'silent'] for segment in silent_segments]
+    silent_segment_count = len(silent_segments)
 
-''' identify non-slient segments separated by silence
-'''
-def identify_nonsilent_segments(sound, config):
-    segments = []
+    # non-silent segments
+    voiced_segments = silence.detect_nonsilent(sound, min_silence_len=min_silence_len, silence_thresh=silence_thresh, seek_step=seek_step)
+    for segment in voiced_segments:
+        segment_start, segment_end = segment[0], segment[1]
 
-    input_audio_file = config['input-audio-file']
+        segment_start = segment_start - audio_ms_to_keep_before
+        if segment_start < 0:
+            segment_start = 0
+            
+        segment_end = segment_end + audio_ms_to_keep_after
 
-    MAX_AUDIO_SECONDS_ALLOWED = config['MAX-AUDIO-SECONDS-ALLOWED']
-    MIN_AUDIO_SECONDS_ALLOWED = config['MIN-AUDIO-SECONDS-ALLOWED']
+        segment[0] = segment_start
+        segment[1] = segment_end
+        segment.append(segment_end - segment_start)
+        segment.append('voiced')
 
-    min_silence_len = config['min-silence-len']
-    silence_thresh = config['silence-thresh']
-    seek_step = config['seek-step']
 
-    segments = silence.detect_nonsilent(sound, min_silence_len=min_silence_len, silence_thresh=silence_thresh, seek_step=seek_step)
-    segments = [[segment[0], segment[1], segment[1] - segment[0], 'voiced'] for segment in segments]
+    voiced_segment_count = len(voiced_segments)
 
-    return segments
+    segments = sorted(silent_segments + voiced_segments)
+
+    return segments, silent_segment_count, voiced_segment_count
 
 
 

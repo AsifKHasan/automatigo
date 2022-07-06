@@ -1,6 +1,6 @@
 # directory where the input and outputs are
-output-dir:       '../out'
-asr-output-file:  'asr-output.txt'
+output-dir:                 '../out'
+asr-output-file:            'asr-output.txt'
 
 # MAX seconds allowed for output audio
 MAX-AUDIO-SECONDS-ALLOWED:  25
@@ -9,10 +9,21 @@ MAX-AUDIO-SECONDS-ALLOWED:  25
 MIN-AUDIO-SECONDS-ALLOWED:  5
 
 # the minimum length for silent sections in milliseconds
-min-silence-len:  500
+min-silence-len:            500
 
 # the upper bound for how quiet is silent in dBFS
-silence-thresh:   -40
+silence-thresh:             -40
 
 # size of the step for checking for silence in milliseconds. Smaller is more precise
-seek-step:        5
+seek-step:                  5
+
+# milisecond of audio to keep from the preceding segment before a voiced segment
+audio-ms-to-keep-before:    100
+
+# milisecond of audio to keep from the next segment after a voiced segment
+audio-ms-to-keep-after:     100
+
+
+
+# whether ASR will be run on the outputs or not
+do-asr:                     True

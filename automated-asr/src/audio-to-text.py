@@ -68,22 +68,22 @@ def process_automatically(config):
     print(printable_info(sound, config['input-audio-file']))
 
 
+    # filter sound
+    sound = filter(sound, config)
+    print(printable_info(sound, config['input-audio-file']))
+
+
     # identify silent segments
-    silent_segments = identify_silent_segments(sound, config)
-    print(f".. {len(silent_segments)} silent segments found")
-
-    # identify non-silent segments
-    nonsilent_segments = identify_nonsilent_segments(sound, config)
-    print(f".. {len(nonsilent_segments)} voiced segments found")
-
-    segments = sorted(nonsilent_segments + silent_segments)
+    segments, silent_segment_count, voiced_segment_count  = identify_segments(sound, config)
+    print(f".. {silent_segment_count} silent segments found")
+    print(f".. {voiced_segment_count} voiced segments found")
 
     i = 0
     for segment in segments:
         if segment[3] == 'voiced':
             print(f"{Fore.GREEN}.. {i:>3}. {segment[3]} - {(segment[0]/1000):6.2f} : {(segment[1]/1000):6.2f}  -  duration : {(segment[2]/1000):6.2f}{Style.RESET_ALL}")
         else:
-            print(f"{Fore.RED}.. {i:>3}. {segment[3]} - {(segment[0]/1000):6.2f} : {(segment[1]/1000):6.2f}  -  duration : {(segment[2]/1000):6.2f}{Style.RESET_ALL}")
+            print(f"{Fore.YELLOW}.. {i:>3}. {segment[3]} - {(segment[0]/1000):6.2f} : {(segment[1]/1000):6.2f}  -  duration : {(segment[2]/1000):6.2f}{Style.RESET_ALL}")
 
         i = i + 1
 
@@ -95,7 +95,8 @@ def process_automatically(config):
 
 
     # do the asr
-    do_asr_on_files(audio_files)
+    if config['do-asr']:
+        do_asr_on_files(audio_files)
 
     return audio_files
 
@@ -177,7 +178,7 @@ if __name__ == '__main__':
 
     config = configure(args["audio"], args["segments"])
     
-    if config['segments']:
+    if 'segments' in config:
         audio_files = process_manually(config)
     else:
         audio_files = process_automatically(config)
