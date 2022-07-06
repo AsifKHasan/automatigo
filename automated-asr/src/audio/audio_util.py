@@ -20,7 +20,8 @@ def open_as_sound(config):
 '''
 def filter(sound, config):
 
-    new_sound = scipy_effects.high_pass_filter(sound, 500, order=3)
+    new_sound = scipy_effects.high_pass_filter(sound, cutoff_freq=config['high-pass-filter']['frequency'], order=config['high-pass-filter']['order'])
+    new_sound = scipy_effects.low_pass_filter(new_sound, cutoff_freq=config['low-pass-filter']['frequency'], order=config['low-pass-filter']['order'])
 
     return new_sound
 
@@ -30,6 +31,8 @@ def filter(sound, config):
 '''
 def identify_segments(sound, config):
     segments = []
+    duration_in_ms = len(sound)
+
     silent_segment_count = 0
     voiced_segment_count = 0
 
@@ -61,6 +64,8 @@ def identify_segments(sound, config):
             segment_start = 0
             
         segment_end = segment_end + audio_ms_to_keep_after
+        if segment_end > duration_in_ms:
+            segment_end = duration_in_ms
 
         segment[0] = segment_start
         segment[1] = segment_end

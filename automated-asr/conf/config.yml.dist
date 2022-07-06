@@ -23,7 +23,18 @@ audio-ms-to-keep-before:    100
 # milisecond of audio to keep from the next segment after a voiced segment
 audio-ms-to-keep-after:     100
 
+# low pass filter spec. 
+# The attenuation is -6dB/octave beyond the cutoff frequency (for 1st order). 
+# A Higher order filter will have more attenuation, each level adding an additional -6dB 
+# (so a 3rd order butterworth filter would be -18dB/octave).
+low-pass-filter:
+  frequency:                5000
+  order:                    5
 
+# low pass filter spec. 
+high-pass-filter:
+  frequency:                200
+  order:                    5
 
 # whether ASR will be run on the outputs or not
 do-asr:                     True

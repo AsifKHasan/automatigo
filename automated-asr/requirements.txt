@@ -3,3 +3,4 @@ requests
 pydub
 webrtcvad
 rhasspy-silence
+scipy
