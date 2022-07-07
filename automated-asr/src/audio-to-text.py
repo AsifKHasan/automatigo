@@ -10,16 +10,28 @@ from colorama import Fore
 from colorama import Style
 
 from audio.audio_util import *
+from helper.logger import *
 
 CONFIG_PATH = '../conf/config.yml'
 
 
-''' do the processing
+''' do the segmentation manually
 '''
-def process_manually(config):
+def segment_manually(config):
     # open as sound
     sound = open_as_sound(config)
+    info('original sound file info')
+    info('--------------------------')
     print(printable_info(sound, config['input-audio-file']))
+
+
+    # filter sound
+    sound = filter(sound, config)
+    info('filtered sound file info')
+    info('--------------------------')
+    print(printable_info(sound, config['input-audio-file']))
+
+
 
     if len(config['segments']) == 0:
         print(f"{Fore.YELLOW}.. no segments defined")
@@ -27,21 +39,54 @@ def process_manually(config):
 
     # generate the segments
     segments = []
-    for segment in config['segments']:
-        this_segment_start = segment[0] * 1000
-        this_segment_end = segment[1] * 1000
-        this_segment_duration = this_segment_end - this_segment_start
-        if this_segment_duration > 0:
-            segments.append([this_segment_start, this_segment_end, this_segment_duration, 'voiced'])
+    for segment_spec in config['segments']:
+        this_segment_start = segment_spec[0] * 1000
+        this_segment_end = segment_spec[1] * 1000
+        if this_segment_start > this_segment_end:
+            info(f"segment start {this_segment_start} is greater than segment end {this_segment_end}")
         else:
-            print(f"segment start {this_segment_start} is greater than segment end {this_segment_end}")
+            segment = Segment(start_ms=this_segment_start, end_ms=this_segment_end, content='voiced')
+            segments.append(segment)
 
+    return sound, segments
+
+
+
+''' do the automatic segmentation
+'''
+def segment_automatically(config):
+
+    # open as sound
+    sound = open_as_sound(config)
+    info('original sound file info')
+    info('--------------------------')
+    print(printable_info(sound, config['input-audio-file']))
+
+
+    # filter sound
+    sound = filter(sound, config)
+    info('filtered sound file info')
+    info('--------------------------')
+    print(printable_info(sound, config['input-audio-file']))
+
+
+    # identify silent segments
+    segments = identify_segments(sound, config)
+    info(f".. {len(segments)} segments found")
+
+    return sound, segments
+
+
+
+''' process the segments
+'''
+def process_segments(sound, segments, config):
     i = 0
     for segment in segments:
-        if segment[3] == 'voiced':
-            print(f"{Fore.GREEN}.. {i:>3}. {segment[3]} - {(segment[0]/1000):6.2f} : {(segment[1]/1000):6.2f}  -  duration : {(segment[2]/1000):6.2f}{Style.RESET_ALL}")
+        if segment.content == 'voiced':
+            info(f"{Fore.GREEN}.. {i:>3}. {segment.content} - [{(segment.start_ms/1000):6.2f} : {(segment.end_ms/1000):6.2f}]  -  duration : {(segment.duration_ms/1000):6.2f}{Style.RESET_ALL}")
         else:
-            print(f"{Fore.RED}.. {i:>3}. {segment[3]} - {(segment[0]/1000):6.2f} : {(segment[1]/1000):6.2f}  -  duration : {(segment[2]/1000):6.2f}{Style.RESET_ALL}")
+            info(f"{Fore.RED}.. {i:>3}. {segment.content} - [{(segment.start_ms/1000):6.2f} : {(segment.end_ms/1000):6.2f}]  -  duration : {(segment.duration_ms/1000):6.2f}{Style.RESET_ALL}")
 
         i = i + 1
 
@@ -59,63 +104,20 @@ def process_manually(config):
 
 
 
-''' do the processing
-'''
-def process_automatically(config):
-
-    # open as sound
-    sound = open_as_sound(config)
-    print(printable_info(sound, config['input-audio-file']))
-
-
-    # filter sound
-    sound = filter(sound, config)
-    print(printable_info(sound, config['input-audio-file']))
-
-
-    # identify silent segments
-    segments, silent_segment_count, voiced_segment_count  = identify_segments(sound, config)
-    print(f".. {silent_segment_count} silent segments found")
-    print(f".. {voiced_segment_count} voiced segments found")
-
-    i = 0
-    for segment in segments:
-        if segment[3] == 'voiced':
-            print(f"{Fore.GREEN}.. {i:>3}. {segment[3]} - {(segment[0]/1000):6.2f} : {(segment[1]/1000):6.2f}  -  duration : {(segment[2]/1000):6.2f}{Style.RESET_ALL}")
-        else:
-            print(f"{Fore.YELLOW}.. {i:>3}. {segment[3]} - {(segment[0]/1000):6.2f} : {(segment[1]/1000):6.2f}  -  duration : {(segment[2]/1000):6.2f}{Style.RESET_ALL}")
-
-        i = i + 1
-
-    print()
-
-
-    # split by segments
-    audio_files = split_segments(sound, segments, config)
-
-
-    # do the asr
-    if config['do-asr']:
-        do_asr_on_files(audio_files)
-
-    return audio_files
-
-
-
 ''' write output
 '''
-def write_output(config, audio_files):
+def write_output(config, segments):
     # write output
     with open(config['asr-output-file'], "w", encoding="utf-8") as f:
-        for audio_file in audio_files:
-            if 'asr-response' in audio_file:
-                f.write(f"audio        : {audio_file['file']}")
+        for segment in segments:
+            if segment.asr_response:
+                f.write(f"audio    : {segment.file}")
                 f.write('\n')
 
-                f.write(f"duration     : {audio_file['duration']:6.2f} secoonds, {audio_file['asr-response']['processingTime']}")
+                f.write(f"duration : {segment.duration_ms/1000:3.2f}s, asr time {segment.asr_response['processingTime']:3.2f}s, ratio {(segment.duration_ms/1000)/segment.asr_response['processingTime']:3.2f}")
                 f.write('\n')
 
-                f.write(audio_file['asr-response']['text'])
+                f.write(segment.asr_response['text'])
                 f.write('\n\n')
 
 
@@ -175,8 +177,10 @@ if __name__ == '__main__':
     config = configure(args["audio"], args["segments"])
     
     if 'segments' in config:
-        audio_files = process_manually(config)
+        sound, segments = segment_manually(config)
     else:
-        audio_files = process_automatically(config)
+        sound, segments = segment_automatically(config)
 
-    write_output(config, audio_files)
+    segments = process_segments(sound, segments, config)
+
+    write_output(config, segments)

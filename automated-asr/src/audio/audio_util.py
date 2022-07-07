@@ -4,6 +4,11 @@ import json
 import requests
 from pydub import AudioSegment, silence, scipy_effects
 
+from audio.segment import Segment
+from helper.logger import *
+
+
+
 ''' return sound object from the input audio file
 '''
 def open_as_sound(config):
@@ -26,11 +31,10 @@ def filter(sound, config):
     return new_sound
 
 
-
-''' identify segments
+''' optimize segments
 '''
-def identify_segments(sound, config):
-    segments = []
+def optimize_segments(sound, segments_to_optimize, config):
+    segments = sorted(segments_to_optimize)
     duration_in_ms = len(sound)
 
     silent_segment_count = 0
@@ -38,8 +42,41 @@ def identify_segments(sound, config):
 
     input_audio_file = config['input-audio-file']
 
-    MAX_AUDIO_SECONDS_ALLOWED = config['MAX-AUDIO-SECONDS-ALLOWED']
-    MIN_AUDIO_SECONDS_ALLOWED = config['MIN-AUDIO-SECONDS-ALLOWED']
+    OPTIMAL_AUDIO_MS = config['OPTIMAL-AUDIO-SECONDS'] * 1000
+
+    min_silence_len = config['min-silence-len']
+    silence_thresh = config['silence-thresh']
+    seek_step = config['seek-step']
+
+    audio_ms_to_keep_before = config['audio-ms-to-keep-before']
+    audio_ms_to_keep_after = config['audio-ms-to-keep-after']
+
+    optimized_segments = []
+    # first we handle larger segments to break them into optimal size segments
+    current_segment_index = 0
+    for current_segment in segments:
+        if current_segment.content == 'voiced' and  current_segment.duration_ms > OPTIMAL_AUDIO_MS:
+            warn(f"{current_segment.content} segment {current_segment_index:3} {current_segment.start_ms/1000:6.2f}:{current_segment.end_ms/1000:3.2f} duration is {current_segment.duration_ms/1000:3.2f}s .. optmizing ..")
+        else:
+            optimized_segments.append(current_segment)
+
+        current_segment_index = current_segment_index + 1
+
+
+    # then we handle smaller segments to merge them into optimal size segments
+
+    return sorted(optimized_segments)
+
+
+''' identify segments
+'''
+def identify_segments(sound, config):
+    segments = []
+    duration_in_ms = len(sound)
+
+    input_audio_file = config['input-audio-file']
+
+    OPTIMAL_AUDIO_SECONDS = config['OPTIMAL-AUDIO-SECONDS']
 
     min_silence_len = config['min-silence-len']
     silence_thresh = config['silence-thresh']
@@ -50,14 +87,13 @@ def identify_segments(sound, config):
 
 
     # silent segments
-    silent_segments = silence.detect_silence(sound, min_silence_len=min_silence_len, silence_thresh=silence_thresh, seek_step=seek_step)
-    silent_segments = [[segment[0], segment[1], segment[1] - segment[0], 'silent'] for segment in silent_segments]
-    silent_segment_count = len(silent_segments)
+    silents = silence.detect_silence(sound, min_silence_len=min_silence_len, silence_thresh=silence_thresh, seek_step=seek_step)
+    segments = [Segment(start_ms=s[0], end_ms=s[1], content='silent') for s in silents]
 
     # non-silent segments
-    voiced_segments = silence.detect_nonsilent(sound, min_silence_len=min_silence_len, silence_thresh=silence_thresh, seek_step=seek_step)
-    for segment in voiced_segments:
-        segment_start, segment_end = segment[0], segment[1]
+    voiceds = silence.detect_nonsilent(sound, min_silence_len=min_silence_len, silence_thresh=silence_thresh, seek_step=seek_step)
+    for s in voiceds:
+        segment_start, segment_end = s[0], s[1]
 
         segment_start = segment_start - audio_ms_to_keep_before
         if segment_start < 0:
@@ -67,51 +103,40 @@ def identify_segments(sound, config):
         if segment_end > duration_in_ms:
             segment_end = duration_in_ms
 
-        segment[0] = segment_start
-        segment[1] = segment_end
-        segment.append(segment_end - segment_start)
-        segment.append('voiced')
+        segments.append(Segment(start_ms=segment_start, end_ms=segment_end, content='voiced'))
 
+    
+    # we may have segments which are not optimal
+    segments = optimize_segments(sound, segments, config)
 
-    voiced_segment_count = len(voiced_segments)
-
-    segments = sorted(silent_segments + voiced_segments)
-
-    return segments, silent_segment_count, voiced_segment_count
+    return segments
 
 
 
 ''' split into separate files as specified by the segments
 '''
 def split_segments(sound, segments, config):
-    output_files = []
     output_file_format = config['output-file-format'] + '{:03}-{}.wav'
-    i = 0
+    index = 0
     for segment in segments:
-        segment_start, segment_end = segment[0], segment[1]
-        duration_seconds = segment[2] /1000
-        output_file = output_file_format.format(i, segment[3])
-        chunk = sound[segment_start:segment_end]
-        chunk.export(output_file, format="wav")
-        output_files.append({'file': output_file, 'duration': duration_seconds, 'start': segment_start, 'end': segment_end, 'content': segment[3]})
-        i = i + 1
+        segment.export(sound=sound, output_file_format=output_file_format, index=index)
+        index = index + 1
 
-    return output_files
+    return segments
 
 
 
 ''' generate printable info for the audio file
 '''
-def printable_info(sound, audio_file_name):
-    str = ''
-    str = f"{str}audio file    : {audio_file_name}\n"
-    str = f"{str}duration (s)  : {sound.duration_seconds:6.2f}\n"
-    str = f"{str}channels      : {sound.channels}\n"
-    str = f"{str}loudness      : {sound.dBFS} dBFS\n"
-    str = f"{str}sample width  : {sound.sample_width} byte(s)\n"
-    str = f"{str}frame rate    : {sound.frame_rate}\n"
-    str = f"{str}max amplitude : {sound.max}\n"
-    str = f"{str}max loudness  : {sound.max_dBFS}\n"
+def printable_info(sound, audio_file_name, left_padding='    '):
+    str = f"\n{left_padding}audio file    : {audio_file_name}"
+    str = f"{str}\n{left_padding}duration (s)  : {sound.duration_seconds:3.2f}"
+    str = f"{str}\n{left_padding}channels      : {sound.channels}"
+    str = f"{str}\n{left_padding}loudness      : {sound.dBFS} dBFS"
+    str = f"{str}\n{left_padding}sample width  : {sound.sample_width} byte(s)"
+    str = f"{str}\n{left_padding}frame rate    : {sound.frame_rate}"
+    str = f"{str}\n{left_padding}max amplitude : {sound.max}"
+    str = f"{str}\n{left_padding}max loudness  : {sound.max_dBFS}"
     str = f"{str}\n\n"
 
     return str
@@ -120,11 +145,11 @@ def printable_info(sound, audio_file_name):
 
 ''' bulk asr on a list of files
 '''
-def do_asr_on_files(audio_files):
-    for audio_file in audio_files:
-        if audio_file['content'] == 'voiced':
-            print(f".. doing asr on {audio_file['file']}")
-            audio_file['asr-response'] = get_text_from_audio(audio_file['file'])
+def do_asr_on_files(segments):
+    for segment in segments:
+        if segment.content == 'voiced':
+            info(f".. doing asr on {segment.file}")
+            segment.asr_response = get_text_from_audio(segment.file)
 
 
 

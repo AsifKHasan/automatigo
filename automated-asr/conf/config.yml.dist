@@ -2,11 +2,8 @@
 output-dir:                 '../out'
 asr-output-file:            'asr-output.txt'
 
-# MAX seconds allowed for output audio
-MAX-AUDIO-SECONDS-ALLOWED:  25
-
-# MIN seconds allowed for output audio
-MIN-AUDIO-SECONDS-ALLOWED:  5
+# seconds an audio should optimally be
+OPTIMAL-AUDIO-SECONDS:      25
 
 # the minimum length for silent sections in milliseconds
 min-silence-len:            500
@@ -33,7 +30,7 @@ low-pass-filter:
 
 # low pass filter spec. 
 high-pass-filter:
-  frequency:                200
+  frequency:                85
   order:                    5
 
 # whether ASR will be run on the outputs or not
