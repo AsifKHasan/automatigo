@@ -4,9 +4,8 @@ import json
 import requests
 from pydub import AudioSegment, silence, scipy_effects
 
-from audio.segment import Segment
+from audio.segment import Segment, MergeSegments
 from helper.logger import *
-
 
 
 ''' return sound object from the input audio file
@@ -14,8 +13,11 @@ from helper.logger import *
 def open_as_sound(config):
     segments = []
 
-    input_audio_file = config['input-audio-file']
+    input_audio_file = config.input_audio_file
     sound = AudioSegment.from_wav(input_audio_file)
+    info('source audio info')
+    info('-------------------------------------------------')
+    print(printable_info(sound, input_audio_file))
 
     return sound
 
@@ -23,106 +25,88 @@ def open_as_sound(config):
 
 ''' apply filters as specified in the config
 '''
-def filter(sound, config):
+def filter(config, sound):
+    if config.high_pass_filter_enabled:
+        sound = scipy_effects.high_pass_filter(sound, cutoff_freq=config.high_pass_filter_frequency, order=config.high_pass_filter_order)
+        info(f"filtered sound file info - CUT BELOW {config.high_pass_filter_frequency} Hz")
+        info('----------------------------------------------------------------------------------')
+        print(printable_info(sound, config.input_audio_file))
 
-    new_sound = scipy_effects.high_pass_filter(sound, cutoff_freq=config['high-pass-filter']['frequency'], order=config['high-pass-filter']['order'])
-    new_sound = scipy_effects.low_pass_filter(new_sound, cutoff_freq=config['low-pass-filter']['frequency'], order=config['low-pass-filter']['order'])
 
-    return new_sound
+    if config.low_pass_filter_enabled:
+        sound = scipy_effects.low_pass_filter(sound, cutoff_freq=config.low_pass_filter_frequency, order=config.low_pass_filter_order)
+        info(f"filtered sound file info - CUT ABOVE {config.low_pass_filter_frequency} Hz")
+        info('--------------------------')
+        print(printable_info(sound, config.input_audio_file))
+
+    return sound
 
 
-''' optimize segments
+
+''' merge segments
 '''
-def optimize_segments(sound, segments_to_optimize, config):
-    segments = sorted(segments_to_optimize)
-    duration_in_ms = len(sound)
-
-    silent_segment_count = 0
-    voiced_segment_count = 0
-
-    input_audio_file = config['input-audio-file']
-
-    OPTIMAL_AUDIO_MS = config['OPTIMAL-AUDIO-SECONDS'] * 1000
-
-    min_silence_len = config['min-silence-len']
-    silence_thresh = config['silence-thresh']
-    seek_step = config['seek-step']
-
-    audio_ms_to_keep_before = config['audio-ms-to-keep-before']
-    audio_ms_to_keep_after = config['audio-ms-to-keep-after']
-
-    optimized_segments = []
-    # first we handle larger segments to break them into optimal size segments
-    current_segment_index = 0
-    for current_segment in segments:
-        if current_segment.content == 'voiced' and  current_segment.duration_ms > OPTIMAL_AUDIO_MS:
-            warn(f"{current_segment.content} segment {current_segment_index:3} {current_segment.start_ms/1000:6.2f}:{current_segment.end_ms/1000:3.2f} duration is {current_segment.duration_ms/1000:3.2f}s .. optmizing ..")
-        else:
-            optimized_segments.append(current_segment)
-
-        current_segment_index = current_segment_index + 1
-
-
+def merge_segments(config, segments):
     # then we handle smaller segments to merge them into optimal size segments
+    merged_segments = []
+    merge_segment = None
+    for current_segment in segments:
+        # it may be that this current segment is a large one
+        if current_segment.duration_ms > config.optimal_audio_ms:
 
-    return sorted(optimized_segments)
+            # we have an active MergeSegments
+            if merge_segment:
+                # close the MergeSegments
+                merged_segments.append(merge_segment.merge())
+                merge_segment = None
+
+            # we do not have an active MergeSegments
+            else:
+                pass
+
+            merged_segments.append(current_segment)
+
+        # this is not a large segment, try to include this segment into the merge
+        else:
+            # we already have a MergeSegments active, try to append to it
+            if merge_segment:
+                # this segment fits within the merge
+                if merge_segment.append(current_segment) == True:
+                    pass
+
+                # this segment does not fit within the merge
+                else:
+                    # close the MergeSegments
+                    newly_merged_segment = merge_segment.merge()
+                    if newly_merged_segment:
+                        merged_segments.append(newly_merged_segment)
+
+                    # create a new MergeSegments and append to it
+                    merge_segment = MergeSegments(config.optimal_audio_ms)
+                    merge_segment.append(current_segment)
+
+            # we do not have a MergeSegments active, create one and append to it
+            else:
+                merge_segment = MergeSegments(config.optimal_audio_ms)
+                merge_segment.append(current_segment)
+
+    # there may be an open MergeSegments, close it
+    if merge_segment:
+        newly_merged_segment = merge_segment.merge()
+        if newly_merged_segment:
+            merged_segments.append(newly_merged_segment)
 
 
-''' identify segments
-'''
-def identify_segments(sound, config):
-    segments = []
-    duration_in_ms = len(sound)
-
-    input_audio_file = config['input-audio-file']
-
-    OPTIMAL_AUDIO_SECONDS = config['OPTIMAL-AUDIO-SECONDS']
-
-    min_silence_len = config['min-silence-len']
-    silence_thresh = config['silence-thresh']
-    seek_step = config['seek-step']
-
-    audio_ms_to_keep_before = config['audio-ms-to-keep-before']
-    audio_ms_to_keep_after = config['audio-ms-to-keep-after']
-
-
-    # silent segments
-    silents = silence.detect_silence(sound, min_silence_len=min_silence_len, silence_thresh=silence_thresh, seek_step=seek_step)
-    segments = [Segment(start_ms=s[0], end_ms=s[1], content='silent') for s in silents]
-
-    # non-silent segments
-    voiceds = silence.detect_nonsilent(sound, min_silence_len=min_silence_len, silence_thresh=silence_thresh, seek_step=seek_step)
-    for s in voiceds:
-        segment_start, segment_end = s[0], s[1]
-
-        segment_start = segment_start - audio_ms_to_keep_before
-        if segment_start < 0:
-            segment_start = 0
-            
-        segment_end = segment_end + audio_ms_to_keep_after
-        if segment_end > duration_in_ms:
-            segment_end = duration_in_ms
-
-        segments.append(Segment(start_ms=segment_start, end_ms=segment_end, content='voiced'))
-
-    
-    # we may have segments which are not optimal
-    segments = optimize_segments(sound, segments, config)
-
-    return segments
+    return sorted(merged_segments)
 
 
 
 ''' split into separate files as specified by the segments
 '''
-def split_segments(sound, segments, config):
-    output_file_format = config['output-file-format'] + '{:03}-{}.wav'
+def split_segments(segments):
     index = 0
     for segment in segments:
-        segment.export(sound=sound, output_file_format=output_file_format, index=index)
+        segment.export(index=index)
         index = index + 1
-
-    return segments
 
 
 
