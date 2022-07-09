@@ -62,7 +62,7 @@ class Segment(object):
                 warn(f".. couldn't break down {self} further")
 
                 # try with next silence_parameter
-                next_silence_len, next_silence_thresh = self.config.get_next_silence_parameter(self.at_silence_len, self.at_silence_thresh, length_first=False)
+                next_silence_len, next_silence_thresh = self.config.get_next_silence_parameter(self.at_silence_len, self.at_silence_thresh, length_first=self.config.adjust_len_before_thresh)
                 if next_silence_len is not None and next_silence_thresh is not None:
                     self.at_silence_len, self.at_silence_thresh = next_silence_len, next_silence_thresh
                 else:
@@ -137,6 +137,7 @@ class Segment(object):
     def export(self, index):
         output_file = self.config.output_file_format.format(index, self.content)
         chunk = self.sound[self.start_ms:self.end_ms]
+        # chunk = chunk.apply_gain(+1.0)
         chunk.export(output_file, format="wav")
         self.file = output_file
 

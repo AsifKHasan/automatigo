@@ -19,6 +19,9 @@ def open_as_sound(config):
     info('-------------------------------------------------')
     print(printable_info(sound, input_audio_file))
 
+    channels = sound.split_to_mono()
+    sound = channels[1]
+
     return sound
 
 

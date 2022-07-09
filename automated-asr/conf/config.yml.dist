@@ -7,13 +7,16 @@ optimal-audio-seconds:        25
 
 # the minimum length for silent sections in milliseconds
 max-silence-len:              500
-min-silence-len:              400
+min-silence-len:              100
 silence-len-decrement-by:     50
 
 # the upper bound for how quiet is silent in dBFS
 min-silence-thresh:           -40
-max-silence-thresh:           -35
+max-silence-thresh:           -30
 silence-thresh-increment-by:  1
+
+# when adjusting silence parameters adjust silence_len before adjusting silence_thresh
+adjust-len-before-thresh:     True
 
 # size of the step for checking for silence in milliseconds. Smaller is more precise
 seek-step:                    5
@@ -30,13 +33,13 @@ audio-ms-to-keep-after:       50
 # (so a 3rd order butterworth filter would be -18dB/octave).
 low-pass-filter:
   enabled:                    True
-  frequency:                  7000
+  frequency:                  9000
   order:                      3
 
 # low pass filter spec. 
 high-pass-filter:
   enabled:                    True
-  frequency:                  70
+  frequency:                  85
   order:                      3
 
 # whether ASR will be run on the outputs or not

@@ -28,6 +28,8 @@ class Config(object):
         self.max_silence_thresh = config['max-silence-thresh']
         self.silence_thresh_increment_by = config['silence-thresh-increment-by']
 
+        self.adjust_len_before_thresh = config['adjust-len-before-thresh']
+
         self.seek_step = config['seek-step']
 
         self.audio_ms_to_keep_before = config['audio-ms-to-keep-before']
