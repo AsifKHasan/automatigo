@@ -1,0 +1,16 @@
+Entity Customer = (Identity, Personal, Family, Professional, Social, EntityProperties, MetaProperties)
+    Entity Identity = ([phone_number:string], nid_number:string, passport_number:string, birth_registration_number:string, driving_license_number:string)
+    Entity Personal = (Name, Adrress, Birth, gender:string)
+    Entity Name = (first_name:string, middle_name:string, last_name:string)
+    Entity Adrress = (line1:string, line2:string, village:string, union:string, upzila:string, district:string, division:string)
+    Entity Birth = (birth_date:date, birth_disctrict:string)
+    Entity Family = (Father, Mother, Spouse, [Child])
+    Entity EntityProperties = (created_by:string, created_on:time, updated_by:string, updated_on:time)
+    Entity MetaProperties = (locked:bool, locked_by:string, loked_on:time)
+
+    Roles = [MAKER, CHECKER, IDENTITY.UPDATER, PERSONAL.UPDATER]
+
+    MAKER :: () -> (Personal, Identity, Family, Professional, Social, EntityProperties)
+    CHECKER :: (EntityProperties, MetaProperties) -> (EntityProperties, MetaProperties)
+    IDENTITY.UPDATER :: (Identity, EntityProperties, MetaProperties) -> (Identity, EntityProperties, MetaProperties)
+    PERSONAL.UPDATER :: (Personal, Name, Adrress, Birth, Family, EntityProperties, MetaProperties) -> (Personal, Name, Adrress, Birth, Family, EntityProperties, MetaProperties)
