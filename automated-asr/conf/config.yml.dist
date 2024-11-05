@@ -3,7 +3,7 @@ output-dir:                   '../out'
 asr-output-file:              'asr-output.txt'
 
 # seconds an audio should optimally be
-optimal-audio-seconds:        25
+optimal-audio-seconds:        30
 
 # the minimum length for silent sections in milliseconds
 max-silence-len:              500
@@ -27,16 +27,16 @@ audio-ms-to-keep-before:      50
 # milisecond of audio to keep from the next segment after a voiced segment
 audio-ms-to-keep-after:       50
 
-# low pass filter spec. 
-# The attenuation is -6dB/octave beyond the cutoff frequency (for 1st order). 
-# A Higher order filter will have more attenuation, each level adding an additional -6dB 
+# low pass filter spec.
+# The attenuation is -6dB/octave beyond the cutoff frequency (for 1st order).
+# A Higher order filter will have more attenuation, each level adding an additional -6dB
 # (so a 3rd order butterworth filter would be -18dB/octave).
 low-pass-filter:
   enabled:                    True
   frequency:                  9000
   order:                      3
 
-# low pass filter spec. 
+# low pass filter spec.
 high-pass-filter:
   enabled:                    True
   frequency:                  85

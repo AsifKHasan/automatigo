@@ -150,7 +150,6 @@ def get_text_from_audio(audio_file_path, reference_text=None):
         files=files,
         data=payload
     )
-    print(response.text)
 
     json_response = json.loads(response.text)
     return json_response
