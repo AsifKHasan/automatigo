@@ -20,7 +20,7 @@ def open_as_sound(config):
     print(printable_info(sound, input_audio_file))
 
     channels = sound.split_to_mono()
-    sound = channels[1]
+    sound = channels[0]
 
     return sound
 
@@ -143,15 +143,14 @@ def do_asr_on_files(segments):
 ''' asr from audio
 '''
 def get_text_from_audio(audio_file_path, reference_text=None):
-    request_json = {
-        'files': open(audio_file_path, 'rb')
-    }
-
+    files = {'file': open(audio_file_path, 'rb')}
+    payload = {'format': 'wav'}
     response = requests.post(
-        "https://nlp.celloscope.net/nlp/dataset/v1/audio/speech-to-text",
-        data={'referenceText' : reference_text},
-        files=request_json
+        "https://nlp.celloscope.net/nlp/speech-to-text/v2",
+        files=files,
+        data=payload
     )
+    print(response.text)
 
     json_response = json.loads(response.text)
     return json_response

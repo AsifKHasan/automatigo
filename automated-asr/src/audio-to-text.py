@@ -96,6 +96,7 @@ def write_output(config, segments):
     with open(config.asr_output_file, "w", encoding="utf-8") as f:
         for segment in segments:
             if segment.asr_response:
+                print(segment.asr_response)
                 f.write(f"audio    : {segment.file}")
                 f.write('\n')
 
@@ -120,7 +121,7 @@ if __name__ == '__main__':
     config.configure(file_name=args["audio"], segment_spec=args["segments"])
 
     sound = open_sound(config=config)
-    
+
     segments = generate_segments(config=config, sound=sound)
 
     process_segments(config=config, segments=segments)

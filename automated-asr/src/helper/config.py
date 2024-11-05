@@ -73,7 +73,7 @@ class Config(object):
                         except:
                             print(f"can not convert {splitted[1]} to a number")
                             continue
-                    
+
                         segment_list.append([segment_start, segment_end])
 
                     else:
