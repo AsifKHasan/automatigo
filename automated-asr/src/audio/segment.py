@@ -70,7 +70,7 @@ class Segment(object):
                     warn(f".. {self} - all silence parameters exhausted")
                     return
 
-        # we may have a list of broken_down_segments, we need to break them down 
+        # we may have a list of broken_down_segments, we need to break them down
         for segment in self.broken_down_segments:
             segment.break_down()
 
@@ -81,7 +81,7 @@ class Segment(object):
     def break_by_silence(self):
         # silent segments
         silents = silence.detect_silence(self.segment_sound, min_silence_len=self.at_silence_len, silence_thresh=self.at_silence_thresh, seek_step=self.config.seek_step)
-        
+
         # if there is no silent segments, it means we can not break it down
         if len(silents) == 0:
             return None
@@ -96,7 +96,7 @@ class Segment(object):
             segment_start = segment_start - self.config.audio_ms_to_keep_before
             if segment_start < self.start_ms:
                 segment_start = self.start_ms
-                
+
             segment_end = segment_end + self.config.audio_ms_to_keep_after
             if segment_end > self.end_ms:
                 segment_end = self.end_ms
@@ -135,7 +135,7 @@ class Segment(object):
     ''' export to wav
     '''
     def export(self, index):
-        output_file = self.config.output_file_format.format(index, self.content)
+        output_file = self.config.output_file_format.format(index, self.content, self.start_ms + int(self.config.audio_range[0] * 1000), self.end_ms + int(self.config.audio_range[0] * 1000))
         chunk = self.sound[self.start_ms:self.end_ms]
         # chunk = chunk.apply_gain(+1.0)
         chunk.export(output_file, format="wav")
@@ -175,7 +175,7 @@ class MergeSegments(object):
         else:
             warn(f".... can not merge an empty MergeSegments")
             return None
-        
+
 
 
     ''' append method
@@ -229,6 +229,3 @@ class MergeSegments(object):
             return self.segments[-1].end_ms - self.segments[0].start_ms
         else:
             return -1
-
-
-   

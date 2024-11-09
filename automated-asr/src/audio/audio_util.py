@@ -11,16 +11,25 @@ from helper.logger import *
 ''' return sound object from the input audio file
 '''
 def open_as_sound(config):
-    segments = []
-
     input_audio_file = config.input_audio_file
     sound = AudioSegment.from_wav(input_audio_file)
     info('source audio info')
     info('-------------------------------------------------')
     print(printable_info(sound, input_audio_file))
 
+    # get the range
+    if config.audio_range[1] == 0.0:
+        sound = sound[config.audio_range[0] * 1000:]
+    else:
+        sound = sound[config.audio_range[0] * 1000:config.audio_range[1] * 1000]
+
+    info('ranged audio info')
+    info('-------------------------------------------------')
+    print(printable_info(sound, input_audio_file))
+
     channels = sound.split_to_mono()
     sound = channels[0]
+    # sound = sound + 6
 
     return sound
 
@@ -29,16 +38,18 @@ def open_as_sound(config):
 ''' apply filters as specified in the config
 '''
 def filter(config, sound):
+    info(f"filtering sound file - CUT BELOW {config.high_pass_filter_frequency} Hz")
     if config.high_pass_filter_enabled:
         sound = scipy_effects.high_pass_filter(sound, cutoff_freq=config.high_pass_filter_frequency, order=config.high_pass_filter_order)
-        info(f"filtered sound file info - CUT BELOW {config.high_pass_filter_frequency} Hz")
+        info(f"filtered sound file - CUT BELOW {config.high_pass_filter_frequency} Hz")
         info('----------------------------------------------------------------------------------')
         print(printable_info(sound, config.input_audio_file))
 
 
     if config.low_pass_filter_enabled:
+        info(f"filtering sound file - CUT ABOVE {config.low_pass_filter_frequency} Hz")
         sound = scipy_effects.low_pass_filter(sound, cutoff_freq=config.low_pass_filter_frequency, order=config.low_pass_filter_order)
-        info(f"filtered sound file info - CUT ABOVE {config.low_pass_filter_frequency} Hz")
+        info(f"filtered sound file - CUT ABOVE {config.low_pass_filter_frequency} Hz")
         info('--------------------------')
         print(printable_info(sound, config.input_audio_file))
 

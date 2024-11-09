@@ -108,17 +108,15 @@ def write_output(config, segments):
 
 
 
-
-
-
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument("-a", "--audio", required=True, help="audio file name to process, without extension, wav assumed")
+    ap.add_argument("-r", "--range", required=False, help="audio range in sss.ms:sss.ms format to be processed")
     ap.add_argument("-s", "--segments", required=False, help="list of segments (start_seconds:end_seconds) where audio is to be splitted manually, must be quoted")
     args = vars(ap.parse_args())
 
     config = Config(CONFIG_PATH)
-    config.configure(file_name=args["audio"], segment_spec=args["segments"])
+    config.configure(file_name=args["audio"], range_spec=args["range"], segment_spec=args["segments"])
 
     sound = open_sound(config=config)
 

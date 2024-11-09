@@ -1,6 +1,6 @@
-requests3
 requests
 pydub
 webrtcvad
 rhasspy-silence
 scipy
+# requests3

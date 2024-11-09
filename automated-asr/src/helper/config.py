@@ -3,6 +3,7 @@
 import yaml
 from pathlib import Path
 
+from helper.logger import *
 
 ''' Configuration object
 '''
@@ -43,47 +44,85 @@ class Config(object):
         self.low_pass_filter_frequency = config['low-pass-filter']['frequency']
         self.low_pass_filter_order = config['low-pass-filter']['order']
 
+        self.audio_range = [0, 0]
         self.do_asr = config['do-asr']
 
 
     ''' configure environment
     '''
-    def configure(self, file_name, segment_spec):
+    def configure(self, file_name, range_spec, segment_spec):
 
         self.input_audio_file = f"{self.audio_data_dir}/{file_name}.wav"
-        self.output_file_format = f"{self.audio_out_dir}/{file_name}-" + '{}-{}.wav'
+        self.output_file_format = f"{self.audio_out_dir}/{file_name}-" + '{}-{}__{}-{}.wav'
 
         self.asr_output_file = f"{self.output_dir}/{self.asr_output_file}"
 
+        # range
+        debug(f"checking range [{range_spec}]")
+        splitted = range_spec.split(':')
+        if len(splitted) == 2:
+            # start range
+            if splitted[0] == '':
+                debug(f"empty start range found, assuming start-of-audio")
+            else:
+                try:
+                    range_start = float(splitted[0])
+                except:
+                    print(f"can not convert start range {splitted[0]} to a number, assuming start-of-audio")
+                    range_start = 0.0
+
+            self.audio_range[0] = range_start
+
+            # end range
+            if splitted[1] == '':
+                debug(f"empty end range found, assuming end-of-audio")
+            else:
+                try:
+                    range_end = float(splitted[1])
+                    self.audio_range[1] = range_end
+                except:
+                    print(f"can not convert end range {splitted[1]} to a number, assuming end-of-audio")
+                    range_end = 0.0
+
+        else:
+            warn(f"range [{range_spec}] is not valid .. processing full audio")
+
+        # segments
+        segment_list = []
         if segment_spec:
-            segment_list = []
-            pairs = segment_spec.split(' ')
-            if len(pairs) > 1:
-                for pair in pairs[1:]:
-                    splitted = pair.split(':')
-                    if len(splitted) == 2:
-                        try:
-                            segment_start = float(splitted[0])
-                        except:
-                            print(f"can not convert {splitted[0]} to a number")
+            if segment_spec == "NOSEG":
+                # there will be only one segment with the full range specified
+                self.segments = [[self.audio_range[0], self.audio_range[1]]]
+
+            else:
+                pairs = segment_spec.split(' ')
+                if len(pairs) > 1:
+                    for pair in pairs[1:]:
+                        splitted = pair.split(':')
+                        if len(splitted) == 2:
+                            try:
+                                segment_start = float(splitted[0])
+                            except:
+                                print(f"can not convert {splitted[0]} to a number")
+                                continue
+
+                            try:
+                                segment_end = float(splitted[1])
+                            except:
+                                print(f"can not convert {splitted[1]} to a number")
+                                continue
+
+                            segment_list.append([segment_start, segment_end])
+
+                        else:
+                            print(f"can not determine range from : {pair}")
                             continue
 
-                        try:
-                            segment_end = float(splitted[1])
-                        except:
-                            print(f"can not convert {splitted[1]} to a number")
-                            continue
-
-                        segment_list.append([segment_start, segment_end])
-
-                    else:
-                        print(f"can not determine range from : {pair}")
-                        continue
-
-            self.segments = sorted(segment_list)
+                self.segments = sorted(segment_list)
 
         else:
             self.segments = None
+
 
 
     ''' get the next segmentation parameter (silence_len, silence_thresh)
