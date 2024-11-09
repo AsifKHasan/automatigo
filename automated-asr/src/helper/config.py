@@ -97,7 +97,7 @@ class Config(object):
             else:
                 pairs = segment_spec.split(' ')
                 if len(pairs) > 1:
-                    for pair in pairs[1:]:
+                    for pair in pairs:
                         splitted = pair.split(':')
                         if len(splitted) == 2:
                             try:
@@ -119,6 +119,7 @@ class Config(object):
                             continue
 
                 self.segments = sorted(segment_list)
+                print(self.segments)
 
         else:
             self.segments = None

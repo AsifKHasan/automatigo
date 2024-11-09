@@ -3,6 +3,7 @@
 from pydub import AudioSegment, silence, scipy_effects
 
 from helper.logger import *
+from helper.utils import *
 
 
 ''' Audio segment object
@@ -121,7 +122,11 @@ class Segment(object):
     ''' short string representation
     '''
     def to_string(self):
-        return f"[{(self.start_ms/1000):6.2f} : {(self.end_ms/1000):6.2f}]"
+        # return f"[{(self.start_ms/1000):6.2f} : {(self.end_ms/1000):6.2f}]"
+        start_hours, start_minutes, start_seconds, start_ms = ms_to_hmss(self.start_ms + self.config.audio_range[0] * 1000)
+        end_hours, end_minutes, end_seconds, end_ms = ms_to_hmss(self.end_ms + self.config.audio_range[0] * 1000)
+        duration_hours, duration_minutes, duration_seconds, duration_ms = ms_to_hmss(self.duration_ms)
+        return f"[{start_hours:02}:{start_minutes:02}:{start_seconds:02}.{start_ms:03} - {end_hours:02}:{end_minutes:02}:{end_seconds:02}.{end_ms:03} = {duration_hours:02}:{duration_minutes:02}:{duration_seconds:02}.{duration_ms:03}]  "
 
 
 

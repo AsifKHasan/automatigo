@@ -39,6 +39,7 @@ def generate_segments(config, sound):
         # generate the segments
         segments = []
         for segment_spec in config.segments:
+            print(segment_spec)
             this_segment_start = segment_spec[0] * 1000
             this_segment_end = segment_spec[1] * 1000
             if this_segment_start > this_segment_end:
@@ -93,16 +94,15 @@ def process_segments(config, segments):
 '''
 def write_output(config, segments):
     # write output
-    with open(config.asr_output_file, "w", encoding="utf-8") as f:
+    with open(config.asr_output_file, "a", encoding="utf-8") as f:
         for segment in segments:
             if segment.asr_response:
                 print(segment.asr_response)
-                f.write(f"audio    : {segment.file}")
+                f.write(segment.to_string())
+                f.write(f"audio    : {segment.file}, asr time {segment.asr_response['processingTime']:3.2f}s, ratio {(segment.duration_ms/1000)/segment.asr_response['processingTime']:3.2f}")
                 f.write('\n')
 
-                f.write(f"duration : {segment.duration_ms/1000:3.2f}s, asr time {segment.asr_response['processingTime']:3.2f}s, ratio {(segment.duration_ms/1000)/segment.asr_response['processingTime']:3.2f}")
-                f.write('\n')
-
+                f.write(segment.to_string())
                 f.write(segment.asr_response['text'])
                 f.write('\n\n')
 

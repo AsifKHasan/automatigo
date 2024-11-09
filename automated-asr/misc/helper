@@ -2,12 +2,15 @@ cd D:\projects\asif@github\automatigo\automated-asr
 
 ffmpeg -i 2024-11-04__11-18__ananta-shipping-order.aac 2024-11-04__11-18__ananta-shipping-order.wav
 
-text-from-audio.bat 2024-11-04__11-18__ananta-shipping-order 000.00:050.00
-text-from-audio.bat 2024-11-04__11-18__ananta-shipping-order 050.00:100.00
-text-from-audio.bat 2024-11-04__11-18__ananta-shipping-order 100.00:150.00
-text-from-audio.bat 2024-11-04__11-18__ananta-shipping-order 150.00:200.00
-text-from-audio.bat 2024-11-04__11-18__ananta-shipping-order 200.00:250.00
-text-from-audio.bat 2024-11-04__11-18__ananta-shipping-order 250.00:300.00
+text-from-audio.bat 2024-11-04__11-18__ananta-shipping-order 000.000:300.000 "000.000:050.000 050.000:100.000 100.000:150.000 150.000:200.000 200.000:250.000 250.000:300.000"
+text-from-audio.bat 2024-11-04__11-18__ananta-shipping-order 000.000:100.000 "000.000:050.000 050.000:100.000"
+
+text-from-audio.bat 2024-11-04__11-18__ananta-shipping-order 000.000:050.000 NOSEG
+text-from-audio.bat 2024-11-04__11-18__ananta-shipping-order 050.000:100.000 NOSEG
+text-from-audio.bat 2024-11-04__11-18__ananta-shipping-order 100.000:150.000
+text-from-audio.bat 2024-11-04__11-18__ananta-shipping-order 150.000:200.000
+text-from-audio.bat 2024-11-04__11-18__ananta-shipping-order 200.000:250.000
+text-from-audio.bat 2024-11-04__11-18__ananta-shipping-order 250.000:300.000
 
 
 
