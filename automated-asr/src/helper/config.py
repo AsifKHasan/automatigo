@@ -64,6 +64,7 @@ class Config(object):
             # start range
             if splitted[0] == '':
                 debug(f"empty start range found, assuming start-of-audio")
+                range_start = 0.0
             else:
                 try:
                     range_start = float(splitted[0])
@@ -76,6 +77,7 @@ class Config(object):
             # end range
             if splitted[1] == '':
                 debug(f"empty end range found, assuming end-of-audio")
+                range_end = 0.0
             else:
                 try:
                     range_end = float(splitted[1])

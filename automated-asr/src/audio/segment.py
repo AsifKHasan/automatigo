@@ -126,7 +126,7 @@ class Segment(object):
         start_hours, start_minutes, start_seconds, start_ms = ms_to_hmss(self.start_ms + self.config.audio_range[0] * 1000)
         end_hours, end_minutes, end_seconds, end_ms = ms_to_hmss(self.end_ms + self.config.audio_range[0] * 1000)
         duration_hours, duration_minutes, duration_seconds, duration_ms = ms_to_hmss(self.duration_ms)
-        return f"[{start_hours:02}:{start_minutes:02}:{start_seconds:02}.{start_ms:03} - {end_hours:02}:{end_minutes:02}:{end_seconds:02}.{end_ms:03} = {duration_hours:02}:{duration_minutes:02}:{duration_seconds:02}.{duration_ms:03}]  "
+        return f"[{start_hours:02}h:{start_minutes:02}m:{start_seconds:02}.{start_ms:03}s - {end_hours:02}h:{end_minutes:02}m:{end_seconds:02}.{end_ms:03}s = {duration_hours:02}h:{duration_minutes:02}m:{duration_seconds:02}.{duration_ms:03}s]  "
 
 
 

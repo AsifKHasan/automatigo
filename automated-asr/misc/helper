@@ -29,6 +29,8 @@ text-from-audio.bat mongla-port 000.000:050.000 NOSEG
 text-from-audio.bat mongla-port 050.000:100.000 NOSEG
 
 
+text-from-audio.bat mongla-port :600.000 "0:50 50:100 100:150 150:200 200:250 250:300 300:350 350:400 400:450 450:500 500:550 550:600"
+
 
 
 curl --location 'https://nlp.celloscope.net/nlp/speech-to-text/v2' --form 'files=@"file:///D:/projects/asif@github/automatigo/automated-asr/out/audio/2024-11-04__11-18__ananta-shipping-order.wav"' --form 'format="wav"'
