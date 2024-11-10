@@ -92,7 +92,7 @@ class Config(object):
         if segment_spec:
             if segment_spec == "NOSEG":
                 # there will be only one segment with the full range specified
-                self.segments = [[self.audio_range[0], self.audio_range[1]]]
+                self.segments = [[0, self.audio_range[1] - self.audio_range[0]]]
 
             else:
                 pairs = segment_spec.split(' ')
