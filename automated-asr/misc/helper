@@ -23,7 +23,7 @@ text-from-audio.bat 2024-11-04__11-18__ananta-shipping-order 250.000:300.000
 
 
 
-text-from-audio.bat mongla-port 000.000:050.000
+./text-from-audio.sh bangla
 
 text-from-audio.bat mongla-port 000.000:050.000 NOSEG
 text-from-audio.bat mongla-port 050.000:100.000 NOSEG

@@ -59,35 +59,39 @@ class Config(object):
 
         # range
         debug(f"checking range [{range_spec}]")
-        splitted = range_spec.split(':')
-        if len(splitted) == 2:
-            # start range
-            if splitted[0] == '':
-                debug(f"empty start range found, assuming start-of-audio")
-                range_start = 0.0
-            else:
-                try:
-                    range_start = float(splitted[0])
-                except:
-                    print(f"can not convert start range {splitted[0]} to a number, assuming start-of-audio")
+        if range_spec:
+            splitted = range_spec.split(':')
+            if len(splitted) == 2:
+                # start range
+                if splitted[0] == '':
+                    debug(f"empty start range found, assuming start-of-audio")
                     range_start = 0.0
+                else:
+                    try:
+                        range_start = float(splitted[0])
+                    except:
+                        print(f"can not convert start range {splitted[0]} to a number, assuming start-of-audio")
+                        range_start = 0.0
 
-            self.audio_range[0] = range_start
+                self.audio_range[0] = range_start
 
-            # end range
-            if splitted[1] == '':
-                debug(f"empty end range found, assuming end-of-audio")
-                range_end = 0.0
-            else:
-                try:
-                    range_end = float(splitted[1])
-                    self.audio_range[1] = range_end
-                except:
-                    print(f"can not convert end range {splitted[1]} to a number, assuming end-of-audio")
+                # end range
+                if splitted[1] == '':
+                    debug(f"empty end range found, assuming end-of-audio")
                     range_end = 0.0
+                else:
+                    try:
+                        range_end = float(splitted[1])
+                        self.audio_range[1] = range_end
+                    except:
+                        print(f"can not convert end range {splitted[1]} to a number, assuming end-of-audio")
+                        range_end = 0.0
+
+            else:
+                warn(f"range [{range_spec}] is not valid .. processing full audio")
 
         else:
-            warn(f"range [{range_spec}] is not valid .. processing full audio")
+            info(f"range [{range_spec}] is not provided .. processing full audio")
 
         # segments
         segment_list = []
