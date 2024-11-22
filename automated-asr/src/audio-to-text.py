@@ -4,6 +4,7 @@ import sys
 import json
 import datetime
 import argparse
+import ffmpeg
 from colorama import Fore
 from colorama import Style
 
@@ -17,6 +18,26 @@ CONFIG_PATH = '../conf/config.yml'
 ''' open and filter the audio
 '''
 def open_sound(config):
+    # convert if necessary
+    if config.input_audio_file_type not in ['.wav']:
+        debug(f"converting [{config.input_audio_file}] to [.wav]")
+        old_input_audio_file = config.input_audio_file
+        new_input_audio_file = f"{config.audio_data_dir}/{config.input_audio_file_base_name}.wav"
+
+        try:
+            stream = ffmpeg.input(old_input_audio_file)
+            # stream = ffmpeg.hflip(stream)
+            stream = ffmpeg.output(stream, new_input_audio_file)
+            ffmpeg.run(stream)
+
+            config.input_audio_file = new_input_audio_file
+            debug(f"converted  [{old_input_audio_file}] to [{config.input_audio_file}]")
+
+        except Exception as e:
+            error(str(e))
+            exit(-1)
+
+
     # open as sound
     sound = open_as_sound(config)
 

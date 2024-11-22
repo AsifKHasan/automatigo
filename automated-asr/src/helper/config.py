@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import os
 import yaml
 from pathlib import Path
 
@@ -52,8 +53,13 @@ class Config(object):
     '''
     def configure(self, file_name, range_spec, segment_spec):
 
-        self.input_audio_file = f"{self.audio_data_dir}/{file_name}.wav"
-        self.output_file_format = f"{self.audio_out_dir}/{file_name}-" + '{}-{}__{}-{}.wav'
+        # determine base name and extension of audio file
+        self.input_audio_file = f"{self.audio_data_dir}/{file_name}"
+
+        self.input_audio_file_base_name, self.input_audio_file_type = os.path.splitext(file_name)
+        debug(f"[{file_name}] is of type [{self.input_audio_file_type}]")
+
+        self.output_file_format = f"{self.audio_out_dir}/{self.input_audio_file_base_name}-" + '{}-{}__{}-{}.wav'
 
         self.asr_output_file = f"{self.output_dir}/{self.asr_output_file}"
 

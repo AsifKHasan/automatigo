@@ -3,4 +3,5 @@ pydub
 webrtcvad
 rhasspy-silence
 scipy
+ffmpeg-python
 # requests3
