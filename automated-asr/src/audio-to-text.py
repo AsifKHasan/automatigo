@@ -11,6 +11,7 @@ from colorama import Style
 from audio.audio_util import *
 from helper.config import Config
 from helper.logger import *
+from helper import logger
 
 CONFIG_PATH = '../conf/config.yml'
 
@@ -137,6 +138,7 @@ if __name__ == '__main__':
     args = vars(ap.parse_args())
 
     config = Config(CONFIG_PATH)
+    logger.LOG_LEVEL = config['log-level']
     config.configure(file_name=args["audio"], range_spec=args["range"], segment_spec=args["segments"])
 
     sound = open_sound(config=config)
