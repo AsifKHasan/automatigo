@@ -1,0 +1,108 @@
+# log level (0-TRACE, 1-DEBUG, 2-INFO, 3-WARN, 4-ERROR) below which logs will not be printed
+log-level:                  1
+
+# the google credential for accessing the gsheet(s) (this file is not in the repo)
+credential-json:            '../conf/credential.json'
+
+gsheet-tasks:
+  # cell linking and ordering
+  # - task                                        : link_cells_to_drive_files
+  #   worksheet_name                              : 'files-folders'
+  #   range_specs_for_cells_to_link               :
+  #   - 'F3:F'
+  # - task                                        : link_cells_based_on_type
+  #   worksheet_name                              : '-toc-new'
+  #   range_specs_for_cells_to_link               :
+  #   - 'E3:F'
+  # - task                                        : link_cells_to_worksheet
+  #   worksheet_name                              : '-toc-new'
+  #   range_specs_for_cells_to_link               :
+  #     - 'O3:O'
+  #     - 'R3:R'
+  # - task                                        : order_worksheets
+
+  # worksheet duplication, removal, renaming
+  # - task                                        : duplicate_worksheet
+  #   worksheet_names                             : true
+  #   worksheet_name_to_duplicate                 : 'z-blank'
+  # - task                                        : remove_worksheets
+  #   worksheet_names                             : true
+  # - task                                        : rename_worksheet
+  #   worksheet_name                              : 'z-header'
+  #   new_worksheet_name                          : 'z-head'
+  # - task                                        : copy_worksheets_to_other_gsheets
+  #   worksheet_names                             : true
+  #   destination_gsheet_names                    : true
+
+  # worksheet creation, formatting and related tasks
+  # - task                                        : clear_data_validations
+  #   worksheet_names                             : true
+  #   range_spec                                  : 'A1:Z'
+  # - task                                        : clear_conditional_formats
+  #   worksheet_names                             : true
+  # - task                                        : create_review_notes_conditional_formatting
+  #   worksheet_names                             : true
+  # - task                                        : create_worksheets
+  #   worksheet_names                             : true
+  # - task                                        : format_worksheets
+  #   worksheet_names                             : true
+
+  # trailing blank row removal, review-notes, column sizing
+  # - task                                        : remove_extra_columns
+  #   worksheet_names                             : true
+  #   cols_to_remove_from                         : 'F'
+  #   cols_to_remove_to                           : 'end'
+  # - task                                        : remove_trailing_blank_rows
+  #   worksheet_names                             : true
+  # - task                                        : column_pixels_in_row
+  #   worksheet_names                             : true
+  #   row_to_update                               : 1
+  # - task                                        : resize_columns_from_values_in_row
+  #   worksheet_names                             : true
+  #   row_to_consult                              : 1
+
+  # add rows and columns
+  # - task                                        : add_rows
+  #   worksheet_names                             : true
+  #   rows_to_add_at                              : end
+  #   rows_to_add                                 : 1
+  #   when_row_count_is                           : 15
+  # - task                                        : add_columns
+  #   worksheet_names                             : true
+  #   cols_to_add_at                              : 'B'
+  #   cols_to_add                                 : 1
+  #   when_col_count_is                           : 6
+
+  # work on ranges etc.
+  # - task                                        : work_on_ranges
+  #   worksheet_names                             : true
+  #   work_specs                                  : true
+
+  # find and replace in worksheets
+  # - task                                        : find_and_replace
+  #   worksheet_names                             : true
+  #   find_replace_patterns                       : true
+
+
+# the gsheet(s) that will be processed
+gsheets:
+
+
+# gsheets which are targets for some activities like copy worksheet
+destination-gsheet-names:
+
+
+# worksheets on which some work will be done, supports RE
+worksheet-names:
+
+
+# worksheets to be excluded, support RE
+worksheet-names-excluded:
+
+
+# work specifications to apply on a list of worksheets
+work-specs:
+
+
+# find and replace patterns
+find-replace-patterns:

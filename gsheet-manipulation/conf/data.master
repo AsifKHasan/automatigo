@@ -1,0 +1,848 @@
+# resume gsheets
+  # template
+    - spectrum__Résumé__template
+    - sscl__Résumé__template
+    - celloscope__résumé__template
+  # sscl resume
+    - Résumé__Arif.Hossain
+    - Résumé__Bappa.Saha
+    - Résumé__Faraz.Ahmed.Bhuiyan
+    - Résumé__Faridul.Islam.Farhad
+    - Résumé__Fasbeer.Mohammad.Haque
+    - Résumé__Fatema.Tabassum
+    - Résumé__Golam.Mostafa
+    - Résumé__Golam.Sarwar.Md.Mursalin
+    - Résumé__Hasib.Mahmud
+    - Résumé__Humaira.Binte.Harun
+    - Résumé__Iftakhar.Ali.Khandokar
+    - Résumé__Jumana.Ahmed
+    - Résumé__Kamrul.Islam.Sarek
+    - Résumé__Md.Abu.Sayed
+    - Résumé__Md.Al.Emran.Hossain
+    - Résumé__Md.Aminul.Matubber
+    - Résumé__Md.Faizul.Bari
+    - Résumé__Md.Faridul.Islam
+    - Résumé__Md.Mahmudul.Hasan
+    - Résumé__Md.Mazharul.Islam.Rakib
+    - Résumé__Md.Nuray.Alam.Siddik
+    - Résumé__Md.Rokonuzzaman
+    - Résumé__Md.Rubel.Ahamed
+    - Résumé__Md.Sayeduzzaman
+    - Résumé__Mehedi.Hasan.Borshon
+    - Résumé__Mohammad.Aminur.Rahman
+    - Résumé__Mohammed.Farhan.Islam
+    - Résumé__Moinur.Rahman
+    - Résumé__Monjur.Ahmed
+    - Résumé__Mosaddek.Ali.Mithu
+    - Résumé__Mourud.Ishmam.Ahmed
+    - Résumé__Mst.Tania.Khatun
+    - Résumé__Nafisa.Tasmiah
+    - Résumé__Nuraiyad.Nafiz.Islam
+    - Résumé__Proma.Hossain.Progga
+    - Résumé__Rasel.Mahmud
+    - Résumé__Sadia.Afroz
+    - Résumé__Sarah.Noor
+  # spectrum resume
+    - Résumé__Aabid.Rahman
+    - Résumé__Abu.Muhammad.Rashed.Mujib.Noman
+    - Résumé__Adiat.Islam.Sahih
+    - Résumé__Airin.Sultana
+    - Résumé__Aminul.Quader.Khalili
+    - Résumé__Aqib.Asifur.Rahman
+    - Résumé__Arif.Ullah
+    - Résumé__Ashish.Kumar.Das
+    - Résumé__Asif.Hasan.Chowdhury
+    - Résumé__Asma.Ul.Husna
+    - Résumé__Atiqur.Rahman
+    - Résumé__Delwar.Hossain
+    - Résumé__Dip.Kumar.Pal
+    - Résumé__Dipika.Debnath
+    - Résumé__Fakhrul.Islam.(Babu)
+    - Résumé__Ferdous.Ara.Ruma
+    - Résumé__Ferdous.Rahman
+    - Résumé__Fiaz.Ahmed
+    - Résumé__Fokrul.Hassan.Zibon
+    - Résumé__Forkan.Bin.Quasem
+    - Résumé__Hasan.Al.Mahmood
+    - Résumé__Ibrahim.Ibna.Md.Liaquat.Ullah
+    - Résumé__Joy.Kabiraj
+    - Résumé__Jubayer.Reza.Chowdhury
+    - Résumé__Jyoti.Basu.Chakma
+    - Résumé__K.M.Zabir.Tarique
+    - Résumé__Kaji.Shahjahan.Omar
+    - Résumé__Kamrul.Islam.Sarek
+    - Résumé__Karzon.Chowdhury
+    - Résumé__Kazi.Md.Mohsin
+    - Résumé__Kazi.Rakibur.Rahman
+    - Résumé__Khaja.Ajijul.Haque.(Mithu)
+    - Résumé__Khandakar.Asif.Hasan
+    - Résumé__Khandakar.Muttakinuzzaman
+    - Résumé__Mahim.Jahan.Mim
+    - Résumé__Manzur.Alam
+    - Résumé__Md.Ashrafur.Rahaman
+    - Résumé__Md.Farhadul.Alam.Jion
+    - Résumé__MD.Ferdous.Mahmud
+    - Résumé__Md.Mehrab.Hossen.Siam
+    - Résumé__Md.Murshid.Sarker
+    - Résumé__Md.Abdul.Kader
+    - Résumé__Md.Abdullah.Al.Mamun
+    - Résumé__Md.Ahsanur.Rahman
+    - Résumé__Md.Al.Shahrior.Rahman
+    - Résumé__Md.Al-Shahariar
+    - Résumé__Md.Aminur.Rahman.Rony
+    - Résumé__Md.Anamul.Haque
+    - Résumé__Md.Anisur.Rahman
+    - Résumé__Md.Anowarul.Islam.Rahat
+    - Résumé__Md.Ariful.Islam
+    - Résumé__Md.Asgor.Ali
+    - Résumé__Md.Ashaduzzaman
+    - Résumé__Md.Ashraful.Hossain
+    - Résumé__Md.Azadul.Karim
+    - Résumé__Md.Fahim.Islam
+    - Résumé__Md.Fazle.Rabby
+    - Résumé__Md.Hasibur.Rahman
+    - Résumé__Md.Humayun.Kabir
+    - Résumé__Md.Ibrahim.Hossen
+    - Résumé__Md.Ibrahim.Ullah
+    - Résumé__Md.Jakir.Hossain
+    - Résumé__Md.Jubaer.Hossain
+    - Résumé__Md.Kamruzzaman.(OM)
+    - Résumé__Md.Kazal.Pk
+    - Résumé__Md.Mahabub.Al-Islam
+    - Résumé__Md.Mahadi.Rahat
+    - Résumé__Md.Mahasin.Alam
+    - Résumé__Md.Mashrurul.Hakim
+    - Résumé__Md.Mazharul.Islam
+    - Résumé__Md.Mizanur.Rahman
+    - Résumé__Md.Mominul.Islam
+    - Résumé__Md.Monirul.Islam
+    - Résumé__Md.Motaleb.Hossain
+    - Résumé__Md.Murshadul.Islam
+    - Résumé__Md.Mushfiqur.Rahman
+    - Résumé__Md.Najmul.Hasan.Sharon
+    - Résumé__Md.Nazmul.Hassan
+    - Résumé__Md.Nazmul.Hossain
+    - Résumé__Md.Nurujjaman.Sarker
+    - Résumé__Md.Rabiul.Islam
+    - Résumé__Md.Rakib.Uddin.Chowdhury
+    - Résumé__Md.Raqibul.Islam
+    - Résumé__Md.Rezaul.Islam
+    - Résumé__Md.Rony.Ahmed
+    - Résumé__Md.Saidur.Rahman.(Shamim)
+    - Résumé__MD.Saiful.Islam.(DBA)
+    - Résumé__Md.Salman.Hossen
+    - Résumé__Md.Samim.Hosen
+    - Résumé__Md.Sayeem.Khan
+    - Résumé__Md.Shahin.Sheikh
+    - Résumé__Md.Shamsuddin.Pappu
+    - Résumé__Md.Sharafat.Hossain.Kamal
+    - Résumé__Md.Shariful.Islam
+    - Résumé__Md.Shohag.Hossain
+    - Résumé__Md.Siddiqur.Rahman
+    - Résumé__Md.Tuhin.Reza
+    - Résumé__Md.Zahidul.Islam
+    - Résumé__Mehedi.Hasan.Bhuiyan
+    - Résumé__Miskatun.Nahar
+    - Résumé__Mohammad.Main.Uddin
+    - Résumé__Mohammad.Sabbir.Ahmed
+    - Résumé__Mohammad.Saiful.Islam
+    - Résumé__Muhammad.Myanuddin
+    - Résumé__Mumtahina.Afroz
+    - Résumé__Nafis.Ahmed
+    - Résumé__Nawsish.Ahmed
+    - Résumé__Nazmul.Hossain.(Tusit)
+    - Résumé__Nur-E-Asma.Tabassum
+    - Résumé__Rahat.Hussain
+    - Résumé__Raihan.Ur.Rashid
+    - Résumé__Rajib.Chowdhury
+    - Résumé__Rizia.Aktar
+    - Résumé__S.M.Touhidul.Islam.Al-Amin
+    - Résumé__S.M.Azharul.Islam
+    - Résumé__Sagar.Saha
+    - Résumé__Saiful.Islam.(Sumon)
+    - Résumé__Sanjoy.Kumar.Saha
+    - Résumé__Sanmoon.Yasmin
+    - Résumé__Saqeeb.Redwanur.Rahman
+    - Résumé__Sarkar.Abul.Kalam.Azad
+    - Résumé__Sayeda.Fatema.Ferdousi
+    - Résumé__Sayeda.Tanjila
+    - Résumé__Shaikh.Tojibul.Islam
+    - Résumé__Shajir.Uddin.Haider
+    - Résumé__Sharif.Mohmmad.Bin.Safi
+    - Résumé__Shibly.Ahmed
+    - Résumé__Shihan.Zaman
+    - Résumé__Shuvo.Das
+    - Résumé__SK.Maruf.Hosen
+    - Résumé__Sonjoy.Kumar
+    - Résumé__Syed.Md.Manzur.Murshed
+    - Résumé__Syed.Tareque.Hasan
+    - Résumé__Tanmoy.Chandra.Dhar
+    - Résumé__Tanveer.Ehsanur.Rahman
+    - Résumé__Tanzin.Rubaiyat
+    - Résumé__Taposh.Kumar
+    - Résumé__Tasnim.Kabir.Ratul
+    - Résumé__Tridib.Biswas
+    - Résumé__Umaeer.Al.Hammad
+  # doer resume
+    - Résumé__Abdullah.Al.Maruf
+    - Résumé__Abir.Ahmed
+    - Résumé__Abu.Zahed.Md.Shamshed
+    - Résumé__Ajoy.Kumar.Khan
+    - Résumé__Amjad.Hossain.Polock
+    - Résumé__Arun.Chakraborty
+    - Résumé__Ashfaq.Inteser
+    - Résumé__Ayesha.Siddika
+    - Résumé__Ayesha.Siddiqa.Asha
+    - Résumé__B.M.Ferdous.Mahmud
+    - Résumé__Fahadul.Islam.Shimak
+    - Résumé__Fahima.Rahman
+    - Résumé__Faisal.Ahmed.Anik
+    - Résumé__Farzana.Afrin
+    - Résumé__Gaffar.Khan
+    - Résumé__Hasibul.Hasan.Emon
+    - Résumé__Imran.Howlader
+    - Résumé__Ishrat.Fatima
+    - Résumé__Ishtiak.Ahmed
+    - Résumé__Istiak.Ahmed
+    - Résumé__Jahin.Khan.Shourov
+    - Résumé__Jashim.Uddin.Ahmed
+    - Résumé__K.M.Anisur.Rahman
+    - Résumé__Kanis.Fatema.Mariya
+    - Résumé__Mahamudul.Hasan
+    - Résumé__Mahmudul.Hasan
+    - Résumé__Maria.Nurjahanara.Bhuiyan
+    - Résumé__Md.Abdullah.Al.Salam
+    - Résumé__Md.Abdus.Samad.Patwary
+    - Résumé__Md.Arafat.Rahman.Sayed
+    - Résumé__Md.Asaduzzaman
+    - Résumé__Md.Bodrul.Alam
+    - Résumé__Md.Bony.Tasnim.Ibna.Razzak
+    - Résumé__Md.Golam.Kibria
+    - Résumé__Md.Habibur.Rahman.Tusher
+    - Résumé__Md.Humayun.Kabir.(BDEx)
+    - Résumé__Md.Humayun.Kabir.(Software)
+    - Résumé__Md.Imtiaz.Mahmood.Sayed
+    - Résumé__Md.Izadul.Ala.Ala.Baksh
+    - Résumé__Md.Jafrul.Ahsan
+    - Résumé__Md.Jahidul.Islam
+    - Résumé__Md.Jalal.Uddin
+    - Résumé__Md.Jamal.Uddin
+    - Résumé__Md.Kamal.Parvez
+    - Résumé__Md.Kamrul.Hasan.(BDEx)
+    - Résumé__Md.Kamrul.Islam
+    - Résumé__Md.Kamruzzaman
+    - Résumé__Md.Khaleque.Rakibul.Haque
+    - Résumé__Md.Masud.Rana.(Tuhin)
+    - Résumé__Md.Masum.Ahmmed
+    - Résumé__Md.Mizanur.Rahman
+    - Résumé__Md.Mokaddes.Hossain.Talukder
+    - Résumé__Md.Moktadir.Hosan
+    - Résumé__Md.Mokul.Arfan
+    - Résumé__Md.Moniruzzaman.Liton
+    - Résumé__Md.Nahhid.Uj.Jaman.Jisun
+    - Résumé__Md.Noor-E-Alom.Siddique
+    - Résumé__Md.Radoan.Ahmed
+    - Résumé__Md.Reasad.Islam
+    - Résumé__Md.Rezaul.Karim.Sarker
+    - Résumé__Md.Sahidur.Rahman
+    - Résumé__Md.Shabbir.Hossain.Bhuiya
+    - Résumé__Md.Shamiul.Islam
+    - Résumé__Md.Siam.Samad.Prantik
+    - Résumé__Md.Sobuj.Sordar
+    - Résumé__Md.Sohan.Kabir
+    - Résumé__Md.Tauhid.Amir
+    - Résumé__Md.Thoufiq.Zumma
+    - Résumé__Md.Zillur.Rahman
+    - Résumé__Mithun.Kumar.Debnath
+    - Résumé__Mohaiminul.Islam
+    - Résumé__Mohammad.Abul.Hasnat
+    - Résumé__Mohammad.Shahadat.Hossain
+    - Résumé__Mohammad.Ziaul.Hoq
+    - Résumé__Moshiur.Rahman
+    - Résumé__Musaddiqur.Rahman.Ovi
+    - Résumé__Ommul.Khair.Musammat.Tahera
+    - Résumé__Palash.Kumar.Sinha
+    - Résumé__Polas.Hossain
+    - Résumé__Rafiqul.Islam.Reyad
+    - Résumé__Rahana.Akter
+    - Résumé__Rasheda.Akter
+    - Résumé__Redwan.Al.Rashed
+    - Résumé__Rizon.Ali
+    - Résumé__Robin.Das
+    - Résumé__Rubayat.Zaman
+    - Résumé__Rubel.Ahammed
+    - Résumé__S.M.Al-Amin
+    - Résumé__Sabiha.Afrin.Bithee
+    - Résumé__Salma.Afroze
+    - Résumé__Sathe.Khan.Majlish
+    - Résumé__Sayeedul.Islam.Talukder
+    - Résumé__Shaikh.Insad.Ibney.Amin
+    - Résumé__Shajidur.Rahman.Chowdury
+    - Résumé__Shanawaz.Durjoy
+    - Résumé__Sharif.Mohammad.Rafi
+    - Résumé__Sharmin.Akter.Pinki
+    - Résumé__Shihab.Uddin
+    - Résumé__Subrata.Sanyal
+    - Résumé__Sufia.Khanom
+    - Résumé__Suman.Miah
+    - Résumé__Sumshur.Rahman
+    - Résumé__Susmoy.Saha
+    - Résumé__Syed.Ahmad.Mahdi
+    - Résumé__Syed.Ahmad.Rasul
+    - Résumé__Tanjim.Ashraf
+    - Résumé__Tanvir.Ahammed.Sobuj
+    - Résumé__Tanvir.Ahmed
+    - Résumé__Tanvir.Mallik
+    - Résumé__Umme.Habiba.Rita
+    - Résumé__Zubair.Azim.Miazi
+  # celloscope resume
+    - Résumé__Abdullah.Nazmus.Sakib
+    - Résumé__Abrar.Jahin.Niloy
+    - Résumé__Abu.Musa.Sakib
+    - Résumé__Afroja.Akter
+    - Résumé__Al-Hai.Rezwan.Huq
+    - Résumé__Alif.Arfab.Pavel
+    - Résumé__Altaf.Hossain
+    - Résumé__Amena.Shiddika
+    - Résumé__Aminul.Hossain.Sazzad
+    - Résumé__Amiya.Ahamed
+    - Résumé__Anan.Aiman.Tuba
+    - Résumé__Arnab.Basak
+    - Résumé__Avi.Afrid
+    - Résumé__Deboraj.Saha
+    - Résumé__Faisal.Ahmed
+    - Résumé__Farhana.Naz
+    - Résumé__Heronmoy.Tanchangya.Emon
+    - Résumé__Kamrul.Hasan.Farabee
+    - Résumé__Kamrun.Nahar
+    - Résumé__Khondoker.Tanvir.Hossain
+    - Résumé__Mahabuba.Rahman.Munia
+    - Résumé__Mainur.Rahman.Rasel
+    - Résumé__Maly.Mohsem.Ahmed
+    - Résumé__Md.Abu.Yousuf.Sajal
+    - Résumé__Md.Aiobi.Habib.Mijan
+    - Résumé__Md.Asif.Khan.Taj
+    - Résumé__Md.Atiar.Rahman
+    - Résumé__Md.Boktiar.Mahbub.Murad
+    - Résumé__Md.Farhad.Bhuiyan
+    - Résumé__MD.Fuad.Hasan.Chowdhury
+    - Résumé__Md.Hafizur.Rahman
+    - Résumé__Md.Kamruzzaman.Tanim
+    - Résumé__Md.Nazmul.Alam
+    - Résumé__Md.Sadik.Hasan.Rafi
+    - Résumé__Md.Samiul.Alim
+    - Résumé__Md.Shariar.Kabir
+    - Résumé__Md.Tahmid.Islam.Bhuiyan
+    - Résumé__Mehedi.Hasan
+    - Résumé__Mehedi.Hasan.(Medu)
+    - Résumé__Mohammad.Kamrul.Hasan
+    - Résumé__Mohammad.Mashud.Karim
+    - Résumé__Mohammad.Wakib.Hasan
+    - Résumé__Muhammad.Zubair.Hasan
+    - Résumé__Mushfika.Faria
+    - Résumé__Nahid.Karim.Ankur
+    - Résumé__Nasima.Aktar
+    - Résumé__Nayeem.Ahmed
+    - Résumé__Nazia.Hossain
+    - Résumé__Nazmus.Sakib
+    - Résumé__Omar.Faruk
+    - Résumé__Rashida.Akter
+    - Résumé__Reyad.Hossain
+    - Résumé__Rizvi.Mahmud
+    - Résumé__Sakib.Chowdhury
+    - Résumé__Sakib.Ibn.Abdullah
+    - Résumé__Salil.Chakma
+    - Résumé__Sazzad.Hossan.Sakib
+    - Résumé__Shafayat.Ahmed
+    - Résumé__Shah.Nafiz.Manjoor
+    - Résumé__Shah.Shafi.Mohammed.Shariful.Alam
+    - Résumé__Shajeda.Akter.Shanta
+    - Résumé__Sharif.Tamjidur.Rahman
+    - Résumé__Sheikh.Iftekhar.Ahmed
+    - Résumé__Syed.Mostofa.Monsur
+    - Résumé__Tahia.Tasnim
+    - Résumé__Trimita.Chakma
+    - Résumé__Umme.Rumman.Usha
+  # ael resume
+    - Résumé__Asadul.Haque
+    - Résumé__Asif.Yusuf
+    - Résumé__Assaduzzaman
+    - Résumé__Dipankar.Kumar.Biswas
+    - Résumé__Iqbal.Yusuf
+    - Résumé__Md.Nasir.Uddin
+    - Résumé__Md.Ahsan.Habib.Rocky
+    - Résumé__Md.Atikur.Zaman
+    - Résumé__Md.Mijanur.Rahman
+    - Résumé__Md.Nahidul.Islam.Siddique
+    - Résumé__Md.Sohel.Rana
+    - Résumé__Md.Yousuf.Ali
+    - Résumé__Mir.Earfan.Elahi
+    - Résumé__Mostafa.Jannatul.Ferdows
+    - Résumé__Salman.Ahmed.Firoz
+
+
+
+# pds gsheets
+  # template
+    - pds__spectrum__blank.template
+    - pds__SSCL__blank.template
+    - pds__doer__blank.template
+    - pds__celloscope__blank.template
+
+  # spectrum pds
+    - pds__ACMELL
+    - pds__Airforce-Network-2021
+    - pds__BANBEIS
+    - pds__BB-PAM-2022
+    - pds__BB-RTGS_2023
+    - pds__BB-RTGS-2018
+    - pds__BBA-BPBB
+    - pds__BCC
+    - pds__BCC-AMC
+    - pds__BCC-AMC-2020
+    - pds__BCC-Cisco-CON-Renewal-2023
+    - pds__BCC-Cisco-Renewal
+    - pds__BCC-DC
+    - pds__BCC-DC-Expansion
+    - pds__BCC-DSCOCP
+    - pds__BCC-Huawei-AMC
+    - pds__BCC-HW-Expansion
+    - pds__BCC-Infra-AMC-2022-2025
+    - pds__BCC-Tier-IV-ServerStorage
+    - pds__BDREN-DC-Expansion
+    - pds__BDREN-G-13
+    - pds__BDREN-Network
+    - pds__BDREN-Trust-AMC-2020
+    - pds__BDREN-Trust-AMC-2022
+    - pds__Beximco-IT
+    - pds__BG(DC)
+    - pds__BPA-Sardah-Police-Academy
+    - pds__BR-DCDR
+    - pds__BRP
+    - pds__BSCCL
+    - pds__BSCCL-Kuakata
+    - pds__BSCCL-CISCO
+    - pds__BTCL
+    - pds__BTCL-NGNCDR
+    - pds__BTTB
+    - pds__BWDB
+    - pds__CCA-Central-Repository-2021
+    - pds__CCA-esign-Database-2021
+    - pds__CCC-WPSD
+    - pds__CRM
+    - pds__DBBL-DWDM
+    - pds__DISWLS
+    - pds__DMS-UBL
+    - pds__DSEL
+    - pds__DSHE-DC
+    - pds__DSILW(BAF)
+    - pds__DVSIVSS
+    - pds__DWASA
+    - pds__EMS
+    - pds__FOLC
+    - pds__GP-CHQ
+    - pds__GPIGP
+    - pds__iBAS
+    - pds__IBBL
+    - pds__ICBIBL(DR)
+    - pds__ICBISL
+    - pds__IFIC-DC
+    - pds__InterCon
+    - pds__IOWM
+    - pds__ITCL
+    - pds__ITICB
+    - pds__ITNA
+    - pds__IUB
+    - pds__JU
+    - pds__JUB
+    - pds__KTAL
+    - pds__LBBL
+    - pds__MCICT-SASECIH
+    - pds__MOS-ICT
+    - pds__Mosharaf-Group
+    - pds__MTBL-CCTV
+    - pds__MTBL-EBNCDC
+    - pds__NBR-ASYCUDA
+    - pds__NBR-ASYCUDA-SLA
+    - pds__NBR-AW-CTG-Lot-01
+    - pds__NBR-AW-DHK-Lot-02
+    - pds__NBR-AW-Network-Security
+    - pds__NBR-AW-Systems
+    - pds__NBR-NSW
+    - pds__NL-DC
+    - pds__OBL
+    - pds__PHQ-AMC
+    - pds__Police-HQ-Network
+    - pds__REB
+    - pds__RHD-BMMS-2018
+    - pds__RHD-ITI-AMC-2017
+    - pds__RHD-ITI-AMC-2021
+    - pds__RHD-MIS-consultancy
+    - pds__RHD-MIS-e-procurement
+    - pds__RWGH
+    - pds__SBFI
+    - pds__SCB
+    - pds__SIBL
+    - pds__SIBL(DC)
+    - pds__SPARRSO-2010
+    - pds__SPARRSO-2012
+    - pds__SSF
+    - pds__SSVPE
+    - pds__SUST-TC
+    - pds__TBL
+    - pds__TDS
+    - pds__UGCB
+    - pds__VHA
+    - pds__WDTGCL
+    - pds__ABBank-CIB
+    - pds__AgraniBank-BACPS
+    - pds__BB-BACPS
+    - pds__BB-CA
+    - pds__BCBL-CIB
+    - pds__BCC-CA
+    - pds__BCC-GRP-2023
+    - pds__Bdjobs-MPVCC
+    - pds__Biman-HelpDeskHR
+    - pds__Boeing-BangladeshBiman
+    - pds__BuySight-BizOps
+    - pds__CapGains-LLC
+    - pds__CCA-IDS
+    - pds__CCC-CSSM
+    - pds__CID-CDMS
+    - pds__CityBank-CityAgent
+    - pds__CityCell-NID-V-SA
+    - pds__ConserveTrack-RDU
+    - pds__ConserveTrack-WCM
+    - pds__EAM-CMMS
+    - pds__GP-HRMS
+    - pds__GP-ROC
+    - pds__GP-WBMS
+    - pds__HabibBank-BACPS
+    - pds__IslamGarments-rmgPro
+    - pds__lekhapora.com
+    - pds__LGED-IPMSRDEC
+    - pds__MarketSharp-CRM
+    - pds__MTBL-BACPS
+    - pds__NBR-BSW-2024
+    - pds__NBR-CAMS
+    - pds__NBR-UMS
+    - pds__Nestle-VATsys
+    - pds__NTL-uniVerge
+    - pds__OAGN-NAMS
+    - pds__OCAG-AMMS
+    - pds__Partex-OEBS
+    - pds__Payra-Port-Sophos-Renewal-2023
+    - pds__RA-BRPSharePoint
+    - pds__RA-CWRBS
+    - pds__RA-SRMS
+    - pds__Revnx-Journey
+    - pds__RHD-BDMS-2016-17
+    - pds__RHD-CBRNIP-TOLL-2022
+    - pds__RHD-MIS-AMC-2009
+    - pds__RHD-MIS-AMC-2015
+    - pds__RHD-TDMS-2020-23
+    - pds__ROBI-DMS
+    - pds__ROBI-ROC
+    - pds__SAU-ACAS
+    - pds__SCB-CBRM
+    - pds__SCB-OPCCMS
+    - pds__SCB-RTGS
+    - pds__SECL-CSB
+    - pds__SECL-Metrica
+    - pds__SECL-UniVerge
+    - pds__SECL-VATsys
+    - pds__SigmaStream-V2P
+    - pds__SportsBuddy
+    - pds__TeleExchange-uniVerge
+    - pds__TrustBank-BACPS
+    - pds__UGC-HEMIS
+    - pds__Unilever-MFGPRO
+  # SSCL pds
+    - pds__SSCL__Augmedix-RoutePlanner
+    - pds__SSCL__NBR-CA-MGT
+    - pds__SSCL__NBR-CAAMS
+    - pds__SSCL__NBR-D-BOND
+    - pds__SSCL__NBR-RMS
+    - pds__SSCL__NBR-SRO
+    - pds__SSCL__NBR-UMS
+    - pds__SSCL__PBL-LC-RPA
+    - pds__SSCL__PBL-SCF
+    - pds__SSCL__RHD-BRTA-API
+    - pds__SSCL__INFINIGENT-EAS
+  # doer pds
+    - pds__doer__ACML-HR-Management-System
+    - pds__doer__AgraniBank-Agent-Banking
+    - pds__doer__AgraniBank-e-KYC
+    - pds__doer__AgraniBank-IB
+    - pds__doer__AgraniBank-Master-Agent
+    - pds__doer__AgraniBank-Remittance-Only-Point
+    - pds__doer__AgraniBank-SMS-Alert
+    - pds__doer__IDRA-ALO
+    - pds__doer__IDRA-e-KYC
+    - pds__doer__IDRA-Policy-Repository
+    - pds__doer__IDRA-SMS-Email
+    - pds__doer__IDRA-UMP
+    - pds__doer__MRA-IMS
+    - pds__doer__MRA-OMS
+    - pds__doer__PAMCL-Accounts-Management-System
+  # celloscope pds
+    - pds__celloscope__AEL-Accounting
+    - pds__celloscope__Crossworld-uniVerge
+    - pds__celloscope__NBR-FFBT-ARDS
+    - pds__celloscope__NRBCB-Agent-Banking
+    - pds__celloscope__NRBCB-e-KYC
+    - pds__celloscope__SAU-ACAS-2023
+    - pds__celloscope__TeleExchange-uniVerge
+
+
+
+# worksheet-names:
+  # resume worksheets
+    - '-toc-new'
+    - 00-layout
+    - 00-layout-WB
+    - 01-personal
+    - 02-career-highlight
+    - 03-education
+    - 04-managerial-expertise
+    - 05-technical-expertise
+    - 06-job-history
+    - 07-project-roles
+    - 08-training
+    - 09-certification
+    - 10-membership
+    - 11-language-proficiency
+    - 12-contact
+    - 13-educational-certificates
+    - 14-vendor-certificates
+    - 15-institutional-certificates
+    - 16-references
+    - 17-national-id
+    - z-foot
+    - z-head
+  # pds worksheets
+    - '-toc-new'
+    - 00-layout
+    - 00-layout-USAID
+    - 00-layout-WB
+    - 01-summary
+    - 02-revenue
+    - 03-contact
+    - 04-joint-venture
+    - 05-people
+    - 06-description
+    - 07-functionality
+    - 08-technology
+    - 09-services
+    - 10-process
+    - 11-complexity
+    - 12-screenshots
+    - z-blank
+    - z-foot
+    - z-head
+  # profile worksheets
+    - 00-coverpage
+    - 01-personal-profile
+    - 01.01-family
+    - 01.02-address
+    - 01.03-banking
+    - 02-professional-profile
+    - 02.01-education
+    - 02.02-jobs
+    - 02.03-training
+    - 02.04-certification
+    - 02.05-skills
+    - 02.06-projects
+    - 03.01-increment
+    - 03.02-events
+    - 03.03-cautions
+    - 03.04-medical
+    - 04-notes
+
+
+
+# worksheet-names-excluded:
+  - '-*'
+  - 'z-*'
+
+
+# work-specs:
+  # borders -> border-list [] : border-style [DOTTED, DASHED, SOLID, SOLID_MEDIUM, SOLID_THICK, NONE, DOUBLE]
+  'D3:D':
+    border-color  : '#000000'
+    inner-border  : False
+    border-list   :
+      - left
+      - right
+    border-style  : DASHED
+
+
+
+  # conditional formatting
+  # format column E if blank and column D has some value
+  'E4:E' :
+    conditional-formats:
+      - type      : 'CUSTOM_FORMULA'
+        values    :
+          -  '=and(not(isblank($D:$D)), isblank($E:$E))'
+        format    :
+          backgroundColor : "#f4cccc"
+
+  # review-notes
+  'A3:Z' :
+    conditional-formats:
+      - type      : 'CUSTOM_FORMULA'
+        values    :
+          -  '=not(isblank($A:$A))'
+        format    :
+          backgroundColor : "#f4cccc"
+
+  'D3:F' :
+    # CUSTOM_FORMULA
+    conditional-formats:
+      - type      : 'CUSTOM_FORMULA'
+        values    :
+          -  '=$D:$D="BANK"'
+        format    :
+          backgroundColor : "#c9daf8"
+
+      - type      : 'CUSTOM_FORMULA'
+        values    :
+          -  '=$D:$D="CHANGE"'
+        format    :
+          backgroundColor : "#fff2cc"
+
+      - type      : 'CUSTOM_FORMULA'
+        values    :
+          -  '=$D:$D="MOVE"'
+        format    :
+          backgroundColor : "#d9d2e9"
+
+      - type      : 'CUSTOM_FORMULA'
+        values    :
+          -  '=$D:$D="OMIT"'
+        format    :
+          backgroundColor : "#f4cccc"
+
+
+
+  # data validation
+    'D3:D':
+      validation-list:
+        - BANK
+        - CHANGE
+        - MOVE
+        - OK
+        - OMIT
+
+  # change fonts and vertical alignments for the worksheet
+    'A1:Z'  :
+      font-family       : Arial
+      font-size         : 11
+      valign            : top
+
+
+    # border around cells
+    'B3:Z'          :
+      border-color      : '#b7b7b7'
+      link -toc-new at cell A1 and left align the cell
+
+    'A1'    :
+      value             : '-toc-new'
+      ws-name-to-link   : '-toc-new'
+      halign            : left
+
+  # -toc-new
+    'F3'      :
+      value             : '00-layout'
+      ws-name-to-link   : '00-layout'
+    'I4'      :
+      value             : 'A4'
+    'J4'      :
+      value             : 'narrow'
+
+    'C3'      :
+      value             : 'Yes'
+
+    'O3'      :
+      value             : 'z-head'
+    'R3'      :
+      value             : 'z-foot'
+
+  # 00-layout
+    'B14'      :
+      value             : '06-job-history'
+      ws-name-to-link   : '06-job-history'
+    'B17'      :
+      value             : '07-project-roles'
+      ws-name-to-link   : '07-project-roles'
+
+  # z-head
+
+  # z-foot
+
+
+
+# find and replace patterns
+  # comma - space after, no space before
+  - find                : ','
+    replace-with        : ', '
+  - find                : ' ,'
+    replace-with        : ','
+
+  # period - space after, no space before
+  - find                : '.'
+    replace-with        : '. '
+  - find                : ' .'
+    replace-with        : '.'
+
+  # semicolon - space after, no space before
+  - find                : ';'
+    replace-with        : '; '
+  - find                : ' ;'
+    replace-with        : ';'
+
+  # colon - space after, no space before
+  - find                : ':'
+    replace-with        : ': '
+  - find                : ' :'
+    replace-with        : ':'
+
+  # opening brace - space before (except when it is a "), no space after
+  - find                : '('
+    replace-with        : ' ('
+  - find                : '( '
+    replace-with        : '('
+  - find                : '" ('
+    replace-with        : '"('
+
+  # # closing brace - space after (except when " or period or comma), no space before
+  - find                : ')'
+    replace-with        : ') '
+  - find                : ' )'
+    replace-with        : ')'
+  - find                : ') .'
+    replace-with        : ').'
+  - find                : '. )'
+    replace-with        : '.)'
+  - find                : ') ,'
+    replace-with        : '),'
+  - find                : ', )'
+    replace-with        : ',)'
+  - find                : ') "'
+    replace-with        : ')"'
+
+  # remove double space, periods
+  - find                : '  '
+    replace-with        : ' '
+  - find                : '..'
+    replace-with        : '.'
+
+  # remove nultiline
+  - find                : \n
+    replace-with        : ' '
+
+  # remove single dash
+  - find                : '-'
+    replace-with        : ''
+    entire-cell         : True
