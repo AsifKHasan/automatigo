@@ -272,7 +272,7 @@ class GoogleWorksheet(object):
         type is valid only if the range has two columns
         if the range has only one column default to worksheet link
     '''
-    def cell_link_based_on_type_requests(self, range_specs_for_cells_to_link, worksheet_dict):
+    def cell_link_based_on_type_requests(self, range_specs_for_cells_to_link, worksheets_dict):
         nesting_level = 2
         range_work_specs = {}
         for range_spec in range_specs_for_cells_to_link:
@@ -332,7 +332,7 @@ class GoogleWorksheet(object):
 
                 r = r + 1
 
-        return self.range_work_requests(range_work_specs=range_work_specs, worksheet_dict=worksheet_dict)
+        return self.range_work_requests(range_work_specs=range_work_specs, worksheets_dict=worksheets_dict)
 
 
 
@@ -355,7 +355,7 @@ class GoogleWorksheet(object):
 
     ''' link cells to worksheets request where cells values are names of worksheets
     '''
-    def cell_to_worksheet_link_requests(self, range_specs_for_cells_to_link, worksheet_dict={}):
+    def cell_to_worksheet_link_requests(self, range_specs_for_cells_to_link, worksheets_dict={}):
         range_work_specs = {}
         for range_spec in range_specs_for_cells_to_link:
             range_to_work_on = self.get_range(range_spec=range_spec)
@@ -366,26 +366,26 @@ class GoogleWorksheet(object):
                     info(f"cell {cell.address:>5} to be linked with worksheet [{cell.value}]")
                     range_work_specs[cell.address] = {'value': cell.value, 'ws-name-to-link': cell.value}
 
-        return self.range_work_requests(range_work_specs=range_work_specs, worksheet_dict=worksheet_dict)
+        return self.range_work_requests(range_work_specs=range_work_specs, worksheets_dict=worksheets_dict)
 
 
 
-    ''' format a worksheet according to spec defined in WORKSHEET_STRUCTURE
+    ''' format a worksheet according to spec defined in worksheet_def
     '''
-    def format_worksheet_requests(self, worksheet_dict, worksheet_struct):
+    def format_worksheet_requests(self, worksheet_def, worksheets_dict):
         # work on the columns - size, alignemnts, fonts and wrapping
         range_work_specs = {}
 
         #  freeze rows and columns
-        frozen_rows, frozen_columns = worksheet_struct.get('frozen-rows', 0), worksheet_struct.get('frozen-columns', 0)
+        frozen_rows, frozen_columns = worksheet_def.get('frozen-rows', 0), worksheet_def.get('frozen-columns', 0)
         dimension_freeze_requests = self.dimension_freeze_requests(frozen_rows=frozen_rows, frozen_cols=frozen_columns)
 
         num_rows = self.row_count()
 
         # all rows to default-row-size if present
         row_defaultsize_requests = []
-        if 'default-row-size' in worksheet_struct:
-            default_row_size = worksheet_struct['default-row-size']
+        if 'default-row-size' in worksheet_def:
+            default_row_size = worksheet_def['default-row-size']
             default_size_work_requests = {}
             for r in range(1, num_rows+1):
                 default_size_work_requests[str(r)] = {"size": default_row_size}
@@ -394,26 +394,26 @@ class GoogleWorksheet(object):
 
 
         # autosize rows only if autosize-rows is true
-        autosize_rows = worksheet_struct.get('autosize-rows', False)
+        autosize_rows = worksheet_def.get('autosize-rows', False)
         row_autosize_requests = []
         if autosize_rows:
             row_autosize_request = self.row_autosize_request(start_index=1, end_index=num_rows)
             row_autosize_requests.append(row_autosize_request)
 
-        if 'rows' in worksheet_struct:
+        if 'rows' in worksheet_def:
             # requests for row resizing
-            row_resize_requests = self.row_resize_requests(row_specs=worksheet_struct['rows'])
+            row_resize_requests = self.row_resize_requests(row_specs=worksheet_def['rows'])
 
         else:
             row_resize_requests = []
 
         data_validation_requests = []
-        if 'columns' in worksheet_struct:
+        if 'columns' in worksheet_def:
             # requests for column resizing
-            column_resize_requests = self.column_resize_requests(column_specs=worksheet_struct['columns'])
+            column_resize_requests = self.column_resize_requests(column_specs=worksheet_def['columns'])
 
             #  requests for column formatting
-            for col_a1, work_spec in worksheet_struct['columns'].items():
+            for col_a1, work_spec in worksheet_def['columns'].items():
                 range_spec = f"{col_a1}:{col_a1}"
                 range_work_specs[range_spec] = work_spec
 
@@ -429,21 +429,21 @@ class GoogleWorksheet(object):
             column_resize_requests, values, column_format_requests = [], [], []
 
         # get the ranges and formatting requests
-        if 'ranges' in worksheet_struct:
-            values, range_format_requests = self.range_work_requests(range_work_specs=worksheet_struct['ranges'], worksheet_dict=worksheet_dict)
+        if 'ranges' in worksheet_def:
+            values, range_format_requests = self.range_work_requests(range_work_specs=worksheet_def['ranges'], worksheets_dict=worksheets_dict)
         else:
             values, range_format_requests = [], []
 
         # conditional formatting for blank cells
-        if 'cell-empty-markers' in worksheet_struct:
-            conditional_format_requests = self.conditional_formatting_for_blank_cells_requests(range_specs=worksheet_struct['cell-empty-markers'])
+        if 'cell-empty-markers' in worksheet_def:
+            conditional_format_requests = self.conditional_formatting_for_blank_cells_requests(range_specs=worksheet_def['cell-empty-markers'])
         else:
             conditional_format_requests = []
 
         # will there be review-notes in the worksheet
-        if 'review-notes' in worksheet_struct:
-            if worksheet_struct['review-notes']:
-                num_cols = worksheet_struct.get('num-columns', 26)
+        if 'review-notes' in worksheet_def:
+            if worksheet_def['review-notes']:
+                num_cols = worksheet_def.get('num-columns', 26)
                 review_notes_format_requests = self.conditional_formatting_for_review_notes_requests(num_cols=num_cols)
             else:
                 review_notes_format_requests = []
@@ -517,7 +517,7 @@ class GoogleWorksheet(object):
             column_width = column_sizes[self.title][col_num]
             range_work_specs[cell_a1] = {'value': column_width, 'halign': 'center'}
 
-        return self.range_work_requests(range_work_specs=range_work_specs, worksheet_dict={})
+        return self.range_work_requests(range_work_specs=range_work_specs, worksheets_dict={})
 
 
 
@@ -595,7 +595,7 @@ class GoogleWorksheet(object):
 
     ''' work on a range work specs requests for value and format updates
     '''
-    def range_work_requests(self, range_work_specs={}, worksheet_dict={}):
+    def range_work_requests(self, range_work_specs={}, worksheets_dict={}):
         formats = []
         values = []
         merges = []
@@ -606,7 +606,7 @@ class GoogleWorksheet(object):
         for range_spec, work_spec in range_work_specs.items():
             # value
             if 'value' in work_spec:
-                values.append({'range': f"'{self.title}'!{range_spec}", 'values': [[build_value_from_work_spec(work_spec=work_spec, worksheet_dict=worksheet_dict, google_service=self.service)]]})
+                values.append({'range': f"'{self.title}'!{range_spec}", 'values': [[build_value_from_work_spec(work_spec=work_spec, worksheets_dict=worksheets_dict, google_service=self.service)]]})
 
             # merge
             merge = False

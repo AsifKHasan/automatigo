@@ -211,15 +211,16 @@ class GoogleSheet(object):
 
                 return GoogleWorksheet(google_service=self.service, gspread_worksheet=ws, gsheet=self)
 
-        error(f"worksheet [{worksheet_name:<40}] not found", nesting_level=1)
+        if not suppress_log:
+            error(f"worksheet [{worksheet_name:<40}] not found", nesting_level=1)
 
 
 
     ''' returns a dict {worksheet_name, worksheet_id}
     '''
     def worksheets_as_dict(self):
-        worksheet_dict = { gspread_worksheet.title : gspread_worksheet.id for gspread_worksheet in self.worksheets }
-        return worksheet_dict
+        worksheets_dict = { gspread_worksheet.title : gspread_worksheet.id for gspread_worksheet in self.worksheets }
+        return worksheets_dict
 
 
 
@@ -282,8 +283,8 @@ class GoogleSheet(object):
     def link_cells_based_on_type(self, worksheet_name, range_specs_for_cells_to_link):
         worksheet_to_work_on = self.worksheet_by_name(worksheet_name)
         if worksheet_to_work_on:
-            worksheet_dict = self.worksheets_as_dict()
-            values, requests = worksheet_to_work_on.cell_link_based_on_type_requests(range_specs_for_cells_to_link=range_specs_for_cells_to_link, worksheet_dict=worksheet_dict)
+            worksheets_dict = self.worksheets_as_dict()
+            values, requests = worksheet_to_work_on.cell_link_based_on_type_requests(range_specs_for_cells_to_link=range_specs_for_cells_to_link, worksheets_dict=worksheets_dict)
             self.update_in_batch(values=values, requests=requests, requester='link_cells_based_on_type')
 
 
@@ -305,8 +306,8 @@ class GoogleSheet(object):
     def link_cells_to_worksheet(self, worksheet_name, range_specs_for_cells_to_link):
         worksheet_to_work_on = self.worksheet_by_name(worksheet_name)
         if worksheet_to_work_on:
-            worksheet_dict = self.worksheets_as_dict()
-            values, requests = worksheet_to_work_on.cell_to_worksheet_link_requests(range_specs_for_cells_to_link=range_specs_for_cells_to_link, worksheet_dict=worksheet_dict)
+            worksheets_dict = self.worksheets_as_dict()
+            values, requests = worksheet_to_work_on.cell_to_worksheet_link_requests(range_specs_for_cells_to_link=range_specs_for_cells_to_link, worksheets_dict=worksheets_dict)
             self.update_in_batch(values=values, requests=requests, requester='link_cells_to_worksheet')
 
 
@@ -363,55 +364,15 @@ class GoogleSheet(object):
 
     ''' work on a (list of) worksheet's range of work specs for value and format updates
     '''
-    def format_worksheets(self, worksheet_names):
-        global WORKSHEET_STRUCTURE
-        values, requests = [], []
-        worksheet_dict = self.worksheets_as_dict()
-        worksheet_struct = None
-
-        # get conditional formats
-        conditional_formats = self.get_conditional_formats(try_for=3)
-
-        # we may have a specific workload defined for the worksheet and if there is not, we may have a common (*) workload defined
-        for worksheet_name in worksheet_names:
-            # clear existing conditional formats
-            if worksheet_name not in WORKSHEET_STRUCTURE:
-                warn(f"No structure defined for formatting [{worksheet_name}]", nesting_level=1)
-                if '*' in WORKSHEET_STRUCTURE:
-                    worksheet_struct = WORKSHEET_STRUCTURE['*']
-                    info(f"But a common structure (*) was defined for formatting [{worksheet_name}]", nesting_level=1)
-                else:
-                    continue
-
-            else:
-                worksheet_struct = WORKSHEET_STRUCTURE[worksheet_name]
-
-            worksheet_to_work_on = self.worksheet_by_name(worksheet_name)
-            if worksheet_to_work_on:
-                # clear conditional formats
-                number_of_rules = len(conditional_formats.get(worksheet_name, []))
-                reqs = worksheet_to_work_on.clear_conditional_formats_requests(number_of_rules=number_of_rules)
-                requests = requests + reqs
-
-                vals, reqs = worksheet_to_work_on.format_worksheet_requests(worksheet_dict=worksheet_dict, worksheet_struct=worksheet_struct)
-                values = values + vals
-                requests = requests + reqs
-
-        self.update_in_batch(values=values, requests=requests, requester='format_worksheets')
-
-
-
-    ''' work on a (list of) worksheet's range of work specs for value and format updates
-    '''
     def work_on_ranges(self, worksheet_names, work_specs={}):
         requests = []
         values = []
-        worksheet_dict = self.worksheets_as_dict()
+        worksheets_dict = self.worksheets_as_dict()
         for worksheet_name in worksheet_names:
             # info(f"working on .. [{len(work_specs.keys())}] ranges on [{worksheet_name}]", nesting_level=1)
             worksheet_to_work_on = self.worksheet_by_name(worksheet_name)
             if worksheet_to_work_on:
-                vals, reqs = worksheet_to_work_on.range_work_requests(range_work_specs=work_specs, worksheet_dict=worksheet_dict)
+                vals, reqs = worksheet_to_work_on.range_work_requests(range_work_specs=work_specs, worksheets_dict=worksheets_dict)
                 values = values + vals
                 requests = requests + reqs
 
@@ -557,3 +518,92 @@ class GoogleSheet(object):
             else:
                 warn(f"destination gsheet [{destination_gsheet_name}] not found", nesting_level=1)
 
+
+
+    ''' create worksheets according to spec defined in worksheet_defs
+    '''
+    def create_worksheets(self, worksheet_names, worksheet_defs):
+        worksheet_add_requests = []
+        for worksheet_name in worksheet_names:
+            if worksheet_name in worksheet_defs:
+                info(f"creating worksheet {worksheet_name}", nesting_level=1)
+
+                worksheet_add_requests = worksheet_add_requests + self.create_worksheet(worksheet_name=worksheet_name, worksheet_def=worksheet_defs[worksheet_name])
+
+            else:
+                warn(f"worksheet {worksheet_name} : structure not defined", nesting_level=1)
+
+        # finally update in batch
+        self.update_in_batch(values=[], requests=worksheet_add_requests, requester='create_worksheets')
+
+
+
+    ''' create a worksheet according to spec defined in worksheet_def
+    '''
+    def create_worksheet(self, worksheet_name, worksheet_def):
+        # the worksheet might exist
+        worksheet = self.worksheet_by_name(worksheet_name=worksheet_name, suppress_log=True)
+        if worksheet:
+            warn(f"worksheet [{worksheet_name}] exists, will not be creates", nesting_level=1)
+            return []
+
+
+        # create the worksheet with right dimensions and in the right place with right freezing
+        worksheet_add_request = build_add_worksheet_request(worksheet_name=worksheet_name, sheet_index=worksheet_def.get('index', None), num_rows=worksheet_def['num-rows'], num_cols=worksheet_def['num-columns'], frozen_rows=worksheet_def['frozen-rows'], frozen_cols=worksheet_def['frozen-columns'])
+
+        return [worksheet_add_request]
+
+
+
+    ''' format worksheets according to the specs in worksheet_defs
+    '''
+    def format_worksheets(self, worksheet_names, worksheet_defs):
+        values, requests = [], []
+        for worksheet_name in worksheet_names:
+            if worksheet_name in worksheet_defs:
+                info(f"formatting worksheet {worksheet_name}", nesting_level=1)
+
+                worksheet_format_values, worksheet_format_requests = self.format_worksheet(worksheet_name=worksheet_name, worksheet_def=worksheet_defs[worksheet_name])
+
+            else:
+                warn(f"worksheet {worksheet_name} : structure not defined", nesting_level=1)
+                if '*' in worksheet_defs:
+                    worksheet_def = worksheet_defs['*']
+                    info(f"But a common structure (*) was defined for formatting [{worksheet_name}]", nesting_level=1)
+                    worksheet_format_values, worksheet_format_requests = self.format_worksheet(worksheet_name=worksheet_name, worksheet_def=worksheet_defs[worksheet_name])
+                else:
+                    worksheet_format_values, worksheet_format_requests = [], []
+
+            values = values + worksheet_format_values
+            requests = requests + worksheet_format_requests
+
+    
+        # finally update in batch
+        self.update_in_batch(values=values, requests=requests, requester='format_worksheets')
+
+
+
+    ''' format a worksheet according to spec defined in worksheet_def
+    '''
+    def format_worksheet(self, worksheet_name, worksheet_def):
+        # get the worksheet
+        worksheet = self.worksheet_by_name(worksheet_name=worksheet_name)
+        if not worksheet:
+            return []
+
+        values, requests = [], []
+
+        # clear conditional formats
+        conditional_formats = self.get_conditional_formats(try_for=3)
+        number_of_rules = len(conditional_formats.get(worksheet_name, []))
+        clear_conditional_formats_requests = worksheet.clear_conditional_formats_requests(number_of_rules=number_of_rules)
+        requests = requests + clear_conditional_formats_requests
+
+
+        # format worksheet requests
+        worksheets_dict = self.worksheets_as_dict()
+        format_worksheet_vals, format_worksheet_requests = worksheet.format_worksheet_requests(worksheet_def=worksheet_def, worksheets_dict=worksheets_dict)
+        values = values + format_worksheet_vals
+        requests = requests + format_worksheet_requests
+
+        return values, requests

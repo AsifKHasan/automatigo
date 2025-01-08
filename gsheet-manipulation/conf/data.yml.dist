@@ -1,7 +1,7 @@
 # log level (0-TRACE, 1-DEBUG, 2-INFO, 3-WARN, 4-ERROR) below which logs will not be printed
 log-level:                  1
 
-# the google credential for accessing the gsheet(s) (this file is not in the repo)
+# the google credential for accessing the gsheet(s) (this file must not be in the repo)
 credential-json:            '../conf/credential.json'
 
 gsheet-tasks:
@@ -17,8 +17,14 @@ gsheet-tasks:
   # - task                                        : link_cells_to_worksheet
   #   worksheet_name                              : '-toc-new'
   #   range_specs_for_cells_to_link               :
+  #     - 'M3:M'
+  #     - 'N3:N'
   #     - 'O3:O'
+  #     - 'P3:P'
+  #     - 'Q3:Q'
   #     - 'R3:R'
+  #     - 'S3:S'
+  #     - 'T3:T'
   # - task                                        : order_worksheets
 
   # worksheet duplication, removal, renaming
@@ -44,8 +50,12 @@ gsheet-tasks:
   #   worksheet_names                             : true
   # - task                                        : create_worksheets
   #   worksheet_names                             : true
+  #   worksheet_defs                              : true
+  #   match_worksheet_names                       : false
   # - task                                        : format_worksheets
   #   worksheet_names                             : true
+  #   worksheet_defs                              : true
+  #   match_worksheet_names                       : false
 
   # trailing blank row removal, review-notes, column sizing
   # - task                                        : remove_extra_columns
@@ -106,3 +116,7 @@ work-specs:
 
 # find and replace patterns
 find-replace-patterns:
+
+
+# worksheet structure definition for creating and formatting worksheets
+worksheet-defs:

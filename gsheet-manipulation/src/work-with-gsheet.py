@@ -15,10 +15,12 @@ from task.resume_tasks import *
 
 final_list = []
 
-def execute_gsheet_tasks(g_sheet, g_service, gsheet_tasks=[], worksheet_names=[], worksheet_names_excluded=[], destination_gsheet_names=[], work_specs={}, find_replace_patterns=[]):
+def execute_gsheet_tasks(g_sheet, g_service, gsheet_tasks=[], worksheet_names=[], worksheet_names_excluded=[], destination_gsheet_names=[], work_specs={}, find_replace_patterns=[], worksheet_defs={}):
     for gsheet_task_def in gsheet_tasks:
         task_name = gsheet_task_def['task']
         if hasattr(g_sheet, task_name) and callable(getattr(g_sheet, task_name)):
+            match_worksheet_names = gsheet_task_def.get('match_worksheet_names', True)
+
             # arguments
             args_dict = {}
             for k, v in gsheet_task_def.items():
@@ -26,7 +28,10 @@ def execute_gsheet_tasks(g_sheet, g_service, gsheet_tasks=[], worksheet_names=[]
                     pass
 
                 elif k == 'worksheet_names' and v == True:
-                    args_dict[k] = g_sheet.matching_worksheet_names(worksheet_names=worksheet_names, worksheet_names_excluded=worksheet_names_excluded)
+                    if match_worksheet_names:
+                        args_dict[k] = g_sheet.matching_worksheet_names(worksheet_names=worksheet_names, worksheet_names_excluded=worksheet_names_excluded)
+                    else:
+                        args_dict[k] = worksheet_names
 
                 elif k == 'destination_gsheet_names' and v == True:
                     args_dict[k] = destination_gsheet_names
@@ -37,8 +42,14 @@ def execute_gsheet_tasks(g_sheet, g_service, gsheet_tasks=[], worksheet_names=[]
                 elif k == 'find_replace_patterns' and v == True:
                     args_dict[k] = find_replace_patterns
 
+                elif k == 'worksheet_defs' and v == True:
+                    args_dict[k] = worksheet_defs
+
                 else:
                     args_dict[k] = v
+
+            # matching_worksheet_names argument is not to be passed
+            args_dict.pop('match_worksheet_names', None)
 
 
             # execute the task
@@ -47,7 +58,7 @@ def execute_gsheet_tasks(g_sheet, g_service, gsheet_tasks=[], worksheet_names=[]
                 info(f"executing task [{task_name}]")
 
                 if 'worksheet_names' in args_dict:
-                    debug(f"worksheets to work on")
+                    debug(f"worksheets to work on {args_dict['worksheet_names']}")
                     for x in args_dict['worksheet_names']:
                         trace(f".. {x}")
 
@@ -136,6 +147,9 @@ if __name__ == '__main__':
     find_replace_patterns = config.get('find-replace-patterns', [])
     if find_replace_patterns is None: find_replace_patterns = []
 
+    worksheet_defs = config.get('worksheet-defs', {})
+    if worksheet_defs is None: worksheet_defs = {}
+
     g_service = GoogleService(credential_json)
 
     count = 0
@@ -151,7 +165,7 @@ if __name__ == '__main__':
             # raise e
 
         if g_sheet:
-            execute_gsheet_tasks(g_sheet=g_sheet, g_service=g_service, gsheet_tasks=gsheet_tasks, worksheet_names=worksheet_names, worksheet_names_excluded=worksheet_names_excluded, destination_gsheet_names=destination_gsheet_names, work_specs=work_specs, find_replace_patterns=find_replace_patterns)
+            execute_gsheet_tasks(g_sheet=g_sheet, g_service=g_service, gsheet_tasks=gsheet_tasks, worksheet_names=worksheet_names, worksheet_names_excluded=worksheet_names_excluded, destination_gsheet_names=destination_gsheet_names, work_specs=work_specs, find_replace_patterns=find_replace_patterns, worksheet_defs=worksheet_defs)
             # work_on_gsheet(g_sheet=g_sheet, g_service=g_service, worksheet_names=worksheet_names, destination_gsheet_names=destination_gsheet_names, work_specs=work_specs, find_replace_patterns=find_replace_patterns)
             # work_on_drive(g_service=g_service, g_sheet=g_sheet)
             info(f"processed  {count:>4}/{num_gsheets} gsheet {gsheet_name}\n")

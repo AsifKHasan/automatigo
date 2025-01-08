@@ -32,7 +32,7 @@ def matrix_dimension(matrix):
 
 ''' addSheetRequest builder
 '''
-def build_add_sheet_request(worksheet_name, sheet_index, num_rows, num_cols, frozen_rows, frozen_cols):
+def build_add_worksheet_request(worksheet_name, sheet_index, num_rows, num_cols, frozen_rows, frozen_cols):
     return {
         'addSheet': {
             'properties': {
@@ -443,7 +443,7 @@ def build_no_data_validation_rule(range):
 
 ''' gets the value from workspec
 '''
-def build_value_from_work_spec(work_spec, worksheet_dict={}, google_service=None):
+def build_value_from_work_spec(work_spec, worksheets_dict={}, google_service=None):
     value = ''
     if 'value' in work_spec:
         value = work_spec['value']
@@ -452,8 +452,8 @@ def build_value_from_work_spec(work_spec, worksheet_dict={}, google_service=None
         # it may be hyperlink to another worksheet
         if 'ws-name-to-link' in work_spec:
             # is it a valid worksheet
-            if work_spec['ws-name-to-link'] in worksheet_dict:
-                value = f'=HYPERLINK("#gid={worksheet_dict[work_spec["ws-name-to-link"]]}", "{value}")'.lstrip("'")
+            if work_spec['ws-name-to-link'] in worksheets_dict:
+                value = f'=HYPERLINK("#gid={worksheets_dict[work_spec["ws-name-to-link"]]}", "{value}")'.lstrip("'")
             else:
                 error(f".... No Worksheet named {work_spec['ws-name-to-link']}")
 
