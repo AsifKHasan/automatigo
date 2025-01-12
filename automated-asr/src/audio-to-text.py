@@ -138,7 +138,8 @@ if __name__ == '__main__':
     args = vars(ap.parse_args())
 
     config = Config(CONFIG_PATH)
-    logger.LOG_LEVEL = config['log-level']
+    print(config)
+    logger.LOG_LEVEL = config.log_level
     config.configure(file_name=args["audio"], range_spec=args["range"], segment_spec=args["segments"])
 
     sound = open_sound(config=config)

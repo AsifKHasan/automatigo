@@ -15,6 +15,7 @@ class Config(object):
     def __init__(self, config_path):
         config_path = Path(config_path).resolve()
         config = yaml.load(open(config_path, 'r', encoding='utf-8'), Loader=yaml.FullLoader)
+        self.log_level = config['log-level']
         self.output_dir = config['output-dir']
         self.asr_output_file = config['asr-output-file']
         self.audio_data_dir = f"{self.output_dir}/audio"
