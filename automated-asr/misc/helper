@@ -1,6 +1,6 @@
 cd D:\projects\asif@github\automatigo\automated-asr
 
-ffmpeg -i out/audio/aas.ogg out/audio/aas.wav
+ffmpeg -i out/audio/tareq.mp4 out/audio/tareq.wav
 
 text-from-audio.bat 2024-11-04__11-18__ananta-shipping-order 000.000:300.000 "000.000:050.000 050.000:100.000 100.000:150.000 150.000:200.000 200.000:250.000 250.000:300.000"
 text-from-audio.bat 2024-11-04__11-18__ananta-shipping-order 000.000:100.000 "000.000:050.000 050.000:100.000"
@@ -23,7 +23,7 @@ text-from-audio.bat 2024-11-04__11-18__ananta-shipping-order 250.000:300.000
 
 
 
-./text-from-audio.sh aas
+./text-from-audio.sh tareq.wav 000.000: NOSEG
 
 text-from-audio.bat mongla-port 000.000:050.000 NOSEG
 text-from-audio.bat mongla-port 050.000:100.000 NOSEG

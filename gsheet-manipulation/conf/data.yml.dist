@@ -31,6 +31,7 @@ gsheet-tasks:
   # - task                                        : duplicate_worksheet
   #   worksheet_names                             : true
   #   worksheet_name_to_duplicate                 : 'z-blank'
+  #   match_worksheet_names                       : false
   # - task                                        : remove_worksheets
   #   worksheet_names                             : true
   # - task                                        : rename_worksheet
