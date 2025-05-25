@@ -34,3 +34,8 @@ text-from-audio.bat mongla-port :600.000 "0:50 50:100 100:150 150:200 200:250 25
 
 
 curl --location 'https://nlp.celloscope.net/nlp/speech-to-text/v2' --form 'files=@"file:///D:/projects/asif@github/automatigo/automated-asr/out/audio/2024-11-04__11-18__ananta-shipping-order.wav"' --form 'format="wav"'
+curl --location 'https://nlp.celloscope.net/nlp/speech-to-text/v2' --form 'files=@"/home/asifhasan/projects/asif@github.com/automatigo/automated-asr/out/audio/04-0.1-corporate-deposit.wav"' --form 'format="wav"'
+
+curl --location 'https://nlp.celloscope.net/nlp/speech-to-text/v2' \
+--form 'files=@"/home/asifhasan/projects/asif@github.com/automatigo/automated-asr/out/audio/splits/04-0.1-corporate-deposit-0-voiced__0-15890.wav"' \
+--form 'format="wav"'
