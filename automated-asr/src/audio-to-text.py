@@ -90,14 +90,11 @@ def generate_segments(config, sound):
 ''' process the segments
 '''
 def process_segments(config, segments):
-    i = 0
-    for segment in segments:
+    for i, segment in enumerate(segments):
         if segment.content == 'voiced':
             info(f"{Fore.GREEN}.. {i:>3}. {segment}{Style.RESET_ALL}")
         else:
             info(f"{Fore.RED}.. {i:>3}. {segment}{Style.RESET_ALL}")
-
-        i = i + 1
 
     print()
 
@@ -117,14 +114,14 @@ def process_segments(config, segments):
 def write_output(config, segments):
     # write output
     with open(config.asr_output_file, "a", encoding="utf-8") as f:
-        for segment in segments:
+        for i, segment in enumerate(segments):
             if segment.asr_response:
-                print(segment.asr_response)
+                # print(segment.asr_response)
                 f.write(segment.to_string())
+                f.write('\n')
                 f.write(f"audio    : {segment.file}, asr time {segment.asr_response['processingTime']:3.2f}s, ratio {(segment.duration_ms/1000)/segment.asr_response['processingTime']:3.2f}")
                 f.write('\n')
 
-                f.write(segment.to_string())
                 f.write(segment.asr_response['text'])
                 f.write('\n\n')
 

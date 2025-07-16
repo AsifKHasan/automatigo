@@ -14,7 +14,7 @@ text-from-audio.bat 2024-11-04__11-18__ananta-shipping-order 250.000:300.000
 
 
 
-./text-from-audio.sh 2024-11-04__11-18__ananta-shipping-order 000.000:295.000
+./text-from-audio.sh umr-discussion-sumon 000.000:300.000
 ./text-from-audio.sh 2024-11-04__11-18__ananta-shipping-order 050.000:100.000
 ./text-from-audio.sh 2024-11-04__11-18__ananta-shipping-order 100.000:150.000
 ./text-from-audio.sh 2024-11-04__11-18__ananta-shipping-order 150.000:200.000

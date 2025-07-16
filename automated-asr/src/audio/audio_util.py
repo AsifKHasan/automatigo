@@ -144,9 +144,10 @@ def printable_info(sound, audio_file_name, left_padding='    '):
 ''' bulk asr on a list of files
 '''
 def do_asr_on_files(segments):
-    for segment in segments:
+    info(f".. doing asr on {len(segments)} segments")
+    for i, segment in enumerate(segments):
         if segment.content == 'voiced':
-            info(f".. doing asr on {segment.file}")
+            info(f".. {i:>3} doing asr on {segment.file}")
             segment.asr_response = get_text_from_audio(segment.file)
 
 
