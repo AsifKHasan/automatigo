@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 import re
 
@@ -328,12 +328,12 @@ def build_duplicate_sheet_request(worksheet_id, new_worksheet_name, new_workshee
 
 ''' find and replace request builder
 '''
-def build_find_replace_request(worksheet_id, search_for, replace_with, regex=False, include_formulas=False, entire_cell=False):
+def build_find_replace_request(worksheet_id, search_for, replace_with, regex=False, include_formulas=False, entire_cell=False, match_case=False):
     return {
         "findReplace": {
             "find": search_for,
             "replacement": replace_with,
-            "matchCase": True,
+            "matchCase": match_case,
             "matchEntireCell": entire_cell,
             "searchByRegex": regex,
             "includeFormulas": include_formulas,

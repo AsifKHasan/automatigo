@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 import gspread
 from gspread.utils import *
@@ -468,7 +468,8 @@ class GoogleWorksheet(object):
             regex = pattern.get('regex', False)
             include_formulas = pattern.get('include-formulas', False)
             entire_cell = pattern.get('entire-cell', False)
-            request = build_find_replace_request(worksheet_id=self.id, search_for=search_for, replace_with=replace_with, regex=regex, include_formulas=include_formulas, entire_cell=entire_cell)
+            match_case = pattern.get('match-case', False)
+            request = build_find_replace_request(worksheet_id=self.id, search_for=search_for, replace_with=replace_with, regex=regex, include_formulas=include_formulas, entire_cell=entire_cell, match_case=match_case)
             if request:
                 find_replace_requests.append(request)
 

@@ -61,8 +61,10 @@ class GoogleSheet(object):
 
     ''' get range values
     '''
-    def get_range_values(self, range_spec):
-        return self.gspread_sheet.values_get(range_spec, params={})
+    def get_range_values(self, range_spec, **kwargs):
+        params = {'majorDimension': 'ROWS'}
+        params.update(kwargs)
+        return self.gspread_sheet.values_get(range_spec, params=params)
 
 
 
@@ -140,13 +142,16 @@ class GoogleSheet(object):
     '''
     def update_in_batch(self, values, requests, requester='', nesting_level=1):
         info(f"batch-updating [{len(values)}] values and [{len(requests)}] formats", nesting_level=nesting_level)
+        value_results, request_results = [], []
         if len(values):
-            self.update_values_in_batch(value_list=values, requester=requester)
+            value_results = self.update_values_in_batch(value_list=values, requester=requester)
 
         if len(requests):
-            self.update_formats_in_batch(request_list=requests, requester=requester)
+            request_results = self.update_formats_in_batch(request_list=requests, requester=requester)
 
         info(f"batch-updated  [{len(values)}] values and [{len(requests)}] formats", nesting_level=nesting_level)
+
+        return value_results, request_results
 
 
 
@@ -324,7 +329,8 @@ class GoogleSheet(object):
                 info(f"found     [{len(reqs)}] patterns in  [{worksheet_name}]", nesting_level=1)
                 requests = requests + reqs
 
-        self.update_in_batch(values=[], requests=requests, requester='find_and_replace')
+        result = self.update_in_batch(values=[], requests=requests, requester='find_and_replace')
+        return result
 
 
 

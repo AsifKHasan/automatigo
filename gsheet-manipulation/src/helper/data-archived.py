@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 # Resume structure
 WORKSHEET_STRUCTURE_RESUME = {

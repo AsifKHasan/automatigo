@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 import json
 import yaml
@@ -74,6 +74,13 @@ def execute_gsheet_tasks(g_sheet, g_service, gsheet_tasks=[], worksheet_names=[]
 
 
 def work_on_gsheet(g_sheet, g_service, worksheet_names=[], destination_gsheet_names=[], work_specs={}, find_replace_patterns=[]):
+    for worksheet_name in worksheet_names:
+        range_spec = f"'{worksheet_name}'!B3:Z"
+        values = g_sheet.get_range_values(range_spec=range_spec, valueRenderOption='FORMULA')
+        for r, row in enumerate(values['values'], start=3):
+            for c, col in enumerate(row, start=2):
+                cell_a1 = f"{COLUMN_TO_LETTER[c]}{r}"
+                print(f"[{cell_a1}] - [{col}]")
 
     # BEGIN common tasks
     # new_toc_from_toc(g_sheet)
@@ -166,8 +173,8 @@ if __name__ == '__main__':
             # raise e
 
         if g_sheet:
-            execute_gsheet_tasks(g_sheet=g_sheet, g_service=g_service, gsheet_tasks=gsheet_tasks, worksheet_names=worksheet_names, worksheet_names_excluded=worksheet_names_excluded, destination_gsheet_names=destination_gsheet_names, work_specs=work_specs, find_replace_patterns=find_replace_patterns, worksheet_defs=worksheet_defs)
-            # work_on_gsheet(g_sheet=g_sheet, g_service=g_service, worksheet_names=worksheet_names, destination_gsheet_names=destination_gsheet_names, work_specs=work_specs, find_replace_patterns=find_replace_patterns)
+            # execute_gsheet_tasks(g_sheet=g_sheet, g_service=g_service, gsheet_tasks=gsheet_tasks, worksheet_names=worksheet_names, worksheet_names_excluded=worksheet_names_excluded, destination_gsheet_names=destination_gsheet_names, work_specs=work_specs, find_replace_patterns=find_replace_patterns, worksheet_defs=worksheet_defs)
+            work_on_gsheet(g_sheet=g_sheet, g_service=g_service, worksheet_names=worksheet_names, destination_gsheet_names=destination_gsheet_names, work_specs=work_specs, find_replace_patterns=find_replace_patterns)
             # work_on_drive(g_service=g_service, g_sheet=g_sheet)
             info(f"processed  {count:>4}/{num_gsheets} gsheet {gsheet_name}\n")
 
