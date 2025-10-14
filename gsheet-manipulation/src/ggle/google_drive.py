@@ -2,7 +2,7 @@
 
 from helper.utils import *
 from helper.logger import *
-from googleapiclient import errors
+from googleapiclient.errors import HttpError
 
 ''' Google sheet wrapper
 '''
@@ -23,7 +23,7 @@ class GoogleDrive(object):
         else:
             q = f"name = '{drive_file_name}'"
 
-        print(q)
+        # print(q)
 
         try:
             files = []

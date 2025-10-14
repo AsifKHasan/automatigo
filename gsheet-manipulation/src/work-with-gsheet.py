@@ -10,6 +10,7 @@ from ggle.google_drive import GoogleDrive
 
 from helper.logger import *
 from helper import logger
+from helper.utils import *
 
 from task.common_tasks import *
 from task.resume_tasks import *
@@ -21,7 +22,6 @@ def execute_gsheet_tasks(g_sheet, g_service, gsheet_tasks=[], worksheet_names=[]
         task_name = gsheet_task_def['task']
         if hasattr(g_sheet, task_name) and callable(getattr(g_sheet, task_name)):
             match_worksheet_names = gsheet_task_def.get('match_worksheet_names', True)
-
 
             # arguments
             args_dict = {}
@@ -75,20 +75,37 @@ def execute_gsheet_tasks(g_sheet, g_service, gsheet_tasks=[], worksheet_names=[]
 
 
 def work_on_gsheet(g_sheet, g_service, worksheet_names=[], destination_gsheet_names=[], work_specs={}, find_replace_patterns=[]):
+    folders_by_organization = {
+        '01-spectrum': '12mbhWHu3SgcUOXcdINVAf6z8vEN5DGM6',
+        '02-sscl': '1xbkBeWsuMrUIFQmd5MpzLTRIMaL5KOEa',
+        '03-doer': '10JCJYypX2KtVHz_t4kxXfxUNghNtg9Gx',
+        '01-celloscope': '1nlzGWA6H_tzYcaGDZt7qLuMvznvxSpUu',
+        '05-ael': '15VOhVeIyKEn3rtpithUYlsuzKXFczLWP',
+        '06-external': '1LNlrmJ3f1rgOlAJAdaF4VpCvps0zc5NV',
+    }
+
+    g_drive = GoogleDrive(google_service=g_service, google_drive=g_service.drive_service)
+    g_drive = GoogleDrive(google_service=g_service, google_drive=g_service.drive_service)
     image_formula_pattern = r'=image\("https://spectrum-bd.biz/data/artifacts/(?P<artifact_type>.+?)/(?P<organization>.+?)/(?P<image_string>.+?)".+\)'
-    image_formula_cells = []
+
+    value_requests = []
     for worksheet_name in worksheet_names:
         ws = g_sheet.worksheet_by_name(worksheet_name=worksheet_name)
         ws_id = ws.id
-        range_spec = f"'{worksheet_name}'!B3:B5"
+        range_spec = f"'{worksheet_name}'!B3:Z"
         values = g_sheet.get_range_values(range_spec=range_spec, valueRenderOption='FORMULA')
-        for r, row in enumerate(values['values'], start=3):
+        image_formula_cells = []
+        for r, row in enumerate(values.get('values', []), start=3):
             for c, col in enumerate(row, start=2):
                 cell_a1 = f"{COLUMN_TO_LETTER[c]}{r}"
-                m = re.match(image_formula_pattern, col, re.IGNORECASE)
+                m = re.match(image_formula_pattern, str(col), re.IGNORECASE)
                 if m:
                     if m.group('artifact_type') is not None:
                         artifact_type = m.group('artifact_type')
+                        if artifact_type in ['logo']:
+                            # ignore
+                            warn(f"{cell_a1} is a LOGO .. ignoring ..")
+                            continue
                     else:
                         warn(f"[{cell_a1}] - [{col}] artifact type could not be found in the formula")
                         continue
@@ -105,27 +122,35 @@ def work_on_gsheet(g_sheet, g_service, worksheet_names=[], destination_gsheet_na
                         warn(f"[{cell_a1}] - [{col}] image string could not be found in the formula")
                         continue
 
-                    image_string = image_string.split('/')[-1]
+                    image_string = cleanup_url(image_string.split('/')[-1])
                     image_formula_cells.append({'worksheet_name': worksheet_name, 'ws_id':  ws_id, 'cell_a1': cell_a1, 'organization': organization, 'artifact_type': artifact_type, 'image_string': image_string })
-                    print(f"['{worksheet_name}'!{cell_a1}] - organization = [{organization}], artifact_type = [{artifact_type}], image_string = [{image_string}]")
+                    # print(f"['{worksheet_name}'!{cell_a1}] - organization = [{organization}], artifact_type = [{artifact_type}], image_string = [{image_string}]")
+                    # print(f"['{worksheet_name}'!{cell_a1}] - image_string = [{image_string}]")
 
 
-    folders_by_organization = {
-        '01-spectrum': '12mbhWHu3SgcUOXcdINVAf6z8vEN5DGM6',
-        '02-sscl': '1xbkBeWsuMrUIFQmd5MpzLTRIMaL5KOEa',
-        '03-doer': '10JCJYypX2KtVHz_t4kxXfxUNghNtg9Gx',
-        '01-celloscope': '1nlzGWA6H_tzYcaGDZt7qLuMvznvxSpUu',
-        '05-ael': '15VOhVeIyKEn3rtpithUYlsuzKXFczLWP',
-        '06-external': '1LNlrmJ3f1rgOlAJAdaF4VpCvps0zc5NV',
-    }
+        cell_requests = {}
+        # iterate over the image cells 
+        for i, image_cell in enumerate(image_formula_cells, start=1):
+            # we are to convert the formula to a hyperlink formula so that drive images are accounted for, get the drive link for the image 
+            # image_drive_link = g_drive.get_drive_file(drive_file_name=image_cell['image_string'], folder_id=folders_by_organization.get(image_cell['organization']))
+            image_drive_link = g_drive.get_drive_file(drive_file_name=image_cell['image_string'], folder_id=None)
+            if image_drive_link is None:
+                warn(f"{image_cell['image_string']} NOT FOUND ...")
+                continue
 
-    # iterate over the image cells 
-    g_drive = GoogleDrive(google_service=g_service, google_drive=g_service.drive_service)
-    for i, image_cell in enumerate(image_formula_cells, start=1):
-        # we are to convert the formula to a hyperlink formula so that drive images are accounted for, get the drive link for the image 
-        # image_drive_link = g_drive.get_drive_file(drive_file_name=image_cell['image_string'], folder_id=folders_by_organization.get(image_cell['organization']))
-        image_drive_link = g_drive.get_drive_file(drive_file_name=image_cell['image_string'], folder_id=None)
-        print(image_drive_link)
+            # build the new formula
+            new_cell_formula = f'=HYPERLINK("{image_drive_link['webViewLink']}", "{image_cell['image_string']}")'
+
+            # build request for cell value change
+            cell_requests[image_cell['cell_a1']] = {'value': new_cell_formula}
+
+        # store the work_specs
+        vals, _ = ws.range_work_requests(range_work_specs=cell_requests, worksheets_dict={})
+        value_requests = value_requests + vals
+        debug(f"[{worksheet_name:30}] - {len(vals)} values to be changed")
+
+    # execute the requests for all worksheets in batch
+    value_results = g_sheet.update_values_in_batch(value_list=value_requests, requester='work_on_gsheet')
 
 
     # BEGIN common tasks

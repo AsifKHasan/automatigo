@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import re
+import urllib.parse
 
 from helper.logger import *
 
@@ -577,6 +578,13 @@ def build_column_freeze_request(sheet_id, frozen_cols):
     }
 
     return update_sheet_properties
+
+
+
+'''
+'''
+def cleanup_url(text):
+    return urllib.parse.unquote(text)
 
 
 
