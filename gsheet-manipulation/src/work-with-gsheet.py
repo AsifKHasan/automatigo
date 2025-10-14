@@ -6,6 +6,7 @@ import time
 import argparse
 
 from ggle.google_service import GoogleService
+from ggle.google_drive import GoogleDrive
 
 from helper.logger import *
 from helper import logger
@@ -74,13 +75,58 @@ def execute_gsheet_tasks(g_sheet, g_service, gsheet_tasks=[], worksheet_names=[]
 
 
 def work_on_gsheet(g_sheet, g_service, worksheet_names=[], destination_gsheet_names=[], work_specs={}, find_replace_patterns=[]):
+    image_formula_pattern = r'=image\("https://spectrum-bd.biz/data/artifacts/(?P<artifact_type>.+?)/(?P<organization>.+?)/(?P<image_string>.+?)".+\)'
+    image_formula_cells = []
     for worksheet_name in worksheet_names:
-        range_spec = f"'{worksheet_name}'!B3:Z"
+        ws = g_sheet.worksheet_by_name(worksheet_name=worksheet_name)
+        ws_id = ws.id
+        range_spec = f"'{worksheet_name}'!B3:B5"
         values = g_sheet.get_range_values(range_spec=range_spec, valueRenderOption='FORMULA')
         for r, row in enumerate(values['values'], start=3):
             for c, col in enumerate(row, start=2):
                 cell_a1 = f"{COLUMN_TO_LETTER[c]}{r}"
-                print(f"[{cell_a1}] - [{col}]")
+                m = re.match(image_formula_pattern, col, re.IGNORECASE)
+                if m:
+                    if m.group('artifact_type') is not None:
+                        artifact_type = m.group('artifact_type')
+                    else:
+                        warn(f"[{cell_a1}] - [{col}] artifact type could not be found in the formula")
+                        continue
+
+                    if m.group('organization') is not None:
+                        organization = m.group('organization')
+                    else:
+                        warn(f"[{cell_a1}] - [{col}] organization could not be found in the formula")
+                        continue
+
+                    if m.group('image_string') is not None:
+                        image_string = m.group('image_string')
+                    else:
+                        warn(f"[{cell_a1}] - [{col}] image string could not be found in the formula")
+                        continue
+
+                    image_string = image_string.split('/')[-1]
+                    image_formula_cells.append({'worksheet_name': worksheet_name, 'ws_id':  ws_id, 'cell_a1': cell_a1, 'organization': organization, 'artifact_type': artifact_type, 'image_string': image_string })
+                    print(f"['{worksheet_name}'!{cell_a1}] - organization = [{organization}], artifact_type = [{artifact_type}], image_string = [{image_string}]")
+
+
+    folders_by_organization = {
+        '01-spectrum': '12mbhWHu3SgcUOXcdINVAf6z8vEN5DGM6',
+        '02-sscl': '1xbkBeWsuMrUIFQmd5MpzLTRIMaL5KOEa',
+        '03-doer': '10JCJYypX2KtVHz_t4kxXfxUNghNtg9Gx',
+        '01-celloscope': '1nlzGWA6H_tzYcaGDZt7qLuMvznvxSpUu',
+        '05-ael': '15VOhVeIyKEn3rtpithUYlsuzKXFczLWP',
+        '06-external': '1LNlrmJ3f1rgOlAJAdaF4VpCvps0zc5NV',
+    }
+
+    # iterate over the image cells 
+    g_drive = GoogleDrive(google_service=g_service, google_drive=g_service.drive_service)
+    for i, image_cell in enumerate(image_formula_cells, start=1):
+        # we are to convert the formula to a hyperlink formula so that drive images are accounted for, get the drive link for the image 
+        # image_drive_link = g_drive.get_drive_file(drive_file_name=image_cell['image_string'], folder_id=folders_by_organization.get(image_cell['organization']))
+        image_drive_link = g_drive.get_drive_file(drive_file_name=image_cell['image_string'], folder_id=None)
+        print(image_drive_link)
+
 
     # BEGIN common tasks
     # new_toc_from_toc(g_sheet)
