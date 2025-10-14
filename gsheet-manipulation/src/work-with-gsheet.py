@@ -91,6 +91,10 @@ def work_on_gsheet(g_sheet, g_service, worksheet_names=[], destination_gsheet_na
     value_requests = []
     for worksheet_name in worksheet_names:
         ws = g_sheet.worksheet_by_name(worksheet_name=worksheet_name)
+        if ws is None:
+            warn(f"[{worksheet_name}] NOT FOUND .. ignoring ..")
+            continue
+
         ws_id = ws.id
         range_spec = f"'{worksheet_name}'!B3:Z"
         values = g_sheet.get_range_values(range_spec=range_spec, valueRenderOption='FORMULA')
