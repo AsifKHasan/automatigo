@@ -2,7 +2,7 @@
 
 from helper.utils import *
 from helper.logger import *
-from googleapiclient.errors import HttpError
+from apiclient import errors
 
 ''' Google sheet wrapper
 '''
@@ -48,9 +48,10 @@ class GoogleDrive(object):
 
 
 
-    ''' copy a file
-    '''
     def copy_file(self, source_file_id, target_folder_id, target_file_title):
+        ''' copy a file
+        '''
+
         copied_file = {'name': target_file_title, 'parents' : [target_folder_id]}
         try:
             response = self.drive_service.files().copy(fileId=source_file_id, fields='id', body=copied_file).execute()
@@ -60,32 +61,6 @@ class GoogleDrive(object):
             print(error)
             return None
 
-
-    ''' share a file
-
-        Args:
-            service: Drive API service instance.
-            file_id: ID of the file to insert permission for.
-            value: User or group e-mail address, domain name or None for 'default'
-                    type.
-            perm_type: The value 'user', 'group', 'domain' or 'default'.
-            role: The value 'owner', 'writer' or 'reader'.
-        Returns:
-            The inserted permission if successful, None otherwise.
-    '''
-    def share(self, file_id, email, perm_type, role):
-        new_permission = {
-            'emailAddress': email,
-            'type': perm_type,
-            'role': role
-        }
-        try:
-            return self.drive_service.permissions().create(fileId=file_id, moveToNewOwnersRoot=True, transferOwnership=True, body=new_permission).execute()
-
-        except Exception as error:
-            print(error)
-
-        return None
 
 
     def copy_drive_file(self, origin_file_id, copy_title, nesting_level):
@@ -108,9 +83,11 @@ class GoogleDrive(object):
             return None
 
 
+
     def download_drive_file(self, param, destination, context, nesting_level):
         f = context['drive'].CreateFile(param)
         f.GetContentFile(destination)
+
 
 
     def read_drive_file(self, drive_url, nesting_level):
@@ -125,3 +102,4 @@ class GoogleDrive(object):
 
         text = f.GetContentString()
         return text
+

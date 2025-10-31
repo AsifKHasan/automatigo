@@ -1,16 +1,35 @@
 #!/usr/bin/env bash
-PYTHON=python3
-# parameters
-if [ $# -eq 0 ] 
-then
-  set echo off
-  pushd ./src
-  ${PYTHON} work-with-gsheet.py
+PYTHON=python
+
+FOLDER=false
+for arg in "$@"; do
+    if [ "$arg" == "--folder" ]; then
+        FOLDER=true
+        break # Exit the loop once the argument is found
+    fi
+
+    if [ "$arg" == "-f" ]; then
+        FOLDER=true
+        break # Exit the loop once the argument is found
+    fi
+done
+
+if [ "$FOLDER" = true ]; then
+    set echo off
+    pushd ./src
+    ${PYTHON} work-with-gsheet.py --folder
 else
-  GSHEET=$1
-  set echo off
-  pushd ./src
-  ${PYTHON} work-with-gsheet.py --gsheet ${GSHEET}
+  # parameters
+  if [ $# -eq 0 ]; then
+    set echo off
+    pushd ./src
+    ${PYTHON} work-with-gsheet.py
+  else
+    GSHEET=$1
+    set echo off
+    pushd ./src
+    ${PYTHON} work-with-gsheet.py --gsheet ${GSHEET}
+  fi
 fi
 
 

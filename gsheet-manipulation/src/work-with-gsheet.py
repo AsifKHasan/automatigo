@@ -184,21 +184,20 @@ def work_on_gsheet(g_sheet, g_service, worksheet_names=[], destination_gsheet_na
     pass
 
 
-def work_on_drive(g_service, g_sheet):
 
-    # BEGIN drive file related
-
+def work_on_drive(g_service, folder_id):
     # target_file_id = g_service.copy_file(source_file_id=g_sheet.id(), target_folder_id='1Ol7pNkAloXNPxeU8j1_IMNAayUh7AvPf', target_file_title='BNDA__standards')
     # g_service.share(file_id=target_file_id, email='asif.hasan@gmail.com', perm_type='user', role='owner')
     # g_service.share(file_id='1J7VpUFfZiQi543f4zdGcX9mqX7HugvsmebtoECCgk_4', email='asif.hasan@gmail.com', perm_type='user', role='owner')
-
-    # END   drive file related
-    pass
+    files = g_service.list_files_under(folder_id=folder_id)
+    for i, file in enumerate(files, start=1):
+        print(i, file)
 
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument("-g", "--gsheet", required=False, help="gsheet name to work with", default=argparse.SUPPRESS)
+    ap.add_argument("-f", "--folder", required=False, help="work with drive folder", action='store_true')
     args = vars(ap.parse_args())
 
     # read config.yml to get the list of gsheets and other data
@@ -206,10 +205,23 @@ if __name__ == '__main__':
 
     logger.LOG_LEVEL = config.get('log-level', 0)
 
+    working_on_gsheet = False
+    working_on_folder = False
+
+    # first we check whether the gsheet argument was passed or not
     if 'gsheet' in args and args["gsheet"] != '':
         gsheet_names = [args["gsheet"]]
+        working_on_gsheet = True
+
+    # if not working_on_gsheet, we check for folder argument
     else:
-        gsheet_names = config['gsheets']
+        if 'folder' in args and args["folder"] == True:
+            working_on_folder = True
+        else:
+            # fall back to working_on_gsheet
+            warn(f"neither gsheet nor folder argument was passed, falling back to gsheet processing")
+            working_on_gsheet = True
+            gsheet_names = config['gsheets']
 
     credential_json = config['credential-json']
 
@@ -233,27 +245,44 @@ if __name__ == '__main__':
     worksheet_defs = config.get('worksheet-defs', {})
     if worksheet_defs is None: worksheet_defs = {}
 
+    drive_folders = config.get('drive-folders', [])
+    if drive_folders is None: drive_folders = []
+
     g_service = GoogleService(credential_json)
 
-    count = 0
-    num_gsheets = len(gsheet_names)
-    for gsheet_name in gsheet_names:
-        count = count + 1
-        try:
-            info(f"processing {count:>4}/{num_gsheets} gsheet {gsheet_name}")
-            g_sheet = g_service.open(gsheet_name=gsheet_name)
-        except Exception as e:
-            g_sheet = None
-            warn(str(e))
-            # raise e
+    wait_for = 30
+    if working_on_gsheet:
+        num_gsheets = len(gsheet_names)
+        for count, gsheet_name in enumerate(gsheet_names, start=1):
+            try:
+                info(f"processing {count:>4}/{num_gsheets} gsheet {gsheet_name}")
+                g_sheet = g_service.open(gsheet_name=gsheet_name)
+            except Exception as e:
+                g_sheet = None
+                warn(str(e))
+                # raise e
 
-        if g_sheet:
-            # execute_gsheet_tasks(g_sheet=g_sheet, g_service=g_service, gsheet_tasks=gsheet_tasks, worksheet_names=worksheet_names, worksheet_names_excluded=worksheet_names_excluded, destination_gsheet_names=destination_gsheet_names, work_specs=work_specs, find_replace_patterns=find_replace_patterns, worksheet_defs=worksheet_defs)
-            work_on_gsheet(g_sheet=g_sheet, g_service=g_service, worksheet_names=worksheet_names, destination_gsheet_names=destination_gsheet_names, work_specs=work_specs, find_replace_patterns=find_replace_patterns)
-            # work_on_drive(g_service=g_service, g_sheet=g_sheet)
-            info(f"processed  {count:>4}/{num_gsheets} gsheet {gsheet_name}\n")
+            if g_sheet:
+                # execute_gsheet_tasks(g_sheet=g_sheet, g_service=g_service, gsheet_tasks=gsheet_tasks, worksheet_names=worksheet_names, worksheet_names_excluded=worksheet_names_excluded, destination_gsheet_names=destination_gsheet_names, work_specs=work_specs, find_replace_patterns=find_replace_patterns, worksheet_defs=worksheet_defs)
+                # work_on_gsheet(g_sheet=g_sheet, g_service=g_service, worksheet_names=worksheet_names, destination_gsheet_names=destination_gsheet_names, work_specs=work_specs, find_replace_patterns=find_replace_patterns)
+                work_on_drive(g_service=g_service, drive_folders=drive_folders)
+                info(f"processed  {count:>4}/{num_gsheets} gsheet {gsheet_name}\n")
 
-        wait_for = 30
-        if count % 500 == 0:
-            warn(f"sleeping for {wait_for} seconds\n")
-            time.sleep(wait_for)
+            if count % 100 == 0:
+                warn(f"sleeping for {wait_for} seconds\n")
+                time.sleep(wait_for)
+
+
+    wait_for = 30
+    if working_on_folder:
+        num_folders = len(drive_folders)
+        for count, folder_id in enumerate(drive_folders, start=1):
+            info(f"processing {count:>4}/{num_folders} folder {folder_id}")
+            work_on_drive(g_service=g_service, folder_id=folder_id)
+            info(f"processed  {count:>4}/{num_folders} folder {folder_id}\n")
+
+            if count % 100 == 0:
+                warn(f"sleeping for {wait_for} seconds\n")
+                time.sleep(wait_for)
+
+
