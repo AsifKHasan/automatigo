@@ -1,0 +1,8 @@
+git add -A & git commit -m "updated" & git push
+git add -A ; git commit -m "updated" ; git push
+
+CMD="./work-with-gsuite.sh"
+${CMD}
+
+set CMD="work-with-gsheet.bat"
+%CMD%

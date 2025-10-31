@@ -17,7 +17,7 @@ done
 if [ "$FOLDER" = true ]; then
     set echo off
     pushd ./src
-    ${PYTHON} work-with-gsheet.py --folder
+    ${PYTHON} work-with-gdrive.py --folder
 else
   # parameters
   if [ $# -eq 0 ]; then

@@ -39,16 +39,11 @@ class GoogleService(object):
         # using gspread for proxying the gsheet API's
         self.gspread = gspread.authorize(scoped_credentials)
 
-        # authed_session = AuthorizedSession(credentials)
-        # response = authed_session.get('https://www.googleapis.com/storage/v1/b')
-
-        # authed_http = AuthorizedHttp(credentials)
-        # response = authed_http.request('GET', 'https://www.googleapis.com/storage/v1/b')
 
 
     ''' open a gsheet
     '''
-    def open(self, gsheet_name, try_for=3):
+    def open_gsheet(self, gsheet_name, try_for=3):
         gspread_sheet = None
         wait_for = 30
         for try_count in range(1, try_for+1):
@@ -70,15 +65,14 @@ class GoogleService(object):
             return None
 
 
-    def list_files(self, parent_id, path_prefix=""):
-        ''' Recursively lists all files and folders under a given parent ID
+    ''' Recursively lists all files and folders under a given parent ID
 
-            Args:
-                parent_id: The ID of the current folder to search within.
-            Returns:
-                list of file metadata, or None
-        '''
-
+        Args:
+            parent_id: The ID of the current folder to search within.
+        Returns:
+            list of file metadata, or None
+    '''
+    def list_files(self, parent_id, path_prefix='', recursive=True):
         page_token = None
         
         all_items = []
@@ -106,9 +100,12 @@ class GoogleService(object):
 
                 # Check if the item is a folder
                 if mime_type == 'application/vnd.google-apps.folder':
-                    print(f"📁 Found Folder: {full_path}")
-                    # RECURSIVE CALL: Call the function again for the subfolder
-                    all_items = all_items + self.list_files(file_id, full_path)
+                    debug(f"📁 Found Folder: {full_path:<100} id=[{file_id}]")
+                    if recursive:
+                        this_list = self.list_files(file_id, full_path)
+                        # print(this_list)
+                        # RECURSIVE CALL: Call the function again for the subfolder
+                        all_items = all_items + this_list
 
 
             page_token = results.get('nextPageToken')
@@ -120,8 +117,9 @@ class GoogleService(object):
 
 
 
-    def list_files_under(self, folder_id):
-        """Main function to start the search"""
+    ''' lists all files and folders under a given parent ID
+    '''
+    def list_files_under(self, folder_id, recursive=True):
         try:
             # Get the name of the starting folder for the path_prefix
             start_folder = self.drive_service.files().get(
@@ -130,7 +128,7 @@ class GoogleService(object):
             ).execute()
             start_name = start_folder.get('name', 'Root Folder')
             
-            folder_items = self.list_files(folder_id, start_name)
+            folder_items = self.list_files(folder_id, start_name, recursive=recursive)
 
             all_items = []
             for i, item in enumerate(folder_items, start=1):
