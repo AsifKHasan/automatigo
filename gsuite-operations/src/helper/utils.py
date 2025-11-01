@@ -2,6 +2,8 @@
 
 import re
 import urllib.parse
+import csv
+
 
 from helper.logger import *
 
@@ -625,3 +627,20 @@ def hex_to_rgba(hex):
 
     color = tuple(int(h[i:i+2], 16) for i in (0, 2, 4, 6))
     return {"red": color[0]/255, "green": color[1]/255, "blue": color[2]/255, "alpha": color[3]/255}
+
+
+
+''' write list of dicts to a csv file
+'''
+def dicts_to_csv(dicts, headers, csv_path):
+    # CSV file name
+    csv_filename = "cars.csv"
+
+    # Define the field names (headers)
+    fieldnames = ["Brand", "Model", "Year"]
+
+    # Writing to CSV
+    with open(csv_path, mode='w', newline='') as file:
+        writer = csv.DictWriter(file, fieldnames=headers)
+        writer.writeheader()  # Write header row
+        writer.writerows(dicts)  # Write data rows

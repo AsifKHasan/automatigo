@@ -83,18 +83,19 @@ class GoogleService(object):
             
             results = self.drive_service.files().list(
                 q=query,
-                fields="nextPageToken, files(id, name, mimeType, owners)",
+                fields="nextPageToken, files(id, name, webViewLink, mimeType, owners)",
                 pageSize=1000, 
                 pageToken=page_token
             ).execute()
             
             items = results.get('files', [])
+            items = [dict(item, path=path_prefix) for item in items]
 
             all_items = all_items + items
 
             for item in items:
-                name = item['name']
                 file_id = item['id']
+                name = item['name']
                 mime_type = item['mimeType']
                 full_path = f"{path_prefix}/{name}"
 
@@ -103,15 +104,14 @@ class GoogleService(object):
                     debug(f"📁 Found Folder: {full_path:<100} id=[{file_id}]")
                     if recursive:
                         this_list = self.list_files(file_id, full_path)
+                        # this_list = [dict(item, path=full_path) for item in this_list]
                         # print(this_list)
                         # RECURSIVE CALL: Call the function again for the subfolder
                         all_items = all_items + this_list
 
-
             page_token = results.get('nextPageToken')
             if not page_token:
                 break
-
 
         return all_items
 
@@ -129,6 +129,7 @@ class GoogleService(object):
             start_name = start_folder.get('name', 'Root Folder')
             
             folder_items = self.list_files(folder_id, start_name, recursive=recursive)
+            # folder_items = [dict(item, path=start_name) for item in folder_items]
 
             all_items = []
             for i, item in enumerate(folder_items, start=1):
@@ -140,7 +141,7 @@ class GoogleService(object):
                     # Get the emailAddress from the first owner in the list
                     owner_email = owners[0].get('emailAddress', 'Unknown Owner')
 
-                all_items.append({'file_name': item['name'], 'id': item['id'], 'mime_type': item['mimeType'], 'owner': owner_email})
+                all_items.append({'path': item['path'], 'file_name': item['name'], 'id': item['id'], 'view_link': item['webViewLink'], 'mime_type': item['mimeType'], 'owner': owner_email})
 
             return all_items
             
