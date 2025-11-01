@@ -52,7 +52,7 @@ if __name__ == '__main__':
             warn(f"sleeping for {wait_for} seconds\n")
             time.sleep(wait_for)
 
-    headers = ['path', 'file_name', 'mime_type', 'view_link', 'owner', 'id']
+    headers = ['path', 'file_name', 'mime_type', 'view_link', 'bytes', 'quota_bytes', 'owner', 'id']
     csv_path = '../out/drive_files.csv'
     dicts_to_csv(dicts=all_items, headers=headers, csv_path=csv_path)
 

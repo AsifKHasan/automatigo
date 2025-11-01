@@ -65,12 +65,14 @@ class GoogleService(object):
             return None
 
 
-    ''' Recursively lists all files and folders under a given parent ID
+    ''' Recursively lists all files and folders under a given parent folder
 
         Args:
-            parent_id: The ID of the current folder to search within.
+            parent_id: The ID of the current folder to search within
+            path_prefix: path prefix of the folder to list files under
+            recursive: whether ro recurse into sub-folders or not
         Returns:
-            list of file metadata, or None
+            list of file metadata (as dict), or None
     '''
     def list_files(self, parent_id, path_prefix='', recursive=True):
         page_token = None
@@ -83,7 +85,7 @@ class GoogleService(object):
             
             results = self.drive_service.files().list(
                 q=query,
-                fields="nextPageToken, files(id, name, webViewLink, mimeType, owners)",
+                fields="nextPageToken, files(id, name, webViewLink, mimeType, owners, size, quotaBytesUsed)",
                 pageSize=1000, 
                 pageToken=page_token
             ).execute()
@@ -103,10 +105,8 @@ class GoogleService(object):
                 if mime_type == 'application/vnd.google-apps.folder':
                     debug(f"📁 Found Folder: {full_path:<100} id=[{file_id}]")
                     if recursive:
-                        this_list = self.list_files(file_id, full_path)
-                        # this_list = [dict(item, path=full_path) for item in this_list]
-                        # print(this_list)
                         # RECURSIVE CALL: Call the function again for the subfolder
+                        this_list = self.list_files(file_id, full_path)
                         all_items = all_items + this_list
 
             page_token = results.get('nextPageToken')
@@ -117,7 +117,7 @@ class GoogleService(object):
 
 
 
-    ''' lists all files and folders under a given parent ID
+    ''' lists all files and folders under a given parent folder
     '''
     def list_files_under(self, folder_id, recursive=True):
         try:
@@ -141,12 +141,13 @@ class GoogleService(object):
                     # Get the emailAddress from the first owner in the list
                     owner_email = owners[0].get('emailAddress', 'Unknown Owner')
 
-                all_items.append({'path': item['path'], 'file_name': item['name'], 'id': item['id'], 'view_link': item['webViewLink'], 'mime_type': item['mimeType'], 'owner': owner_email})
+                all_items.append({'path': item['path'], 'file_name': item['name'], 'id': item['id'], 'view_link': item['webViewLink'], 'mime_type': item['mimeType'], 'owner': owner_email, 'bytes': item.get('size', 0), 'quota_bytes': item.get('quotaBytesUsed', 0)})
 
             return all_items
             
         except Exception as error:
             print(f'An error occurred: {error}')
+            return None
 
 
 

@@ -1273,19 +1273,25 @@ worksheet-defs:
 
 # drive folders to work on
 drive-folders:
-# - '1b0XccqLHNsNlhUlbiuKSLuvzZOqqAhuU'
+# spectrum resume
+- '1JltNCjefWmSMZHHQtON_fSTpkHh2W9rP'
+
+# sscl resume
+# - '1M38H0z7DJaQO9bfq5ZWlVYXczuOxxPpe'
+
+# spectrum leads&prospects
 # - '0B67lz2acES9ydDI5eEZ0RTQwcm8'
 
-- '14XWehxowqEDPKN93mguD3bCbuz54jIKS'
-- '1RMH8cxVSJpM5LqtQGDllTIRBcF9j6mWc'
-- '15L1T02UkQhFJRDc1OvebwbyurD6fwK8n'
-- '1oHVm-uk_tNPSZd4roGda0tcp6WO7Pdhm'
-- '1DbNgMs4_Q4GcJluJ9vQ0t2Hn3iTwgg_S'
-- '1x2zj-kwtJsdzxa2E1xCdEkmBYxabwyPn'
-- '1EPTfPzxUhWUuQLr9LPrAkIZbjOU4yPbU'
-- '1I7woGGcY65uuqEnNoWHbsdEuWWFzzNUZ'
-- '1v4yY0zO60t_7zLoUCpRAN8b1iTc_Jysq'
-- '1v1oFX6mv6NwPuT8P1ggojbPG9pBCHS8T'
+# - '14XWehxowqEDPKN93mguD3bCbuz54jIKS'
+# - '1RMH8cxVSJpM5LqtQGDllTIRBcF9j6mWc'
+# - '15L1T02UkQhFJRDc1OvebwbyurD6fwK8n'
+# - '1oHVm-uk_tNPSZd4roGda0tcp6WO7Pdhm'
+# - '1DbNgMs4_Q4GcJluJ9vQ0t2Hn3iTwgg_S'
+# - '1x2zj-kwtJsdzxa2E1xCdEkmBYxabwyPn'
+# - '1EPTfPzxUhWUuQLr9LPrAkIZbjOU4yPbU'
+# - '1I7woGGcY65uuqEnNoWHbsdEuWWFzzNUZ'
+# - '1v4yY0zO60t_7zLoUCpRAN8b1iTc_Jysq'
+# - '1v1oFX6mv6NwPuT8P1ggojbPG9pBCHS8T'
 
 # - '1QI_wBGtDzgalMKp-6s4-gwxT2SoUT2cA'
 # - '1tL37OaP7QKKbJtYsZi7cyTzOlFlgt1K1'
