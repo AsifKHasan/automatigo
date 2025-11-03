@@ -74,7 +74,7 @@ class GoogleService(object):
         Returns:
             list of file metadata (as dict), or None
     '''
-    def list_files(self, parent_id, path_prefix='', recursive=True):
+    def list_files(self, parent_id, path_prefix='', recursive=True, nesting_level=0):
         page_token = None
         
         all_items = []
@@ -83,16 +83,33 @@ class GoogleService(object):
             # We also need to query for the MIME type to distinguish files from folders.
             query = f"'{parent_id}' in parents and trashed = false"
             
-            results = self.drive_service.files().list(
-                q=query,
-                fields="nextPageToken, files(id, name, webViewLink, mimeType, owners, size, quotaBytesUsed)",
-                pageSize=1000, 
-                pageToken=page_token
-            ).execute()
-            
-            items = results.get('files', [])
-            items = [dict(item, path=path_prefix) for item in items]
+            wait_for = 30
+            try_for = 3
+            for try_count in range(1, try_for+1):
+                try:
+                    results = self.drive_service.files().list(
+                        q=query,
+                        fields="nextPageToken, files(id, name, webViewLink, mimeType, owners, size, quotaBytesUsed)",
+                        pageSize=1000, 
+                        pageToken=page_token
+                    ).execute()
 
+                    items = results.get('files', [])
+                    trace(f"{len(items)} file(s) found", nesting_level=nesting_level+1)
+                    break
+                
+                except Exception as err:
+                    if try_count < try_for:
+                        warn(f"An error occurred in [{try_count}] try: {err}, trying again in {wait_for} seconds", nesting_level=nesting_level)
+                        time.sleep(wait_for)
+                        continue
+
+                    else:
+                        error(f"An error occurred in [{try_count}] try: {err} .. abandoing", nesting_level=nesting_level)
+                        items = []
+                        break
+
+            items = [dict(item, path=path_prefix) for item in items]
             all_items = all_items + items
 
             for item in items:
@@ -103,10 +120,10 @@ class GoogleService(object):
 
                 # Check if the item is a folder
                 if mime_type == 'application/vnd.google-apps.folder':
-                    debug(f"📁 Found Folder: {full_path:<100} id=[{file_id}]")
+                    debug(f"📁 Found Folder: {full_path:<100} id=[{file_id}]", nesting_level=nesting_level)
                     if recursive:
                         # RECURSIVE CALL: Call the function again for the subfolder
-                        this_list = self.list_files(file_id, full_path)
+                        this_list = self.list_files(file_id, full_path, nesting_level=nesting_level+1)
                         all_items = all_items + this_list
 
             page_token = results.get('nextPageToken')
@@ -119,7 +136,7 @@ class GoogleService(object):
 
     ''' lists all files and folders under a given parent folder
     '''
-    def list_files_under(self, folder_id, recursive=True):
+    def list_files_under(self, folder_id, recursive=True, nesting_level=0):
         try:
             # Get the name of the starting folder for the path_prefix
             start_folder = self.drive_service.files().get(
@@ -128,7 +145,7 @@ class GoogleService(object):
             ).execute()
             start_name = start_folder.get('name', 'Root Folder')
             
-            folder_items = self.list_files(folder_id, start_name, recursive=recursive)
+            folder_items = self.list_files(folder_id, start_name, recursive=recursive, nesting_level=nesting_level+1)
             # folder_items = [dict(item, path=start_name) for item in folder_items]
 
             all_items = []
@@ -145,8 +162,8 @@ class GoogleService(object):
 
             return all_items
             
-        except Exception as error:
-            print(f'An error occurred: {error}')
+        except Exception as err:
+            error(f'An error occurred: {err}')
             return None
 
 
