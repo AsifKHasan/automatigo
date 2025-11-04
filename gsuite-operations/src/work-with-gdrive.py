@@ -52,7 +52,7 @@ if __name__ == '__main__':
         all_items = all_items + work_on_drive(g_service=g_service, folder_id=folder_id)
         info(f"processed  {count:>4}/{num_folders} folder {folder_id}\n")
 
-        if count % 5 == 0:
+        if count % 100 == 0:
             warn(f"sleeping for {wait_for} seconds\n")
             time.sleep(wait_for)
 
