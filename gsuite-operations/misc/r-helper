@@ -1,0 +1,12 @@
+suppressPackageStartupMessages(library(dplyr, quietly = TRUE))
+
+csv_path <- '/home/asifhasan/projects/asif@github.com/automatigo/gsuite-operations/out/other_ownership.csv'
+drive_files <- read.csv(csv_path, header = TRUE)
+
+# Calculate total sales and profit for each region
+summary_by_owner <- drive_files %>%
+    group_by(owner) %>%
+    summarise(
+        count = n(),
+        .groups = 'drop' # Recommended to drop grouping after summarising
+    )
