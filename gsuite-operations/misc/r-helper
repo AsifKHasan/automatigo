@@ -10,3 +10,51 @@ summary_by_owner <- drive_files %>%
         count = n(),
         .groups = 'drop' # Recommended to drop grouping after summarising
     )
+
+
+
+
+
+suppressPackageStartupMessages(library(tidyverse, quietly = TRUE))
+
+# 1. Split the main dataframe into a list of dataframes
+# Each element in the 'df_list' is a dataframe containing only one unique owner's rows.
+df_list <- split(drive_files, drive_files$owner)
+
+
+# 2. Create a target directory for the new CSV files (optional but recommended)
+output_dir <- "/home/asifhasan/projects/asif@github.com/automatigo/gsuite-operations/out/owner-specific/"
+if (!dir.exists(output_dir)) {
+  dir.create(output_dir)
+  # cat(paste("Created directory:", output_dir, "\n"))
+}
+
+
+# 3. Loop through the list and write each dataframe to a separate CSV
+# The name of the list element (key) is the owner's email.
+for (owner_email in names(df_list)) {
+  
+    # Get the dataframe for the current owner
+    df_to_export <- df_list[[owner_email]]
+
+    # Remove the redundant 'owner' column before saving (optional)
+    df_to_export$owner <- NULL 
+
+    # Sanitize the email for a valid filename (replace '@' and '.' with '_')
+    # safe_filename <- gsub("[[:punct:]]", "_", owner_email)
+    safe_filename <- owner_email
+
+    # Construct the full file path
+    file_path <- file.path(output_dir, paste0(safe_filename, ".csv"))
+
+    # Write the dataframe to CSV
+    write.csv(
+        x = df_to_export, 
+        file = file_path, 
+        row.names = FALSE # Don't include R row numbers in the CSV
+    )
+
+    # cat(paste("Successfully exported:", file_path, "\n"))
+}
+
+# cat("\nProcessing complete. Check the 'owner_specific_files' directory.")
