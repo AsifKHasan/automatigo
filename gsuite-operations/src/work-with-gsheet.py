@@ -84,7 +84,6 @@ def work_on_gsheet(g_sheet, g_service, worksheet_names=[], destination_gsheet_na
     }
 
     g_drive = GoogleDrive(google_service=g_service, google_drive=g_service.drive_service)
-    g_drive = GoogleDrive(google_service=g_service, google_drive=g_service.drive_service)
     image_formula_pattern = r'=image\("https://spectrum-bd.biz/data/artifacts/(?P<artifact_type>.+?)/(?P<organization>.+?)/(?P<image_string>.+?)".+\)'
 
     value_requests = []
@@ -229,7 +228,7 @@ if __name__ == '__main__':
     for count, gsheet_name in enumerate(gsheet_names, start=1):
         try:
             info(f"processing {count:>4}/{num_gsheets} gsheet {gsheet_name}")
-            g_sheet = g_service.open(gsheet_name=gsheet_name)
+            g_sheet = g_service.open_gsheet(gsheet_name=gsheet_name)
         except Exception as e:
             g_sheet = None
             warn(str(e))
