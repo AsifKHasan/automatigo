@@ -17,7 +17,7 @@ class GoogleDrive(object):
 
     ''' get a drive file
     '''
-    def get_drive_file(self, drive_file_name, folder_id=None):
+    def get_drive_files(self, drive_file_name, folder_id=None):
         if folder_id is not None:
             q = f"'{folder_id}' in parents and name = '{drive_file_name}'"
         else:

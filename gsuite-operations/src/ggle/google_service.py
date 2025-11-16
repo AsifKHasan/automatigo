@@ -196,3 +196,37 @@ class GoogleService(object):
 
 
 
+    ''' get a drive file
+    '''
+    def get_drive_file(self, drive_file_name, folder_id=None):
+        if folder_id is not None:
+            q = f"'{folder_id}' in parents and name = '{drive_file_name}'"
+        else:
+            q = f"name = '{drive_file_name}'"
+
+        # print(q)
+
+        try:
+            files = []
+            page_token = None
+            while True:
+                response = self.drive_service.files().list(q=q,
+                                                spaces='drive',
+                                                fields='nextPageToken, files(id, name, webViewLink)',
+                                                pageToken=page_token).execute()
+
+                files.extend(response.get('files', []))
+                page_token = response.get('nextPageToken', None)
+                if page_token is None:
+                    break
+
+            if len(files) > 0:
+                return files[0]
+
+        except Exception as error:
+            print(f"An error occurred: {error}")
+            return None
+
+
+
+
