@@ -1,17 +1,7 @@
-- pds__BCC-CA-2018
-- pds__BCC-Cisco-CON-Renewal-2023
-- pds__BCC-Cisco-Renewal-2019
-- pds__BCC-DC-2010
-- pds__BCC-DC-Expansion-2017
-- pds__BCC-Huawei-AMC-2019
-- pds__BCC-HW-Expansion-2015
-- pds__BCC-Infra-AMC-2022-2025
-- pds__BCC-Tier-IV-ServerStorage-2019
-
-# - pds__BDREN-DC-Expansion-2018
-# - pds__BDREN-G-13-2018
-# - pds__BDREN-Network-2014
-# - pds__BDREN-Trust-AMC-2019
+# - pds__BdREN-DC-Expansion-2018
+# - pds__BdREN-G13-2018
+# - pds__BdREN-G25-2014
+# - pds__BdREN-Trust-AMC-2019
 
 # - pds__BPA-Sardah-Police-Academy-2018
 # - pds__BR-DCDR-Lot-A-2013
