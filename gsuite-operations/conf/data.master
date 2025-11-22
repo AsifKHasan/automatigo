@@ -1,56 +1,24 @@
-# - pds__BdREN-DC-Expansion-2018
-# - pds__BdREN-G13-2018
-# - pds__BdREN-G25-2014
-# - pds__BdREN-Trust-AMC-2019
-
-# - pds__BPA-Sardah-Police-Academy-2018
-# - pds__BR-DCDR-Lot-A-2013
-
-# - pds__BSCCL-Cisco-2014
-# - pds__BSCCL-IIG-2012
-# - pds__BSCCL-Kuakata-2015
-
-# - pds__BTCL-NGNCDR-2011
-
-# - pds__CCA-Central-Repository-2021
-# - pds__CCA-esign-Database-2021
-# - pds__CCC-CSSM-2017
-
-# - pds__DBBL-DWDM-2015
-# - pds__DSE-UPS-2014
-# - pds__DSHE-DC-2020
-# - pds__GP-HRMS-2008
-# - pds__iBAS-2021
-# - pds__IBBL-Exadata-AMC-2023
-# - pds__ICB-AMC-2011
-# - pds__ICBIBL-DC-2009
-# - pds__ICBIBL-DR-2009
-# - pds__IFIC-DC-2015
-# - pds__IUB-2010
-# - pds__Jalalabad-DC-2022
-# - pds__JU-2012
-# - pds__MoS&ICT-SASEC-2011
-# - pds__MoS&ICT-SASEC-2012
-# - pds__Mosharaf-Group-2015
-# - pds__MTBL-CCTV-2014
-# - pds__MTBL-EBNCDC-2013
 # - pds__NBR-ASYCUDA-2013
 # - pds__NBR-AW-CTG-Lot-01-2021
 # - pds__NBR-AW-DHK-Lot-02-2021
 # - pds__NBR-AW-Network-Security-2020
 # - pds__NBR-AW-Systems-2020
 # - pds__NBR-BSW-2024
+
 # - pds__OAGN-NAMS-2014
 # - pds__OCAG-AMMS-2011
 # - pds__OneBank-2010
+
 # - pds__Payra-Port-Sophos-Renewal-2023
 # - pds__PHQ-Network-2019
 # - pds__Pubali-Bank-Server-2023
+
 # - pds__RHD-CBRNIP-TOLL-2022
 # - pds__RHD-MIS-e-procurement-2016
 # - pds__RHD-MIS-Infra-AMC-2017
 # - pds__RHD-TDMS-2020-23
 # - pds__ROBI-DMS-2013
+
 # - pds__SCB-2007
 # - pds__SCB-CBRM-2015
 # - pds__SCB-OPCCMS-2008
@@ -58,6 +26,7 @@
 # - pds__SPARRSO-2010
 # - pds__SPARRSO-2012
 # - pds__SUST-TC-2012
+
 # - pds__TeleExchange-uniVerge-2012
 # - pds__UGC-LAN-2011
 
