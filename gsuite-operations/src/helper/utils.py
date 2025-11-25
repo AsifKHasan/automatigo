@@ -20,7 +20,7 @@ LETTER_TO_COLUMN = {
 
 ''' get height and width of a list of list
 '''
-def matrix_dimension(matrix):
+def matrix_dimension(matrix, nesting_level=0):
     height, width = None, None
     if isinstance(matrix, list):
         height = len(matrix)
@@ -35,7 +35,7 @@ def matrix_dimension(matrix):
 
 ''' addSheetRequest builder
 '''
-def build_add_worksheet_request(worksheet_name, sheet_index, num_rows, num_cols, frozen_rows, frozen_cols):
+def build_add_worksheet_request(worksheet_name, sheet_index, num_rows, num_cols, frozen_rows, frozen_cols, nesting_level=0):
     return {
         'addSheet': {
             'properties': {
@@ -55,7 +55,7 @@ def build_add_worksheet_request(worksheet_name, sheet_index, num_rows, num_cols,
 
 ''' build a repeatCell from work_spec
 '''
-def build_repeatcell_from_work_spec(range, work_spec, gsheet):
+def build_repeatcell_from_work_spec(range, work_spec, gsheet, nesting_level=0):
     fields = []
 
     # textFormatRuns/values
@@ -288,14 +288,14 @@ def build_repeatcell_from_work_spec(range, work_spec, gsheet):
 
 ''' appendDimensionRequest builder
 '''
-def build_append_dimension_request(worksheet_id, dimension, length, inherit_from_before):
+def build_append_dimension_request(worksheet_id, dimension, length, inherit_from_before, nesting_level=0):
     return {'appendDimension': {'sheetId': worksheet_id, 'dimension': dimension, 'length': length}}
 
 
 
 ''' insertDimensionRequest builder
 '''
-def build_insert_dimension_request(worksheet_id, dimension, start_index, length, inherit_from_before):
+def build_insert_dimension_request(worksheet_id, dimension, start_index, length, inherit_from_before, nesting_level=0):
     range = {'sheetId': worksheet_id, 'dimension': dimension, 'startIndex': start_index, 'endIndex': start_index + length}
     return {'insertDimension': {'range': range, 'inheritFromBefore': inherit_from_before}}
 
@@ -303,7 +303,7 @@ def build_insert_dimension_request(worksheet_id, dimension, start_index, length,
 
 ''' deleteDimensionRequest builder
 '''
-def build_delete_dimension_request(worksheet_id, dimension, start_index, end_index=None):
+def build_delete_dimension_request(worksheet_id, dimension, start_index, end_index=None, nesting_level=0):
     range = {'sheetId': worksheet_id, 'dimension': dimension, 'startIndex': start_index}
     if end_index:
         range['endIndex'] = end_index
@@ -314,7 +314,7 @@ def build_delete_dimension_request(worksheet_id, dimension, start_index, end_ind
 
 ''' gsheet border spec for border around a range
 '''
-def build_duplicate_sheet_request(worksheet_id, new_worksheet_name, new_worksheet_index=None):
+def build_duplicate_sheet_request(worksheet_id, new_worksheet_name, new_worksheet_index=None, nesting_level=0):
     request_body = {
         "duplicateSheet": {
             "sourceSheetId": worksheet_id,
@@ -331,7 +331,7 @@ def build_duplicate_sheet_request(worksheet_id, new_worksheet_name, new_workshee
 
 ''' find and replace request builder
 '''
-def build_find_replace_request(worksheet_id, search_for, replace_with, regex=False, include_formulas=False, entire_cell=False, match_case=False):
+def build_find_replace_request(worksheet_id, search_for, replace_with, regex=False, include_formulas=False, entire_cell=False, match_case=False, nesting_level=0):
     return {
         "findReplace": {
             "find": search_for,
@@ -348,7 +348,7 @@ def build_find_replace_request(worksheet_id, search_for, replace_with, regex=Fal
 
 ''' gsheet border spec for border around a range
 '''
-def build_border_around_spec(border_list, border_color, border_style='SOLID', inner_border=True):
+def build_border_around_spec(border_list, border_color, border_style='SOLID', inner_border=True, nesting_level=0):
     color = hex_to_rgba(border_color)
     border = {
         "style": border_style,
@@ -375,7 +375,7 @@ def build_border_around_spec(border_list, border_color, border_style='SOLID', in
     condition_values is a list of strings
     format is a dict
 '''
-def build_conditional_format_rule(ranges, condition_type, condition_values, format):
+def build_conditional_format_rule(ranges, condition_type, condition_values, format, nesting_level=0):
     rule = {"addConditionalFormatRule": {
                 "rule": {
                     "ranges" : ranges,
@@ -399,7 +399,7 @@ def build_conditional_format_rule(ranges, condition_type, condition_values, form
     format is a dict which needs to be manipulated
     backgroundColor -> hex_to_rgba(backgroundColor)
 '''
-def conditional_format_from_object(format):
+def conditional_format_from_object(format, nesting_level=0):
     new_format = {}
     if 'backgroundColor' in format:
         new_format['backgroundColor'] = hex_to_rgba(format['backgroundColor'])
@@ -411,7 +411,7 @@ def conditional_format_from_object(format):
 ''' build a data validation rule
     condition_values is a list of strings
 '''
-def build_data_validation_rule(range, condition_type, condition_values, input_message=None):
+def build_data_validation_rule(range, condition_type, condition_values, input_message=None, nesting_level=0):
     values = [{'userEnteredValue': v} for v in condition_values]
     rule = {"setDataValidation": {
                 "range" : range,
@@ -433,7 +433,7 @@ def build_data_validation_rule(range, condition_type, condition_values, input_me
 
 ''' build a no data validation rule
 '''
-def build_no_data_validation_rule(range):
+def build_no_data_validation_rule(range, nesting_level=0):
     rule = {"setDataValidation": {
                 "range" : range,
                 "rule": None
@@ -446,7 +446,7 @@ def build_no_data_validation_rule(range):
 
 ''' gets the value from workspec
 '''
-def build_value_from_work_spec(work_spec, worksheets_dict={}, google_service=None):
+def build_value_from_work_spec(work_spec, worksheets_dict={}, google_service=None, nesting_level=0):
     value = ''
     if 'value' in work_spec:
         value = work_spec['value']
@@ -463,7 +463,7 @@ def build_value_from_work_spec(work_spec, worksheets_dict={}, google_service=Non
         # it may be hyperlink to another drive file
         elif 'file-name-to-link' in work_spec:
             # we need the id of the drive file
-            drive_file = google_service.get_drive_file(drive_file_name=work_spec['file-name-to-link'])
+            drive_file = google_service.get_drive_file(drive_file_name=work_spec['file-name-to-link'], verbose=True, nesting_level=nesting_level)
             if drive_file:
                 # print(drive_file)
                 value = f'=HYPERLINK("{drive_file["webViewLink"]}", "{value}")'.lstrip("'")
@@ -477,7 +477,7 @@ def build_value_from_work_spec(work_spec, worksheets_dict={}, google_service=Non
 ''' build dimension autosize request
     note: index is 0 based
 '''
-def build_dimension_autosize_request(sheet_id, dimension, start_index, end_index):
+def build_dimension_autosize_request(sheet_id, dimension, start_index, end_index, nesting_level=0):
     range_spec = {
         "sheetId": sheet_id,
         "dimension": dimension,
@@ -498,7 +498,7 @@ def build_dimension_autosize_request(sheet_id, dimension, start_index, end_index
 ''' build dimension size update request
     note: index is 0 based
 '''
-def build_dimension_size_update_request(sheet_id, dimension, index, size):
+def build_dimension_size_update_request(sheet_id, dimension, index, size, nesting_level=0):
     range_spec = {
         "sheetId": sheet_id,
         "dimension": dimension,
@@ -523,7 +523,7 @@ def build_dimension_size_update_request(sheet_id, dimension, index, size):
 ''' build dimension visibility update request
     note: index is 0 based
 '''
-def build_dimension_visibility_update_request(sheet_id, dimension, start_index, end_index, hide):
+def build_dimension_visibility_update_request(sheet_id, dimension, start_index, end_index, hide, nesting_level=0):
     range_spec = {
         "sheetId": sheet_id,
         "dimension": dimension,
@@ -547,7 +547,7 @@ def build_dimension_visibility_update_request(sheet_id, dimension, start_index, 
 
 ''' build sheet property update request for frozen rows
 '''
-def build_row_freeze_request(sheet_id, frozen_rows):
+def build_row_freeze_request(sheet_id, frozen_rows, nesting_level=0):
     update_sheet_properties = {
       "updateSheetProperties": {
         "properties": {
@@ -566,7 +566,7 @@ def build_row_freeze_request(sheet_id, frozen_rows):
 
 ''' build sheet property update request for frozen columns
 '''
-def build_column_freeze_request(sheet_id, frozen_cols):
+def build_column_freeze_request(sheet_id, frozen_cols, nesting_level=0):
     update_sheet_properties = {
       "updateSheetProperties": {
         "properties": {
@@ -585,21 +585,21 @@ def build_column_freeze_request(sheet_id, frozen_cols):
 
 '''
 '''
-def cleanup_url(text):
+def cleanup_url(text, nesting_level=0):
     return urllib.parse.unquote(text)
 
 
 
 ''' column number to letter
 '''
-def column_to_letter(col_num):
+def column_to_letter(col_num, nesting_level=0):
     return COLUMN_TO_LETTER[col_num]
 
 
 
 ''' split text into lines and remove spaces and any special character from the begining
 '''
-def split_and_dress(value):
+def split_and_dress(value, nesting_level=0):
     lines = value.split('\n')
     regex = r'^[-\s•]+'
     lines = [re.sub(regex, '', s) for s in lines]
@@ -612,7 +612,7 @@ def split_and_dress(value):
 
 ''' hex string to RGB color tuple
 '''
-def hex_to_color(hex):
+def hex_to_color(hex, nesting_level=0):
     h = hex.lstrip('#')
     return tuple(int(h[i:i+2], 16) for i in (0, 2, 4))
 
@@ -620,7 +620,7 @@ def hex_to_color(hex):
 
 ''' hex string to RGBA
 '''
-def hex_to_rgba(hex):
+def hex_to_rgba(hex, nesting_level=0):
     h = hex.lstrip('#')
     if len(h) == 6:
         h = h + '00'
@@ -632,7 +632,7 @@ def hex_to_rgba(hex):
 
 ''' write list of dicts to a csv file
 '''
-def dicts_to_csv(dicts, headers, csv_path):
+def dicts_to_csv(dicts, headers, csv_path, nesting_level=0):
     # CSV file name
     csv_filename = "cars.csv"
 

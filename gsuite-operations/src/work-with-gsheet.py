@@ -63,8 +63,8 @@ def execute_gsheet_tasks(g_sheet, g_service, gsheet_tasks=[], worksheet_names=[]
                     for x in args_dict['worksheet_names']:
                         trace(f".. {x}")
 
-                task(**args_dict)
-                debug(f"executed  task [{task_name}]")
+                task(nesting_level=1, **args_dict)
+                info(f"executed  task [{task_name}]")
             except Exception as e:
                 error(str(e))
 

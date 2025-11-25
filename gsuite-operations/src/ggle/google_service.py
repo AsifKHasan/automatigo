@@ -43,7 +43,7 @@ class GoogleService(object):
 
     ''' open a gsheet
     '''
-    def open_gsheet(self, gsheet_name, try_for=3):
+    def open_gsheet(self, gsheet_name, try_for=3, nesting_level=0):
         gspread_sheet = None
         wait_for = 30
         for try_count in range(1, try_for+1):
@@ -168,7 +168,7 @@ class GoogleService(object):
 
 
 
-    def share(self, file_id, email, perm_type, role):
+    def share(self, file_id, email, perm_type, role, nesting_level=0):
         ''' share a file
             Args:
                 service: Drive API service instance.
@@ -198,7 +198,7 @@ class GoogleService(object):
 
     ''' get a drive file
     '''
-    def get_drive_file(self, drive_file_name, folder_id=None):
+    def get_drive_file(self, drive_file_name, folder_id=None, verbose=False, nesting_level=0):
         if folder_id is not None:
             q = f"'{folder_id}' in parents and name = '{drive_file_name}'"
         else:
@@ -221,6 +221,15 @@ class GoogleService(object):
                     break
 
             if len(files) > 0:
+                if verbose:
+                    if len(files) > 1:
+                        warn(f"multiple drive files found for [{drive_file_name}] ... ", nesting_level=nesting_level)
+
+                    for i, drive_file in enumerate(files, start=1):
+                        full_path = self.get_file_hierarchy(file_id=drive_file['id'])
+                        path_name = " -> ".join([item['name'] for item in reversed(full_path)])
+                        debug(f"{i} : {path_name}", nesting_level=nesting_level)
+
                 return files[0]
 
         except Exception as error:
@@ -229,4 +238,107 @@ class GoogleService(object):
 
 
 
+    '''
+    Recursively retrieves the full parent folder hierarchy for a given file ID.
+
+    Args:
+        file_id (str): The ID of the file to trace.
+        service: The authenticated Google Drive API service object.
+
+    Returns:
+        list: A list of dicts representing the path from the file up to the root.
+              Example: [{'id': 'fileId', 'name': 'MyFile'}, {'id': 'parent1Id', 'name': 'Folder A'}, ...]
+    '''
+    def get_file_hierarchy(self, file_id, nesting_level=0):
+        hierarchy = []
+        current_id = file_id
+
+        # Use a loop to trace back the parents
+        while current_id:
+            try:
+                # 1. Fetch file/folder metadata
+                # We specifically request the 'id', 'name', and 'parents' fields
+                file_metadata = self.drive_service.files().get(
+                    fileId=current_id, 
+                    fields='id, name, parents'
+                ).execute()
+                
+                file_name = file_metadata.get('name')
+                parent_ids = file_metadata.get('parents')
+                
+                # 2. Add the current item to the hierarchy list
+                hierarchy.append({'id': current_id, 'name': file_name})
+
+                # 3. Determine the next parent ID for the next iteration
+                if parent_ids:
+                    # Drive can have multiple parents; we typically follow the first one
+                    # for a single path, or you could adapt this to trace all paths.
+                    current_id = parent_ids[0] 
+                else:
+                    # No more parents means we have reached the root (My Drive)
+                    current_id = None
+
+            except Exception as e:
+                error(f"An error occurred while fetching ID {current_id}: {e}")
+                break
+        
+        # The hierarchy is built from the file upward; return it in that order.
+        return hierarchy
+
+
+
+    def copy_file(self, source_file_id, target_folder_id, target_file_title, nesting_level=0):
+        ''' copy a file
+        '''
+
+        copied_file = {'name': target_file_title, 'parents' : [target_folder_id]}
+        try:
+            response = self.drive_service.files().copy(fileId=source_file_id, fields='id', body=copied_file).execute()
+            print(response)
+            return response
+        except Exception as error:
+            print(error)
+            return None
+
+
+
+    def copy_drive_file(self, origin_file_id, copy_title, nesting_level=0):
+        """
+        Copy an existing file.
+
+        Args:
+            service: Drive API service instance.
+            origin_file_id: ID of the origin file to copy.
+            copy_title: Title of the copy.
+
+        Returns:
+            The copied file if successful, None otherwise.
+        """
+        copied_file = {'title': copy_title}
+        try:
+            return self.drive.files().copy(fileId=origin_file_id, body=copied_file).execute()
+        except(errors.HttpError, error):
+            error(f"An error occurred: {error}", nesting_level=nesting_level)
+            return None
+
+
+
+    def download_drive_file(self, param, destination, context, nesting_level=0):
+        f = context['drive'].CreateFile(param)
+        f.GetContentFile(destination)
+
+
+
+    def read_drive_file(self, drive_url, nesting_level=0):
+        url = drive_url.strip()
+
+        id = url.replace('https://drive.google.com/file/d/', '')
+        id = id.split('/')[0]
+        # debug(f"drive file id to be read from is {id}", nesting_level=nesting_level)
+        f = self.drive.CreateFile({'id': id})
+        if f['mimeType'] != 'text/plain':
+            warn(f"drive url {url} mime-type is {f['mimeType']} which may not be readable as text", nesting_level=nesting_level)
+
+        text = f.GetContentString()
+        return text
 
