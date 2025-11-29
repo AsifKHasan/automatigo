@@ -19,7 +19,7 @@ def work_on_drive(g_service, folder_id):
     # g_service.share(file_id='1J7VpUFfZiQi543f4zdGcX9mqX7HugvsmebtoECCgk_4', email='asif.hasan@gmail.com', perm_type='user', role='owner')
     files = g_service.list_files_under(folder_id=folder_id, recursive=True)
     if files:
-        # files = [file for file in files if file['owner'] not in ['asif.hasan@gmail.com']]
+        files = [file for file in files if file['owner'] not in ['asif.hasan@gmail.com']]
         # files = [file for file in files if file['owner'] in ['sharafathossain786@gmail.com']]
 
         return files
