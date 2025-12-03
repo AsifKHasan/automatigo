@@ -73,7 +73,7 @@ def execute_gsheet_tasks(g_sheet, g_service, gsheet_tasks=[], worksheet_names=[]
 
 
 
-def work_on_gsheet(g_sheet, g_service, worksheet_names=[], destination_gsheet_names=[], work_specs={}, find_replace_patterns=[]):
+def work_on_gsheet(g_sheet, g_service, worksheet_names=[], worksheet_names_excluded=[], destination_gsheet_names=[], work_specs={}, find_replace_patterns=[]):
     folders_by_organization = {
         '01-spectrum': '12mbhWHu3SgcUOXcdINVAf6z8vEN5DGM6',
         '02-sscl': '1xbkBeWsuMrUIFQmd5MpzLTRIMaL5KOEa',
@@ -83,11 +83,11 @@ def work_on_gsheet(g_sheet, g_service, worksheet_names=[], destination_gsheet_na
         '06-external': '1LNlrmJ3f1rgOlAJAdaF4VpCvps0zc5NV',
     }
 
-    g_drive = GoogleDrive(google_service=g_service, google_drive=g_service.drive_service)
-    image_formula_pattern = r'=image\("https://spectrum-bd.biz/data/artifacts/(?P<artifact_type>.+?)/(?P<organization>.+?)/(?P<image_string>.+?)".+\)'
+    image_formula_pattern = r'=image\("https://spectrum-bd.biz/data/artifacts[/]+(?P<artifact_type>.+?)[/]+(?P<organization>.+?)[/]+(?P<image_string>.+?)".+\)'
 
     value_requests = []
-    for worksheet_name in worksheet_names:
+    matching_worksheet_names = g_sheet.matching_worksheet_names(worksheet_names=worksheet_names, worksheet_names_excluded=worksheet_names_excluded, nesting_level=0)
+    for worksheet_name in matching_worksheet_names:
         ws = g_sheet.worksheet_by_name(worksheet_name=worksheet_name)
         if ws is None:
             warn(f"[{worksheet_name}] NOT FOUND .. ignoring ..")
@@ -102,6 +102,7 @@ def work_on_gsheet(g_sheet, g_service, worksheet_names=[], destination_gsheet_na
                 cell_a1 = f"{COLUMN_TO_LETTER[c]}{r}"
                 m = re.match(image_formula_pattern, str(col), re.IGNORECASE)
                 if m:
+                    debug(f"match found in [{cell_a1}] : {col}", nesting_level=1)
                     if m.group('artifact_type') is not None:
                         artifact_type = m.group('artifact_type')
                         if artifact_type in ['logo']:
@@ -134,8 +135,8 @@ def work_on_gsheet(g_sheet, g_service, worksheet_names=[], destination_gsheet_na
         # iterate over the image cells 
         for i, image_cell in enumerate(image_formula_cells, start=1):
             # we are to convert the formula to a hyperlink formula so that drive images are accounted for, get the drive link for the image 
-            # image_drive_link = g_drive.get_drive_file(drive_file_name=image_cell['image_string'], folder_id=folders_by_organization.get(image_cell['organization']))
-            image_drive_link = g_drive.get_drive_file(drive_file_name=image_cell['image_string'], folder_id=None)
+            # image_drive_link = g_service.get_drive_file(drive_file_name=image_cell['image_string'], folder_id=folders_by_organization.get(image_cell['organization']))
+            image_drive_link = g_service.get_drive_file(drive_file_name=image_cell['image_string'], folder_id=None)
             if image_drive_link is None:
                 warn(f"{image_cell['image_string']} NOT FOUND ...")
                 continue
@@ -223,7 +224,7 @@ if __name__ == '__main__':
 
     g_service = GoogleService(credential_json)
 
-    wait_for = 30
+    wait_for = 60
     num_gsheets = len(gsheet_names)
     for count, gsheet_name in enumerate(gsheet_names, start=1):
         try:
@@ -236,7 +237,7 @@ if __name__ == '__main__':
 
         if g_sheet:
             execute_gsheet_tasks(g_sheet=g_sheet, g_service=g_service, gsheet_tasks=gsheet_tasks, worksheet_names=worksheet_names, worksheet_names_excluded=worksheet_names_excluded, destination_gsheet_names=destination_gsheet_names, work_specs=work_specs, find_replace_patterns=find_replace_patterns, worksheet_defs=worksheet_defs)
-            # work_on_gsheet(g_sheet=g_sheet, g_service=g_service, worksheet_names=worksheet_names, destination_gsheet_names=destination_gsheet_names, work_specs=work_specs, find_replace_patterns=find_replace_patterns)
+            # work_on_gsheet(g_sheet=g_sheet, g_service=g_service, worksheet_names=worksheet_names, worksheet_names_excluded=worksheet_names_excluded, destination_gsheet_names=destination_gsheet_names, work_specs=work_specs, find_replace_patterns=find_replace_patterns)
             info(f"processed  {count:>4}/{num_gsheets} gsheet {gsheet_name}\n")
 
         if count % 100 == 0:

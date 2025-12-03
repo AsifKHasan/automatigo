@@ -569,6 +569,9 @@ class GoogleWorksheet(object):
     ''' data validation from list request
     '''
     def data_validation_from_list_requests(self, range_spec, values, input_message=None, nesting_level=0):
+        if values is None or len(values) == 0:
+            return []
+
         range = a1_range_to_grid_range(range_spec, sheet_id=self.id)
 
         rule = build_data_validation_rule(range=range, condition_type='ONE_OF_LIST', condition_values=values, input_message=input_message)

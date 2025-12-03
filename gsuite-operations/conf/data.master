@@ -726,7 +726,7 @@
 
 
 
-  # data validation
+  # data validation, null list means clear the validation rule
     'D3:D':
       validation-list:
         - BANK
