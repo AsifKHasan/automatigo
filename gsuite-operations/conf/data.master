@@ -1031,7 +1031,7 @@ worksheet-defs:
           - A3
           - Letter
           - Legal
-      'K3:K':
+      'I3:I':
         validation-list:
           - wide
           - medium
@@ -1041,6 +1041,9 @@ worksheet-defs:
           - secl-pad
           - doer-pad
           - stamp
+          - narrow-no-header
+          - narrow-no-footer
+          - narrow-no-header-footer
       'L3:L':
         validation-list:
           - 'Yes'
