@@ -748,8 +748,8 @@
       link -toc-new at cell A1 and left align the cell
 
     'A1'    :
-      value             : '-toc-new'
-      ws-name-to-link   : '-toc-new'
+      value             : '-toc'
+      ws-name-to-link   : '-toc'
       halign            : left
 
   # -toc-new
