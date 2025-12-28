@@ -16,7 +16,7 @@ from task.resume_tasks import *
 
 final_list = []
 
-def execute_gsheet_tasks(g_sheet, g_service, gsheet_tasks=[], worksheet_names=[], worksheet_names_excluded=[], destination_gsheet_names=[], work_specs={}, find_replace_patterns=[], worksheet_defs={}):
+def execute_gsheet_tasks(g_sheet, g_service, gsheet_tasks=[], worksheet_names=[], worksheet_names_excluded=[], destination_gsheet_names=[], work_specs={}, find_replace_patterns=[], worksheet_defs={}, nesting_level=0):
     for gsheet_task_def in gsheet_tasks:
         task_name = gsheet_task_def['task']
         if hasattr(g_sheet, task_name) and callable(getattr(g_sheet, task_name)):
@@ -30,7 +30,7 @@ def execute_gsheet_tasks(g_sheet, g_service, gsheet_tasks=[], worksheet_names=[]
 
                 elif k == 'worksheet_names' and v == True:
                     if match_worksheet_names:
-                        args_dict[k] = g_sheet.matching_worksheet_names(worksheet_names=worksheet_names, worksheet_names_excluded=worksheet_names_excluded)
+                        args_dict[k] = g_sheet.matching_worksheet_names(worksheet_names=worksheet_names, worksheet_names_excluded=worksheet_names_excluded, nesting_level=nesting_level+1)
                     else:
                         args_dict[k] = worksheet_names
 
@@ -56,24 +56,25 @@ def execute_gsheet_tasks(g_sheet, g_service, gsheet_tasks=[], worksheet_names=[]
             # execute the task
             try:
                 task = getattr(g_sheet, task_name)
-                info(f"executing task [{task_name}]")
+                info(f"executing task [{task_name}]", nesting_level=nesting_level)
 
                 if 'worksheet_names' in args_dict:
-                    debug(f"worksheets to work on {args_dict['worksheet_names']}")
+                    debug(f"worksheets to work on {args_dict['worksheet_names']}", nesting_level=nesting_level)
                     for x in args_dict['worksheet_names']:
-                        trace(f".. {x}")
+                        trace(f"{x}", nesting_level=nesting_level)
 
-                task(nesting_level=1, **args_dict)
-                info(f"executed  task [{task_name}]")
+                task(nesting_level=nesting_level+1, **args_dict)
+                info(f"executed  task [{task_name}]", nesting_level=nesting_level)
+                print()
             except Exception as e:
-                error(str(e))
+                error(str(e), nesting_level=nesting_level)
 
         else:
-            error(f"g_sheet has no method [{task_name}]")
+            error(f"g_sheet has no method [{task_name}]", nesting_level=nesting_level)
 
 
 
-def work_on_gsheet(g_sheet, g_service, worksheet_names=[], worksheet_names_excluded=[], destination_gsheet_names=[], work_specs={}, find_replace_patterns=[]):
+def work_on_gsheet(g_sheet, g_service, worksheet_names=[], worksheet_names_excluded=[], destination_gsheet_names=[], work_specs={}, find_replace_patterns=[], nesting_level=0):
     folders_by_organization = {
         '01-spectrum': '12mbhWHu3SgcUOXcdINVAf6z8vEN5DGM6',
         '02-sscl': '1xbkBeWsuMrUIFQmd5MpzLTRIMaL5KOEa',
@@ -222,25 +223,27 @@ if __name__ == '__main__':
     worksheet_defs = config.get('worksheet-defs', {})
     if worksheet_defs is None: worksheet_defs = {}
 
-    g_service = GoogleService(credential_json)
+    g_service = GoogleService(service_account_json_path=credential_json, config=config)
 
-    wait_for = 60
+    wait_for = config.get('wait-for', 60)
+    batch_size = config.get('batch-size', 100)
     num_gsheets = len(gsheet_names)
+    nesting_level = 0
     for count, gsheet_name in enumerate(gsheet_names, start=1):
         try:
-            info(f"processing {count:>4}/{num_gsheets} gsheet {gsheet_name}")
-            g_sheet = g_service.open_gsheet(gsheet_name=gsheet_name)
+            info(f"processing {count:>4}/{num_gsheets} gsheet {gsheet_name}", nesting_level=nesting_level)
+            g_sheet = g_service.open_gsheet(gsheet_name=gsheet_name, nesting_level=nesting_level+1)
         except Exception as e:
             g_sheet = None
-            warn(str(e))
+            warn(str(e), nesting_level=nesting_level)
             # raise e
 
         if g_sheet:
-            execute_gsheet_tasks(g_sheet=g_sheet, g_service=g_service, gsheet_tasks=gsheet_tasks, worksheet_names=worksheet_names, worksheet_names_excluded=worksheet_names_excluded, destination_gsheet_names=destination_gsheet_names, work_specs=work_specs, find_replace_patterns=find_replace_patterns, worksheet_defs=worksheet_defs)
-            # work_on_gsheet(g_sheet=g_sheet, g_service=g_service, worksheet_names=worksheet_names, worksheet_names_excluded=worksheet_names_excluded, destination_gsheet_names=destination_gsheet_names, work_specs=work_specs, find_replace_patterns=find_replace_patterns)
-            info(f"processed  {count:>4}/{num_gsheets} gsheet {gsheet_name}\n")
+            execute_gsheet_tasks(g_sheet=g_sheet, g_service=g_service, gsheet_tasks=gsheet_tasks, worksheet_names=worksheet_names, worksheet_names_excluded=worksheet_names_excluded, destination_gsheet_names=destination_gsheet_names, work_specs=work_specs, find_replace_patterns=find_replace_patterns, worksheet_defs=worksheet_defs, nesting_level=nesting_level+1)
+            # work_on_gsheet(g_sheet=g_sheet, g_service=g_service, worksheet_names=worksheet_names, worksheet_names_excluded=worksheet_names_excluded, destination_gsheet_names=destination_gsheet_names, work_specs=work_specs, find_replace_patterns=find_replace_patterns, nesting_level=nesting_level+1)
+            info(f"processed  {count:>4}/{num_gsheets} gsheet {gsheet_name}\n", nesting_level=nesting_level)
 
-        if count % 100 == 0:
-            warn(f"sleeping for {wait_for} seconds\n")
+        if count % batch_size == 0:
+            warn(f"sleeping for {wait_for} seconds\n", nesting_leve=nesting_level)
             time.sleep(wait_for)
 

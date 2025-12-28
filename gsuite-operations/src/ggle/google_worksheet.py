@@ -16,34 +16,39 @@ class GoogleWorksheet(object):
 
     ''' constructor
     '''
-    def __init__(self, google_service, gspread_worksheet, gsheet):
+    def __init__(self, google_service, gspread_worksheet, gsheet, wait_for, try_for):
         self.service = google_service
         self.gspread_worksheet = gspread_worksheet
         self.gsheet = gsheet
         self.id = self.gspread_worksheet.id
         self.title = self.gspread_worksheet.title
+        self.wait_for = wait_for
+        self.try_for = try_for
 
 
 
     ''' get values for a column - column in A1 notation
     '''
     def get_col_values(self, col_a1, nesting_level=0):
-        return self.gspread_worksheet.col_values(LETTER_TO_COLUMN[col_a1])
+        range = f"{col_a1}1:{col_a1}"
+        # return self.gspread_worksheet.col_values(LETTER_TO_COLUMN[col_a1])
+        return self.get_values_in_batch(ranges=[range], major_dimension='COLUMNS')[0][0]
 
 
 
     ''' get values for a row - row starts with 1
     '''
     def get_row_values(self, row_num, nesting_level=0):
-        return self.gspread_worksheet.row_values(row_num)
+        range = f"{row_num}:{row_num}"
+        # return self.gspread_worksheet.row_values(row_num)
+        return self.get_values_in_batch(ranges=[range], major_dimension='ROWS')[0][0]
 
 
 
     ''' get values in batch
     '''
-    def get_values_in_batch(self, ranges, major_dimension='ROWS', try_for=3, nesting_level=0):
-        wait_for = 30
-        for try_count in range(1, try_for+1):
+    def get_values_in_batch(self, ranges, major_dimension='ROWS', nesting_level=0):
+        for try_count in range(1, self.try_for+1):
             try:
                 values = self.gspread_worksheet.batch_get(ranges, major_dimension=major_dimension, value_render_option='FORMATTED_VALUE')
                 # debug(f"get values in batch passed in [{try_count}] try", nesting_level=1)
@@ -51,9 +56,9 @@ class GoogleWorksheet(object):
 
             except Exception as e:
                 print(e)
-                if try_count < try_for:
-                    warn(f"get values in batch failed in [{try_count}] try, trying again in {wait_for} seconds", nesting_level=1)
-                    time.sleep(wait_for)
+                if try_count < self.try_for:
+                    warn(f"get values in batch failed in [{try_count}] try, trying again in {self.wait_for} seconds", nesting_level=1)
+                    time.sleep(self.wait_for)
                 else:
                     warn(f"get values in batch failed in [{try_count}] try", nesting_level=1)
 
@@ -64,18 +69,17 @@ class GoogleWorksheet(object):
     ''' get values from a1 notation
         get_values_in_batch is preferred
     '''
-    def get_values(self, range_spec, try_for=3, nesting_level=0):
-        wait_for = 30
-        for try_count in range(1, try_for+1):
+    def get_values(self, range_spec, nesting_level=0):
+        for try_count in range(1, self.try_for+1):
             try:
                 values = self.gspread_worksheet.get_values(range_spec, value_render_option='FORMATTED_VALUE')
                 # debug(f"get values passed in [{try_count}] try", nesting_level=1)
                 return values
             except Exception as e:
                 print(e)
-                if try_count < try_for:
-                    warn(f"get values failed in [{try_count}] try, trying again in {wait_for} seconds", nesting_level=1)
-                    time.sleep(wait_for)
+                if try_count < self.try_for:
+                    warn(f"get values failed in [{try_count}] try, trying again in {self.wait_for} seconds", nesting_level=1)
+                    time.sleep(self.wait_for)
                 else:
                     warn(f"get values failed in [{try_count}] try", nesting_level=1)
 
@@ -96,18 +100,17 @@ class GoogleWorksheet(object):
 
     ''' get a range from a1 notation
     '''
-    def get_range(self, range_spec, try_for=3, nesting_level=0):
-        wait_for = 30
-        for try_count in range(1, try_for+1):
+    def get_range(self, range_spec, nesting_level=0):
+        for try_count in range(1, self.try_for+1):
             try:
                 ws_range = self.gspread_worksheet.range(range_spec)
                 # debug(f"get range passed in [{try_count}] try", nesting_level=1)
                 return ws_range
             except Exception as e:
                 print(e)
-                if try_count < try_for:
-                    warn(f"get range failed in [{try_count}] try, trying again in {wait_for} seconds", nesting_level=1)
-                    time.sleep(wait_for)
+                if try_count < self.try_for:
+                    warn(f"get range failed in [{try_count}] try, trying again in {self.wait_for} seconds", nesting_level=1)
+                    time.sleep(self.wait_for)
                 else:
                     warn(f"get range failed in [{try_count}] try", nesting_level=1)
 
@@ -380,7 +383,7 @@ class GoogleWorksheet(object):
 
                 r = r + 1
 
-        return self.range_work_requests(range_work_specs=range_work_specs, worksheets_dict=worksheets_dict, nesting_level=nesting_level)
+        return self.range_work_requests(range_work_specs=range_work_specs, worksheets_dict=worksheets_dict, nesting_level=nesting_level+1)
 
 
 
@@ -398,7 +401,7 @@ class GoogleWorksheet(object):
                     info(f"cell {cell.address:>5} to be linked with drive file [{cell.value}]")
                     range_work_specs[cell.address] = {'value': cell.value, 'file-name-to-link': cell.value}
 
-        return self.range_work_requests(range_work_specs=range_work_specs, nesting_level=nesting_level)
+        return self.range_work_requests(range_work_specs=range_work_specs, nesting_level=nesting_level+1)
 
 
 
@@ -410,13 +413,13 @@ class GoogleWorksheet(object):
             range_to_work_on = self.get_range(range_spec=range_spec)
             for cell in range_to_work_on:
                 if cell.value == '':
-                    # warn(f"cell {cell.address:>5} is empty .. skipping")
+                    # warn(f"cell {cell.address:>5} is empty .. skipping", nesting_level=nesting_level)
                     pass
                 else:
-                    info(f"cell {cell.address:>5} to be linked with worksheet [{cell.value}]")
+                    debug(f"cell {cell.address:>5} to be linked with worksheet [{cell.value}]", nesting_level=nesting_level)
                     range_work_specs[cell.address] = {'value': cell.value, 'ws-name-to-link': cell.value}
 
-        return self.range_work_requests(range_work_specs=range_work_specs, worksheets_dict=worksheets_dict, nesting_level=nesting_level)
+        return self.range_work_requests(range_work_specs=range_work_specs, worksheets_dict=worksheets_dict, nesting_level=nesting_level+1)
 
 
 
@@ -545,7 +548,7 @@ class GoogleWorksheet(object):
                 column_specs[col_a1] = {'size': col_size}
 
             else:
-                # print(f"[{self.title}] column [{col_a1}] has a non-int value [{row_value}] will not be resized")
+                warn(f"[{self.title}] column [{col_a1}] has a non-int value [{row_value}] will not be resized", nesting_level=nesting_level)
                 pass
 
             col_num = col_num + 1
@@ -557,7 +560,7 @@ class GoogleWorksheet(object):
 
     ''' put column size in pixels in row 1 for all columns except A
     '''
-    def column_pixels_in_top_row_requests(self, column_sizes, row_to_update, nesting_level=0):
+    def column_pixels_in_row_requests(self, column_sizes, row_to_update, nesting_level=0):
         # for coumns B to end
         range_work_specs = {}
         values = []

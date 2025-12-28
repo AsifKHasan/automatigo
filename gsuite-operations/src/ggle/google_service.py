@@ -24,7 +24,7 @@ class GoogleService(object):
 
     ''' constructor
     '''
-    def __init__(self, service_account_json_path):
+    def __init__(self, service_account_json_path, config):
 
         # get credentials for service-account
         credentials = service_account.Credentials.from_service_account_file(service_account_json_path)
@@ -39,28 +39,29 @@ class GoogleService(object):
         # using gspread for proxying the gsheet API's
         self.gspread = gspread.authorize(scoped_credentials)
 
+        self.wait_for = config.get('wait-for', 60)
+        self.try_for = config.get('try-for', 60)
 
 
     ''' open a gsheet
     '''
-    def open_gsheet(self, gsheet_name, try_for=3, nesting_level=0):
+    def open_gsheet(self, gsheet_name, nesting_level=0):
         gspread_sheet = None
-        wait_for = 30
-        for try_count in range(1, try_for+1):
+        for try_count in range(1, self.try_for+1):
             try:
                 gspread_sheet = self.gspread.open(gsheet_name)
                 break
 
             except Exception as e:
                 print(e)
-                if try_count < try_for:
-                    warn(f"open gsheet failed in [{try_count}] try, trying again in {wait_for} seconds", nesting_level=1)
-                    time.sleep(wait_for)
+                if try_count < self.try_for:
+                    warn(f"open gsheet failed in [{try_count}] try, trying again in {self.wait_for} seconds", nesting_level=1)
+                    time.sleep(self.wait_for)
                 else:
                     warn(f"open gsheet failed in [{try_count}] try", nesting_level=1)
 
         if gspread_sheet:
-            return GoogleSheet(google_service=self, gspread_sheet=gspread_sheet)
+            return GoogleSheet(google_service=self, gspread_sheet=gspread_sheet, wait_for=self.wait_for, try_for=self.try_for)
         else:
             return None
 
@@ -83,9 +84,7 @@ class GoogleService(object):
             # We also need to query for the MIME type to distinguish files from folders.
             query = f"'{parent_id}' in parents and trashed = false"
             
-            wait_for = 30
-            try_for = 3
-            for try_count in range(1, try_for+1):
+            for try_count in range(1, self.try_for+1):
                 try:
                     results = self.drive_service.files().list(
                         q=query,
@@ -99,9 +98,9 @@ class GoogleService(object):
                     break
                 
                 except Exception as err:
-                    if try_count < try_for:
-                        warn(f"An error occurred in [{try_count}] try: {err}, trying again in {wait_for} seconds", nesting_level=nesting_level)
-                        time.sleep(wait_for)
+                    if try_count < self.try_for:
+                        warn(f"An error occurred in [{try_count}] try: {err}, trying again in {self.wait_for} seconds", nesting_level=nesting_level)
+                        time.sleep(self.wait_for)
                         continue
 
                     else:
@@ -228,12 +227,16 @@ class GoogleService(object):
                     for i, drive_file in enumerate(files, start=1):
                         full_path = self.get_file_hierarchy(file_id=drive_file['id'])
                         path_name = " -> ".join([item['name'] for item in reversed(full_path)])
-                        debug(f"{i} : {path_name}", nesting_level=nesting_level)
+                        if i == 1:
+                            trace(f"{i} : {path_name}", nesting_level=nesting_level)
+                        else:
+                            warn(f"{i} : {path_name}", nesting_level=nesting_level)
+
 
                 return files[0]
 
         except Exception as error:
-            print(f"An error occurred: {error}")
+            print(f"An error occurred: {error}", nesting_level=nesting_level)
             return None
 
 

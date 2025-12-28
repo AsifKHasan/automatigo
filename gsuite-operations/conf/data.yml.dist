@@ -1,6 +1,15 @@
 # log level (0-TRACE, 1-DEBUG, 2-INFO, 3-WARN, 4-ERROR) below which logs will not be printed
 log-level:                  1
 
+# seconds to wait for before retrying
+wait-for:                   60
+
+# number of gsheets to process before a wait
+wait-for:                   3
+
+# retry count, how many times to retry if API call fails
+try-for:                    3
+
 # the google credential for accessing the gsheet(s) (this file must not be in the repo)
 credential-json:            '../conf/credential.json'
 
@@ -21,12 +30,12 @@ gsheet-tasks:
   #   range_specs_for_cells_to_link               :
   #     # - 'M3:M'
   #     # - 'N3:N'
-  #     - 'O3:O'
-  #     - 'P3:P'
-  #     - 'Q3:Q'
   #     - 'R3:R'
   #     - 'S3:S'
   #     - 'T3:T'
+  #     - 'U3:U'
+  #     - 'V3:V'
+  #     - 'W3:W'
 
   # - task                                        : order_worksheets
 

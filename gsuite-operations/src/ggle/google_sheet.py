@@ -21,11 +21,13 @@ class GoogleSheet(object):
 
     ''' constructor
     '''
-    def __init__(self, google_service, gspread_sheet):
+    def __init__(self, google_service, gspread_sheet, wait_for, try_for):
         self.service = google_service
         self.gspread_sheet = gspread_sheet
         self.id = self.gspread_sheet.id
         self.title = self.gspread_sheet.title
+        self.wait_for = wait_for
+        self.try_for = try_for
 
         self.worksheets = self.gspread_sheet.worksheets()
 
@@ -70,12 +72,11 @@ class GoogleSheet(object):
 
     ''' get conditional formats
     '''
-    def get_conditional_formats(self, try_for=3, nesting_level=0):
+    def get_conditional_formats(self, nesting_level=0):
         fields = 'sheets(properties.title,conditionalFormats)'
         # ranges = [f"'{worksheet_name}'!{range_spec}"]
-        wait_for = 30
         conditional_formats = {}
-        for try_count in range(1, try_for+1):
+        for try_count in range(1, self.try_for+1):
             try:
                 request = self.service.gsheet_service.spreadsheets().get(spreadsheetId=self.id, includeGridData=True, fields=fields)
                 response = request.execute()
@@ -89,9 +90,9 @@ class GoogleSheet(object):
 
             except Exception as e:
                 print(e)
-                if try_count < try_for:
-                    warn(f"get conditional formats failed in [{try_count}] try, trying again in {wait_for} seconds", nesting_level=1)
-                    time.sleep(wait_for)
+                if try_count < self.try_for:
+                    warn(f"get conditional formats failed in [{try_count}] try, trying again in {self.wait_for} seconds", nesting_level=1)
+                    time.sleep(self.wait_for)
                 else:
                     warn(f"get conditional formats failed in [{try_count}] try", nesting_level=1)
 
@@ -101,10 +102,9 @@ class GoogleSheet(object):
 
     ''' get column sizes
     '''
-    def get_column_sizes(self, try_for=3, nesting_level=0):
+    def get_column_sizes(self, nesting_level=0):
         fields = 'sheets(properties.title,data(columnMetadata(pixelSize)))'
-        wait_for = 30
-        for try_count in range(1, try_for+1):
+        for try_count in range(1, self.try_for+1):
             try:
                 request = self.service.gsheet_service.spreadsheets().get(spreadsheetId=self.id, includeGridData=True, fields=fields)
                 response = request.execute()
@@ -113,9 +113,9 @@ class GoogleSheet(object):
                 return column_sizes
             except Exception as e:
                 print(e)
-                if try_count < try_for:
-                    warn(f"get worksheet failed in [{try_count}] try, trying again in {wait_for} seconds", nesting_level=1)
-                    time.sleep(wait_for)
+                if try_count < self.try_for:
+                    warn(f"get worksheet failed in [{try_count}] try, trying again in {self.wait_for} seconds", nesting_level=1)
+                    time.sleep(self.wait_for)
                 else:
                     warn(f"get worksheet failed in [{try_count}] try", nesting_level=1)
 
@@ -157,33 +157,31 @@ class GoogleSheet(object):
 
     ''' update spreadsheet formats in batch
     '''
-    def update_formats_in_batch(self, request_list, requester='', try_for=3, nesting_level=0):
-        wait_for = 30
-        for try_count in range(1, try_for+1):
+    def update_formats_in_batch(self, request_list, requester='', nesting_level=0):
+        for try_count in range(1, self.try_for+1):
             try:
                 response = self.gspread_sheet.batch_update(body={'requests': request_list})
                 # debug(f"[{requester}] batch-update passed in [{try_count}] try", nesting_level=1)
                 return response
             except Exception as e:
                 print(e)
-                if try_count < try_for:
-                    warn(f"[{requester}] batch-update failed in [{try_count}/{try_for}] try, trying again in {wait_for} seconds", nesting_level=1)
-                    time.sleep(wait_for)
+                if try_count < self.try_for:
+                    warn(f"[{requester}] batch-update failed in [{try_count}/{self.try_for}] try, trying again in {self.wait_for} seconds", nesting_level=1)
+                    time.sleep(self.wait_for)
                 else:
-                    warn(f"[{requester}] batch-update failed in [{try_count}/{try_for}] try", nesting_level=1)
+                    warn(f"[{requester}] batch-update failed in [{try_count}/{self.try_for}] try", nesting_level=1)
 
 
 
     ''' update spreadsheet values in batch
     '''
-    def update_values_in_batch(self, value_list, requester='', try_for=3, nesting_level=0):
+    def update_values_in_batch(self, value_list, requester='', nesting_level=0):
         batch_update_values_request_body = {
                 'value_input_option': 'USER_ENTERED',
                 'data': value_list,
             }
 
-        wait_for = 30
-        for try_count in range(1, try_for+1):
+        for try_count in range(1, self.try_for+1):
             try:
                 request = self.service.gsheet_service.spreadsheets().values().batchUpdate(spreadsheetId=self.id, body=batch_update_values_request_body)
                 response = request.execute()
@@ -191,9 +189,9 @@ class GoogleSheet(object):
                 return response
             except Exception as e:
                 print(e)
-                if try_count < try_for:
-                    warn(f"[{requester}] value-update failed in [{try_count}] try, trying again in {wait_for} seconds", nesting_level=1)
-                    time.sleep(wait_for)
+                if try_count < self.try_for:
+                    warn(f"[{requester}] value-update failed in [{try_count}] try, trying again in {self.wait_for} seconds", nesting_level=1)
+                    time.sleep(self.wait_for)
                 else:
                     warn(f"[{requester}] value-update failed in [{try_count}] try", nesting_level=1)
 
@@ -214,7 +212,7 @@ class GoogleSheet(object):
                 if not suppress_log:
                     debug(f"worksheet [{worksheet_name:<40}] found", nesting_level=1)
 
-                return GoogleWorksheet(google_service=self.service, gspread_worksheet=ws, gsheet=self)
+                return GoogleWorksheet(google_service=self.service, gspread_worksheet=ws, gsheet=self, wait_for=self.wait_for, try_for=self.try_for)
 
         if not suppress_log:
             error(f"worksheet [{worksheet_name:<40}] not found", nesting_level=1)
@@ -239,10 +237,10 @@ class GoogleSheet(object):
     ''' order the worksheets of the gsheet alphabetically
     '''
     def order_worksheets(self, nesting_level=0):
-        info(f"ordering worksheets for {self.gspread_sheet.title}", nesting_level=1)
+        info(f"ordering worksheets for {self.gspread_sheet.title}", nesting_level=nesting_level)
         reordered_worksheets = sorted(self.worksheets, key=lambda x: x.title, reverse=False)
         self.gspread_sheet.reorder_worksheets(reordered_worksheets)
-        info(f"ordered  worksheets for {self.title}", nesting_level=1)
+        info(f"ordered  worksheets for {self.title}", nesting_level=nesting_level)
 
 
 
@@ -262,12 +260,12 @@ class GoogleSheet(object):
             worksheet_to_remove = self.worksheet_by_name(worksheet_name)
             if worksheet_to_remove:
                 try:
-                    info(f"removing worksheet {worksheet_name}", nesting_level=nesting_level+1)
+                    info(f"removing worksheet {worksheet_name}", nesting_level=nesting_level)
                     self.gspread_sheet.del_worksheet(worksheet_to_remove)
-                    info(f"removed  worksheet {worksheet_name}", nesting_level=nesting_level+1)
+                    info(f"removed  worksheet {worksheet_name}", nesting_level=nesting_level)
 
                 except:
-                    error(f"worksheet {worksheet_name} could not be removed", nesting_level=nesting_level+1)
+                    warn(f"worksheet {worksheet_name} could not be removed", nesting_level=nesting_level)
 
 
 
@@ -312,8 +310,8 @@ class GoogleSheet(object):
         worksheet_to_work_on = self.worksheet_by_name(worksheet_name)
         if worksheet_to_work_on:
             worksheets_dict = self.worksheets_as_dict()
-            values, requests = worksheet_to_work_on.cell_to_worksheet_link_requests(range_specs_for_cells_to_link=range_specs_for_cells_to_link, worksheets_dict=worksheets_dict, nesting_level=nesting_level)
-            self.update_in_batch(values=values, requests=requests, requester='link_cells_to_worksheet', nesting_level=nesting_level)
+            values, requests = worksheet_to_work_on.cell_to_worksheet_link_requests(range_specs_for_cells_to_link=range_specs_for_cells_to_link, worksheets_dict=worksheets_dict, nesting_level=nesting_level+1)
+            self.update_in_batch(values=values, requests=requests, requester='link_cells_to_worksheet', nesting_level=nesting_level+1)
 
 
 
@@ -351,7 +349,7 @@ class GoogleSheet(object):
     ''' get and clear conditional formats
     '''
     def clear_conditional_formats(self, worksheet_names, nesting_level=0):
-        conditional_formats = self.get_conditional_formats(try_for=3)
+        conditional_formats = self.get_conditional_formats()
         requests = []
         for worksheet_name in worksheet_names:
             if worksheet_name not in conditional_formats:
@@ -394,7 +392,7 @@ class GoogleSheet(object):
         for worksheet_name in worksheet_names:
             worksheet = self.worksheet_by_name(worksheet_name)
             if worksheet:
-                vals, reqs = worksheet.column_pixels_in_top_row_requests(column_sizes=column_sizes, row_to_update=row_to_update)
+                vals, reqs = worksheet.column_pixels_in_row_requests(column_sizes=column_sizes, row_to_update=row_to_update)
                 values = values + vals
                 requests = requests + reqs
 
@@ -672,7 +670,7 @@ class GoogleSheet(object):
         values, requests = [], []
 
         # clear conditional formats
-        conditional_formats = self.get_conditional_formats(try_for=3)
+        conditional_formats = self.get_conditional_formats()
         number_of_rules = len(conditional_formats.get(worksheet_name, []))
         clear_conditional_formats_requests = worksheet.clear_conditional_formats_requests(number_of_rules=number_of_rules)
         requests = requests + clear_conditional_formats_requests
