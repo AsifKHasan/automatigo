@@ -417,21 +417,93 @@ class GoogleSheet(object):
 
 
 
-    ''' remove extra columns
-    '''
-    def remove_extra_columns(self, worksheet_names, cols_to_remove_from, cols_to_remove_to, nesting_level=0):
+    ''' move column
+        worksheet_name: worksheet name in which to order columns
+        row_to_consult: worksheet row where the values are and based on what to order the columns
+        order_by_values: a list of values based on which ordering to be done by matching them with the values in the specified row
+    ''' 
+    def move_column(self, worksheet_name, move_from, move_to, check_condition, conditions, nesting_level=0):
         requests = []
-        for worksheet_name in worksheet_names:
-            worksheet = self.worksheet_by_name(worksheet_name=worksheet_name)
-            if worksheet:
-                # check if the worksheet column count is valid for the operation
-                if worksheet.col_count() >= LETTER_TO_COLUMN[cols_to_remove_from]:
-                    reqs = worksheet.remove_extra_columns_requests(cols_to_remove_from=cols_to_remove_from, cols_to_remove_to=cols_to_remove_to)
-                    requests = requests + reqs
-                else:
-                    debug(f"worksheet [{worksheet.gspread_worksheet.title:<40}] does not have column [{cols_to_remove_from}]", nesting_level=1)
+        worksheet = self.worksheet_by_name(worksheet_name=worksheet_name)
+        if worksheet:
+            condition_satisfied = worksheet.check_condition(check_condition=check_condition, conditions=conditions, nesting_level=nesting_level+1)
+            if condition_satisfied:
+                move_from_index = LETTER_TO_COLUMN[move_from] - 1
+                move_to_index = LETTER_TO_COLUMN[move_to]
+                if worksheet.col_count() < move_from_index:
+                    warn(f"worksheet [{worksheet.gspread_worksheet.title:<40}] does not have column [{move_from}]", nesting_level=nesting_level)
+                    return
 
-        self.update_in_batch(values=[], requests=requests, requester='remove_extra_columns')
+                if worksheet.col_count() < move_to_index:
+                    warn(f"worksheet [{worksheet.gspread_worksheet.title:<40}] does not have column [{move_to}]", nesting_level=nesting_level)
+                    return
+                
+                trace(f"worksheet [{worksheet.gspread_worksheet.title:<40}] moving column [{move_from}] to [{move_to}]", nesting_level=nesting_level)
+                requests = worksheet.dimension_move_requests(dimension='COLUMNS', from_index=move_from_index, to_index=move_to_index, nesting_level=nesting_level+1)
+
+                self.update_in_batch(values=[], requests=requests, requester='move_column')
+
+
+    ''' order columns
+        worksheet_name: worksheet name in which to order columns
+        row_to_consult: worksheet row where the values are and based on what to order the columns
+        order_by_values: a list of values based on which ordering to be done by matching them with the values in the specified row
+    ''' 
+    def order_columns(self, worksheet_name, row_to_consult, order_by_values, nesting_level=0):
+        requests = []
+        worksheet = self.worksheet_by_name(worksheet_name=worksheet_name)
+        if worksheet:
+            # get values from row_to_consult
+            row_values = worksheet.get_row_values(row_num=row_to_consult, nesting_level=nesting_level+1)
+
+            # provided values may have lables which are not in the row, we should be removing them from provided values
+            valid_target_order = [label for label in order_by_values if label in row_values]
+
+            # build the move requests
+            for target_idx, label in enumerate(valid_target_order):
+                try:
+                    current_idx = row_values.index(label)
+                    if current_idx != target_idx:
+                        current_col = COLUMN_TO_LETTER[current_idx]
+                        target_col = COLUMN_TO_LETTER[target_idx]
+                        trace(f"column [{current_col}]:[{label}] will be moved to column [{target_col}]", nesting_level=nesting_level+1)
+                        requests.append(worksheet.dimension_move_requests(dimension='COLUMNS', from_index=current_idx, to_index=target_idx, nesting_level=nesting_level+1))
+
+                        # Update our local list to reflect the move so the next loop is accurate
+                        col = row_values.pop(current_idx)
+                        row_values.insert(target_idx, col)
+
+                except ValueError:
+                    warn(f"worksheet [{worksheet.gspread_worksheet.title:<40}] no column found with label '{label}' in Row {row_to_consult}", nesting_level=nesting_level)
+            
+            self.update_in_batch(values=[], requests=requests, requester='order_columns')
+
+
+
+    ''' remove columns
+        worksheet_name: worksheet name from which to remove columns
+        cols_to_remove_from: column letter from where to start removal
+        cols_to_remove_to: column letter upto where to remove
+        check_condition: whether to check any condition for the removal. all conditions must be satisfied
+        conditions: if check_condition, a list of condition dicts
+            cell_a1: cell on which the condition is to be checked
+            value_is: cell_a1 value that must be satisfied for this condition to be satisfied
+    '''
+    def remove_columns(self, worksheet_name, cols_to_remove_from, cols_to_remove_to, check_condition, conditions, nesting_level=0):
+        requests = []
+        worksheet = self.worksheet_by_name(worksheet_name=worksheet_name)
+        if worksheet:
+            # check if the worksheet column count is valid for the operation
+            if worksheet.col_count() >= LETTER_TO_COLUMN[cols_to_remove_from]:
+                condition_satisfied = worksheet.check_condition(check_condition=check_condition, conditions=conditions, nesting_level=nesting_level+1)
+                if condition_satisfied:
+                    requests = worksheet.remove_columns_requests(cols_to_remove_from=cols_to_remove_from, cols_to_remove_to=cols_to_remove_to)
+
+                    self.update_in_batch(values=[], requests=requests, requester='remove_columns')
+    
+            else:
+                warn(f"worksheet [{worksheet.gspread_worksheet.title:<40}] does not have column [{cols_to_remove_from}]", nesting_level=nesting_level)
+
 
 
 

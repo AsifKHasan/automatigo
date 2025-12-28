@@ -45,7 +45,7 @@ class GoogleWorksheet(object):
         wait_for = 30
         for try_count in range(1, try_for+1):
             try:
-                values = self.gspread_worksheet.batch_get(ranges, major_dimension=major_dimension, value_render_option=ValueRenderOption.formatted)
+                values = self.gspread_worksheet.batch_get(ranges, major_dimension=major_dimension, value_render_option='FORMATTED_VALUE')
                 # debug(f"get values in batch passed in [{try_count}] try", nesting_level=1)
                 return values
 
@@ -68,7 +68,7 @@ class GoogleWorksheet(object):
         wait_for = 30
         for try_count in range(1, try_for+1):
             try:
-                values = self.gspread_worksheet.get_values(range_spec, value_render_option='ValueRenderOption.formatted')
+                values = self.gspread_worksheet.get_values(range_spec, value_render_option='FORMATTED_VALUE')
                 # debug(f"get values passed in [{try_count}] try", nesting_level=1)
                 return values
             except Exception as e:
@@ -81,6 +81,17 @@ class GoogleWorksheet(object):
 
         return None
 
+
+    ''' check if a cell value meets a condition
+    '''
+    def cell_meets_condition(self, cell_a1, value_a1, condition='==', nesting_level=0):
+        values = self.get_values(range_spec=f"{cell_a1}:{cell_a1}")
+        if values:
+            value = values[0][0]
+            return get_truth(inp=value, relate=condition, cut=value_a1)
+            
+        else:
+            return False
 
 
     ''' get a range from a1 notation
@@ -176,6 +187,29 @@ class GoogleWorksheet(object):
 
 
 
+    ''' check a condition
+        check_condition: whether to check any condition. all conditions must be satisfied
+        conditions: if check_condition, a list of condition dicts
+            cell_a1: cell on which the condition is to be checked
+            value_is: cell_a1 value that must be satisfied for this condition to be satisfied
+    '''
+    def check_condition(self, check_condition, conditions, nesting_level=0):
+        condition_satisfied = True
+        if check_condition:
+            for condition in conditions:
+                cell_a1 = condition['cell_a1']
+                value_is = condition['value_is']
+                if not self.cell_meets_condition(cell_a1=cell_a1, value_a1=value_is, condition=condition['operator'], nesting_level=nesting_level+1):
+                    warn(f"condition failed: cell [{cell_a1}] {condition['operator']} [{value_is}]", nesting_level=nesting_level)
+                    condition_satisfied = False
+                    break
+
+                else:
+                    trace(f"condition satisfied: cell [{cell_a1}] {condition['operator']} [{value_is}]", nesting_level=nesting_level)
+
+        return condition_satisfied
+
+
 
     ''' worksheet methods to be called by gsheet to return back requests, not doing the actual work
     '''
@@ -192,9 +226,9 @@ class GoogleWorksheet(object):
 
 
 
-    ''' remove extra columns request
+    ''' remove columns request
     '''
-    def remove_extra_columns_requests(self, cols_to_remove_from, cols_to_remove_to, nesting_level=0):
+    def remove_columns_requests(self, cols_to_remove_from, cols_to_remove_to, nesting_level=0):
         request_list = self.dimension_remove_requests(cols_to_remove_from=cols_to_remove_from, cols_to_remove_to=cols_to_remove_to)
         info(f"columns(s) {cols_to_remove_from}-{cols_to_remove_to} to be removed", nesting_level=1)
         return request_list
@@ -211,6 +245,17 @@ class GoogleWorksheet(object):
 
 
 
+    ''' dimensions move request
+    '''
+    def dimension_move_requests(self, dimension, from_index, to_index, nesting_level=0):
+        requests = []
+        if from_index != to_index:
+            requests.append(build_move_dimension_request(worksheet_id=self.id, dimension=dimension, from_index=from_index, to_index=to_index, nesting_level=nesting_level+1))
+
+        return requests
+
+
+
     ''' dimensions add request
     '''
     def dimension_add_requests(self, cols_to_add_at=None, cols_to_add=0, rows_to_add_at=None, rows_to_add=0, nesting_level=0):
@@ -219,22 +264,22 @@ class GoogleWorksheet(object):
             # columns to be added
             if cols_to_add_at == 'end':
                 # columns to be appended at the end
-                requests.append(build_append_dimension_request(worksheet_id=self.id, dimension='COLUMNS', length=cols_to_add, inherit_from_before=False))
+                requests.append(build_append_dimension_request(worksheet_id=self.id, dimension='COLUMNS', length=cols_to_add, inherit_from_before=False, nesting_level=nesting_level+1))
 
             else:
                 # columns to be inserted at some index
                 start_index = LETTER_TO_COLUMN[cols_to_add_at]-1
-                requests.append(build_insert_dimension_request(worksheet_id=self.id, dimension='COLUMNS', start_index=start_index, length=cols_to_add, inherit_from_before=False))
+                requests.append(build_insert_dimension_request(worksheet_id=self.id, dimension='COLUMNS', start_index=start_index, length=cols_to_add, inherit_from_before=False, nesting_level=nesting_level+1))
 
         if rows_to_add_at and rows_to_add:
             # rows to be added
             if rows_to_add_at == 'end':
                 # rows to be appended at the end
-                requests.append(build_append_dimension_request(worksheet_id=self.id, dimension='ROWS', length=rows_to_add, inherit_from_before=False))
+                requests.append(build_append_dimension_request(worksheet_id=self.id, dimension='ROWS', length=rows_to_add, inherit_from_before=False, nesting_level=nesting_level+1))
 
             else:
                 # rows to be inserted at some index
-                requests.append(build_insert_dimension_request(worksheet_id=self.id, dimension='ROWS', start_index=rows_to_add_at, length=rows_to_add, inherit_from_before=False))
+                requests.append(build_insert_dimension_request(worksheet_id=self.id, dimension='ROWS', start_index=rows_to_add_at, length=rows_to_add, inherit_from_before=False, nesting_level=nesting_level+1))
 
         return requests
 

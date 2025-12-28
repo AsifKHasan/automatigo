@@ -3,7 +3,7 @@
 import re
 import urllib.parse
 import csv
-
+import operator
 
 from helper.logger import *
 
@@ -16,6 +16,22 @@ LETTER_TO_COLUMN = {
     'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6, 'G': 7, 'H': 8, 'I': 9, 'J': 10, 'K': 11, 'L': 12, 'M': 13, 'N': 14, 'O': 15, 'P': 16, 'Q': 17, 'R': 18, 'S': 19, 'T': 20, 'U': 21, 'V': 22, 'W': 23, 'X': 24, 'Y': 25, 'Z': 26,
     'AA': 27, 'AB': 28, 'AC': 29, 'AD': 30, 'AE': 31, 'AF': 32, 'AG': 33, 'AH': 34, 'AI': 35, 'AJ': 36, 'AK': 37, 'AL': 38, 'AM': 39, 'AN': 40, 'AO': 41, 'AP': 42, 'AQ': 43, 'AR': 44, 'AS': 45, 'AT': 46, 'AU': 47, 'AV': 48, 'AW': 49, 'AX': 50, 'AY': 51, 'AZ': 52,
 }
+
+
+''' apply operator to inputs to check condition
+    relate: is the operator
+    inp: is the first operand
+    cut is the second operand 
+'''
+def get_truth(inp, relate, cut):
+    ops = {'>': operator.gt,
+           '<': operator.lt,
+           '>=': operator.ge,
+           '<=': operator.le,
+           '==': operator.eq}
+           
+    return ops[relate](inp, cut)
+
 
 
 ''' get height and width of a list of list
@@ -286,6 +302,22 @@ def build_repeatcell_from_work_spec(range, work_spec, gsheet, nesting_level=0):
 
 
 
+''' moveDimensionRequest builder
+'''
+def build_move_dimension_request(worksheet_id, dimension, from_index, to_index, nesting_level=0):
+    return {
+        "moveDimension": {
+            "source": {
+                "sheetId": worksheet_id,
+                "dimension": dimension,
+                "startIndex": from_index,
+                "endIndex": from_index + 1
+            },
+            "destinationIndex": to_index
+        }
+    }
+
+
 ''' appendDimensionRequest builder
 '''
 def build_append_dimension_request(worksheet_id, dimension, length, inherit_from_before, nesting_level=0):
@@ -458,17 +490,17 @@ def build_value_from_work_spec(work_spec, worksheets_dict={}, google_service=Non
             if work_spec['ws-name-to-link'] in worksheets_dict:
                 value = f'=HYPERLINK("#gid={worksheets_dict[work_spec["ws-name-to-link"]]}", "{value}")'.lstrip("'")
             else:
-                error(f".... No Worksheet named {work_spec['ws-name-to-link']}")
+                error(f".... No Worksheet named {work_spec['ws-name-to-link']}", nesting_level=nesting_level)
 
         # it may be hyperlink to another drive file
         elif 'file-name-to-link' in work_spec:
             # we need the id of the drive file
-            drive_file = google_service.get_drive_file(drive_file_name=work_spec['file-name-to-link'], verbose=True, nesting_level=nesting_level)
+            drive_file = google_service.get_drive_file(drive_file_name=work_spec['file-name-to-link'], verbose=True, nesting_level=nesting_level+1)
             if drive_file:
                 # print(drive_file)
                 value = f'=HYPERLINK("{drive_file["webViewLink"]}", "{value}")'.lstrip("'")
             else:
-                error(f".... No Drive File named {work_spec['file-name-to-link']}")
+                error(f".... No Drive File named {work_spec['file-name-to-link']}", nesting_level=nesting_level)
 
     return value
 
