@@ -32,7 +32,7 @@ class GoogleWorksheet(object):
     def get_col_values(self, col_a1, nesting_level=0):
         range = f"{col_a1}1:{col_a1}"
         # return self.gspread_worksheet.col_values(LETTER_TO_COLUMN[col_a1])
-        return self.get_values_in_batch(ranges=[range], major_dimension='COLUMNS')[0][0]
+        return self.get_values_in_batch(ranges=[range], major_dimension='COLUMNS', nesting_level=nesting_level+1)[0][0]
 
 
 
@@ -41,7 +41,7 @@ class GoogleWorksheet(object):
     def get_row_values(self, row_num, nesting_level=0):
         range = f"{row_num}:{row_num}"
         # return self.gspread_worksheet.row_values(row_num)
-        return self.get_values_in_batch(ranges=[range], major_dimension='ROWS')[0][0]
+        return self.get_values_in_batch(ranges=[range], major_dimension='ROWS', nesting_level=nesting_level+1)[0][0]
 
 
 
@@ -51,16 +51,16 @@ class GoogleWorksheet(object):
         for try_count in range(1, self.try_for+1):
             try:
                 values = self.gspread_worksheet.batch_get(ranges, major_dimension=major_dimension, value_render_option='FORMATTED_VALUE')
-                # debug(f"get values in batch passed in [{try_count}] try", nesting_level=1)
+                # debug(f"get values in batch passed in [{try_count}] try", nesting_level=nesting_level)
                 return values
 
             except Exception as e:
                 print(e)
                 if try_count < self.try_for:
-                    warn(f"get values in batch failed in [{try_count}] try, trying again in {self.wait_for} seconds", nesting_level=1)
+                    warn(f"get values in batch failed in [{try_count}] try, trying again in {self.wait_for} seconds", nesting_level=nesting_level)
                     time.sleep(self.wait_for)
                 else:
-                    warn(f"get values in batch failed in [{try_count}] try", nesting_level=1)
+                    warn(f"get values in batch failed in [{try_count}] try", nesting_level=nesting_level)
 
         return None
 
@@ -73,15 +73,15 @@ class GoogleWorksheet(object):
         for try_count in range(1, self.try_for+1):
             try:
                 values = self.gspread_worksheet.get_values(range_spec, value_render_option='FORMATTED_VALUE')
-                # debug(f"get values passed in [{try_count}] try", nesting_level=1)
+                # debug(f"get values passed in [{try_count}] try", nesting_level=nesting_level)
                 return values
             except Exception as e:
                 print(e)
                 if try_count < self.try_for:
-                    warn(f"get values failed in [{try_count}] try, trying again in {self.wait_for} seconds", nesting_level=1)
+                    warn(f"get values failed in [{try_count}] try, trying again in {self.wait_for} seconds", nesting_level=nesting_level)
                     time.sleep(self.wait_for)
                 else:
-                    warn(f"get values failed in [{try_count}] try", nesting_level=1)
+                    warn(f"get values failed in [{try_count}] try", nesting_level=nesting_level)
 
         return None
 
@@ -104,15 +104,15 @@ class GoogleWorksheet(object):
         for try_count in range(1, self.try_for+1):
             try:
                 ws_range = self.gspread_worksheet.range(range_spec)
-                # debug(f"get range passed in [{try_count}] try", nesting_level=1)
+                # debug(f"get range passed in [{try_count}] try", nesting_level=nesting_level)
                 return ws_range
             except Exception as e:
                 print(e)
                 if try_count < self.try_for:
-                    warn(f"get range failed in [{try_count}] try, trying again in {self.wait_for} seconds", nesting_level=1)
+                    warn(f"get range failed in [{try_count}] try, trying again in {self.wait_for} seconds", nesting_level=nesting_level)
                     time.sleep(self.wait_for)
                 else:
-                    warn(f"get range failed in [{try_count}] try", nesting_level=1)
+                    warn(f"get range failed in [{try_count}] try", nesting_level=nesting_level)
 
         return None
 
@@ -148,13 +148,13 @@ class GoogleWorksheet(object):
     def rename_worksheet(self, new_worksheet_name, nesting_level=0):
         old_worksheet_name = self.title
         try:
-            info(f"renaming worksheet [{old_worksheet_name}] to [{new_worksheet_name}]")
+            info(f"renaming worksheet [{old_worksheet_name}] to [{new_worksheet_name}]", nesting_level=nesting_level)
             self.gspread_worksheet.update_title(new_worksheet_name)
             self.title = new_worksheet_name
-            info(f"renamed  worksheet [{old_worksheet_name}] to [{new_worksheet_name}]")
+            info(f"renamed  worksheet [{old_worksheet_name}] to [{new_worksheet_name}]", nesting_level=nesting_level)
 
         except:
-            error(f"worksheet [{old_worksheet_name}] could not be renamed to [{new_worksheet_name}]")
+            error(f"worksheet [{old_worksheet_name}] could not be renamed to [{new_worksheet_name}]", nesting_level=nesting_level)
 
 
 
@@ -233,7 +233,7 @@ class GoogleWorksheet(object):
     '''
     def remove_columns_requests(self, cols_to_remove_from, cols_to_remove_to, nesting_level=0):
         request_list = self.dimension_remove_requests(cols_to_remove_from=cols_to_remove_from, cols_to_remove_to=cols_to_remove_to)
-        info(f"columns(s) {cols_to_remove_from}-{cols_to_remove_to} to be removed", nesting_level=1)
+        info(f"columns(s) {cols_to_remove_from}-{cols_to_remove_to} to be removed", nesting_level=nesting_level)
         return request_list
 
 
@@ -243,7 +243,7 @@ class GoogleWorksheet(object):
     def remove_trailing_blank_rows_requests(self, nesting_level=0):
         rows_to_remove_from, rows_to_remove_to = self.trailing_blank_row_start_index(), 'end'
         request_list = self.dimension_remove_requests(rows_to_remove_from=rows_to_remove_from, rows_to_remove_to=rows_to_remove_to)
-        info(f"rows {rows_to_remove_from}-{rows_to_remove_to} to be removed", nesting_level=1)
+        info(f"rows {rows_to_remove_from}-{rows_to_remove_to} to be removed", nesting_level=nesting_level)
         return request_list
 
 
@@ -326,7 +326,7 @@ class GoogleWorksheet(object):
         for range_spec in range_specs_for_cells_to_link:
             grid_range_spec = a1_range_to_grid_range(range_spec)
             range_start_col, range_start_row, range_end_col = grid_range_spec['startColumnIndex']+1, grid_range_spec['startRowIndex']+1, grid_range_spec['endColumnIndex']+1
-            values = self.get_values_in_batch(ranges=[range_spec])[0]
+            values = self.get_values_in_batch(ranges=[range_spec], nesting_level=nesting_level+1)[0]
             num_columns = range_end_col - range_start_col
             r = 0
             for row_value in values:
@@ -522,7 +522,7 @@ class GoogleWorksheet(object):
             include_formulas = pattern.get('include-formulas', False)
             entire_cell = pattern.get('entire-cell', False)
             match_case = pattern.get('match-case', False)
-            request = build_find_replace_request(worksheet_id=self.id, search_for=search_for, replace_with=replace_with, regex=regex, include_formulas=include_formulas, entire_cell=entire_cell, match_case=match_case)
+            request = build_find_replace_request(worksheet_id=self.id, search_for=search_for, replace_with=replace_with, regex=regex, include_formulas=include_formulas, entire_cell=entire_cell, match_case=match_case, nesting_level=nesting_level+1)
             if request:
                 find_replace_requests.append(request)
 
@@ -538,7 +538,7 @@ class GoogleWorksheet(object):
         column_specs = {}
 
         # get the full row values
-        row_values = self.get_row_values(row_num=row_to_consult)
+        row_values = self.get_row_values(row_num=row_to_consult, nesting_level=nesting_level+1)
         col_num = 1
         for row_value in row_values:
             col_a1 = COLUMN_TO_LETTER[col_num]
@@ -552,7 +552,7 @@ class GoogleWorksheet(object):
                 pass
 
             col_num = col_num + 1
-            requests = requests + self.column_resize_requests(column_specs=column_specs)
+            requests = requests + self.column_resize_requests(column_specs=column_specs, nesting_level=nesting_level+1)
 
         return values, requests
 

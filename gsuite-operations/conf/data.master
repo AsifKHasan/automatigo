@@ -562,6 +562,7 @@
     - pds__Unilever-MFGPRO-2004
     - pds__VHold-Analyst-2009
   # SSCL pds
+    - pds__SSCL__blank.template
     - pds__SSCL__Augmedix-RoutePlanner
     - pds__SSCL__NBR-CA-MGT
     - pds__SSCL__NBR-CAAMS
@@ -573,6 +574,7 @@
     - pds__SSCL__PBL-SCF
     - pds__SSCL__RHD-BRTA-API
     - pds__SSCL__INFINIGENT-EAS
+    - pds__SSCL__PBL-REGULATORY-REPORTING-SYSTEM
   # doer pds
     - pds__doer__ACML-HR-Management-System
     - pds__doer__AgraniBank-Agent-Banking
@@ -943,7 +945,35 @@ worksheet-defs:
       AA:
         halign: left
         size: 300
-    
+
+
+  # 'A1:Z'  :
+  #   font-family       : Arial
+  #   font-size         : 10
+  #   valign            : top
+  # 'Y2'      :
+  #   value             : 'autocrop'
+  # 'Z2'      :
+  #   value             : 'page-bg'
+
+  # 'L2':
+  #   value:    'heading-style'
+  # 'M2':
+  #   value:    'bookmark'
+  # 'N2':
+  #   value:    'jpeg-quality'
+  # 'O2':
+  #   value:    'page-list'
+  # 'L1':
+  #   value:    80
+  # 'M1':
+  #   value:    80
+  # 'N1':
+  #   value:    80
+  # 'O1':
+  #   value:    80
+
+
     ranges:
       # column lables in row 2
       A2:
@@ -968,12 +998,8 @@ worksheet-defs:
         value:  'page-spec'
       K2:
         value:  'margin-spec'
-      L2:
-        value:  'hide-pageno'
       M2:
         value:  'hide-heading'
-      N2:
-        value:  'different-firstpage'
       O2:
         value:  'header-first'
       P2:

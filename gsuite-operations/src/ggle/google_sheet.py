@@ -80,7 +80,7 @@ class GoogleSheet(object):
             try:
                 request = self.service.gsheet_service.spreadsheets().get(spreadsheetId=self.id, includeGridData=True, fields=fields)
                 response = request.execute()
-                # debug(f"get conditional formats passed in [{try_count}] try", nesting_level=1)
+                # debug(f"get conditional formats passed in [{try_count}] try", nesting_level=nesting_level)
                 if 'sheets' in response:
                     for sheet in response['sheets']:
                         if 'conditionalFormats' in sheet:
@@ -91,10 +91,10 @@ class GoogleSheet(object):
             except Exception as e:
                 print(e)
                 if try_count < self.try_for:
-                    warn(f"get conditional formats failed in [{try_count}] try, trying again in {self.wait_for} seconds", nesting_level=1)
+                    warn(f"get conditional formats failed in [{try_count}] try, trying again in {self.wait_for} seconds", nesting_level=nesting_level)
                     time.sleep(self.wait_for)
                 else:
-                    warn(f"get conditional formats failed in [{try_count}] try", nesting_level=1)
+                    warn(f"get conditional formats failed in [{try_count}] try", nesting_level=nesting_level)
 
         return conditional_formats
 
@@ -108,16 +108,16 @@ class GoogleSheet(object):
             try:
                 request = self.service.gsheet_service.spreadsheets().get(spreadsheetId=self.id, includeGridData=True, fields=fields)
                 response = request.execute()
-                # debug(f"get worksheet passed in [{try_count}] try", nesting_level=1)
+                # debug(f"get worksheet passed in [{try_count}] try", nesting_level=nesting_level)
                 column_sizes = {sheet['properties']['title']: [ pixel_size['pixelSize'] for pixel_size in sheet['data'][0]['columnMetadata'] ] for sheet in response['sheets']}
                 return column_sizes
             except Exception as e:
                 print(e)
                 if try_count < self.try_for:
-                    warn(f"get worksheet failed in [{try_count}] try, trying again in {self.wait_for} seconds", nesting_level=1)
+                    warn(f"get worksheet failed in [{try_count}] try, trying again in {self.wait_for} seconds", nesting_level=nesting_level)
                     time.sleep(self.wait_for)
                 else:
-                    warn(f"get worksheet failed in [{try_count}] try", nesting_level=1)
+                    warn(f"get worksheet failed in [{try_count}] try", nesting_level=nesting_level)
 
         return None
 
@@ -140,7 +140,7 @@ class GoogleSheet(object):
 
     ''' update spreadsheet in batch
     '''
-    def update_in_batch(self, values, requests, requester='', nesting_level=1):
+    def update_in_batch(self, values, requests, requester='', nesting_level=0):
         info(f"batch-updating [{len(values)}] values and [{len(requests)}] formats", nesting_level=nesting_level)
         value_results, request_results = [], []
         if len(values):
@@ -161,15 +161,15 @@ class GoogleSheet(object):
         for try_count in range(1, self.try_for+1):
             try:
                 response = self.gspread_sheet.batch_update(body={'requests': request_list})
-                # debug(f"[{requester}] batch-update passed in [{try_count}] try", nesting_level=1)
+                # debug(f"[{requester}] batch-update passed in [{try_count}] try", nesting_level=nesting_level)
                 return response
             except Exception as e:
                 print(e)
                 if try_count < self.try_for:
-                    warn(f"[{requester}] batch-update failed in [{try_count}/{self.try_for}] try, trying again in {self.wait_for} seconds", nesting_level=1)
+                    warn(f"[{requester}] batch-update failed in [{try_count}/{self.try_for}] try, trying again in {self.wait_for} seconds", nesting_level=nesting_level)
                     time.sleep(self.wait_for)
                 else:
-                    warn(f"[{requester}] batch-update failed in [{try_count}/{self.try_for}] try", nesting_level=1)
+                    warn(f"[{requester}] batch-update failed in [{try_count}/{self.try_for}] try", nesting_level=nesting_level)
 
 
 
@@ -185,15 +185,15 @@ class GoogleSheet(object):
             try:
                 request = self.service.gsheet_service.spreadsheets().values().batchUpdate(spreadsheetId=self.id, body=batch_update_values_request_body)
                 response = request.execute()
-                # debug(f"[{requester}] value-update passed in [{try_count}] try", nesting_level=1)
+                # debug(f"[{requester}] value-update passed in [{try_count}] try", nesting_level=nesting_level)
                 return response
             except Exception as e:
                 print(e)
                 if try_count < self.try_for:
-                    warn(f"[{requester}] value-update failed in [{try_count}] try, trying again in {self.wait_for} seconds", nesting_level=1)
+                    warn(f"[{requester}] value-update failed in [{try_count}] try, trying again in {self.wait_for} seconds", nesting_level=nesting_level)
                     time.sleep(self.wait_for)
                 else:
-                    warn(f"[{requester}] value-update failed in [{try_count}] try", nesting_level=1)
+                    warn(f"[{requester}] value-update failed in [{try_count}] try", nesting_level=nesting_level)
 
 
 
@@ -210,12 +210,12 @@ class GoogleSheet(object):
         for ws in self.worksheets:
             if ws.title == worksheet_name:
                 if not suppress_log:
-                    debug(f"worksheet [{worksheet_name:<40}] found", nesting_level=1)
+                    debug(f"worksheet [{worksheet_name:<40}] found", nesting_level=nesting_level)
 
                 return GoogleWorksheet(google_service=self.service, gspread_worksheet=ws, gsheet=self, wait_for=self.wait_for, try_for=self.try_for)
 
         if not suppress_log:
-            error(f"worksheet [{worksheet_name:<40}] not found", nesting_level=1)
+            error(f"worksheet [{worksheet_name:<40}] not found", nesting_level=nesting_level)
 
 
 
@@ -249,7 +249,7 @@ class GoogleSheet(object):
     def rename_worksheet(self, worksheet_name, new_worksheet_name, nesting_level=0):
         worksheet_to_rename = self.worksheet_by_name(worksheet_name)
         if worksheet_to_rename:
-            worksheet_to_rename.rename_worksheet(new_worksheet_name)
+            worksheet_to_rename.rename_worksheet(new_worksheet_name, nesting_level=nesting_level+1)
 
 
 
@@ -274,8 +274,8 @@ class GoogleSheet(object):
     def duplicate_worksheet(self, worksheet_names, worksheet_name_to_duplicate, nesting_level=0):
         worksheet_to_duplicate = self.worksheet_by_name(worksheet_name_to_duplicate)
         if worksheet_to_duplicate:
-            requests = worksheet_to_duplicate.duplicate_worksheet_requests(new_worksheet_names=worksheet_names, nesting_level=nesting_level)
-            self.update_in_batch(values=[], requests=requests, requester='duplicate_worksheet', nesting_level=nesting_level)
+            requests = worksheet_to_duplicate.duplicate_worksheet_requests(new_worksheet_names=worksheet_names, nesting_level=nesting_level+1)
+            self.update_in_batch(values=[], requests=requests, requester='duplicate_worksheet', nesting_level=nesting_level+1)
 
 
 
@@ -288,7 +288,7 @@ class GoogleSheet(object):
         if worksheet_to_work_on:
             worksheets_dict = self.worksheets_as_dict()
             values, requests = worksheet_to_work_on.cell_link_based_on_type_requests(range_specs_for_cells_to_link=range_specs_for_cells_to_link, worksheets_dict=worksheets_dict)
-            self.update_in_batch(values=values, requests=requests, requester='link_cells_based_on_type', nesting_level=nesting_level)
+            self.update_in_batch(values=values, requests=requests, requester='link_cells_based_on_type', nesting_level=nesting_level+1)
 
 
 
@@ -299,7 +299,7 @@ class GoogleSheet(object):
         worksheet_to_work_on = self.worksheet_by_name(worksheet_name)
         if worksheet_to_work_on:
             values, requests = worksheet_to_work_on.cell_to_drive_file_link_requests(range_specs_for_cells_to_link=range_specs_for_cells_to_link, nesting_level=nesting_level)
-            self.update_in_batch(values=values, requests=requests, requester='link_cells_to_drive_files', nesting_level=nesting_level)
+            self.update_in_batch(values=values, requests=requests, requester='link_cells_to_drive_files', nesting_level=nesting_level+1)
 
 
 
@@ -320,14 +320,14 @@ class GoogleSheet(object):
     def find_and_replace(self, worksheet_names, find_replace_patterns, nesting_level=0):
         requests = []
         for worksheet_name in worksheet_names:
-            info(f"searching [{len(find_replace_patterns)}] patterns in  [{worksheet_name}]", nesting_level=1)
+            info(f"searching [{len(find_replace_patterns)}] patterns in  [{worksheet_name}]", nesting_level=nesting_level)
             worksheet_to_work_on = self.worksheet_by_name(worksheet_name)
             if worksheet_to_work_on:
                 reqs = worksheet_to_work_on.find_and_replace_requests(find_replace_patterns=find_replace_patterns)
-                info(f"found     [{len(reqs)}] patterns in  [{worksheet_name}]", nesting_level=1)
+                info(f"found     [{len(reqs)}] patterns in  [{worksheet_name}]", nesting_level=nesting_level)
                 requests = requests + reqs
 
-        result = self.update_in_batch(values=[], requests=requests, requester='find_and_replace')
+        result = self.update_in_batch(values=[], requests=requests, requester='find_and_replace', nesting_level=nesting_level+1)
         return result
 
 
@@ -342,7 +342,7 @@ class GoogleSheet(object):
                 reqs = worksheet_to_work_on.data_validation_clear_requests(range_spec=range_spec)
                 requests = requests + reqs
 
-        self.update_in_batch(values=[], requests=requests, requester='clear_data_validations')
+        self.update_in_batch(values=[], requests=requests, requester='clear_data_validations', nesting_level=nesting_level+1)
 
 
 
@@ -362,7 +362,7 @@ class GoogleSheet(object):
                 reqs = worksheet_to_work_on.clear_conditional_formats_requests(number_of_rules=number_of_rules)
                 requests = requests + reqs
 
-        self.update_in_batch(values=[], requests=requests, requester='clear_conditional_formats')
+        self.update_in_batch(values=[], requests=requests, requester='clear_conditional_formats', nesting_level=nesting_level+1)
 
 
 
@@ -373,14 +373,14 @@ class GoogleSheet(object):
         values = []
         worksheets_dict = self.worksheets_as_dict()
         for worksheet_name in worksheet_names:
-            # info(f"working on .. [{len(work_specs.keys())}] ranges on [{worksheet_name}]", nesting_level=1)
+            # info(f"working on .. [{len(work_specs.keys())}] ranges on [{worksheet_name}]", nesting_level=nesting_level)
             worksheet_to_work_on = self.worksheet_by_name(worksheet_name)
             if worksheet_to_work_on:
                 vals, reqs = worksheet_to_work_on.range_work_requests(range_work_specs=work_specs, worksheets_dict=worksheets_dict)
                 values = values + vals
                 requests = requests + reqs
 
-        self.update_in_batch(values=values, requests=requests, requester='work_on_ranges')
+        self.update_in_batch(values=values, requests=requests, requester='work_on_ranges', nesting_level=nesting_level+1)
 
 
 
@@ -396,7 +396,7 @@ class GoogleSheet(object):
                 values = values + vals
                 requests = requests + reqs
 
-        self.update_in_batch(values=values, requests=requests, requester='column_pixels_in_row')
+        self.update_in_batch(values=values, requests=requests, requester='column_pixels_in_row', nesting_level=nesting_level+1)
 
 
 
@@ -411,7 +411,7 @@ class GoogleSheet(object):
                 values = values + vals
                 requests = requests + reqs
 
-        self.update_in_batch(values=values, requests=requests, requester='resize_columns_from_values_in_row')
+        self.update_in_batch(values=values, requests=requests, requester='resize_columns_from_values_in_row', nesting_level=nesting_level+1)
 
 
 
@@ -439,7 +439,7 @@ class GoogleSheet(object):
                 trace(f"worksheet [{worksheet.gspread_worksheet.title:<40}] moving column [{move_from}] to [{move_to}]", nesting_level=nesting_level)
                 requests = worksheet.dimension_move_requests(dimension='COLUMNS', from_index=move_from_index, to_index=move_to_index, nesting_level=nesting_level+1)
 
-                self.update_in_batch(values=[], requests=requests, requester='move_column')
+                self.update_in_batch(values=[], requests=requests, requester='move_column', nesting_level=nesting_level+1)
 
 
     ''' order columns
@@ -474,7 +474,7 @@ class GoogleSheet(object):
                 except ValueError:
                     warn(f"worksheet [{worksheet.gspread_worksheet.title:<40}] no column found with label '{label}' in Row {row_to_consult}", nesting_level=nesting_level)
             
-            self.update_in_batch(values=[], requests=requests, requester='order_columns')
+            self.update_in_batch(values=[], requests=requests, requester='order_columns', nesting_level=nesting_level+1)
 
 
 
@@ -497,7 +497,7 @@ class GoogleSheet(object):
                 if condition_satisfied:
                     requests = worksheet.remove_columns_requests(cols_to_remove_from=cols_to_remove_from, cols_to_remove_to=cols_to_remove_to)
 
-                    self.update_in_batch(values=[], requests=requests, requester='remove_columns')
+                    self.update_in_batch(values=[], requests=requests, requester='remove_columns', nesting_level=nesting_level+1)
     
             else:
                 warn(f"worksheet [{worksheet.gspread_worksheet.title:<40}] does not have column [{cols_to_remove_from}]", nesting_level=nesting_level)
@@ -515,7 +515,7 @@ class GoogleSheet(object):
                 reqs = worksheet.remove_trailing_blank_rows_requests()
                 requests = requests + reqs
 
-        self.update_in_batch(values=[], requests=requests, requester='remove_trailing_blank_rows')
+        self.update_in_batch(values=[], requests=requests, requester='remove_trailing_blank_rows', nesting_level=nesting_level+1)
 
 
 
@@ -543,7 +543,7 @@ class GoogleSheet(object):
                     reqs = worksheet.dimension_add_requests(rows_to_add_at=rows_to_add_at, rows_to_add=rows_to_add)
                     requests = requests + reqs
         
-        self.update_in_batch(values=[], requests=requests, requester='add_rows')
+        self.update_in_batch(values=[], requests=requests, requester='add_rows', nesting_level=nesting_level+1)
 
 
 
@@ -560,7 +560,7 @@ class GoogleSheet(object):
                     reqs = worksheet.dimension_add_requests(cols_to_add_at=cols_to_add_at, cols_to_add=cols_to_add)
                     requests = requests + reqs
         
-        self.update_in_batch(values=[], requests=requests, requester='add_columns')
+        self.update_in_batch(values=[], requests=requests, requester='add_columns', nesting_level=nesting_level+1)
 
 
 
@@ -570,14 +570,14 @@ class GoogleSheet(object):
         requests = []
         for worksheet_name in worksheet_names:
             worksheet = self.worksheet_by_name(worksheet_name=worksheet_name)
-            info(f"updating review-notes conditional formatting for worksheet {worksheet_name}", nesting_level=1)
+            info(f"updating review-notes conditional formatting for worksheet {worksheet_name}", nesting_level=nesting_level)
             if worksheet:
                 # Get number of columns
                 num_cols = worksheet.col_count()
                 requests = requests + worksheet.conditional_formatting_for_review_notes_requests(num_cols=num_cols)
 
         # finally update in batch
-        self.update_in_batch(values=[], requests=requests, requester='create_review_notes_conditional_formatting')
+        self.update_in_batch(values=[], requests=requests, requester='create_review_notes_conditional_formatting', nesting_level=nesting_level+1)
 
 
 
@@ -588,11 +588,11 @@ class GoogleSheet(object):
             destination_gsheet = self.service.open(gsheet_name=destination_gsheet_name)
             if destination_gsheet:
                 for worksheet_name in worksheet_names:
-                    info(f"copying [{worksheet_name}] to gsheet [{destination_gsheet_name}]", nesting_level=1)
+                    info(f"copying [{worksheet_name}] to gsheet [{destination_gsheet_name}]", nesting_level=nesting_level+1)
                     self.copy_worksheet_to_gsheet(destination_gsheet=destination_gsheet, worksheet_name_to_copy=worksheet_name)
             
             else:
-                warn(f"destination gsheet [{destination_gsheet_name}] not found", nesting_level=1)
+                warn(f"destination gsheet [{destination_gsheet_name}] not found", nesting_level=nesting_level+1)
 
 
 
@@ -602,15 +602,15 @@ class GoogleSheet(object):
         worksheet_add_requests = []
         for worksheet_name in worksheet_names:
             if worksheet_name in worksheet_defs:
-                info(f"creating worksheet {worksheet_name}", nesting_level=1)
+                info(f"creating worksheet {worksheet_name}", nesting_level=nesting_level)
 
                 worksheet_add_requests = worksheet_add_requests + self.create_worksheet(worksheet_name=worksheet_name, worksheet_def=worksheet_defs[worksheet_name])
 
             else:
-                warn(f"worksheet {worksheet_name} : structure not defined", nesting_level=1)
+                warn(f"worksheet {worksheet_name} : structure not defined", nesting_level=nesting_level)
 
         # finally update in batch
-        self.update_in_batch(values=[], requests=worksheet_add_requests, requester='create_worksheets')
+        self.update_in_batch(values=[], requests=worksheet_add_requests, requester='create_worksheets', nesting_level=nesting_level+1)
 
 
 
@@ -620,7 +620,7 @@ class GoogleSheet(object):
         # the worksheet might exist
         worksheet = self.worksheet_by_name(worksheet_name=worksheet_name, suppress_log=True)
         if worksheet:
-            warn(f"worksheet [{worksheet_name}] exists, will not be creates", nesting_level=1)
+            warn(f"worksheet [{worksheet_name}] exists, will not be creates", nesting_level=nesting_level)
             return []
 
 
@@ -637,15 +637,15 @@ class GoogleSheet(object):
         values, requests = [], []
         for worksheet_name in worksheet_names:
             if worksheet_name in worksheet_defs:
-                info(f"formatting worksheet {worksheet_name}", nesting_level=1)
+                info(f"formatting worksheet {worksheet_name}", nesting_level=nesting_level)
 
                 worksheet_format_values, worksheet_format_requests = self.format_worksheet(worksheet_name=worksheet_name, worksheet_def=worksheet_defs[worksheet_name])
 
             else:
-                warn(f"worksheet {worksheet_name} : structure not defined", nesting_level=1)
+                warn(f"worksheet {worksheet_name} : structure not defined", nesting_level=nesting_level)
                 if '*' in worksheet_defs:
                     worksheet_def = worksheet_defs['*']
-                    info(f"But a common structure (*) was defined for formatting [{worksheet_name}]", nesting_level=1)
+                    info(f"But a common structure (*) was defined for formatting [{worksheet_name}]", nesting_level=nesting_level)
                     worksheet_format_values, worksheet_format_requests = self.format_worksheet(worksheet_name=worksheet_name, worksheet_def=worksheet_defs[worksheet_name])
                 else:
                     worksheet_format_values, worksheet_format_requests = [], []
@@ -655,7 +655,7 @@ class GoogleSheet(object):
 
     
         # finally update in batch
-        self.update_in_batch(values=values, requests=requests, requester='format_worksheets')
+        self.update_in_batch(values=values, requests=requests, requester='format_worksheets', nesting_level=nesting_level+1)
 
 
 
