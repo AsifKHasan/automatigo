@@ -1,0 +1,237 @@
+# ------------------------------------------------
+# cell linking and ordering
+# ------------------------------------------------
+
+# link_cells_to_drive_files:
+link_cells_to_drive_files:
+  task                                        : link_cells_to_drive_files
+  worksheet_name                              : 'files-folders'
+  range_specs_for_cells_to_link               :
+  - 'F3:F'
+
+# link_cells_based_on_type
+link_cells_based_on_type:
+  task                                        : link_cells_based_on_type
+  worksheet_name                              : '-toc'
+  range_specs_for_cells_to_link               :
+  - 'E3:F'
+
+# link_cells_to_worksheet
+link_cells_to_worksheet:
+  task                                        : link_cells_to_worksheet
+  worksheet_name                              : '-toc'
+  range_specs_for_cells_to_link               :
+    - 'M3:M'
+    - 'N3:N'
+    - 'R3:R'
+    - 'S3:S'
+    - 'T3:T'
+    - 'U3:U'
+    - 'V3:V'
+    - 'W3:W'
+
+# order_worksheets
+order_worksheets:
+  task                                        : order_worksheets
+
+
+
+# ------------------------------------------------
+# worksheet duplication, removal, renaming
+# ------------------------------------------------
+
+# duplicate_worksheet
+duplicate_worksheet:
+  task                                        : duplicate_worksheet
+  worksheet_names                             : true
+  worksheet_name_to_duplicate                 : 'z-blank'
+  match_worksheet_names                       : false
+
+# remove_worksheets
+remove_worksheets:
+  task                                        : remove_worksheets
+  worksheet_names                             : true
+
+# rename_worksheet
+rename_worksheet:
+  task                                        : rename_worksheet
+  worksheet_name                              : '-toc-new'
+  new_worksheet_name                          : '-toc'
+
+# copy_worksheets_to_other_gsheets
+copy_worksheets_to_other_gsheets:
+  task                                        : copy_worksheets_to_other_gsheets
+  worksheet_names                             : true
+  destination_gsheet_names                    : true
+
+
+
+# ------------------------------------------------
+# worksheet creation, formatting and related tasks
+# ------------------------------------------------
+
+# clear_data_validations
+clear_data_validations:
+  task                                        : clear_data_validations
+  worksheet_names                             : true
+  range_spec                                  : 'A1:Z'
+
+# clear_conditional_formats
+clear_conditional_formats:  
+  task                                        : clear_conditional_formats
+  worksheet_names                             : true
+
+# create_review_notes_conditional_formatting
+create_review_notes_conditional_formatting:  
+  task                                        : create_review_notes_conditional_formatting
+  worksheet_names                             : true
+
+# create_worksheets
+create_worksheets:  
+  task                                        : create_worksheets
+  worksheet_names                             : true
+  worksheet_defs                              : true
+  match_worksheet_names                       : false
+
+# format_worksheets
+format_worksheets:  
+  task                                        : format_worksheets
+  worksheet_names                             : true
+  worksheet_defs                              : true
+  match_worksheet_names                       : false
+
+
+
+# ------------------------------------------------
+# trailing blank row removal, review-notes, column sizing
+# ------------------------------------------------
+
+# report_dimesnions
+report_dimesnions:
+  task                                        : report_dimesnions
+  worksheet_names                             : true
+
+# move_column
+move_column:
+  task                                        : move_column
+  worksheet_name                              : '-toc'
+  move_from                                   : 'K'
+  move_to                                     : 'L'
+  check_condition                             : true
+  conditions:
+    - cell_a1                                 : 'K2'
+      operator                                : '=='
+      value_is                                : 'hide-pageno'
+
+# remove_columns
+remove_columns:
+  task                                        : remove_columns
+  worksheet_name                              : '-toc'
+  cols_to_remove_from                         : 'K'
+  cols_to_remove_to                           : 'K'
+  check_condition                             : true
+  conditions:
+    - cell_a1                                 : 'K2'
+      operator                                : '=='
+      value_is                                : 'hide-pageno'
+
+# remove_trailing_blank_rows
+remove_trailing_blank_rows:
+  task                                        : remove_trailing_blank_rows
+  worksheet_names                             : true
+
+# column_pixels_in_row
+column_pixels_in_row:
+  task                                        : column_pixels_in_row
+  worksheet_names                             : true
+  row_to_update                               : 1
+
+# resize_columns_from_values_in_row
+resize_columns_from_values_in_row:
+  task                                        : resize_columns_from_values_in_row
+  worksheet_names                             : true
+  row_to_consult                              : 1
+
+# order_columns
+order_columns:
+  task                                        : order_columns
+  worksheet_name                              : '-toc'
+  row_to_consult                              : 2
+  order_by_values:
+  - 'section'
+  - 'heading'
+  - 'process'
+  - 'level'
+  - 'content-type'
+  - 'link'
+  - 'break'
+  - 'page-spec'
+  - 'margin-spec'
+  - 'landscape'
+  - 'heading-style'
+  - 'bookmark'
+  - 'jpeg-quality'
+  - 'page-list'
+  - 'autocrop'
+  - 'page-bg'
+  - 'hide-heading'
+  - 'header-first'
+  - 'header-odd'
+  - 'header-even'
+  - 'footer-first'
+  - 'footer-odd'
+  - 'footer-even'
+  - 'override-header'
+  - 'override-footer'
+  - 'background-image'
+  - 'responsible'
+  - 'reviewer'
+  - 'status'
+  - 'comment'
+
+
+
+# ------------------------------------------------
+# add rows and columns
+# ------------------------------------------------
+
+# add_rows
+add_rows:
+  task                                        : add_rows
+  worksheet_names                             : true
+  rows_to_add_at                              : end
+  rows_to_add                                 : 1
+  when_row_count_is                           : 15
+
+# add_columns
+add_columns:
+  task                                        : add_columns
+  worksheet_names                             : true
+  cols_to_add_at                              : 'L'
+  cols_to_add                                 : 5
+  when_col_count_is                           : 26
+
+
+
+# ------------------------------------------------
+# work on ranges etc.
+# ------------------------------------------------
+
+# work_on_ranges
+work_on_ranges:
+  task                                        : work_on_ranges
+  worksheet_names                             : true
+  work_specs                                  : true
+
+
+
+# ------------------------------------------------
+# find and replace in worksheets
+# ------------------------------------------------
+
+# find_and_replace
+find_and_replace:
+  task                                        : find_and_replace
+  worksheet_names                             : true
+  find_replace_patterns                       : true
+

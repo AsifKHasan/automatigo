@@ -16,8 +16,14 @@ from task.resume_tasks import *
 
 final_list = []
 
-def execute_gsheet_tasks(g_sheet, g_service, gsheet_tasks=[], worksheet_names=[], worksheet_names_excluded=[], destination_gsheet_names=[], work_specs={}, find_replace_patterns=[], worksheet_defs={}, nesting_level=0):
-    for gsheet_task_def in gsheet_tasks:
+def execute_gsheet_tasks(g_sheet, g_service, gsheet_tasks=[], task_defs={}, worksheet_names=[], worksheet_names_excluded=[], destination_gsheet_names=[], work_specs={}, find_replace_patterns=[], worksheet_defs={}, nesting_level=0):
+    for gsheet_task in gsheet_tasks:
+        # get the task definition
+        if gsheet_task not in task_defs:
+            warn(f"task [{gsheet_task}] not defined in conf/task-def.yml", nesting_level=nesting_level)
+            continue
+
+        gsheet_task_def = task_defs.get(gsheet_task)
         task_name = gsheet_task_def['task']
         if hasattr(g_sheet, task_name) and callable(getattr(g_sheet, task_name)):
             match_worksheet_names = gsheet_task_def.get('match_worksheet_names', True)
@@ -195,6 +201,10 @@ if __name__ == '__main__':
 
     logger.LOG_LEVEL = config.get('log-level', 0)
 
+    # read task-defs.yml to get the task definitions
+    task_defs = yaml.load(open('../conf/task-defs.yml', 'r', encoding='utf-8'), Loader=yaml.FullLoader)
+
+
     # first we check whether the gsheet argument was passed or not
     if 'gsheet' in args and args["gsheet"] != '':
         gsheet_names = [args["gsheet"]]
@@ -239,11 +249,11 @@ if __name__ == '__main__':
             # raise e
 
         if g_sheet:
-            execute_gsheet_tasks(g_sheet=g_sheet, g_service=g_service, gsheet_tasks=gsheet_tasks, worksheet_names=worksheet_names, worksheet_names_excluded=worksheet_names_excluded, destination_gsheet_names=destination_gsheet_names, work_specs=work_specs, find_replace_patterns=find_replace_patterns, worksheet_defs=worksheet_defs, nesting_level=nesting_level+1)
+            execute_gsheet_tasks(g_sheet=g_sheet, g_service=g_service, gsheet_tasks=gsheet_tasks, task_defs=task_defs, worksheet_names=worksheet_names, worksheet_names_excluded=worksheet_names_excluded, destination_gsheet_names=destination_gsheet_names, work_specs=work_specs, find_replace_patterns=find_replace_patterns, worksheet_defs=worksheet_defs, nesting_level=nesting_level+1)
             # work_on_gsheet(g_sheet=g_sheet, g_service=g_service, worksheet_names=worksheet_names, worksheet_names_excluded=worksheet_names_excluded, destination_gsheet_names=destination_gsheet_names, work_specs=work_specs, find_replace_patterns=find_replace_patterns, nesting_level=nesting_level+1)
             info(f"processed  {count:>4}/{num_gsheets} gsheet {gsheet_name}\n", nesting_level=nesting_level)
 
         if count % batch_size == 0:
-            warn(f"sleeping for {wait_for} seconds\n", nesting_leve=nesting_level)
+            warn(f"sleeping for {wait_for} seconds\n", nesting_level=nesting_level)
             time.sleep(wait_for)
 

@@ -127,12 +127,12 @@ class GoogleSheet(object):
     '''
     def copy_worksheet_to_gsheet(self, destination_gsheet, worksheet_name_to_copy, nesting_level=0):
         # if destination already has a worksheet of the same name, do not do anything
-        destintion_worksheet = destination_gsheet.worksheet_by_name(worksheet_name_to_copy, suppress_log=True)
+        destintion_worksheet = destination_gsheet.worksheet_by_name(worksheet_name_to_copy, suppress_log=True, nesting_level=nesting_level+1)
         if destintion_worksheet:
             warn(f"worksheet [{worksheet_name_to_copy}] already exists in [{destination_gsheet.title}]")
             return
 
-        worksheet_to_copy = self.worksheet_by_name(worksheet_name_to_copy)
+        worksheet_to_copy = self.worksheet_by_name(worksheet_name_to_copy, nesting_level=nesting_level+1)
         if worksheet_to_copy:
             worksheet_to_copy.copy_worksheet_to_gsheet(destination_gsheet)
 
@@ -247,7 +247,7 @@ class GoogleSheet(object):
     ''' rename a worksheet
     '''
     def rename_worksheet(self, worksheet_name, new_worksheet_name, nesting_level=0):
-        worksheet_to_rename = self.worksheet_by_name(worksheet_name)
+        worksheet_to_rename = self.worksheet_by_name(worksheet_name, nesting_level=nesting_level+1)
         if worksheet_to_rename:
             worksheet_to_rename.rename_worksheet(new_worksheet_name, nesting_level=nesting_level+1)
 
@@ -257,7 +257,7 @@ class GoogleSheet(object):
     '''
     def remove_worksheets(self, worksheet_names, nesting_level=0):
         for worksheet_name in worksheet_names:
-            worksheet_to_remove = self.worksheet_by_name(worksheet_name)
+            worksheet_to_remove = self.worksheet_by_name(worksheet_name, nesting_level=nesting_level+1)
             if worksheet_to_remove:
                 try:
                     info(f"removing worksheet {worksheet_name}", nesting_level=nesting_level)
@@ -272,7 +272,7 @@ class GoogleSheet(object):
     ''' bulk create multiple worksheets by duplicating a given worksheet
     '''
     def duplicate_worksheet(self, worksheet_names, worksheet_name_to_duplicate, nesting_level=0):
-        worksheet_to_duplicate = self.worksheet_by_name(worksheet_name_to_duplicate)
+        worksheet_to_duplicate = self.worksheet_by_name(worksheet_name_to_duplicate, nesting_level=nesting_level+1)
         if worksheet_to_duplicate:
             requests = worksheet_to_duplicate.duplicate_worksheet_requests(new_worksheet_names=worksheet_names, nesting_level=nesting_level+1)
             self.update_in_batch(values=[], requests=requests, requester='duplicate_worksheet', nesting_level=nesting_level+1)
@@ -284,7 +284,7 @@ class GoogleSheet(object):
         if the range has only one column default to worksheet link
     '''
     def link_cells_based_on_type(self, worksheet_name, range_specs_for_cells_to_link, nesting_level=0):
-        worksheet_to_work_on = self.worksheet_by_name(worksheet_name)
+        worksheet_to_work_on = self.worksheet_by_name(worksheet_name, nesting_level=nesting_level+1)
         if worksheet_to_work_on:
             worksheets_dict = self.worksheets_as_dict()
             values, requests = worksheet_to_work_on.cell_link_based_on_type_requests(range_specs_for_cells_to_link=range_specs_for_cells_to_link, worksheets_dict=worksheets_dict)
@@ -296,7 +296,7 @@ class GoogleSheet(object):
         link_cells_based_on_type is preferred
     '''
     def link_cells_to_drive_files(self, worksheet_name, range_specs_for_cells_to_link, nesting_level=0):
-        worksheet_to_work_on = self.worksheet_by_name(worksheet_name)
+        worksheet_to_work_on = self.worksheet_by_name(worksheet_name, nesting_level=nesting_level+1)
         if worksheet_to_work_on:
             values, requests = worksheet_to_work_on.cell_to_drive_file_link_requests(range_specs_for_cells_to_link=range_specs_for_cells_to_link, nesting_level=nesting_level)
             self.update_in_batch(values=values, requests=requests, requester='link_cells_to_drive_files', nesting_level=nesting_level+1)
@@ -307,7 +307,7 @@ class GoogleSheet(object):
         link_cells_based_on_type is preferred
     '''
     def link_cells_to_worksheet(self, worksheet_name, range_specs_for_cells_to_link, nesting_level=0):
-        worksheet_to_work_on = self.worksheet_by_name(worksheet_name)
+        worksheet_to_work_on = self.worksheet_by_name(worksheet_name, nesting_level=nesting_level+1)
         if worksheet_to_work_on:
             worksheets_dict = self.worksheets_as_dict()
             values, requests = worksheet_to_work_on.cell_to_worksheet_link_requests(range_specs_for_cells_to_link=range_specs_for_cells_to_link, worksheets_dict=worksheets_dict, nesting_level=nesting_level+1)
@@ -321,7 +321,7 @@ class GoogleSheet(object):
         requests = []
         for worksheet_name in worksheet_names:
             info(f"searching [{len(find_replace_patterns)}] patterns in  [{worksheet_name}]", nesting_level=nesting_level)
-            worksheet_to_work_on = self.worksheet_by_name(worksheet_name)
+            worksheet_to_work_on = self.worksheet_by_name(worksheet_name, nesting_level=nesting_level+1)
             if worksheet_to_work_on:
                 reqs = worksheet_to_work_on.find_and_replace_requests(find_replace_patterns=find_replace_patterns)
                 info(f"found     [{len(reqs)}] patterns in  [{worksheet_name}]", nesting_level=nesting_level)
@@ -337,7 +337,7 @@ class GoogleSheet(object):
     def clear_data_validations(self, worksheet_names, range_spec, nesting_level=0):
         requests = []
         for worksheet_name in worksheet_names:
-            worksheet_to_work_on = self.worksheet_by_name(worksheet_name)
+            worksheet_to_work_on = self.worksheet_by_name(worksheet_name, nesting_level=nesting_level+1)
             if worksheet_to_work_on:
                 reqs = worksheet_to_work_on.data_validation_clear_requests(range_spec=range_spec)
                 requests = requests + reqs
@@ -356,7 +356,7 @@ class GoogleSheet(object):
                 debug(f"No conditional format exists for [{worksheet_name}]")
                 continue
 
-            worksheet_to_work_on = self.worksheet_by_name(worksheet_name)
+            worksheet_to_work_on = self.worksheet_by_name(worksheet_name, nesting_level=nesting_level+1)
             if worksheet_to_work_on:
                 number_of_rules = len(conditional_formats[worksheet_name])
                 reqs = worksheet_to_work_on.clear_conditional_formats_requests(number_of_rules=number_of_rules)
@@ -374,9 +374,9 @@ class GoogleSheet(object):
         worksheets_dict = self.worksheets_as_dict()
         for worksheet_name in worksheet_names:
             # info(f"working on .. [{len(work_specs.keys())}] ranges on [{worksheet_name}]", nesting_level=nesting_level)
-            worksheet_to_work_on = self.worksheet_by_name(worksheet_name)
+            worksheet_to_work_on = self.worksheet_by_name(worksheet_name, nesting_level=nesting_level+1)
             if worksheet_to_work_on:
-                vals, reqs = worksheet_to_work_on.range_work_requests(range_work_specs=work_specs, worksheets_dict=worksheets_dict)
+                vals, reqs = worksheet_to_work_on.range_work_requests(range_work_specs=work_specs, worksheets_dict=worksheets_dict, nesting_level=nesting_level+1)
                 values = values + vals
                 requests = requests + reqs
 
@@ -390,7 +390,7 @@ class GoogleSheet(object):
         values, requests = [], []
         column_sizes = self.get_column_sizes()
         for worksheet_name in worksheet_names:
-            worksheet = self.worksheet_by_name(worksheet_name)
+            worksheet = self.worksheet_by_name(worksheet_name, nesting_level=nesting_level+1)
             if worksheet:
                 vals, reqs = worksheet.column_pixels_in_row_requests(column_sizes=column_sizes, row_to_update=row_to_update)
                 values = values + vals
@@ -405,7 +405,7 @@ class GoogleSheet(object):
     def resize_columns_from_values_in_row(self, worksheet_names, row_to_consult, nesting_level=0):
         values, requests = [], []
         for worksheet_name in worksheet_names:
-            worksheet = self.worksheet_by_name(worksheet_name)
+            worksheet = self.worksheet_by_name(worksheet_name, nesting_level=nesting_level+1)
             if worksheet:
                 vals, reqs = worksheet.resize_columns_from_values_in_row_requests(row_to_consult=row_to_consult)
                 values = values + vals
@@ -422,7 +422,7 @@ class GoogleSheet(object):
     ''' 
     def move_column(self, worksheet_name, move_from, move_to, check_condition, conditions, nesting_level=0):
         requests = []
-        worksheet = self.worksheet_by_name(worksheet_name=worksheet_name)
+        worksheet = self.worksheet_by_name(worksheet_name=worksheet_name, nesting_level=nesting_level+1)
         if worksheet:
             condition_satisfied = worksheet.check_condition(check_condition=check_condition, conditions=conditions, nesting_level=nesting_level+1)
             if condition_satisfied:
@@ -442,6 +442,7 @@ class GoogleSheet(object):
                 self.update_in_batch(values=[], requests=requests, requester='move_column', nesting_level=nesting_level+1)
 
 
+
     ''' order columns
         worksheet_name: worksheet name in which to order columns
         row_to_consult: worksheet row where the values are and based on what to order the columns
@@ -449,7 +450,7 @@ class GoogleSheet(object):
     ''' 
     def order_columns(self, worksheet_name, row_to_consult, order_by_values, nesting_level=0):
         requests = []
-        worksheet = self.worksheet_by_name(worksheet_name=worksheet_name)
+        worksheet = self.worksheet_by_name(worksheet_name=worksheet_name, nesting_level=nesting_level+1)
         if worksheet:
             # get values from row_to_consult
             row_values = worksheet.get_row_values(row_num=row_to_consult, nesting_level=nesting_level+1)
@@ -489,7 +490,7 @@ class GoogleSheet(object):
     '''
     def remove_columns(self, worksheet_name, cols_to_remove_from, cols_to_remove_to, check_condition, conditions, nesting_level=0):
         requests = []
-        worksheet = self.worksheet_by_name(worksheet_name=worksheet_name)
+        worksheet = self.worksheet_by_name(worksheet_name=worksheet_name, nesting_level=nesting_level+1)
         if worksheet:
             # check if the worksheet column count is valid for the operation
             if worksheet.col_count() >= LETTER_TO_COLUMN[cols_to_remove_from]:
@@ -503,6 +504,16 @@ class GoogleSheet(object):
                 warn(f"worksheet [{worksheet.gspread_worksheet.title:<40}] does not have column [{cols_to_remove_from}]", nesting_level=nesting_level)
 
 
+    ''' report dimesnions
+    '''
+    def report_dimesnions(self, worksheet_names, nesting_level=0):
+        for worksheet_name in worksheet_names:
+            worksheet = self.worksheet_by_name(worksheet_name, suppress_log=False, nesting_level=nesting_level+1)
+            num_rows, num_cols = worksheet.number_of_dimesnions()
+            if worksheet:
+                info(f"[{num_cols}] cols in [{worksheet_name:40}] worksheet for gsheet [{self.title}]", nesting_level=nesting_level)
+                info(f"[{num_rows}] rows in [{worksheet_name:40}] worksheet for gsheet [{self.title}]", nesting_level=nesting_level)
+
 
 
     ''' remove trailing blank rows from a worksheet
@@ -510,9 +521,9 @@ class GoogleSheet(object):
     def remove_trailing_blank_rows(self, worksheet_names, nesting_level=0):
         requests = []
         for worksheet_name in worksheet_names:
-            worksheet = self.worksheet_by_name(worksheet_name)
+            worksheet = self.worksheet_by_name(worksheet_name, nesting_level=nesting_level+1)
             if worksheet:
-                reqs = worksheet.remove_trailing_blank_rows_requests()
+                reqs = worksheet.remove_trailing_blank_rows_requests(nesting_level=nesting_level+1)
                 requests = requests + reqs
 
         self.update_in_batch(values=[], requests=requests, requester='remove_trailing_blank_rows', nesting_level=nesting_level+1)
@@ -522,9 +533,9 @@ class GoogleSheet(object):
     ''' number of rows and columns of a worksheet
     '''
     def number_of_dimesnions(self, worksheet_name, suppress_log=False, nesting_level=0):
-        worksheet = self.worksheet_by_name(worksheet_name, suppress_log=suppress_log)
+        worksheet = self.worksheet_by_name(worksheet_name, suppress_log=suppress_log, nesting_level=nesting_level+1)
         if worksheet:
-            return worksheet.number_of_dimesnions()
+            return worksheet.number_of_dimesnions(nesting_level=nesting_level+1)
         else:
             return 0, 0
 
@@ -536,9 +547,9 @@ class GoogleSheet(object):
     def add_rows(self, worksheet_names, rows_to_add_at, rows_to_add, when_row_count_is=None, nesting_level=0):
         requests = []
         for worksheet_name in worksheet_names:
-            worksheet = self.worksheet_by_name(worksheet_name, suppress_log=False)
+            worksheet = self.worksheet_by_name(worksheet_name, suppress_log=False, nesting_level=nesting_level+1)
             if worksheet:
-                num_rows, num_cols = worksheet.number_of_dimesnions()
+                num_rows, num_cols = worksheet.number_of_dimesnions(nesting_level=nesting_level+1)
                 if when_row_count_is is None or when_row_count_is == num_rows:
                     reqs = worksheet.dimension_add_requests(rows_to_add_at=rows_to_add_at, rows_to_add=rows_to_add)
                     requests = requests + reqs
@@ -553,7 +564,7 @@ class GoogleSheet(object):
     def add_columns(self, worksheet_names, cols_to_add_at, cols_to_add, when_col_count_is=None, nesting_level=0):
         requests = []
         for worksheet_name in worksheet_names:
-            worksheet = self.worksheet_by_name(worksheet_name, suppress_log=False)
+            worksheet = self.worksheet_by_name(worksheet_name, suppress_log=False, nesting_level=nesting_level+1)
             if worksheet:
                 num_rows, num_cols = worksheet.number_of_dimesnions()
                 if when_col_count_is is None or when_col_count_is == num_cols:
@@ -569,7 +580,7 @@ class GoogleSheet(object):
     def create_review_notes_conditional_formatting(self, worksheet_names, nesting_level=0):
         requests = []
         for worksheet_name in worksheet_names:
-            worksheet = self.worksheet_by_name(worksheet_name=worksheet_name)
+            worksheet = self.worksheet_by_name(worksheet_name=worksheet_name, nesting_level=nesting_level+1)
             info(f"updating review-notes conditional formatting for worksheet {worksheet_name}", nesting_level=nesting_level)
             if worksheet:
                 # Get number of columns
@@ -618,7 +629,7 @@ class GoogleSheet(object):
     '''
     def create_worksheet(self, worksheet_name, worksheet_def, nesting_level=0):
         # the worksheet might exist
-        worksheet = self.worksheet_by_name(worksheet_name=worksheet_name, suppress_log=True)
+        worksheet = self.worksheet_by_name(worksheet_name=worksheet_name, suppress_log=True, nesting_level=nesting_level+1)
         if worksheet:
             warn(f"worksheet [{worksheet_name}] exists, will not be creates", nesting_level=nesting_level)
             return []
@@ -663,7 +674,7 @@ class GoogleSheet(object):
     '''
     def format_worksheet(self, worksheet_name, worksheet_def, nesting_level=0):
         # get the worksheet
-        worksheet = self.worksheet_by_name(worksheet_name=worksheet_name)
+        worksheet = self.worksheet_by_name(worksheet_name=worksheet_name, nesting_level=nesting_level+1)
         if not worksheet:
             return []
 

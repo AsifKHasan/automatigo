@@ -576,6 +576,7 @@
     - pds__SSCL__INFINIGENT-EAS
     - pds__SSCL__PBL-REGULATORY-REPORTING-SYSTEM
   # doer pds
+    - pds__doer__blank.template
     - pds__doer__ACML-HR-Management-System
     - pds__doer__AgraniBank-Agent-Banking
     - pds__doer__AgraniBank-e-KYC
@@ -592,6 +593,7 @@
     - pds__doer__MRA-OMS
     - pds__doer__PAMCL-Accounts-Management-System
   # celloscope pds
+    - pds__celloscope__blank.template
     - pds__celloscope__AEL-Accounting
     - pds__celloscope__Crossworld-uniVerge
     - pds__celloscope__NBR-FFBT-ARDS
@@ -599,7 +601,6 @@
     - pds__celloscope__NRBCB-e-KYC
     - pds__celloscope__SAU-ACAS-2023
     - pds__celloscope__TeleExchange-uniVerge
-
 
 
 # worksheet-names:
@@ -945,34 +946,6 @@ worksheet-defs:
       AA:
         halign: left
         size: 300
-
-
-  # 'A1:Z'  :
-  #   font-family       : Arial
-  #   font-size         : 10
-  #   valign            : top
-  # 'Y2'      :
-  #   value             : 'autocrop'
-  # 'Z2'      :
-  #   value             : 'page-bg'
-
-  # 'L2':
-  #   value:    'heading-style'
-  # 'M2':
-  #   value:    'bookmark'
-  # 'N2':
-  #   value:    'jpeg-quality'
-  # 'O2':
-  #   value:    'page-list'
-  # 'L1':
-  #   value:    80
-  # 'M1':
-  #   value:    80
-  # 'N1':
-  #   value:    80
-  # 'O1':
-  #   value:    80
-
 
     ranges:
       # column lables in row 2
