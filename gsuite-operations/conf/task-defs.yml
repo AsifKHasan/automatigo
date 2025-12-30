@@ -127,13 +127,16 @@ move_column:
 remove_columns:
   task                                        : remove_columns
   worksheet_name                              : '-toc'
-  cols_to_remove_from                         : 'K'
-  cols_to_remove_to                           : 'K'
+  cols_to_remove_from                         : 'AE'
+  cols_to_remove_to                           : 'AE'
   check_condition                             : true
   conditions:
-    - cell_a1                                 : 'K2'
+    - method                                  : num_cols
       operator                                : '=='
-      value_is                                : 'hide-pageno'
+      value_is                                : 31
+    - cell_a1                                 : 'AE2'
+      operator                                : '=='
+      value_is                                : ''
 
 # remove_trailing_blank_rows
 remove_trailing_blank_rows:
@@ -208,7 +211,7 @@ add_columns:
   task                                        : add_columns
   worksheet_names                             : true
   cols_to_add_at                              : 'L'
-  cols_to_add                                 : 5
+  cols_to_add                                 : 4
   when_col_count_is                           : 26
 
 
@@ -222,6 +225,11 @@ work_on_ranges:
   task                                        : work_on_ranges
   worksheet_names                             : true
   work_specs                                  : true
+  check_condition                             : true
+  conditions:
+    - method                                  : num_cols
+      operator                                : '=='
+      value_is                                : 30
 
 
 

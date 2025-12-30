@@ -89,13 +89,32 @@ class GoogleWorksheet(object):
     ''' check if a cell value meets a condition
     '''
     def cell_meets_condition(self, cell_a1, value_a1, condition='==', nesting_level=0):
-        values = self.get_values(range_spec=f"{cell_a1}:{cell_a1}")
+        values = self.get_values(range_spec=f"{cell_a1}")
         if values:
-            value = values[0][0]
+            try:
+                value = values[0][0]
+            except:
+                value = ''
+
             return get_truth(inp=value, relate=condition, cut=value_a1)
             
         else:
             return False
+
+
+
+    ''' check if a method return value meets a condition
+    '''
+    def method_meets_condition(self, method, value_is, condition='==', nesting_level=0):
+        try:
+            obj = getattr(self, method)
+            value = obj(nesting_level=nesting_level+1)
+            return get_truth(inp=value, relate=condition, cut=value_is)
+
+        except Exception as e:
+            error(e.message, nesting_level=nesting_level)
+            return False
+
 
 
     ''' get a range from a1 notation
@@ -176,7 +195,7 @@ class GoogleWorksheet(object):
 
     ''' number of rows of the worksheet
     '''
-    def row_count(self, nesting_level=0):
+    def num_rows(self, nesting_level=0):
         row_count, _ = self.number_of_dimesnions()
         return row_count
 
@@ -184,7 +203,7 @@ class GoogleWorksheet(object):
 
     ''' number of columns of the worksheet
     '''
-    def col_count(self, nesting_level=0):
+    def num_cols(self, nesting_level=0):
         _, col_count = self.number_of_dimesnions()
         return col_count
 
@@ -200,15 +219,28 @@ class GoogleWorksheet(object):
         condition_satisfied = True
         if check_condition:
             for condition in conditions:
-                cell_a1 = condition['cell_a1']
-                value_is = condition['value_is']
-                if not self.cell_meets_condition(cell_a1=cell_a1, value_a1=value_is, condition=condition['operator'], nesting_level=nesting_level+1):
-                    warn(f"condition failed: cell [{cell_a1}] {condition['operator']} [{value_is}]", nesting_level=nesting_level)
-                    condition_satisfied = False
-                    break
+                if 'cell_a1' in condition:
+                    cell_a1 = condition['cell_a1']
+                    value_is = condition['value_is']
+                    if not self.cell_meets_condition(cell_a1=cell_a1, value_a1=value_is, condition=condition['operator'], nesting_level=nesting_level+1):
+                        warn(f"condition failed: cell [{cell_a1}] {condition['operator']} [{value_is}]", nesting_level=nesting_level)
+                        condition_satisfied = False
+                        break
 
-                else:
-                    trace(f"condition satisfied: cell [{cell_a1}] {condition['operator']} [{value_is}]", nesting_level=nesting_level)
+                    else:
+                        trace(f"condition satisfied: cell [{cell_a1}] {condition['operator']} [{value_is}]", nesting_level=nesting_level)
+
+                elif 'method' in condition:
+                    # print('hi')
+                    method = condition['method']
+                    value_is = condition['value_is']
+                    if not self.method_meets_condition(method=method, value_is=value_is, condition=condition['operator'], nesting_level=nesting_level+1):
+                        warn(f"condition failed: method [{method}] {condition['operator']} [{value_is}]", nesting_level=nesting_level)
+                        condition_satisfied = False
+                        break
+
+                    else:
+                        trace(f"condition satisfied: method [{method}] {condition['operator']} [{value_is}]", nesting_level=nesting_level)
 
         return condition_satisfied
 
@@ -433,7 +465,7 @@ class GoogleWorksheet(object):
         frozen_rows, frozen_columns = worksheet_def.get('frozen-rows', 0), worksheet_def.get('frozen-columns', 0)
         dimension_freeze_requests = self.dimension_freeze_requests(frozen_rows=frozen_rows, frozen_cols=frozen_columns)
 
-        num_rows = self.row_count()
+        num_rows = self.num_rows()
 
         # all rows to default-row-size if present
         row_defaultsize_requests = []
@@ -566,7 +598,7 @@ class GoogleWorksheet(object):
         values = []
         requests = []
 
-        for col_num in range(1, self.col_count()):
+        for col_num in range(1, self.num_cols()):
             cell_a1 = f"{column_to_letter(col_num + 1)}{row_to_update}"
             column_width = column_sizes[self.title][col_num]
             range_work_specs[cell_a1] = {'value': column_width, 'halign': 'center'}

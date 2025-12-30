@@ -17,7 +17,10 @@ from task.resume_tasks import *
 final_list = []
 
 def execute_gsheet_tasks(g_sheet, g_service, gsheet_tasks=[], task_defs={}, worksheet_names=[], worksheet_names_excluded=[], destination_gsheet_names=[], work_specs={}, find_replace_patterns=[], worksheet_defs={}, nesting_level=0):
-    for gsheet_task in gsheet_tasks:
+    for count, gsheet_task in enumerate(gsheet_tasks):
+        if count:
+            print()
+
         # get the task definition
         if gsheet_task not in task_defs:
             warn(f"task [{gsheet_task}] not defined in conf/task-def.yml", nesting_level=nesting_level)
@@ -71,7 +74,6 @@ def execute_gsheet_tasks(g_sheet, g_service, gsheet_tasks=[], task_defs={}, work
 
                 task(nesting_level=nesting_level+1, **args_dict)
                 info(f"executed  task [{task_name}]", nesting_level=nesting_level)
-                print()
             except Exception as e:
                 error(str(e), nesting_level=nesting_level)
 
@@ -134,8 +136,6 @@ def work_on_gsheet(g_sheet, g_service, worksheet_names=[], worksheet_names_exclu
 
                     image_string = cleanup_url(image_string.split('/')[-1])
                     image_formula_cells.append({'worksheet_name': worksheet_name, 'ws_id':  ws_id, 'cell_a1': cell_a1, 'organization': organization, 'artifact_type': artifact_type, 'image_string': image_string })
-                    # print(f"['{worksheet_name}'!{cell_a1}] - organization = [{organization}], artifact_type = [{artifact_type}], image_string = [{image_string}]")
-                    # print(f"['{worksheet_name}'!{cell_a1}] - image_string = [{image_string}]")
 
 
         cell_requests = {}
@@ -241,6 +241,9 @@ if __name__ == '__main__':
     nesting_level = 0
     for count, gsheet_name in enumerate(gsheet_names, start=1):
         try:
+            if count:
+                print()
+
             info(f"processing {count:>4}/{num_gsheets} gsheet {gsheet_name}", nesting_level=nesting_level)
             g_sheet = g_service.open_gsheet(gsheet_name=gsheet_name, nesting_level=nesting_level+1)
         except Exception as e:
@@ -251,7 +254,7 @@ if __name__ == '__main__':
         if g_sheet:
             execute_gsheet_tasks(g_sheet=g_sheet, g_service=g_service, gsheet_tasks=gsheet_tasks, task_defs=task_defs, worksheet_names=worksheet_names, worksheet_names_excluded=worksheet_names_excluded, destination_gsheet_names=destination_gsheet_names, work_specs=work_specs, find_replace_patterns=find_replace_patterns, worksheet_defs=worksheet_defs, nesting_level=nesting_level+1)
             # work_on_gsheet(g_sheet=g_sheet, g_service=g_service, worksheet_names=worksheet_names, worksheet_names_excluded=worksheet_names_excluded, destination_gsheet_names=destination_gsheet_names, work_specs=work_specs, find_replace_patterns=find_replace_patterns, nesting_level=nesting_level+1)
-            info(f"processed  {count:>4}/{num_gsheets} gsheet {gsheet_name}\n", nesting_level=nesting_level)
+            info(f"processed  {count:>4}/{num_gsheets} gsheet {gsheet_name}", nesting_level=nesting_level)
 
         if count % batch_size == 0:
             warn(f"sleeping for {wait_for} seconds\n", nesting_level=nesting_level)
