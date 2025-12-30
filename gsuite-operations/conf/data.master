@@ -1,48 +1,13 @@
 # resume gsheets
   # template
-    - spectrum__Résumé__template
-    - sscl__Résumé__template
-    - celloscope__résumé__template
-  # sscl resume
-    - Résumé__Arif.Hossain
-    - Résumé__Bappa.Saha
-    - Résumé__Faraz.Ahmed.Bhuiyan
-    - Résumé__Faridul.Islam.Farhad
-    - Résumé__Fasbeer.Mohammad.Haque
-    - Résumé__Fatema.Tabassum
-    - Résumé__Golam.Mostafa
-    - Résumé__Golam.Sarwar.Md.Mursalin
-    - Résumé__Hasib.Mahmud
-    - Résumé__Humaira.Binte.Harun
-    - Résumé__Iftakhar.Ali.Khandokar
-    - Résumé__Jumana.Ahmed
-    - Résumé__Kamrul.Islam.Sarek
-    - Résumé__Md.Abu.Sayed
-    - Résumé__Md.Al.Emran.Hossain
-    - Résumé__Md.Aminul.Matubber
-    - Résumé__Md.Faizul.Bari
-    - Résumé__Md.Faridul.Islam
-    - Résumé__Md.Mahmudul.Hasan
-    - Résumé__Md.Mazharul.Islam.Rakib
-    - Résumé__Md.Nuray.Alam.Siddik
-    - Résumé__Md.Rokonuzzaman
-    - Résumé__Md.Rubel.Ahamed
-    - Résumé__Md.Sayeduzzaman
-    - Résumé__Mehedi.Hasan.Borshon
-    - Résumé__Mohammad.Aminur.Rahman
-    - Résumé__Mohammed.Farhan.Islam
-    - Résumé__Moinur.Rahman
-    - Résumé__Monjur.Ahmed
-    - Résumé__Mosaddek.Ali.Mithu
-    - Résumé__Mourud.Ishmam.Ahmed
-    - Résumé__Mst.Tania.Khatun
-    - Résumé__Nafisa.Tasmiah
-    - Résumé__Nuraiyad.Nafiz.Islam
-    - Résumé__Proma.Hossain.Progga
-    - Résumé__Rasel.Mahmud
-    - Résumé__Sadia.Afroz
-    - Résumé__Sarah.Noor
+    - spectrum__résumé-index
+    - sscl__résumé-index
+    - celloscope__résumé-index
+    - ael__résumé-index
+    - doer__résumé-index
+    - external__résumé-index
   # spectrum resume
+    - spectrum__Résumé__template
     - Résumé__Aabid.Rahman
     - Résumé__Abu.Muhammad.Rashed.Mujib.Noman
     - Résumé__Adiat.Islam.Sahih
@@ -52,6 +17,7 @@
     - Résumé__Arif.Ullah
     - Résumé__Ashish.Kumar.Das
     - Résumé__Asif.Hasan.Chowdhury
+    - Résumé__Asis.Biswas
     - Résumé__Asma.Ul.Husna
     - Résumé__Atiqur.Rahman
     - Résumé__Delwar.Hossain
@@ -79,16 +45,12 @@
     - Résumé__Khandakar.Muttakinuzzaman
     - Résumé__Mahim.Jahan.Mim
     - Résumé__Manzur.Alam
-    - Résumé__Md.Ashrafur.Rahaman
-    - Résumé__Md.Farhadul.Alam.Jion
-    - Résumé__MD.Ferdous.Mahmud
-    - Résumé__Md.Mehrab.Hossen.Siam
-    - Résumé__Md.Murshid.Sarker
     - Résumé__Md.Abdul.Kader
     - Résumé__Md.Abdullah.Al.Mamun
     - Résumé__Md.Ahsanur.Rahman
-    - Résumé__Md.Al.Shahrior.Rahman
+    - Résumé__Md.Akram.Hossain
     - Résumé__Md.Al-Shahariar
+    - Résumé__Md.Al.Shahrior.Rahman
     - Résumé__Md.Aminur.Rahman.Rony
     - Résumé__Md.Anamul.Haque
     - Résumé__Md.Anisur.Rahman
@@ -97,9 +59,12 @@
     - Résumé__Md.Asgor.Ali
     - Résumé__Md.Ashaduzzaman
     - Résumé__Md.Ashraful.Hossain
+    - Résumé__Md.Ashrafur.Rahaman
     - Résumé__Md.Azadul.Karim
     - Résumé__Md.Fahim.Islam
+    - Résumé__Md.Farhadul.Alam.Jion
     - Résumé__Md.Fazle.Rabby
+    - Résumé__MD.Ferdous.Mahmud
     - Résumé__Md.Hasibur.Rahman
     - Résumé__Md.Humayun.Kabir
     - Résumé__Md.Ibrahim.Hossen
@@ -113,14 +78,16 @@
     - Résumé__Md.Mahasin.Alam
     - Résumé__Md.Mashrurul.Hakim
     - Résumé__Md.Mazharul.Islam
+    - Résumé__Md.Mehrab.Hossen.Siam
     - Résumé__Md.Mizanur.Rahman
     - Résumé__Md.Mominul.Islam
     - Résumé__Md.Monirul.Islam
     - Résumé__Md.Motaleb.Hossain
     - Résumé__Md.Murshadul.Islam
+    - Résumé__Md.Murshid.Sarker
     - Résumé__Md.Mushfiqur.Rahman
     - Résumé__Md.Najmul.Hasan.Sharon
-    - Résumé__Md.Nazmul.Hassan
+    - Résumé__Md.Nazmul.Hasan
     - Résumé__Md.Nazmul.Hossain
     - Résumé__Md.Nurujjaman.Sarker
     - Résumé__Md.Rabiul.Islam
@@ -130,6 +97,7 @@
     - Résumé__Md.Rony.Ahmed
     - Résumé__Md.Saidur.Rahman.(Shamim)
     - Résumé__MD.Saiful.Islam.(DBA)
+    - Résumé__MD.Salman.Hossain
     - Résumé__Md.Salman.Hossen
     - Résumé__Md.Samim.Hosen
     - Résumé__Md.Sayeem.Khan
@@ -156,8 +124,8 @@
     - Résumé__Raihan.Ur.Rashid
     - Résumé__Rajib.Chowdhury
     - Résumé__Rizia.Aktar
-    - Résumé__S.M.Touhidul.Islam.Al-Amin
     - Résumé__S.M.Azharul.Islam
+    - Résumé__S.M.Touhidul.Islam.Al-Amin
     - Résumé__Sagar.Saha
     - Résumé__Saiful.Islam.(Sumon)
     - Résumé__Sanjoy.Kumar.Saha
@@ -183,6 +151,144 @@
     - Résumé__Tasnim.Kabir.Ratul
     - Résumé__Tridib.Biswas
     - Résumé__Umaeer.Al.Hammad
+  # sscl resume
+    - sscl__Résumé__template
+    - Résumé__Arif.Hossain
+    - Résumé__Bappa.Saha
+    - Résumé__Faraz.Ahmed.Bhuiyan
+    - Résumé__Faridul.Islam.Farhad
+    - Résumé__Fasbeer.Mohammad.Haque
+    - Résumé__Fatema.Tabassum
+    - Résumé__Golam.Mostafa
+    - Résumé__Golam.Sarwar.Md.Mursalin
+    - Résumé__Hasib.Mahmud
+    - Résumé__Humaira.Binte.Harun
+    - Résumé__Iftakhar.Ali.Khandokar
+    - Résumé__Jumana.Ahmed
+    - Résumé__Kamrul.Islam.Sarek
+    - Résumé__Md.Al.Emran.Hossain
+    - Résumé__Md.Abu.Sayed
+    - Résumé__Md.Aminul.Matubber
+    - Résumé__Md.Faizul.Bari
+    - Résumé__Md.Mahmudul.Hasan
+    - Résumé__Md.Mazharul.Islam.Rakib
+    - Résumé__Md.Nuray.Alam.Siddik
+    - Résumé__Md.Rokonuzzaman
+    - Résumé__Md.Rubel.Ahamed
+    - Résumé__Md.Sayeduzzaman
+    - Résumé__Mehedi.Hasan.Borshon
+    - Résumé__Mohammad.Aminur.Rahman
+    - Résumé__Mohammed.Farhan.Islam
+    - Résumé__Moinur.Rahman
+    - Résumé__Monjur.Ahmed
+    - Résumé__Mosaddek.Ali.Mithu
+    - Résumé__Mourud.Ishmam.Ahmed
+    - Résumé__Mst.Tania.Khatun
+    - Résumé__Nafisa.Tasmiah
+    - Résumé__Nuraiyad.Nafiz.Islam
+    - Résumé__Proma.Hossain.Progga
+    - Résumé__Rasel.Mahmud
+    - Résumé__Sadia.Afroz
+    - Résumé__Sarah.Noor
+  # external resume
+    - Résumé__Md.Rezaur.Rahman__RHD-TMC
+    - Résumé__Saifur.Rahman__RHD-TMC
+    - Résumé__Sharmin.Sultana__RHD-TMC
+    - Résumé__Mamunur.Rashid__RHD-TMC
+    - Résumé__Farook.Ahmed__BTRC-EDOTCO
+    - Résumé__Md.Moniruzzaman.Miah_RAJUK
+    - Résumé__Mirbahar.Nurul.Amin__RAJUK
+    - Résumé__Sohag.Hossain__RAJUK
+    - Résumé__M.Nayem.Abdullah__RAJUK
+    - Résumé__Rakib.Hossain.Galib__RAJUK
+    - Résumé__Shahidul.Islam__RAJUK
+    - Résumé__Forhadul.Islam.Tarek__RAJUK
+    - Résumé__Imtiaz.Morshed.Bin.Zaman__RAJUK
+    - Résumé__Muhammad.Asif.Atick__RAJUK
+    - Résumé__Md.Tariqul.Islam__RAJUK
+    - Résumé__Md. Reazul.Islam.Polash__RAJUK
+    - Résumé__Mamunur.Reza.Ibne.Abedin__Technoglobal
+  # celloscope resume
+    - celloscope__résumé__template
+    - Résumé__Abdullah.Nazmus.Sakib
+    - Résumé__Abrar.Jahin.Niloy
+    - Résumé__Abu.Musa.Sakib
+    - Résumé__Alif.Arfab.Pavel
+    - Résumé__Altaf.Hossain
+    - Résumé__Amena.Shiddika
+    - Résumé__Aminul.Hossain.Sazzad
+    - Résumé__Amiya.Ahamed
+    - Résumé__Anan.Aiman.Tuba
+    - Résumé__Arnab.Basak
+    - Résumé__Avi.Afrid
+    - Résumé__Deboraj.Saha.Dipta
+    - Résumé__Farhana.Naz
+    - Résumé__Heronmoy.Tanchangya.Emon
+    - Résumé__Kamrul.Hasan.Farabee
+    - Résumé__Kamrun.Nahar
+    - Résumé__Khondoker.Tanvir.Hossain
+    - Résumé__Mahabuba.Rahman.Munia
+    - Résumé__Mainur.Rahman.Rasel
+    - Résumé__MD.Abu.Yousuf.Sajal
+    - Résumé__Md.Aiobi.Habib.Mijan
+    - Résumé__Md.Asif.Khan.Taj
+    - Résumé__Md.Atiar.Rahman
+    - Résumé__Md.Boktiar.Mahbub.Murad
+    - Résumé__Md.Farhad.Bhuiyan
+    - Résumé__Md.Fuad.Hasan.Chowdhury
+    - Résumé__Md.Hafizur.Rahman
+    - Résumé__Md.Kamruzzaman.Tanim
+    - Résumé__Md.Nazmul.Alam
+    - Résumé__Md.Sadik.Hasan.Rafi
+    - Résumé__Md.Samiul.Alim
+    - Résumé__Md.Shariar.Kabir
+    - Résumé__Md.Tahmid.Islam.Bhuiyan
+    - Résumé__Mehedi.Hasan
+    - Résumé__Mehedi.Hasan.(Medu)
+    - Résumé__Mohammad.Kamrul.Hasan
+    - Résumé__Mohammad.Mashud.Karim
+    - Résumé__Mohammad.Wakib.Hasan
+    - Résumé__Muhammad.Zubair.Hasan
+    - Résumé__Mushfika.Faria
+    - Résumé__Nahid.Karim.Ankur
+    - Résumé__Nasima.Aktar
+    - Résumé__Nayeem.Ahmed
+    - Résumé__Nazia.Hossain
+    - Résumé__Nazmus.Sakib
+    - Résumé__Reyad.Hossain
+    - Résumé__Rizvi.Mahmud
+    - Résumé__Sakib.Chowdhury
+    - Résumé__Sakib.Ibn.Abdullah
+    - Résumé__Sazzad.Hossan.Sakib
+    - Résumé__Shafayat.Ahmed
+    - Résumé__Shah.Nafiz.Monjoor
+    - Résumé__Shah.Shafi.Mohammed.Shariful.Alam
+    - Résumé__Shajeda.Akter.Shanta
+    - Résumé__Sharif.Tamjidur.Rahman
+    - Résumé__Sheikh.Iftekhar.Ahmed
+    - Résumé__Syed.Mostofa.Monsur
+    - Résumé__Trimita.Chakma
+    - Résumé__Umme.Rumman.Usha
+    - Résumé__Hasibul.Hasan.Emon
+    - Résumé__Nafisa.Tabassum
+    - Résumé__Noushin.Salsabil
+    - Résumé__Rieaj.Uddin.Fahad
+  # ael resume
+    - Résumé__Asadul.Haque
+    - Résumé__Asif.Yusuf
+    - Résumé__Assaduzzaman
+    - Résumé__Dipankar.Kumar.Biswas
+    - Résumé__Iqbal.Yusuf
+    - Résumé__Md.Nasir.Uddin
+    - Résumé__Md.Ahsan.Habib.Rocky
+    - Résumé__Md.Atikur.Zaman
+    - Résumé__Md.Mijanur.Rahman
+    - Résumé__Md.Nahidul.Islam.Siddique
+    - Résumé__Md.Sohel.Rana
+    - Résumé__Md.Yousuf.Ali
+    - Résumé__Mir.Earfan.Elahi
+    - Résumé__Mostafa.Jannatul.Ferdows
+    - Résumé__Salman.Ahmed.Firoz
   # doer resume
     - Résumé__Abdullah.Al.Maruf
     - Résumé__Abir.Ahmed
@@ -199,7 +305,6 @@
     - Résumé__Faisal.Ahmed.Anik
     - Résumé__Farzana.Afrin
     - Résumé__Gaffar.Khan
-    - Résumé__Hasibul.Hasan.Emon
     - Résumé__Imran.Howlader
     - Résumé__Ishrat.Fatima
     - Résumé__Ishtiak.Ahmed
@@ -211,10 +316,17 @@
     - Résumé__Mahamudul.Hasan
     - Résumé__Mahmudul.Hasan
     - Résumé__Maria.Nurjahanara.Bhuiyan
+    - Résumé__Md.Asaduzzaman
+    - Résumé__Md.Jafrul.Ahsan
+    - Résumé__Md.Jahidul.Islam
+    - Résumé__Md.Masud.Rana.(Tuhin)
+    - Résumé__Md.Sahidur.Rahman
+    - Résumé__Md.Shamiul.Islam
+    - Résumé__Md.Sobuj.Sordar
+    - Résumé__Md.Zillur.Rahman
     - Résumé__Md.Abdullah.Al.Salam
     - Résumé__Md.Abdus.Samad.Patwary
     - Résumé__Md.Arafat.Rahman.Sayed
-    - Résumé__Md.Asaduzzaman
     - Résumé__Md.Bodrul.Alam
     - Résumé__Md.Bony.Tasnim.Ibna.Razzak
     - Résumé__Md.Golam.Kibria
@@ -223,8 +335,6 @@
     - Résumé__Md.Humayun.Kabir.(Software)
     - Résumé__Md.Imtiaz.Mahmood.Sayed
     - Résumé__Md.Izadul.Ala.Ala.Baksh
-    - Résumé__Md.Jafrul.Ahsan
-    - Résumé__Md.Jahidul.Islam
     - Résumé__Md.Jalal.Uddin
     - Résumé__Md.Jamal.Uddin
     - Résumé__Md.Kamal.Parvez
@@ -232,7 +342,6 @@
     - Résumé__Md.Kamrul.Islam
     - Résumé__Md.Kamruzzaman
     - Résumé__Md.Khaleque.Rakibul.Haque
-    - Résumé__Md.Masud.Rana.(Tuhin)
     - Résumé__Md.Masum.Ahmmed
     - Résumé__Md.Mizanur.Rahman
     - Résumé__Md.Mokaddes.Hossain.Talukder
@@ -241,24 +350,19 @@
     - Résumé__Md.Moniruzzaman.Liton
     - Résumé__Md.Nahhid.Uj.Jaman.Jisun
     - Résumé__Md.Noor-E-Alom.Siddique
-    - Résumé__Md.Radoan.Ahmed
     - Résumé__Md.Reasad.Islam
     - Résumé__Md.Rezaul.Karim.Sarker
-    - Résumé__Md.Sahidur.Rahman
     - Résumé__Md.Shabbir.Hossain.Bhuiya
-    - Résumé__Md.Shamiul.Islam
     - Résumé__Md.Siam.Samad.Prantik
-    - Résumé__Md.Sobuj.Sordar
     - Résumé__Md.Sohan.Kabir
     - Résumé__Md.Tauhid.Amir
     - Résumé__Md.Thoufiq.Zumma
-    - Résumé__Md.Zillur.Rahman
+    - Résumé__Md.Radoan.Ahmed
     - Résumé__Mithun.Kumar.Debnath
     - Résumé__Mohaiminul.Islam
     - Résumé__Mohammad.Abul.Hasnat
     - Résumé__Mohammad.Shahadat.Hossain
     - Résumé__Mohammad.Ziaul.Hoq
-    - Résumé__Moshiur.Rahman
     - Résumé__Musaddiqur.Rahman.Ovi
     - Résumé__Ommul.Khair.Musammat.Tahera
     - Résumé__Palash.Kumar.Sinha
@@ -295,90 +399,6 @@
     - Résumé__Tanvir.Mallik
     - Résumé__Umme.Habiba.Rita
     - Résumé__Zubair.Azim.Miazi
-  # celloscope resume
-    - Résumé__Abdullah.Nazmus.Sakib
-    - Résumé__Abrar.Jahin.Niloy
-    - Résumé__Abu.Musa.Sakib
-    - Résumé__Afroja.Akter
-    - Résumé__Al-Hai.Rezwan.Huq
-    - Résumé__Alif.Arfab.Pavel
-    - Résumé__Altaf.Hossain
-    - Résumé__Amena.Shiddika
-    - Résumé__Aminul.Hossain.Sazzad
-    - Résumé__Amiya.Ahamed
-    - Résumé__Anan.Aiman.Tuba
-    - Résumé__Arnab.Basak
-    - Résumé__Avi.Afrid
-    - Résumé__Deboraj.Saha
-    - Résumé__Faisal.Ahmed
-    - Résumé__Farhana.Naz
-    - Résumé__Heronmoy.Tanchangya.Emon
-    - Résumé__Kamrul.Hasan.Farabee
-    - Résumé__Kamrun.Nahar
-    - Résumé__Khondoker.Tanvir.Hossain
-    - Résumé__Mahabuba.Rahman.Munia
-    - Résumé__Mainur.Rahman.Rasel
-    - Résumé__Maly.Mohsem.Ahmed
-    - Résumé__Md.Abu.Yousuf.Sajal
-    - Résumé__Md.Aiobi.Habib.Mijan
-    - Résumé__Md.Asif.Khan.Taj
-    - Résumé__Md.Atiar.Rahman
-    - Résumé__Md.Boktiar.Mahbub.Murad
-    - Résumé__Md.Farhad.Bhuiyan
-    - Résumé__MD.Fuad.Hasan.Chowdhury
-    - Résumé__Md.Hafizur.Rahman
-    - Résumé__Md.Kamruzzaman.Tanim
-    - Résumé__Md.Nazmul.Alam
-    - Résumé__Md.Sadik.Hasan.Rafi
-    - Résumé__Md.Samiul.Alim
-    - Résumé__Md.Shariar.Kabir
-    - Résumé__Md.Tahmid.Islam.Bhuiyan
-    - Résumé__Mehedi.Hasan
-    - Résumé__Mehedi.Hasan.(Medu)
-    - Résumé__Mohammad.Kamrul.Hasan
-    - Résumé__Mohammad.Mashud.Karim
-    - Résumé__Mohammad.Wakib.Hasan
-    - Résumé__Muhammad.Zubair.Hasan
-    - Résumé__Mushfika.Faria
-    - Résumé__Nahid.Karim.Ankur
-    - Résumé__Nasima.Aktar
-    - Résumé__Nayeem.Ahmed
-    - Résumé__Nazia.Hossain
-    - Résumé__Nazmus.Sakib
-    - Résumé__Omar.Faruk
-    - Résumé__Rashida.Akter
-    - Résumé__Reyad.Hossain
-    - Résumé__Rizvi.Mahmud
-    - Résumé__Sakib.Chowdhury
-    - Résumé__Sakib.Ibn.Abdullah
-    - Résumé__Salil.Chakma
-    - Résumé__Sazzad.Hossan.Sakib
-    - Résumé__Shafayat.Ahmed
-    - Résumé__Shah.Nafiz.Manjoor
-    - Résumé__Shah.Shafi.Mohammed.Shariful.Alam
-    - Résumé__Shajeda.Akter.Shanta
-    - Résumé__Sharif.Tamjidur.Rahman
-    - Résumé__Sheikh.Iftekhar.Ahmed
-    - Résumé__Syed.Mostofa.Monsur
-    - Résumé__Tahia.Tasnim
-    - Résumé__Trimita.Chakma
-    - Résumé__Umme.Rumman.Usha
-  # ael resume
-    - Résumé__Asadul.Haque
-    - Résumé__Asif.Yusuf
-    - Résumé__Assaduzzaman
-    - Résumé__Dipankar.Kumar.Biswas
-    - Résumé__Iqbal.Yusuf
-    - Résumé__Md.Nasir.Uddin
-    - Résumé__Md.Ahsan.Habib.Rocky
-    - Résumé__Md.Atikur.Zaman
-    - Résumé__Md.Mijanur.Rahman
-    - Résumé__Md.Nahidul.Islam.Siddique
-    - Résumé__Md.Sohel.Rana
-    - Résumé__Md.Yousuf.Ali
-    - Résumé__Mir.Earfan.Elahi
-    - Résumé__Mostafa.Jannatul.Ferdows
-    - Résumé__Salman.Ahmed.Firoz
 
 
 

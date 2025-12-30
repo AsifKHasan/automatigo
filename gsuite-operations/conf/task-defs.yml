@@ -106,9 +106,9 @@ format_worksheets:
 # trailing blank row removal, review-notes, column sizing
 # ------------------------------------------------
 
-# report_dimesnions
-report_dimesnions:
-  task                                        : report_dimesnions
+# report_dimensions
+report_dimensions:
+  task                                        : report_dimensions
   worksheet_names                             : true
 
 # move_column
