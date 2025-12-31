@@ -321,7 +321,7 @@ class GoogleSheet(object):
 
     ''' find and replace in worksheets
     '''
-    def find_and_replace(self, worksheet_names, find_replace_patterns, check_condition=False, conditions=[], nesting_level=0):
+    def find_and_replace(self, worksheet_names, find_replace_patterns=[], check_condition=False, conditions=[], nesting_level=0):
         requests = []
         for worksheet_name in worksheet_names:
             info(f"searching [{len(find_replace_patterns)}] patterns in  [{worksheet_name}]", nesting_level=nesting_level)

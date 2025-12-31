@@ -408,20 +408,23 @@ def build_border_around_spec(border_list, border_color, border_style='SOLID', in
     format is a dict
 '''
 def build_conditional_format_rule(ranges, condition_type, condition_values, format, nesting_level=0):
+    condition = {"type": condition_type}
+    if condition_values:
+        condition["values"] = [{"userEnteredValue": v} for v in condition_values]
+
     rule = {"addConditionalFormatRule": {
                 "rule": {
                     "ranges" : ranges,
                     "booleanRule": {
-                        "condition": {
-                            "type": condition_type,
-                            "values": [{"userEnteredValue": v} for v in condition_values]
-                        },
+                        "condition": condition,
                         "format": format
                     }
                 },
                 "index": 0
             }
         }
+
+    
 
     return rule
 

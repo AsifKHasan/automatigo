@@ -1,0 +1,81 @@
+# find_and_replace
+find_and_replace:
+# find and replace patterns
+  # z-header
+  - find                : 'z-header'
+    replace-with        : 'z-head'
+    regex               : False
+    include-formulas    : True
+    entire-cell         : False
+    match-case          : True
+
+  # z-footer
+  - find                : 'z-footer'
+    replace-with        : 'z-foot'
+    regex               : False
+    include-formulas    : True
+    entire-cell         : False
+    match-case          : True
+
+  # comma - space after, no space before
+  - find                : ','
+    replace-with        : ', '
+  - find                : ' ,'
+    replace-with        : ','
+
+  # period - space after, no space before
+  - find                : '.'
+    replace-with        : '. '
+  - find                : ' .'
+    replace-with        : '.'
+
+  # semicolon - space after, no space before
+  - find                : ';'
+    replace-with        : '; '
+  - find                : ' ;'
+    replace-with        : ';'
+
+  # colon - space after, no space before
+  - find                : ':'
+    replace-with        : ': '
+  - find                : ' :'
+    replace-with        : ':'
+
+  # opening brace - space before (except when it is a "), no space after
+  - find                : '('
+    replace-with        : ' ('
+  - find                : '( '
+    replace-with        : '('
+  - find                : '" ('
+    replace-with        : '"('
+
+  # # closing brace - space after (except when " or period or comma), no space before
+  - find                : ')'
+    replace-with        : ') '
+  - find                : ' )'
+    replace-with        : ')'
+  - find                : ') .'
+    replace-with        : ').'
+  - find                : '. )'
+    replace-with        : '.)'
+  - find                : ') ,'
+    replace-with        : '),'
+  - find                : ', )'
+    replace-with        : ',)'
+  - find                : ') "'
+    replace-with        : ')"'
+
+  # remove double space, periods
+  - find                : '  '
+    replace-with        : ' '
+  - find                : '..'
+    replace-with        : '.'
+
+  # remove nultiline
+  - find                : \n
+    replace-with        : ' '
+
+  # remove single dash
+  - find                : '-'
+    replace-with        : ''
+    entire-cell         : True

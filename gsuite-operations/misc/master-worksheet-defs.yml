@@ -1,0 +1,420 @@
+# worksheet structure definition for creating and formatting worksheets
+worksheet-defs:
+  '-toc':
+    index: 0
+    num-rows: 3
+    num-columns: 27
+    frozen-rows: 2
+    frozen-columns: 0
+    
+    columns:
+      A:
+        halign: center
+        size: 60
+      B:
+        halign: left
+        size: 200
+      C:
+        halign: center
+        size: 80
+      D:
+        halign: center
+        size: 80
+      E:
+        halign: center
+        size: 80
+      F:
+        halign: left
+        size: 200
+      G:
+        halign: center
+        size: 80
+      H:
+        halign: center
+        size: 80
+      I:
+        halign: left
+        size: 80
+      J:
+        halign: center
+        size: 80
+      K:
+        halign: center
+        size: 100
+      L:
+        halign: center
+        size: 80
+      M:
+        halign: center
+        size: 80
+      N:
+        halign: center
+        size: 80
+      O:
+        halign: left
+        size: 80
+      P:
+        halign: left
+        size: 80
+      Q:
+        halign: left
+        size: 80
+      R:
+        halign: left
+        size: 80
+      S:
+        halign: left
+        size: 80
+      T:
+        halign: left
+        size: 80
+      U:
+        halign: center
+        size: 80
+      V:
+        halign: center
+        size: 80
+      W:
+        halign: left
+        size: 100
+      X:
+        halign: left
+        size: 80
+      Y:
+        halign: left
+        size: 80
+      Z:
+        halign: left
+        size: 160
+      AA:
+        halign: left
+        size: 300
+
+    ranges:
+      # column lables in row 2
+      A2:
+        value:  'section'
+      B2:
+        value:  'heading'
+      C2:
+        value:  'process'
+      D2:
+        value:  'level'
+      E2:
+        value:  'content-type'
+      F2:
+        value:  'link'
+      G2:
+        value:  'break'
+      H2:
+        value:  'landscape'
+      I2:
+        value:  'bookmark'
+      J2:
+        value:  'page-spec'
+      K2:
+        value:  'margin-spec'
+      M2:
+        value:  'hide-heading'
+      O2:
+        value:  'header-first'
+      P2:
+        value:  'header-odd'
+      Q2:
+        value:  'header-even'
+      R2:
+        value:  'footer-first'
+      S2:
+        value:  'footer-odd'
+      T2:
+        value:  'footer-even'
+      U2:
+        value:  'override-header'
+      V2:
+        value:  'override-footer'
+      W2:
+        value:  'background-image'
+      X2:
+        value:  'responsible'
+      Y2:
+        value:  'reviewer'
+      Z2:
+        value:  'status'
+      AA2:
+        value:  'comment'
+    
+      # column level data validations from row 3
+      'C3:C':
+        validation-list:
+          - 'Yes'
+      'D3:D':
+        validation-list:
+          - '0'
+          - '1'
+          - '2'
+          - '3'
+          - '4'
+          - '5'
+          - '6'
+      'E3:E':
+        validation-list:
+          - table
+          - pdf
+          - gsheet
+          - toc
+          - lof
+          - lot
+      'G3:G':
+        validation-list:
+          - page
+          - section
+      'H3:H':
+        validation-list:
+          - 'Yes'
+      'J3:J':
+        validation-list:
+          - A4
+          - A3
+          - Letter
+          - Legal
+      'I3:I':
+        validation-list:
+          - wide
+          - medium
+          - narrow
+          - none
+          - book-bind
+          - secl-pad
+          - doer-pad
+          - stamp
+          - narrow-no-header
+          - narrow-no-footer
+          - narrow-no-header-footer
+      'L3:L':
+        validation-list:
+          - 'Yes'
+      'M3:M':
+        validation-list:
+          - 'Yes'
+      'N3:N':
+        validation-list:
+          - 'Yes'
+      'U3:U':
+        validation-list:
+          - 'Yes'
+      'V3:V':
+        validation-list:
+          - 'Yes'
+      'Z3:Z':
+        validation-list:
+          - pending
+          - under-documentation
+          - ready-for-review
+          - under-review
+          - finalized
+
+      # column value count in row 1 
+      A1:
+        value:  '=subtotal(3, A3:A)'
+      B1:
+        value:  '=subtotal(3, B3:B)'
+      C1:
+        value:  '=subtotal(3, C3:C)'
+      D1:
+        value:  '=subtotal(3, D3:D)'
+      E1:
+        value:  '=subtotal(3, E3:E)'
+      F1:
+        value:  '=subtotal(3, F3:F)'
+      G1:
+        value:  '=subtotal(3, G3:G)'
+      H1:
+        value:  '=subtotal(3, H3:H)'
+      I1:
+        value:  '=subtotal(3, I3:I)'
+      J1:
+        value:  '=subtotal(3, J3:J)'
+      K1:
+        value:  '=subtotal(3, K3:K)'
+      L1:
+        value:  '=subtotal(3, L3:L)'
+      M1:
+        value:  '=subtotal(3, M3:M)'
+      N1:
+        value:  '=subtotal(3, N3:N)'
+      O1:
+        value:  '=subtotal(3, O3:O)'
+      P1:
+        value:  '=subtotal(3, P3:P)'
+      Q1:
+        value:  '=subtotal(3, Q3:Q)'
+      R1:
+        value:  '=subtotal(3, R3:R)'
+      S1:
+        value:  '=subtotal(3, S3:S)'
+      T1:
+        value:  '=subtotal(3, T3:T)'
+      U1:
+        value:  '=subtotal(3, U3:U)'
+      V1:
+        value:  '=subtotal(3, V3:V)'
+      W1:
+        value:  '=subtotal(3, W3:W)'
+      X1:
+        value:  '=subtotal(3, X3:X)'
+      Y1:
+        value:  '=subtotal(3, Y3:Y)'
+      Z1:
+        value:  '=subtotal(3, Z3:Z)'
+      AA1:
+        value:  '=subtotal(3, AA3:AA)'
+
+      # row 1 is center aligned
+      'A1:AA1':
+        halign: center
+
+      # row 2 labels are bold
+      'A2:AA2':
+        bold:   true
+
+    cell-empty-markers:
+      - 'X3:Z'
+
+  'z-head':
+    num-rows: 3
+    num-columns: 3
+    frozen-rows: 2
+    frozen-columns: 0
+    columns:
+      'A':
+        size: 100
+        halign: left
+        wrap: true
+      'B':
+        size: 700
+        halign: left
+        wrap: true
+      'C':
+        size: 100
+        halign: right
+        wrap: true
+    review-notes: true
+    ranges:
+      # the worksheet wide specs
+      'A1:C':
+        font-family       : Arial
+        font-size         : 11
+        valign            : top
+
+      # row 1 is center aligned
+      'A1:C1':
+        halign: center
+      'A1':
+        value: '-toc'
+        ws-name-to-link: '-toc'
+      'B1':
+        value: 700
+      'C1':
+        value: 100
+
+      # row 2 labels are bold
+      'A2:C2':
+        bold:   true
+      'A2':
+        value: review-notes
+      'B2:C2':
+        value: content
+        merge: true
+        halign: left
+
+      # row 3 onwards fonts are size 9, light color
+      'A3:C':
+        font-family       : Arial
+        font-size         : 9
+        fgcolor           : '#666666' 
+
+      'B3:C':
+        border-color  : '#B7B7B7'
+        inner-border  : False
+        border-list   :
+          - bottom
+        border-style  : SOLID
+
+      'B3':
+        value: ''
+      'C3':
+        value: >-
+          =image("https://spectrum-bd.biz/data/artifacts/res/logo/spectrum-logo-small-111x89.png",1)
+        halign: right
+
+    cell-empty-markers:
+      - 'B3:C'
+
+  'z-foot':
+    num-rows: 3
+    num-columns: 3
+    frozen-rows: 2
+    frozen-columns: 0
+    columns:
+      'A':
+        size: 100
+        halign: left
+        wrap: true
+      'B':
+        size: 600
+        halign: left
+        wrap: true
+      'C':
+        size: 200
+        halign: right
+        wrap: true
+    review-notes: true
+    ranges:
+      # the worksheet wide specs
+      'A1:C':
+        font-family       : Arial
+        font-size         : 11
+        valign            : top
+
+      # row 1 is center aligned
+      'A1:C1':
+        halign: center
+      'A1':
+        value: '-toc'
+        ws-name-to-link: '-toc'
+      'B1':
+        value: 600
+      'C1':
+        value: 200
+
+      # row 2 labels are bold
+      'A2:C2':
+        bold:   true
+      'A2':
+        value: review-notes
+      'B2:C2':
+        value: content
+        merge: true
+        halign: left
+
+      # row 3 onwards fonts are size 9, light color
+      'A3:C':
+        font-family       : Arial
+        font-size         : 9
+        fgcolor           : '#666666' 
+
+      'B3:C':
+        border-color  : '#B7B7B7'
+        inner-border  : False
+        border-list   :
+          - top
+        border-style  : SOLID
+
+      'B3':
+        value: ''
+      'C3':
+        value: 'Page PAGE{} of PAGE{*}'
+        halign: right
+
+    cell-empty-markers:
+      - 'B3:C'

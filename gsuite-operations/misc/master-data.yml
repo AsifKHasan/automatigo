@@ -1,5 +1,81 @@
-# resume gsheets
-  # template
+# worksheets on which some work will be done, supports RE
+worksheet-names:
+    - '.*'
+    - '-toc'
+    - 'z-*'
+  # resume worksheets
+    - '-toc'
+    - 00-layout
+    - 00-layout-WB
+    - 01-personal
+    - 02-career-highlight
+    - 03-education
+    - 04-managerial-expertise
+    - 05-technical-expertise
+    - 06-job-history
+    - 07-project-roles
+    - 08-training
+    - 09-certification
+    - 10-membership
+    - 11-language-proficiency
+    - 12-contact
+    - 13-educational-certificates
+    - 14-vendor-certificates
+    - 15-institutional-certificates
+    - 16-references
+    - 17-national-id
+    - z-foot
+    - z-head
+  # pds worksheets
+    - '-toc'
+    - 00-layout
+    - 00-layout-USAID
+    - 00-layout-WB
+    - 01-summary
+    - 02-revenue
+    - 03-contact
+    - 04-joint-venture
+    - 05-people
+    - 06-description
+    - 07-functionality
+    - 08-technology
+    - 09-services
+    - 10-process
+    - 11-complexity
+    - 12-screenshots
+    - z-blank
+    - z-foot
+    - z-head
+  # profile worksheets
+    - 00-coverpage
+    - 01-personal-profile
+    - 01.01-family
+    - 01.02-address
+    - 01.03-banking
+    - 02-professional-profile
+    - 02.01-education
+    - 02.02-jobs
+    - 02.03-training
+    - 02.04-certification
+    - 02.05-skills
+    - 02.06-projects
+    - 03.01-increment
+    - 03.02-events
+    - 03.03-cautions
+    - 03.04-medical
+    - 04-notes
+
+
+# worksheets to be excluded, support RE
+worksheet-names-excluded:
+  - '-*'
+  - 'z-*'
+
+
+# the gsheet(s) that will be processed
+gsheets:
+  # resume gsheets
+  # resume templates
     - spectrum__résumé-index
     - sscl__résumé-index
     - celloscope__résumé-index
@@ -363,6 +439,7 @@
     - Résumé__Mohammad.Abul.Hasnat
     - Résumé__Mohammad.Shahadat.Hossain
     - Résumé__Mohammad.Ziaul.Hoq
+    - Résumé__Moshiur.Rahman
     - Résumé__Musaddiqur.Rahman.Ovi
     - Résumé__Ommul.Khair.Musammat.Tahera
     - Résumé__Palash.Kumar.Sinha
@@ -401,14 +478,12 @@
     - Résumé__Zubair.Azim.Miazi
 
 
-
-# pds gsheets
-  # template
+  # pds gsheets
+  # pds templates
     - pds__spectrum__blank.template
     - pds__SSCL__blank.template
     - pds__doer__blank.template
     - pds__celloscope__blank.template
-
   # spectrum pds
     - pds__spectrum__blank.template
     - pds__ACME-LAN-2009
@@ -622,764 +697,5 @@
     - pds__celloscope__SAU-ACAS-2023
     - pds__celloscope__TeleExchange-uniVerge
 
-
-# worksheet-names:
-  # resume worksheets
-    - '-toc-new'
-    - 00-layout
-    - 00-layout-WB
-    - 01-personal
-    - 02-career-highlight
-    - 03-education
-    - 04-managerial-expertise
-    - 05-technical-expertise
-    - 06-job-history
-    - 07-project-roles
-    - 08-training
-    - 09-certification
-    - 10-membership
-    - 11-language-proficiency
-    - 12-contact
-    - 13-educational-certificates
-    - 14-vendor-certificates
-    - 15-institutional-certificates
-    - 16-references
-    - 17-national-id
-    - z-foot
-    - z-head
-  # pds worksheets
-    - '-toc-new'
-    - 00-layout
-    - 00-layout-USAID
-    - 00-layout-WB
-    - 01-summary
-    - 02-revenue
-    - 03-contact
-    - 04-joint-venture
-    - 05-people
-    - 06-description
-    - 07-functionality
-    - 08-technology
-    - 09-services
-    - 10-process
-    - 11-complexity
-    - 12-screenshots
-    - z-blank
-    - z-foot
-    - z-head
-  # profile worksheets
-    - 00-coverpage
-    - 01-personal-profile
-    - 01.01-family
-    - 01.02-address
-    - 01.03-banking
-    - 02-professional-profile
-    - 02.01-education
-    - 02.02-jobs
-    - 02.03-training
-    - 02.04-certification
-    - 02.05-skills
-    - 02.06-projects
-    - 03.01-increment
-    - 03.02-events
-    - 03.03-cautions
-    - 03.04-medical
-    - 04-notes
-
-
-
-# worksheet-names-excluded:
-  - '-*'
-  - 'z-*'
-
-
-# work-specs:
-  # borders -> border-list [] : border-style [DOTTED, DASHED, SOLID, SOLID_MEDIUM, SOLID_THICK, NONE, DOUBLE]
-  'D3:D':
-    border-color  : '#000000'
-    inner-border  : False
-    border-list   :
-      - left
-      - right
-    border-style  : DASHED
-
-
-
-  # conditional formatting
-  # format column E if blank and column D has some value
-  'E4:E' :
-    conditional-formats:
-      - type      : 'CUSTOM_FORMULA'
-        values    :
-          -  '=and(not(isblank($D:$D)), isblank($E:$E))'
-        format    :
-          backgroundColor : "#f4cccc"
-
-  # review-notes
-  'A3:Z' :
-    conditional-formats:
-      - type      : 'CUSTOM_FORMULA'
-        values    :
-          -  '=not(isblank($A:$A))'
-        format    :
-          backgroundColor : "#f4cccc"
-
-  'D3:F' :
-    # CUSTOM_FORMULA
-    conditional-formats:
-      - type      : 'CUSTOM_FORMULA'
-        values    :
-          -  '=$D:$D="BANK"'
-        format    :
-          backgroundColor : "#c9daf8"
-
-      - type      : 'CUSTOM_FORMULA'
-        values    :
-          -  '=$D:$D="CHANGE"'
-        format    :
-          backgroundColor : "#fff2cc"
-
-      - type      : 'CUSTOM_FORMULA'
-        values    :
-          -  '=$D:$D="MOVE"'
-        format    :
-          backgroundColor : "#d9d2e9"
-
-      - type      : 'CUSTOM_FORMULA'
-        values    :
-          -  '=$D:$D="OMIT"'
-        format    :
-          backgroundColor : "#f4cccc"
-
-
-
-  # data validation, null list means clear the validation rule
-    'D3:D':
-      validation-list:
-        - BANK
-        - CHANGE
-        - MOVE
-        - OK
-        - OMIT
-
-  # change fonts and vertical alignments for the worksheet
-    'A1:Z'  :
-      font-family       : Arial
-      font-size         : 11
-      valign            : top
-
-
-    # border around cells
-    'B3:Z'          :
-      border-color      : '#b7b7b7'
-      link -toc-new at cell A1 and left align the cell
-
-    'A1'    :
-      value             : '-toc'
-      ws-name-to-link   : '-toc'
-      halign            : left
-
-  # -toc-new
-    'F3'      :
-      value             : '00-layout'
-      ws-name-to-link   : '00-layout'
-    'I4'      :
-      value             : 'A4'
-    'J4'      :
-      value             : 'narrow'
-
-    'C3'      :
-      value             : 'Yes'
-
-    'O3'      :
-      value             : 'z-head'
-    'R3'      :
-      value             : 'z-foot'
-
-  # 00-layout
-    'B14'      :
-      value             : '06-job-history'
-      ws-name-to-link   : '06-job-history'
-    'B17'      :
-      value             : '07-project-roles'
-      ws-name-to-link   : '07-project-roles'
-
-  # z-head
-
-  # z-foot
-
-
-
-# find and replace patterns
-  # comma - space after, no space before
-  - find                : ','
-    replace-with        : ', '
-  - find                : ' ,'
-    replace-with        : ','
-
-  # period - space after, no space before
-  - find                : '.'
-    replace-with        : '. '
-  - find                : ' .'
-    replace-with        : '.'
-
-  # semicolon - space after, no space before
-  - find                : ';'
-    replace-with        : '; '
-  - find                : ' ;'
-    replace-with        : ';'
-
-  # colon - space after, no space before
-  - find                : ':'
-    replace-with        : ': '
-  - find                : ' :'
-    replace-with        : ':'
-
-  # opening brace - space before (except when it is a "), no space after
-  - find                : '('
-    replace-with        : ' ('
-  - find                : '( '
-    replace-with        : '('
-  - find                : '" ('
-    replace-with        : '"('
-
-  # # closing brace - space after (except when " or period or comma), no space before
-  - find                : ')'
-    replace-with        : ') '
-  - find                : ' )'
-    replace-with        : ')'
-  - find                : ') .'
-    replace-with        : ').'
-  - find                : '. )'
-    replace-with        : '.)'
-  - find                : ') ,'
-    replace-with        : '),'
-  - find                : ', )'
-    replace-with        : ',)'
-  - find                : ') "'
-    replace-with        : ')"'
-
-  # remove double space, periods
-  - find                : '  '
-    replace-with        : ' '
-  - find                : '..'
-    replace-with        : '.'
-
-  # remove nultiline
-  - find                : \n
-    replace-with        : ' '
-
-  # remove single dash
-  - find                : '-'
-    replace-with        : ''
-    entire-cell         : True
-
-
-# worksheet structure definition for creating and formatting worksheets
-worksheet-defs:
-  '-toc':
-    index: 0
-    num-rows: 3
-    num-columns: 27
-    frozen-rows: 2
-    frozen-columns: 0
-    
-    columns:
-      A:
-        halign: center
-        size: 60
-      B:
-        halign: left
-        size: 200
-      C:
-        halign: center
-        size: 80
-      D:
-        halign: center
-        size: 80
-      E:
-        halign: center
-        size: 80
-      F:
-        halign: left
-        size: 200
-      G:
-        halign: center
-        size: 80
-      H:
-        halign: center
-        size: 80
-      I:
-        halign: left
-        size: 80
-      J:
-        halign: center
-        size: 80
-      K:
-        halign: center
-        size: 100
-      L:
-        halign: center
-        size: 80
-      M:
-        halign: center
-        size: 80
-      N:
-        halign: center
-        size: 80
-      O:
-        halign: left
-        size: 80
-      P:
-        halign: left
-        size: 80
-      Q:
-        halign: left
-        size: 80
-      R:
-        halign: left
-        size: 80
-      S:
-        halign: left
-        size: 80
-      T:
-        halign: left
-        size: 80
-      U:
-        halign: center
-        size: 80
-      V:
-        halign: center
-        size: 80
-      W:
-        halign: left
-        size: 100
-      X:
-        halign: left
-        size: 80
-      Y:
-        halign: left
-        size: 80
-      Z:
-        halign: left
-        size: 160
-      AA:
-        halign: left
-        size: 300
-
-    ranges:
-      # column lables in row 2
-      A2:
-        value:  'section'
-      B2:
-        value:  'heading'
-      C2:
-        value:  'process'
-      D2:
-        value:  'level'
-      E2:
-        value:  'content-type'
-      F2:
-        value:  'link'
-      G2:
-        value:  'break'
-      H2:
-        value:  'landscape'
-      I2:
-        value:  'bookmark'
-      J2:
-        value:  'page-spec'
-      K2:
-        value:  'margin-spec'
-      M2:
-        value:  'hide-heading'
-      O2:
-        value:  'header-first'
-      P2:
-        value:  'header-odd'
-      Q2:
-        value:  'header-even'
-      R2:
-        value:  'footer-first'
-      S2:
-        value:  'footer-odd'
-      T2:
-        value:  'footer-even'
-      U2:
-        value:  'override-header'
-      V2:
-        value:  'override-footer'
-      W2:
-        value:  'background-image'
-      X2:
-        value:  'responsible'
-      Y2:
-        value:  'reviewer'
-      Z2:
-        value:  'status'
-      AA2:
-        value:  'comment'
-    
-      # column level data validations from row 3
-      'C3:C':
-        validation-list:
-          - 'Yes'
-      'D3:D':
-        validation-list:
-          - '0'
-          - '1'
-          - '2'
-          - '3'
-          - '4'
-          - '5'
-          - '6'
-      'E3:E':
-        validation-list:
-          - table
-          - pdf
-          - gsheet
-          - toc
-          - lof
-          - lot
-      'G3:G':
-        validation-list:
-          - page
-          - section
-      'H3:H':
-        validation-list:
-          - 'Yes'
-      'J3:J':
-        validation-list:
-          - A4
-          - A3
-          - Letter
-          - Legal
-      'I3:I':
-        validation-list:
-          - wide
-          - medium
-          - narrow
-          - none
-          - book-bind
-          - secl-pad
-          - doer-pad
-          - stamp
-          - narrow-no-header
-          - narrow-no-footer
-          - narrow-no-header-footer
-      'L3:L':
-        validation-list:
-          - 'Yes'
-      'M3:M':
-        validation-list:
-          - 'Yes'
-      'N3:N':
-        validation-list:
-          - 'Yes'
-      'U3:U':
-        validation-list:
-          - 'Yes'
-      'V3:V':
-        validation-list:
-          - 'Yes'
-      'Z3:Z':
-        validation-list:
-          - pending
-          - under-documentation
-          - ready-for-review
-          - under-review
-          - finalized
-
-      # column value count in row 1 
-      A1:
-        value:  '=subtotal(3, A3:A)'
-      B1:
-        value:  '=subtotal(3, B3:B)'
-      C1:
-        value:  '=subtotal(3, C3:C)'
-      D1:
-        value:  '=subtotal(3, D3:D)'
-      E1:
-        value:  '=subtotal(3, E3:E)'
-      F1:
-        value:  '=subtotal(3, F3:F)'
-      G1:
-        value:  '=subtotal(3, G3:G)'
-      H1:
-        value:  '=subtotal(3, H3:H)'
-      I1:
-        value:  '=subtotal(3, I3:I)'
-      J1:
-        value:  '=subtotal(3, J3:J)'
-      K1:
-        value:  '=subtotal(3, K3:K)'
-      L1:
-        value:  '=subtotal(3, L3:L)'
-      M1:
-        value:  '=subtotal(3, M3:M)'
-      N1:
-        value:  '=subtotal(3, N3:N)'
-      O1:
-        value:  '=subtotal(3, O3:O)'
-      P1:
-        value:  '=subtotal(3, P3:P)'
-      Q1:
-        value:  '=subtotal(3, Q3:Q)'
-      R1:
-        value:  '=subtotal(3, R3:R)'
-      S1:
-        value:  '=subtotal(3, S3:S)'
-      T1:
-        value:  '=subtotal(3, T3:T)'
-      U1:
-        value:  '=subtotal(3, U3:U)'
-      V1:
-        value:  '=subtotal(3, V3:V)'
-      W1:
-        value:  '=subtotal(3, W3:W)'
-      X1:
-        value:  '=subtotal(3, X3:X)'
-      Y1:
-        value:  '=subtotal(3, Y3:Y)'
-      Z1:
-        value:  '=subtotal(3, Z3:Z)'
-      AA1:
-        value:  '=subtotal(3, AA3:AA)'
-
-      # row 1 is center aligned
-      'A1:AA1':
-        halign: center
-
-      # row 2 labels are bold
-      'A2:AA2':
-        bold:   true
-
-    cell-empty-markers:
-      - 'X3:Z'
-
-  'z-head':
-    num-rows: 3
-    num-columns: 3
-    frozen-rows: 2
-    frozen-columns: 0
-    columns:
-      'A':
-        size: 100
-        halign: left
-        wrap: true
-      'B':
-        size: 700
-        halign: left
-        wrap: true
-      'C':
-        size: 100
-        halign: right
-        wrap: true
-    review-notes: true
-    ranges:
-      # the worksheet wide specs
-      'A1:C':
-        font-family       : Arial
-        font-size         : 11
-        valign            : top
-
-      # row 1 is center aligned
-      'A1:C1':
-        halign: center
-      'A1':
-        value: '-toc'
-        ws-name-to-link: '-toc'
-      'B1':
-        value: 700
-      'C1':
-        value: 100
-
-      # row 2 labels are bold
-      'A2:C2':
-        bold:   true
-      'A2':
-        value: review-notes
-      'B2:C2':
-        value: content
-        merge: true
-        halign: left
-
-      # row 3 onwards fonts are size 9, light color
-      'A3:C':
-        font-family       : Arial
-        font-size         : 9
-        fgcolor           : '#666666' 
-
-      'B3:C':
-        border-color  : '#B7B7B7'
-        inner-border  : False
-        border-list   :
-          - bottom
-        border-style  : SOLID
-
-      'B3':
-        value: ''
-      'C3':
-        value: >-
-          =image("https://spectrum-bd.biz/data/artifacts/res/logo/spectrum-logo-small-111x89.png",1)
-        halign: right
-
-    cell-empty-markers:
-      - 'B3:C'
-
-  'z-foot':
-    num-rows: 3
-    num-columns: 3
-    frozen-rows: 2
-    frozen-columns: 0
-    columns:
-      'A':
-        size: 100
-        halign: left
-        wrap: true
-      'B':
-        size: 600
-        halign: left
-        wrap: true
-      'C':
-        size: 200
-        halign: right
-        wrap: true
-    review-notes: true
-    ranges:
-      # the worksheet wide specs
-      'A1:C':
-        font-family       : Arial
-        font-size         : 11
-        valign            : top
-
-      # row 1 is center aligned
-      'A1:C1':
-        halign: center
-      'A1':
-        value: '-toc'
-        ws-name-to-link: '-toc'
-      'B1':
-        value: 600
-      'C1':
-        value: 200
-
-      # row 2 labels are bold
-      'A2:C2':
-        bold:   true
-      'A2':
-        value: review-notes
-      'B2:C2':
-        value: content
-        merge: true
-        halign: left
-
-      # row 3 onwards fonts are size 9, light color
-      'A3:C':
-        font-family       : Arial
-        font-size         : 9
-        fgcolor           : '#666666' 
-
-      'B3:C':
-        border-color  : '#B7B7B7'
-        inner-border  : False
-        border-list   :
-          - top
-        border-style  : SOLID
-
-      'B3':
-        value: ''
-      'C3':
-        value: 'Page PAGE{} of PAGE{*}'
-        halign: right
-
-    cell-empty-markers:
-      - 'B3:C'
-
-
-# drive folders to work on
-drive-folders:
-# spectrum resume
-# - '1JltNCjefWmSMZHHQtON_fSTpkHh2W9rP'
-
-# sscl resume
-# - '1M38H0z7DJaQO9bfq5ZWlVYXczuOxxPpe'
-
-# spectrum leads&prospects
-- '0B67lz2acES9ydDI5eEZ0RTQwcm8'
-
-# - '14XWehxowqEDPKN93mguD3bCbuz54jIKS'
-# - '1RMH8cxVSJpM5LqtQGDllTIRBcF9j6mWc'
-# - '15L1T02UkQhFJRDc1OvebwbyurD6fwK8n'
-# - '1oHVm-uk_tNPSZd4roGda0tcp6WO7Pdhm'
-# - '1DbNgMs4_Q4GcJluJ9vQ0t2Hn3iTwgg_S'
-# - '1x2zj-kwtJsdzxa2E1xCdEkmBYxabwyPn'
-# - '1EPTfPzxUhWUuQLr9LPrAkIZbjOU4yPbU'
-# - '1I7woGGcY65uuqEnNoWHbsdEuWWFzzNUZ'
-# - '1v4yY0zO60t_7zLoUCpRAN8b1iTc_Jysq'
-# - '1v1oFX6mv6NwPuT8P1ggojbPG9pBCHS8T'
-
-# - '1QI_wBGtDzgalMKp-6s4-gwxT2SoUT2cA'
-# - '1tL37OaP7QKKbJtYsZi7cyTzOlFlgt1K1'
-# - '1ie8OOCsZKaPCb43FGu7ukouShVvl1_vH'
-# - '1UvwgJDVSaEd1yY4q62buWhMpiRgku0pQ'
-# - '1nl8XJN6cMXagRDjy0YucHR3aFnsVPw36'
-# - '1iK7AB5HbIrITL1TPKdzfkUZa7oyJ_Wyx'
-# - '1nkjxDmfu7N1ksRa2NMG8-JgJra0zNOS9'
-# - '1J7wbnfIXyI6vN5rzYxD6MFO3QfYpUsFa'
-# - '17trrzKCpXxE-X8U9syFSw2y8IHByyT9j'
-# - '1MvHX7XTah58tpRpGT36OoYkfkGXe-WbX'
-
-# - '12ct0rwNUhQeqSeSZ6apZYth33u_r-ZCj'
-# - '1VUXHAPMYQzspqcCO0uwBHTMnOq3HlIhj'
-# - '1WMXIkTnZsQ8DI4jsua9m2WdGv7oIRRe9'
-# - '1mqSNtJUDzc40bpbQrPZzJ9ipEXm3q_1J'
-# - '10x7y7EIn59TLopulOjb614TDD0kwo1H_'
-# - '1xskw2HxHUU6wqgP6qOhVYxCrJ59NT3Uw'
-# - '1fuvwyXAs5brgOrS-MIgp882XfeswLZ81'
-# - '1fHqtUetDHP_3IRNeafj9oYG0eE5n45ZR'
-# - '1iOLKdkk8d5NG5o70gq2ppbozUm6unz1V'
-# - '1L3MAm57szcITwTGmczmXGtYqYuiazwMG'
-
-# - '1lJpNqpqf_btjXd4zFQTPFDhOuQvAIAow'
-# - '1dNG9vxIMN008qo-tag72WKqJ0k-JLLSU'
-# - '1otzdvUWS3caGoVdOqED3n8cMSbzlUCTv'
-# - '1obeIhK7EOsQT0KGW5ptjt4hO1H2OPigO'
-# - '1SKdypQDi4-V5wQSTJao79C_TCx_jRXQG'
-# - '1M-r2yZk-jo7uBfWeXt33hexsy-HSA6Rw'
-# - '1T0WCXdH0VqaG6kUU70ApFHz_gytySiak'
-# - '13aSygK_3fYiXDc5s0eZ0PVmqPyOidLJy'
-# - '17IKwkg5JFuSWjAi1sc512nGnT83Tw8od'
-# - '1hmcnloNVUtqUNXfukBRjmSoct72Y6cbs'
-
-# - '1zbvOrJG0hrhdoYowIRz6ox4Dte0tRiLS'
-# - '1pvZDPvd2NnIJ_RtB5N1dXzbY1VmVehlC'
-# - '1FGvKUqbIj2tDiYdx2ewK2u9V05A-j_l6'
-# - '1lCuXsbvZxvNP5rr9mM6pG3-NU6NZDVsE'
-# - '1gJPi6assqAig2U_6lfjAFdxFs5k3Ounu'
-# - '1qlrDVDq9IqT6XSaxkmw09KnAav3v-vAt'
-# - '1mOkxgSQKHPyxOo-sMXP8gG8sj_NCuLAh'
-# - '1Zxa1xQkt8N_e9yzdjcCz5hjIybbuc8Dq'
-# - '1be32mrCVgQE2rRdH6aW9-fuuQD0WMfh7'
-# - '1GSxC9GJg2Z71vuBn0xrKCVJyy8-R9VlP'
-
-# - '1qGZ_0jD4FnE2XUfcsjmviBRf_pPTf1xd'
-# - '1CR7P123SHYW7jry2zQiOI9I-rCBq7Zeg'
-# - '1R7K6sPAzpmlK_LaXwMdqgLye5kieHPMg'
-# - '1lRJENe4j6RvH6MHHlfj35l0RJXbAFcFC'
-# - '1-iFz7NjRj20GIrGb8ZJY__vxmcMIzdV7'
-# - '1ptRy5x6jkt9lcMIWzesvP4rApfjsyzTB'
-# - '1xlyTchRDjeCJV75HwE2W1FSe4Q8sXWMZ'
-# - '1Rpgx9zCOUX4s3-WBqACnGFmnQXahNF0R'
-# - '1aFBrQrsKT3IAbXun74btoMWpiNrFLlIr'
-# - '1NHEfP4qo06O3vXfydmyOaUJu04jrgpK6'
-
-# - '1Q3fit_ha-xEre6d_UbCr6uSWGTADvjmI'
-# - '18LVXUeSc5rE04vhp53xWJsTuYKSiMBIg'
-# - '16NOef8l9aoxsGKvUVulW3uQxPJzaFqCM'
-# - '13FdcvKNd8GlNmn5U2vrRmhS2-hT8bpPM'
-# - '1TvcxAlKs_dSNbVoLYoHV8u3cIizMpPgV'
-# - '1ieNLFgkSPHXAQ0Lk9qUufNOcimharZmf'
-# - '114DwLNDR31Os0bzG5Zuk2ROpaQLz1C9x'
-# - '1j8IQqLuy9phu-O2h_hvN9-YVlceHErBr'
-# - '1uKYfL1bG9_RsddQIavMNmkNjc3F3WrHR'
+# gsheets which are targets for some activities like copy worksheet
+destination-gsheet-names:

@@ -1,0 +1,114 @@
+work-specs:
+  # borders -> border-list [] : border-style [DOTTED, DASHED, SOLID, SOLID_MEDIUM, SOLID_THICK, NONE, DOUBLE]
+  'D3:D':
+    border-color  : '#000000'
+    inner-border  : False
+    border-list   :
+      - left
+      - right
+    border-style  : DASHED
+
+
+
+  # conditional formatting
+  # format column E if blank and column D has some value
+  'E4:E' :
+    conditional-formats:
+      - type      : 'CUSTOM_FORMULA'
+        values    :
+          -  '=and(not(isblank($D:$D)), isblank($E:$E))'
+        format    :
+          backgroundColor : "#f4cccc"
+
+  # review-notes
+  'A3:Z' :
+    conditional-formats:
+      - type      : 'CUSTOM_FORMULA'
+        values    :
+          -  '=not(isblank($A:$A))'
+        format    :
+          backgroundColor : "#f4cccc"
+
+  'D3:F' :
+    # CUSTOM_FORMULA
+    conditional-formats:
+      - type      : 'CUSTOM_FORMULA'
+        values    :
+          -  '=$D:$D="BANK"'
+        format    :
+          backgroundColor : "#c9daf8"
+
+      - type      : 'CUSTOM_FORMULA'
+        values    :
+          -  '=$D:$D="CHANGE"'
+        format    :
+          backgroundColor : "#fff2cc"
+
+      - type      : 'CUSTOM_FORMULA'
+        values    :
+          -  '=$D:$D="MOVE"'
+        format    :
+          backgroundColor : "#d9d2e9"
+
+      - type      : 'CUSTOM_FORMULA'
+        values    :
+          -  '=$D:$D="OMIT"'
+        format    :
+          backgroundColor : "#f4cccc"
+
+
+
+  # data validation, null list means clear the validation rule
+    'D3:D':
+      validation-list:
+        - BANK
+        - CHANGE
+        - MOVE
+        - OK
+        - OMIT
+
+  # change fonts and vertical alignments for the worksheet
+    'A1:Z'  :
+      font-family       : Arial
+      font-size         : 11
+      valign            : top
+
+
+    # border around cells
+    'B3:Z'          :
+      border-color      : '#b7b7b7'
+      link -toc-new at cell A1 and left align the cell
+
+    'A1'    :
+      value             : '-toc'
+      ws-name-to-link   : '-toc'
+      halign            : left
+
+  # -toc-new
+    'F3'      :
+      value             : '00-layout'
+      ws-name-to-link   : '00-layout'
+    'I4'      :
+      value             : 'A4'
+    'J4'      :
+      value             : 'narrow'
+
+    'C3'      :
+      value             : 'Yes'
+
+    'O3'      :
+      value             : 'z-head'
+    'R3'      :
+      value             : 'z-foot'
+
+  # 00-layout
+    'B14'      :
+      value             : '06-job-history'
+      ws-name-to-link   : '06-job-history'
+    'B17'      :
+      value             : '07-project-roles'
+      ws-name-to-link   : '07-project-roles'
+
+  # z-head
+
+  # z-foot

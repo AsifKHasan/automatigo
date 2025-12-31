@@ -768,7 +768,7 @@ class GoogleWorksheet(object):
                 ranges = [a1_range_to_grid_range(range_spec, sheet_id=self.id)]
                 for conditional_format in work_spec['conditional-formats']:
                     condition_type = conditional_format['type']
-                    condition_values = conditional_format['values']
+                    condition_values = conditional_format.get('values', None)
                     format = conditional_format_from_object(conditional_format['format'])
 
                     conditional_format_requests = conditional_format_requests + [build_conditional_format_rule(ranges=ranges, condition_type=condition_type, condition_values=condition_values, format=format)]

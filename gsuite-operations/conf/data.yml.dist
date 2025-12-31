@@ -41,14 +41,6 @@ gsheet-tasks:
 - work_on_ranges
 
 
-# the gsheet(s) that will be processed
-gsheets:
-
-
-# gsheets which are targets for some activities like copy worksheet
-destination-gsheet-names:
-
-
 # worksheets on which some work will be done, supports RE
 worksheet-names:
 
@@ -57,16 +49,12 @@ worksheet-names:
 worksheet-names-excluded:
 
 
-# work specifications to apply on a list of worksheets
-work-specs:
+# the gsheet(s) that will be processed
+gsheets:
 
 
-# find and replace patterns
-find-replace-patterns:
-
-
-# worksheet structure definition for creating and formatting worksheets
-worksheet-defs:
+# gsheets which are targets for some activities like copy worksheet
+destination-gsheet-names:
 
 
 # drive folders to work on
