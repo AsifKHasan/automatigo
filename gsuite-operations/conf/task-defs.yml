@@ -21,8 +21,6 @@ link_cells_to_worksheet:
   task                                        : link_cells_to_worksheet
   worksheet_name                              : '-toc'
   range_specs_for_cells_to_link               :
-    # - 'M3:M'
-    # - 'N3:N'
     - 'R3:R'
     - 'S3:S'
     - 'T3:T'

@@ -61,6 +61,7 @@ class GoogleSheet(object):
         return matching_worksheets
 
 
+
     ''' get range values
     '''
     def get_range_values(self, range_spec, nesting_level=0, **kwargs):
@@ -531,6 +532,7 @@ class GoogleSheet(object):
     
             else:
                 warn(f"worksheet [{worksheet.gspread_worksheet.title:<40}] does not have column [{cols_to_remove_from}]", nesting_level=nesting_level)
+
 
 
     ''' report dimesnions

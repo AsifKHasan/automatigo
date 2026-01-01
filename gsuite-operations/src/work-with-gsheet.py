@@ -189,14 +189,15 @@ if __name__ == '__main__':
 
             info(f"processing {count:>4}/{num_gsheets} gsheet {gsheet_name}", nesting_level=nesting_level)
             g_sheet = g_service.open_gsheet(gsheet_name=gsheet_name, nesting_level=nesting_level+1)
+            
         except Exception as e:
             g_sheet = None
             warn(str(e), nesting_level=nesting_level)
             # raise e
 
         if g_sheet:
-            # execute_gsheet_tasks(g_sheet=g_sheet, g_service=g_service, gsheet_tasks=gsheet_tasks, task_defs=task_defs, worksheet_names=worksheet_names, worksheet_names_excluded=worksheet_names_excluded, nesting_level=nesting_level+1)
-            work_on_gsheet(g_sheet=g_sheet, g_service=g_service, worksheet_names=worksheet_names, worksheet_names_excluded=worksheet_names_excluded, nesting_level=nesting_level+1)
+            execute_gsheet_tasks(g_sheet=g_sheet, g_service=g_service, gsheet_tasks=gsheet_tasks, task_defs=task_defs, worksheet_names=worksheet_names, worksheet_names_excluded=worksheet_names_excluded, nesting_level=nesting_level+1)
+            # work_on_gsheet(g_sheet=g_sheet, g_service=g_service, worksheet_names=worksheet_names, worksheet_names_excluded=worksheet_names_excluded, nesting_level=nesting_level+1)
             info(f"processed  {count:>4}/{num_gsheets} gsheet {gsheet_name}", nesting_level=nesting_level)
 
         if count % batch_size == 0:

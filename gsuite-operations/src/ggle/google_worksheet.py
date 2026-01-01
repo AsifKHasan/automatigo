@@ -86,6 +86,7 @@ class GoogleWorksheet(object):
         return None
 
 
+
     ''' check if a cell value meets a condition
     '''
     def cell_meets_condition(self, cell_a1, value_a1, condition='==', nesting_level=0):
