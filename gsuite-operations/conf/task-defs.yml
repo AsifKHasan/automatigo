@@ -46,25 +46,35 @@ duplicate_worksheet:
   worksheet_names                             : true
   worksheet_name_to_duplicate                 : 'z-blank'
   match_worksheet_names                       : false
+  check_condition                             : false
+  conditions:
 
 # remove_worksheets
 remove_worksheets:
   task                                        : remove_worksheets
   worksheet_names                             : true
+  check_condition                             : false
+  conditions:
 
 # rename_worksheet
 rename_worksheet:
   task                                        : rename_worksheet
+  check_condition                             : false
+  conditions:
   worksheet_name                              : '-toc-new'
   new_worksheet_name                          : '-toc'
 
 rename_worksheet__z-header:
   task                                        : rename_worksheet
+  check_condition                             : false
+  conditions:
   worksheet_name                              : 'z-header'
   new_worksheet_name                          : 'z-head'
 
 rename_worksheet__z-footer:
   task                                        : rename_worksheet
+  check_condition                             : false
+  conditions:
   worksheet_name                              : 'z-footer'
   new_worksheet_name                          : 'z-foot'
 
@@ -72,6 +82,8 @@ rename_worksheet__z-footer:
 copy_worksheets_to_other_gsheets:
   task                                        : copy_worksheets_to_other_gsheets
   worksheet_names                             : true
+  check_condition                             : false
+  conditions:
   destination_gsheet_names:
 
 
@@ -85,11 +97,15 @@ clear_data_validations:
   task                                        : clear_data_validations
   worksheet_names                             : true
   range_spec                                  : 'A1:AZ'
+  check_condition                             : false
+  conditions:
 
 # clear_conditional_formats
 clear_conditional_formats:  
   task                                        : clear_conditional_formats
   worksheet_names                             : true
+  check_condition                             : false
+  conditions:
 
 # create_review_notes_conditional_formatting
 create_review_notes_conditional_formatting:  
@@ -101,6 +117,8 @@ create_worksheets:
   task                                        : create_worksheets
   worksheet_names                             : true
   match_worksheet_names                       : false
+  check_condition                             : false
+  conditions:
   worksheet_defs:
 
 # format_worksheets
@@ -108,6 +126,8 @@ format_worksheets:
   task                                        : format_worksheets
   worksheet_names                             : true
   match_worksheet_names                       : false
+  check_condition                             : false
+  conditions:
   worksheet_defs:
 
 
@@ -127,7 +147,7 @@ move_column:
   worksheet_name                              : '-toc'
   move_from                                   : 'K'
   move_to                                     : 'L'
-  check_condition                             : true
+  check_condition                             : false
   conditions:
     - cell_a1                                 : 'K2'
       operator                                : '=='
@@ -139,7 +159,7 @@ remove_columns:
   worksheet_name                              : '-toc'
   cols_to_remove_from                         : 'AE'
   cols_to_remove_to                           : 'AE'
-  check_condition                             : true
+  check_condition                             : false
   conditions:
     - method                                  : num_cols
       operator                                : '=='
@@ -152,6 +172,8 @@ remove_columns:
 remove_trailing_blank_rows:
   task                                        : remove_trailing_blank_rows
   worksheet_names                             : true
+  check_condition                             : false
+  conditions:
 
 # column_pixels_in_row
 column_pixels_in_row:
@@ -171,36 +193,36 @@ order_columns:
   worksheet_name                              : '-toc'
   row_to_consult                              : 2
   order_by_values:
-  - 'section'
-  - 'heading'
-  - 'process'
-  - 'level'
-  - 'content-type'
-  - 'link'
-  - 'break'
-  - 'page-spec'
-  - 'margin-spec'
-  - 'landscape'
-  - 'heading-style'
-  - 'bookmark'
-  - 'jpeg-quality'
-  - 'page-list'
-  - 'autocrop'
-  - 'page-bg'
-  - 'hide-heading'
-  - 'header-first'
-  - 'header-odd'
-  - 'header-even'
-  - 'footer-first'
-  - 'footer-odd'
-  - 'footer-even'
-  - 'override-header'
-  - 'override-footer'
-  - 'background-image'
-  - 'responsible'
-  - 'reviewer'
-  - 'status'
-  - 'comment'
+    - 'section'
+    - 'heading'
+    - 'process'
+    - 'level'
+    - 'content-type'
+    - 'link'
+    - 'break'
+    - 'page-spec'
+    - 'margin-spec'
+    - 'landscape'
+    - 'heading-style'
+    - 'bookmark'
+    - 'jpeg-quality'
+    - 'page-list'
+    - 'autocrop'
+    - 'page-bg'
+    - 'hide-heading'
+    - 'header-first'
+    - 'header-odd'
+    - 'header-even'
+    - 'footer-first'
+    - 'footer-odd'
+    - 'footer-even'
+    - 'override-header'
+    - 'override-footer'
+    - 'background-image'
+    - 'responsible'
+    - 'reviewer'
+    - 'status'
+    - 'comment'
 
 
 
@@ -214,7 +236,8 @@ add_rows:
   worksheet_names                             : true
   rows_to_add_at                              : end
   rows_to_add                                 : 1
-  when_row_count_is                           : 15
+  check_condition                             : false
+  conditions:
 
 # add_columns
 add_columns:
@@ -222,7 +245,8 @@ add_columns:
   worksheet_names                             : true
   cols_to_add_at                              : 'L'
   cols_to_add                                 : 3
-  when_col_count_is                           : 27
+  check_condition                             : false
+  conditions:
 
 
 
@@ -234,6 +258,8 @@ add_columns:
 find_and_replace:
   task                                        : find_and_replace
   worksheet_names                             : true
+  check_condition                             : false
+  conditions:
   find_replace_patterns:
     # z-header
     - find                : 'z-header'
@@ -263,165 +289,7 @@ work_on_ranges:
   worksheet_names                             : true
   check_condition                             : false
   conditions:
-    - method                                  : num_cols
-      operator                                : '=='
-      value_is                                : 30
+    # - method                                  : num_cols
+    #   operator                                : '=='
+    #   value_is                                : 30
   work_specs:
-    # custom formats
-      # 'A1:Z':
-      #   font-family:                    Arial
-      #   font-size:                      10
-      #   valign:                         top
-      # 'A1':
-      #     value:                        '-toc'
-      #     ws-name-to-link:              '-toc'
-      #     halign:                       left
-    # update row 1 for column sizes
-      # 'A1':
-      #   'value':  60
-      # 'B1':
-      #   'value':  300
-      # 'C1':
-      #   'value':  80
-      # 'D1':
-      #   'value':  80
-      # 'E1':
-      #   'value':  80
-      # 'F1':
-      #   'value':  200
-      # 'G1':
-      #   'value':  80
-      # 'H1':
-      #   'value':  80
-      # 'I1':
-      #   'value':  100
-      # 'J1':
-      #   'value':  80
-      # 'K1':
-      #   'value':  80
-      # 'L1':
-      #   'value':  80
-      # 'M1':
-      #   'value':  80
-      # 'N1':
-      #   'value':  80
-      # 'O1':
-      #   'value':  80
-      # 'P1':
-      #   'value':  80
-      # 'Q1':
-      #   'value':  80
-      # 'R1':
-      #   'value':  80
-      # 'S1':
-      #   'value':  80
-      # 'T1':
-      #   'value':  80
-      # 'U1':
-      #   'value':  80
-      # 'V1':
-      #   'value':  80
-      # 'W1':
-      #   'value':  80
-      # 'X1':
-      #   'value':  80
-      # 'Y1':
-      #   'value':  80
-      # 'Z1':
-      #   'value':  100
-      # 'AA1':
-      #   'value':  80
-      # 'AB1':
-      #   'value':  80
-      # 'AC1':
-      #   'value':  160
-      # 'AD1':
-      #   'value':  300
-    # data validations
-      # 'C3:C':
-      #   validation-list:
-      #     - 'Yes'
-      # 'D3:D':
-      #   validation-list:
-      #     - '0'
-      #     - '1'
-      #     - '2'
-      #     - '3'
-      #     - '4'
-      #     - '5'
-      #     - '6'
-      # 'E3:E':
-      #   validation-list:
-      #     - table
-      #     - pdf
-      #     - gsheet
-      #     - toc
-      #     - lof
-      #     - lot
-      # 'G3:G':
-      #   validation-list:
-      #     - page
-      #     - section
-      # 'H3:H':
-      #   validation-list:
-      #     - A4
-      #     - A3
-      #     - Letter
-      #     - Legal
-      # 'I3:I':
-      #   validation-list:
-      #     - wide
-      #     - medium
-      #     - narrow
-      #     - none
-      #     - book-bind
-      #     - secl-pad
-      #     - doer-pad
-      #     - stamp
-      #     - narrow-no-header
-      #     - narrow-no-footer
-      #     - narrow-no-header-footer
-      # 'J3:J':
-      #   validation-list:
-      #     - 'Yes'
-      # 'O3:O':
-      #   validation-list:
-      #     - 'Yes'
-      # 'P3:P':
-      #   validation-list:
-      #     - 'Yes'
-      # 'Q3:Q':
-      #   validation-list:
-      #     - 'Yes'
-      # 'X3:X':
-      #   validation-list:
-      #     - 'Yes'
-      # 'Y3:Y':
-      #   validation-list:
-      #     - 'Yes'
-      # 'AC3:AC':
-      #   validation-list:
-      #     - pending
-      #     - under-documentation
-      #     - ready-for-review
-      #     - under-review
-      #     - finalized
-    # conditional formats
-      # 'AA3:AA':
-      #   conditional-formats:
-      #     - type:               'BLANK'
-      #       values: 
-      #       format:
-      #         backgroundColor : "#fff2cc"
-      # 'AB3:AB':
-      #   conditional-formats:
-      #     - type:               'BLANK'
-      #       values: 
-      #       format:
-      #         backgroundColor : "#fff2cc"
-      # 'AC3:AC':
-      #   conditional-formats:
-      #     - type:               'BLANK'
-      #       values: 
-      #       format:
-      #         backgroundColor : "#fff2cc"

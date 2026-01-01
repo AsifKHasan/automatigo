@@ -18,56 +18,9 @@ LETTER_TO_COLUMN = {
 }
 
 
-''' apply operator to inputs to check condition
-    relate: is the operator
-    inp: is the first operand
-    cut is the second operand 
-'''
-def get_truth(inp, relate, cut):
-    ops = {'>': operator.gt,
-           '<': operator.lt,
-           '>=': operator.ge,
-           '<=': operator.le,
-           '==': operator.eq}
-           
-    return ops[relate](inp, cut)
-
-
-
-''' get height and width of a list of list
-'''
-def matrix_dimension(matrix, nesting_level=0):
-    height, width = None, None
-    if isinstance(matrix, list):
-        height = len(matrix)
-        if all(isinstance(el, list) for el in matrix):
-            width = len(matrix[0])
-        else:
-            width = 1
-
-    return height, width
-
-
-
-''' addSheetRequest builder
-'''
-def build_add_worksheet_request(worksheet_name, sheet_index, num_rows, num_cols, frozen_rows, frozen_cols, nesting_level=0):
-    return {
-        'addSheet': {
-            'properties': {
-                'title': worksheet_name,
-                'index': sheet_index,
-                'gridProperties': {
-                    'rowCount': num_rows,
-                    'columnCount': num_cols,
-                    'frozenRowCount': frozen_rows,
-                    'frozenColumnCount': frozen_cols,
-                },
-            }
-        }
-    }
-
-
+# -------------------------------------------------------------
+# requests, rules and specs builders
+# -------------------------------------------------------------
 
 ''' build a repeatCell from work_spec
 '''
@@ -298,6 +251,26 @@ def build_repeatcell_from_work_spec(range, work_spec, gsheet, nesting_level=0):
         },
         'fields': ','.join(fields)
       }
+    }
+
+
+
+''' addSheetRequest builder
+'''
+def build_add_worksheet_request(worksheet_name, sheet_index, num_rows, num_cols, frozen_rows, frozen_cols, nesting_level=0):
+    return {
+        'addSheet': {
+            'properties': {
+                'title': worksheet_name,
+                'index': sheet_index,
+                'gridProperties': {
+                    'rowCount': num_rows,
+                    'columnCount': num_cols,
+                    'frozenRowCount': frozen_rows,
+                    'frozenColumnCount': frozen_cols,
+                },
+            }
+        }
     }
 
 
@@ -615,6 +588,41 @@ def build_column_freeze_request(sheet_id, frozen_cols, nesting_level=0):
     }
 
     return update_sheet_properties
+
+
+
+# -------------------------------------------------------------
+# various utilities
+# -------------------------------------------------------------
+
+''' apply operator to inputs to check condition
+    relate: is the operator
+    inp: is the first operand
+    cut is the second operand 
+'''
+def get_truth(inp, relate, cut):
+    ops = {'>': operator.gt,
+           '<': operator.lt,
+           '>=': operator.ge,
+           '<=': operator.le,
+           '==': operator.eq}
+           
+    return ops[relate](inp, cut)
+
+
+
+''' get height and width of a list of list
+'''
+def matrix_dimension(matrix, nesting_level=0):
+    height, width = None, None
+    if isinstance(matrix, list):
+        height = len(matrix)
+        if all(isinstance(el, list) for el in matrix):
+            width = len(matrix[0])
+        else:
+            width = 1
+
+    return height, width
 
 
 

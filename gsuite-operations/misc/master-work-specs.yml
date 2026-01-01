@@ -1,114 +1,198 @@
 work-specs:
-  # borders -> border-list [] : border-style [DOTTED, DASHED, SOLID, SOLID_MEDIUM, SOLID_THICK, NONE, DOUBLE]
-  'D3:D':
-    border-color  : '#000000'
-    inner-border  : False
-    border-list   :
-      - left
-      - right
-    border-style  : DASHED
+  # generic
+    # link cell A1 to -toc
+      'A1'    :
+        value             : '-toc'
+        ws-name-to-link   : '-toc'
+        halign            : left
 
+  # [-toc] specific
+    # [-toc] update row 1 for column sizes
+      'A1':
+        'value':  60
+      'B1':
+        'value':  300
+      'C1':
+        'value':  80
+      'D1':
+        'value':  80
+      'E1':
+        'value':  80
+      'F1':
+        'value':  200
+      'G1':
+        'value':  80
+      'H1':
+        'value':  80
+      'I1':
+        'value':  100
+      'J1':
+        'value':  80
+      'K1':
+        'value':  80
+      'L1':
+        'value':  80
+      'M1':
+        'value':  80
+      'N1':
+        'value':  80
+      'O1':
+        'value':  80
+      'P1':
+        'value':  80
+      'Q1':
+        'value':  80
+      'R1':
+        'value':  80
+      'S1':
+        'value':  80
+      'T1':
+        'value':  80
+      'U1':
+        'value':  80
+      'V1':
+        'value':  80
+      'W1':
+        'value':  80
+      'X1':
+        'value':  80
+      'Y1':
+        'value':  80
+      'Z1':
+        'value':  100
+      'AA1':
+        'value':  80
+      'AB1':
+        'value':  80
+      'AC1':
+        'value':  160
+      'AD1':
+        'value':  300
+    # [-toc] data validations
+      'C3:C':
+        validation-list:
+          - 'Yes'
+      'D3:D':
+        validation-list:
+          - '0'
+          - '1'
+          - '2'
+          - '3'
+          - '4'
+          - '5'
+          - '6'
+      'E3:E':
+        validation-list:
+          - table
+          - pdf
+          - gsheet
+          - toc
+          - lof
+          - lot
+      'G3:G':
+        validation-list:
+          - page
+          - section
+      'H3:H':
+        validation-list:
+          - A4
+          - A3
+          - Letter
+          - Legal
+      'I3:I':
+        validation-list:
+          - wide
+          - medium
+          - narrow
+          - none
+          - book-bind
+          - secl-pad
+          - doer-pad
+          - stamp
+          - narrow-no-header
+          - narrow-no-footer
+          - narrow-no-header-footer
+      'J3:J':
+        validation-list:
+          - 'Yes'
+      'O3:O':
+        validation-list:
+          - 'Yes'
+      'P3:P':
+        validation-list:
+          - 'Yes'
+      'Q3:Q':
+        validation-list:
+          - 'Yes'
+      'X3:X':
+        validation-list:
+          - 'Yes'
+      'Y3:Y':
+        validation-list:
+          - 'Yes'
+      'AC3:AC':
+        validation-list:
+          - pending
+          - under-documentation
+          - ready-for-review
+          - under-review
+          - finalized
+    # [-toc] conditional formats
+      'AA3:AA':
+        conditional-formats:
+          - type:               'BLANK'
+            values: 
+            format:
+              backgroundColor : "#fff2cc"
+      'AB3:AB':
+        conditional-formats:
+          - type:               'BLANK'
+            values: 
+            format:
+              backgroundColor : "#fff2cc"
+      'AC3:AC':
+        conditional-formats:
+          - type:               'BLANK'
+            values: 
+            format:
+              backgroundColor : "#fff2cc"
+    # [z-foot] page number
+
+  # borders
+    # borders -> border-list [] : border-style [DOTTED, DASHED, SOLID, SOLID_MEDIUM, SOLID_THICK, NONE, DOUBLE]
+      'D3:D':
+        border-color  : '#000000'
+        inner-border  : False
+        border-list   :
+          - left
+          - right
+        border-style  : DASHED
 
 
   # conditional formatting
-  # format column E if blank and column D has some value
-  'E4:E' :
-    conditional-formats:
-      - type      : 'CUSTOM_FORMULA'
-        values    :
-          -  '=and(not(isblank($D:$D)), isblank($E:$E))'
-        format    :
-          backgroundColor : "#f4cccc"
+    # format column E if blank and column D has some value
+      'E4:E' :
+        conditional-formats:
+          - type      : 'CUSTOM_FORMULA'
+            values    :
+              -  '=and(not(isblank($D:$D)), isblank($E:$E))'
+            format    :
+              backgroundColor : "#f4cccc"
 
-  # review-notes
-  'A3:Z' :
-    conditional-formats:
-      - type      : 'CUSTOM_FORMULA'
-        values    :
-          -  '=not(isblank($A:$A))'
-        format    :
-          backgroundColor : "#f4cccc"
-
-  'D3:F' :
-    # CUSTOM_FORMULA
-    conditional-formats:
-      - type      : 'CUSTOM_FORMULA'
-        values    :
-          -  '=$D:$D="BANK"'
-        format    :
-          backgroundColor : "#c9daf8"
-
-      - type      : 'CUSTOM_FORMULA'
-        values    :
-          -  '=$D:$D="CHANGE"'
-        format    :
-          backgroundColor : "#fff2cc"
-
-      - type      : 'CUSTOM_FORMULA'
-        values    :
-          -  '=$D:$D="MOVE"'
-        format    :
-          backgroundColor : "#d9d2e9"
-
-      - type      : 'CUSTOM_FORMULA'
-        values    :
-          -  '=$D:$D="OMIT"'
-        format    :
-          backgroundColor : "#f4cccc"
-
-
-
-  # data validation, null list means clear the validation rule
-    'D3:D':
-      validation-list:
-        - BANK
-        - CHANGE
-        - MOVE
-        - OK
-        - OMIT
-
-  # change fonts and vertical alignments for the worksheet
-    'A1:Z'  :
-      font-family       : Arial
-      font-size         : 11
-      valign            : top
-
-
-    # border around cells
-    'B3:Z'          :
-      border-color      : '#b7b7b7'
-      link -toc-new at cell A1 and left align the cell
-
-    'A1'    :
-      value             : '-toc'
-      ws-name-to-link   : '-toc'
-      halign            : left
-
-  # -toc-new
-    'F3'      :
-      value             : '00-layout'
-      ws-name-to-link   : '00-layout'
-    'I4'      :
-      value             : 'A4'
-    'J4'      :
-      value             : 'narrow'
-
-    'C3'      :
-      value             : 'Yes'
-
-    'O3'      :
-      value             : 'z-head'
-    'R3'      :
-      value             : 'z-foot'
-
-  # 00-layout
-    'B14'      :
-      value             : '06-job-history'
-      ws-name-to-link   : '06-job-history'
-    'B17'      :
-      value             : '07-project-roles'
-      ws-name-to-link   : '07-project-roles'
+    # review-notes
+      'A3:Z' :
+        conditional-formats:
+          - type      : 'CUSTOM_FORMULA'
+            values    :
+              -  '=not(isblank($A:$A))'
+            format    :
+              backgroundColor : "#f4cccc"
 
   # z-head
 
   # z-foot
+    # page number
+      'C3':
+        value:          'Page PAGE{} of PAGE{*}'
+        halign:         right
+        note:           ''

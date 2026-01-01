@@ -211,3 +211,100 @@ def populate_range(g_sheet):
 
     if len(values):
         worksheet.update_values_in_batch(values=values)
+
+
+
+''' web image links (image formula) to drive file links
+    this is because we are moving all artifacts (photo, signature, nid, certificates) to Google drive from of web/ftp
+'''
+def web_image_to_drive_file_link_for_artifacts(g_sheet, g_service, worksheet_names=[], worksheet_names_excluded=[], nesting_level=0):
+    folders_by_organization = {
+        '01-spectrum': '12mbhWHu3SgcUOXcdINVAf6z8vEN5DGM6',
+        '02-sscl': '1xbkBeWsuMrUIFQmd5MpzLTRIMaL5KOEa',
+        '03-doer': '10JCJYypX2KtVHz_t4kxXfxUNghNtg9Gx',
+        '01-celloscope': '1nlzGWA6H_tzYcaGDZt7qLuMvznvxSpUu',
+        '05-ael': '15VOhVeIyKEn3rtpithUYlsuzKXFczLWP',
+        '06-external': '1LNlrmJ3f1rgOlAJAdaF4VpCvps0zc5NV',
+    }
+
+    image_formula_pattern = r'=image\("https://spectrum-bd.biz/data/artifacts[/]+(?P<artifact_type>.+?)[/]+(?P<organization>.+?)[/]+(?P<image_string>.+?)".+\)'
+
+    value_requests = []
+    matching_worksheet_names = g_sheet.matching_worksheet_names(worksheet_names=worksheet_names, worksheet_names_excluded=worksheet_names_excluded, nesting_level=nesting_level+1)
+    for worksheet_name in matching_worksheet_names:
+        ws = g_sheet.worksheet_by_name(worksheet_name=worksheet_name, nesting_level=nesting_level+1)
+        if ws is None:
+            warn(f"[{worksheet_name}] NOT FOUND .. ignoring ..", nesting_level=nesting_level)
+            continue
+
+        trace(f"[{worksheet_name:30}] - searching for images", nesting_level=nesting_level)
+
+        ws_id = ws.id
+        range_spec = f"'{worksheet_name}'!B3:Z"
+        response = g_sheet.get_range_values_in_batch(range_spec=range_spec, valueRenderOption='FORMULA', requester='web_image_to_drive_file_link_for_artifacts', nesting_level=nesting_level+1)
+        if response is None:
+            continue
+
+        if 'valueRanges' not in response:
+            continue
+
+        values = response['valueRanges'][0]
+
+        image_formula_cells = []
+        for r, row in enumerate(values.get('values', []), start=3):
+            for c, col in enumerate(row, start=2):
+                cell_a1 = f"{COLUMN_TO_LETTER[c]}{r}"
+                m = re.match(image_formula_pattern, str(col), re.IGNORECASE)
+                if m:
+                    trace(f"match in [{cell_a1}] : {col}", nesting_level=nesting_level+1)
+                    if m.group('organization') is not None:
+                        organization = m.group('organization')
+                    else:
+                        warn(f"[{cell_a1}] - [{col}] organization could not be found in the formula", nesting_level=nesting_level+1)
+                        continue
+
+                    if m.group('artifact_type') is not None:
+                        artifact_type = m.group('artifact_type')
+                        if artifact_type in ['res'] and organization in ['logo']:
+                            # ignore
+                            warn(f"{cell_a1} is a LOGO .. ignoring ..", nesting_level=nesting_level+1)
+                            continue
+                    else:
+                        warn(f"[{cell_a1}] - [{col}] artifact type could not be found in the formula", nesting_level=nesting_level+1)
+                        continue
+
+                    if m.group('image_string') is not None:
+                        image_string = m.group('image_string')
+                    else:
+                        warn(f"[{cell_a1}] - [{col}] image string could not be found in the formula", nesting_level=nesting_level+1)
+                        continue
+
+                    image_string = cleanup_url(image_string.split('/')[-1])
+                    image_formula_cells.append({'worksheet_name': worksheet_name, 'ws_id':  ws_id, 'cell_a1': cell_a1, 'organization': organization, 'artifact_type': artifact_type, 'image_string': image_string })
+
+
+        cell_requests = {}
+        # iterate over the image cells 
+        for i, image_cell in enumerate(image_formula_cells, start=1):
+            # we are to convert the formula to a hyperlink formula so that drive images are accounted for, get the drive link for the image 
+            # image_drive_link = g_service.get_drive_file(drive_file_name=image_cell['image_string'], folder_id=folders_by_organization.get(image_cell['organization']), nesting_level=nesting_level+1)
+            image_drive_link = g_service.get_drive_file(drive_file_name=image_cell['image_string'], folder_id=None, nesting_level=nesting_level+1)
+            if image_drive_link is None:
+                warn(f"{image_cell['image_string']} NOT FOUND ...", nesting_level=nesting_level+1)
+                continue
+
+            # build the new formula
+            new_cell_formula = f'=HYPERLINK("{image_drive_link['webViewLink']}", "{image_cell['image_string']}")'
+
+            # build request for cell value change
+            cell_requests[image_cell['cell_a1']] = {'value': new_cell_formula}
+
+        # process the work-specs
+        vals, _ = ws.range_work_requests(range_work_specs=cell_requests, worksheets_dict={}, nesting_level=nesting_level+1)
+        value_requests = value_requests + vals
+
+        if len(vals):
+            debug(f"[{worksheet_name:30}] - {len(vals)} values will be changed", nesting_level=nesting_level)
+
+    # execute the requests for all worksheets in batch
+    value_results = g_sheet.update_values_in_batch(value_list=value_requests, requester='web_image_to_drive_file_link_for_artifacts', nesting_level=nesting_level+1)

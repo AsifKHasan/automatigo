@@ -70,6 +70,29 @@ class GoogleSheet(object):
 
 
 
+    ''' get range values in batch
+    '''
+    def get_range_values_in_batch(self, range_spec, requester='', nesting_level=0, **kwargs):
+        params = {'majorDimension': 'ROWS'}
+        params.update(kwargs)
+
+        for try_count in range(1, self.try_for+1):
+            try:
+                values = self.gspread_sheet.values_batch_get(range_spec, params=params)
+                # print(range_spec, values)
+                return values
+            except Exception as e:
+                print(e)
+                if try_count < self.try_for:
+                    warn(f"[{requester}] batch-get failed in [{try_count}/{self.try_for}] try, trying again in {self.wait_for} seconds", nesting_level=nesting_level)
+                    time.sleep(self.wait_for)
+                else:
+                    warn(f"[{requester}] batch-get failed in [{try_count}/{self.try_for}] try", nesting_level=nesting_level)
+
+        return None
+
+
+
     ''' get conditional formats
     '''
     def get_conditional_formats(self, nesting_level=0):
@@ -550,15 +573,13 @@ class GoogleSheet(object):
     ''' add rows in a worksheet
         rows will be added after rows_to_add_at
     '''
-    def add_rows(self, worksheet_names, rows_to_add_at, rows_to_add, when_row_count_is=None, check_condition=False, conditions=[], nesting_level=0):
+    def add_rows(self, worksheet_names, rows_to_add_at, rows_to_add, check_condition=False, conditions=[], nesting_level=0):
         requests = []
         for worksheet_name in worksheet_names:
             worksheet = self.worksheet_by_name(worksheet_name, suppress_log=False, nesting_level=nesting_level+1)
             if worksheet:
-                num_rows, num_cols = worksheet.number_of_dimesnions(nesting_level=nesting_level+1)
-                if when_row_count_is is None or when_row_count_is == num_rows:
-                    reqs = worksheet.dimension_add_requests(rows_to_add_at=rows_to_add_at, rows_to_add=rows_to_add)
-                    requests = requests + reqs
+                reqs = worksheet.dimension_add_requests(rows_to_add_at=rows_to_add_at, rows_to_add=rows_to_add)
+                requests = requests + reqs
         
         self.update_in_batch(values=[], requests=requests, requester='add_rows', nesting_level=nesting_level+1)
 
@@ -567,17 +588,15 @@ class GoogleSheet(object):
     ''' add column in a worksheet
         columns will be added after rows_to_add_at
     '''
-    def add_columns(self, worksheet_names, cols_to_add_at, cols_to_add, when_col_count_is=None, check_condition=False, conditions=[], nesting_level=0):
+    def add_columns(self, worksheet_names, cols_to_add_at, cols_to_add, check_condition=False, conditions=[], nesting_level=0):
         requests = []
         for worksheet_name in worksheet_names:
             worksheet = self.worksheet_by_name(worksheet_name, suppress_log=False, nesting_level=nesting_level+1)
             if worksheet:
                 condition_satisfied = worksheet.check_condition(check_condition=check_condition, conditions=conditions, nesting_level=nesting_level+1)
                 if condition_satisfied:
-                    num_rows, num_cols = worksheet.number_of_dimesnions()
-                    if when_col_count_is is None or when_col_count_is == num_cols:
-                        reqs = worksheet.dimension_add_requests(cols_to_add_at=cols_to_add_at, cols_to_add=cols_to_add)
-                        requests = requests + reqs
+                    reqs = worksheet.dimension_add_requests(cols_to_add_at=cols_to_add_at, cols_to_add=cols_to_add)
+                    requests = requests + reqs
         
         self.update_in_batch(values=[], requests=requests, requester='add_columns', nesting_level=nesting_level+1)
 
