@@ -291,3 +291,7 @@ work_on_ranges:
     #   operator                                : '=='
     #   value_is                                : 30
   work_specs:
+      'A1'    :
+        value             : '-toc'
+        ws-name-to-link   : '-toc'
+        halign            : left
