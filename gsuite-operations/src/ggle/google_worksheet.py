@@ -593,13 +593,15 @@ class GoogleWorksheet(object):
                     new_style = pattern.get('format', {})
                     matches = list(re.finditer(pattern['pattern'], text))
                     if matches:
-                        trace(f"matches found in [{column_to_letter(c_idx+1)}{r_idx+1}] for pattern '{pattern['pattern']}'", nesting_level=nesting_level)
+                        trace(f"matches found in [{column_to_letter(c_idx+1)}{r_idx+1}] (length: {len(text)}) for pattern '{pattern['pattern']}'", nesting_level=nesting_level)
                         current_runs = existing_runs
                         for m in matches:
                             trace(f"{m.group()} at {m.span()}", nesting_level=nesting_level+1)
                             start, end = m.span()
                             current_runs = merge_runs(current_runs, start, end, new_style)
-
+                            for run in current_runs:
+                                trace(f"startIndex: {run.get('startIndex', 0)}", nesting_level=nesting_level+2)
+                            
                             requests.append({
                                 "updateCells": {
                                     "rows": [{
