@@ -351,7 +351,7 @@ class GoogleSheet(object):
             info(f"searching [{len(find_replace_patterns)}] patterns in  [{worksheet_name}]", nesting_level=nesting_level)
             worksheet_to_work_on = self.worksheet_by_name(worksheet_name, nesting_level=nesting_level+1)
             if worksheet_to_work_on:
-                reqs = worksheet_to_work_on.find_and_replace_requests(find_replace_patterns=find_replace_patterns)
+                reqs = worksheet_to_work_on.find_and_replace_requests(find_replace_patterns=find_replace_patterns, nesting_level=nesting_level+1)
                 info(f"found     [{len(reqs)}] patterns in  [{worksheet_name}]", nesting_level=nesting_level)
                 requests = requests + reqs
 
@@ -365,12 +365,12 @@ class GoogleSheet(object):
     def find_and_format(self, worksheet_names, check_condition=False, conditions=[], patterns=[], nesting_level=0):
         requests = []
         for worksheet_name in worksheet_names:
-            info(f"searching [{len(find_replace_patterns)}] patterns in  [{worksheet_name}]", nesting_level=nesting_level)
+            info(f"searching [{len(patterns)}] patterns in  [{worksheet_name}]", nesting_level=nesting_level)
             worksheet_to_work_on = self.worksheet_by_name(worksheet_name, nesting_level=nesting_level+1)
             if worksheet_to_work_on:
                 condition_satisfied = worksheet_to_work_on.check_condition(check_condition=check_condition, conditions=conditions, nesting_level=nesting_level+1)
                 if condition_satisfied:
-                    reqs = worksheet_to_work_on.find_and_format_requests(patterns=patterns)
+                    reqs = worksheet_to_work_on.find_and_format_requests(patterns=patterns, nesting_level=nesting_level+1)
                     info(f"found     [{len(reqs)}] patterns in  [{worksheet_name}]", nesting_level=nesting_level)
                     requests = requests + reqs
 

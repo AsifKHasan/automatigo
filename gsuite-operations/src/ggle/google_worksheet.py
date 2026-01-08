@@ -566,12 +566,59 @@ class GoogleWorksheet(object):
     ''' find and replace in worksheet
     '''
     def find_and_format_requests(self, patterns, nesting_level=0):
-        format_requests = []
-        for pattern in patterns:
-            # 1. Get the current values from the range
-            result = service.spreadsheets().values().get(
-                spreadsheet_id=spreadsheet_id, range=range_name).execute()
-            rows = result.get('values', [])
+        requests = []
+
+        # Fetch cells with existing TextFormatRuns
+        range_spec = f"'{self.title}'!A1:{COLUMN_TO_LETTER[self.num_cols()]}{self.num_rows()}"
+        result = self.service.gsheet_service.spreadsheets().get(
+            spreadsheetId=self.gsheet.id,
+            ranges=range_spec,
+            fields="sheets(data(rowData(values(userEnteredValue,textFormatRuns,effectiveFormat))))"
+        ).execute()
+
+        sheet_data = result['sheets'][0]['data'][0]
+        rows = sheet_data.get('rowData', [])
+        start_row = sheet_data.get('startRow', 0)
+        start_col = sheet_data.get('startColumn', 0)
+
+        for r_idx, row in enumerate(rows):
+            values = row.get('values', [])
+            for c_idx, cell in enumerate(values):
+                text = cell.get('userEnteredValue', {}).get('stringValue', '')
+                if not text: continue
+                
+                existing_runs = cell.get('textFormatRuns', [])
+
+                for pattern in patterns:
+                    new_style = pattern.get('format', {})
+                    matches = list(re.finditer(pattern['pattern'], text))
+                    if matches:
+                        trace(f"matches found in [{column_to_letter(c_idx+1)}{r_idx+1}] for pattern '{pattern['pattern']}'", nesting_level=nesting_level)
+                        current_runs = existing_runs
+                        for m in matches:
+                            trace(f"{m.group()} at {m.span()}", nesting_level=nesting_level+1)
+                            start, end = m.span()
+                            current_runs = merge_runs(current_runs, start, end, new_style)
+
+                            requests.append({
+                                "updateCells": {
+                                    "rows": [{
+                                        "values": [{
+                                            "userEnteredValue": {"stringValue": text},
+                                            "textFormatRuns": current_runs,
+                                            "userEnteredFormat": cell.get('effectiveFormat', {})
+                                        }]
+                                    }],
+                                    "fields": "userEnteredValue,textFormatRuns,userEnteredFormat",
+                                    "start": {
+                                        "sheetId": self.id,
+                                        "rowIndex": start_row + r_idx,
+                                        "columnIndex": start_col + c_idx
+                                    }
+                                }
+                            })
+                
+        return requests
 
 
 

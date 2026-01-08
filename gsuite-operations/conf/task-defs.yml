@@ -284,9 +284,17 @@ find_and_format:
   check_condition                             : false
   conditions:
   patterns:
-  - pattern               : '(\[[0-9]+\])'
+  # - pattern               : '(\[[0-9]+\])'
+  #   format:
+  #     bold                : True
+  #     italic              : False
+  #     foregroundColor:
+  #       red               : 0.9176
+  #       green             : 0.2626
+  #       blue              : 0.2078
+  - pattern               : '\[LINK{A.+?}{Attachment #.+?} \(page PAGE{A.+?}\)\]'
     format:
-      foregroundColor     : '#ea4335'
+      bold                : False
       italic              : True
 
 

@@ -595,6 +595,58 @@ def build_column_freeze_request(sheet_id, frozen_cols, nesting_level=0):
 # various utilities
 # -------------------------------------------------------------
 
+
+def merge_runs(existing_runs, new_start, new_end, new_format):
+    """
+    Splicing a new format into existing runs is complex. 
+    A simpler robust way is to expand runs into a list of 'per-character' formats,
+    modify them, and then compress them back into runs.
+    """
+    # 1. If no existing runs, start with a default run at 0
+    if not existing_runs:
+        existing_runs = [{"startIndex": 0, "format": {}}]
+    
+    # 2. To preserve existing formatting, we find which existing run 
+    # covers the 'new_start' to 'new_end' area and merge the properties.
+    # For brevity, this logic adds the new run and tries to maintain 
+    # the 'after-match' style by carrying over the previous run's format.
+    
+    updated_runs = []
+    inserted = False
+    
+    for i, run in enumerate(existing_runs):
+        curr_idx = run.get('startIndex', 0)
+        curr_fmt = run.get('format', {})
+        
+        # If this run starts before our new match and the next run is after or non-existent
+        next_idx = existing_runs[i+1].get('startIndex', float('inf')) if i+1 < len(existing_runs) else float('inf')
+        
+        updated_runs.append(run)
+        
+        if not inserted and new_start >= curr_idx and new_start < next_idx:
+            # Create the new merged format (existing + new)
+            merged_fmt = {**curr_fmt, **new_format}
+            updated_runs.append({"startIndex": new_start, "format": merged_fmt})
+            
+            # Create a 'reset' run at the end of the match to return to the original style
+            updated_runs.append({"startIndex": new_end, "format": curr_fmt})
+            inserted = True
+
+    # Sort by startIndex and remove duplicates at the same index. If startIndex is missing, treat it as the first in order
+    updated_runs.sort(key=lambda x: x.get("startIndex", float("-inf")))
+    
+    # Deduplicate: if two consecutive runs have the same startIndex, keep the last one
+    final_runs = []
+    for run in updated_runs:
+        if final_runs and final_runs[-1].get('startIndex', 0) == run.get('startIndex', 0):
+            final_runs[-1] = run
+        else:
+            final_runs.append(run)
+    
+    return final_runs
+
+
+
 ''' apply operator to inputs to check condition
     relate: is the operator
     inp: is the first operand
