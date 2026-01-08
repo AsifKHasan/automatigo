@@ -277,6 +277,20 @@ find_and_replace:
 
 
 
+# find_and_format
+find_and_format:
+  task                                        : find_and_format
+  worksheet_names                             : true
+  check_condition                             : false
+  conditions:
+  patterns:
+  - pattern               : '(\[[0-9]+\])'
+    format:
+      foregroundColor     : '#ea4335'
+      italic              : True
+
+
+
 # ------------------------------------------------
 # work on ranges etc.
 # ------------------------------------------------

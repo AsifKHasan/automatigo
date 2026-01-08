@@ -95,7 +95,7 @@ def work_on_gsheet(g_sheet, g_service, worksheet_names=[], worksheet_names_exclu
     # -----------------------------------------------------------
     # BEGIN resume specific tasks
 
-    web_image_to_drive_file_link_for_artifacts(g_sheet=g_sheet, g_service=g_service, worksheet_names=worksheet_names, worksheet_names_excluded=worksheet_names_excluded, nesting_level=nesting_level)
+    # web_image_to_drive_file_link_for_artifacts(g_sheet=g_sheet, g_service=g_service, worksheet_names=worksheet_names, worksheet_names_excluded=worksheet_names_excluded, nesting_level=nesting_level)
 
     # worksheet_names_to_work_on = ['02-career-highlight']
     # range_spec = 'B3:Z'

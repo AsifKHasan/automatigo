@@ -563,6 +563,18 @@ class GoogleWorksheet(object):
 
 
 
+    ''' find and replace in worksheet
+    '''
+    def find_and_format_requests(self, patterns, nesting_level=0):
+        format_requests = []
+        for pattern in patterns:
+            # 1. Get the current values from the range
+            result = service.spreadsheets().values().get(
+                spreadsheet_id=spreadsheet_id, range=range_name).execute()
+            rows = result.get('values', [])
+
+
+
     ''' resize columns with the size mentioned in pixel number in row 1 for that column
     '''
     def resize_columns_from_values_in_row_requests(self, row_to_consult, nesting_level=0):

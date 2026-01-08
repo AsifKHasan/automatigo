@@ -360,6 +360,25 @@ class GoogleSheet(object):
 
 
 
+    ''' find and format texts in worksheets
+    '''
+    def find_and_format(self, worksheet_names, check_condition=False, conditions=[], patterns=[], nesting_level=0):
+        requests = []
+        for worksheet_name in worksheet_names:
+            info(f"searching [{len(find_replace_patterns)}] patterns in  [{worksheet_name}]", nesting_level=nesting_level)
+            worksheet_to_work_on = self.worksheet_by_name(worksheet_name, nesting_level=nesting_level+1)
+            if worksheet_to_work_on:
+                condition_satisfied = worksheet_to_work_on.check_condition(check_condition=check_condition, conditions=conditions, nesting_level=nesting_level+1)
+                if condition_satisfied:
+                    reqs = worksheet_to_work_on.find_and_format_requests(patterns=patterns)
+                    info(f"found     [{len(reqs)}] patterns in  [{worksheet_name}]", nesting_level=nesting_level)
+                    requests = requests + reqs
+
+        result = self.update_in_batch(values=[], requests=requests, requester='find_and_format', nesting_level=nesting_level+1)
+        return result
+
+
+
     ''' clear data validations for a range
     '''
     def clear_data_validations(self, worksheet_names, range_spec, check_condition=False, conditions=[], nesting_level=0):
