@@ -296,6 +296,10 @@ find_and_format:
     format:
       bold                : False
       italic              : True
+      foregroundColor:
+        red               : 0.9176
+        green             : 0.2626
+        blue              : 0.2078
 
 
 
