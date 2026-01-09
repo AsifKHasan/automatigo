@@ -292,10 +292,12 @@ find_and_format:
   #       red               : 0.9176
   #       green             : 0.2626
   #       blue              : 0.2078
-  - pattern               : '\[LINK{A.+?}{Attachment #.+?} \(page PAGE{A.+?}\)\]'
+  - pattern               : '\[LINK{A.+?}{A\..+?} \(p\.PAGE{A.+?}\)\]'
     format:
       bold                : False
       italic              : True
+      fontFamily          : 'Consolas'
+      fontSize            : 10
       foregroundColor:
         red               : 0.9176
         green             : 0.2626
