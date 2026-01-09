@@ -284,10 +284,12 @@ find_and_format:
   check_condition                             : false
   conditions:
   patterns:
-  # - pattern               : '(\[[0-9]+\])'
+  # - pattern               : '\[LINK{A\.71}{A\.71}\]'
   #   format:
-  #     bold                : True
-  #     italic              : False
+  #     bold                : False
+  #     italic              : True
+  #     fontFamily          : 'Consolas'
+  #     fontSize            : 10
   #     foregroundColor:
   #       red               : 0.9176
   #       green             : 0.2626
