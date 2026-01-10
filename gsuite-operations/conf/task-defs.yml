@@ -259,21 +259,21 @@ find_and_replace:
   check_condition                             : false
   conditions:
   find_replace_patterns:
-    # z-header
-    - find                : 'z-header'
-      replace-with        : 'z-head'
-      regex               : False
-      include-formulas    : True
-      entire-cell         : False
-      match-case          : True
+    # # z-header
+    # - find                : 'z-header'
+    #   replace-with        : 'z-head'
+    #   regex               : False
+    #   include-formulas    : True
+    #   entire-cell         : False
+    #   match-case          : True
 
-    # z-footer
-    - find                : 'z-footer'
-      replace-with        : 'z-foot'
-      regex               : False
-      include-formulas    : True
-      entire-cell         : False
-      match-case          : True
+    # # z-footer
+    # - find                : 'z-footer'
+    #   replace-with        : 'z-foot'
+    #   regex               : False
+    #   include-formulas    : True
+    #   entire-cell         : False
+    #   match-case          : True
 
 
 
