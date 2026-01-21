@@ -12,7 +12,7 @@ link_cells_to_drive_files:
 # link_cells_based_on_type
 link_cells_based_on_type:
   task                                        : link_cells_based_on_type
-  worksheet_name                              : '-toc-asif'
+  worksheet_name                              : '-toc'
   range_specs_for_cells_to_link               :
   - 'E3:F'
 
