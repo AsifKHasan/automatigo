@@ -80,9 +80,7 @@ rename_worksheet__z-footer:
 copy_worksheets_to_other_gsheets:
   task                                        : copy_worksheets_to_other_gsheets
   worksheet_names                             : true
-  check_condition                             : false
-  conditions:
-  destination_gsheet_names:
+  destination_gsheet_names                    : true
 
 
 

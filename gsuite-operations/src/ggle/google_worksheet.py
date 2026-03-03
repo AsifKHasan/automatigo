@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import traceback
 import gspread
 from gspread.utils import *
 from gspread.exceptions import *
@@ -156,6 +157,7 @@ class GoogleWorksheet(object):
                     info(f"renamed  worksheet [{response['title']}] to [{self.title}]")
 
                 except:
+                    traceback.print_exc()
                     error(f"worksheet          [{response['title']}] could not be renamed to [{self.title}]")
 
         except:

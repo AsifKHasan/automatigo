@@ -17,7 +17,7 @@ from task.resume_tasks import *
 ''' execute gsheet tasks sequentially as defined in conf/data.yml *gsheet-tasks* list
     actual task parameters are defined in conf/task-defs.yml
 '''
-def execute_gsheet_tasks(g_sheet, g_service, gsheet_tasks=[], task_defs={}, worksheet_names=[], worksheet_names_excluded=[], nesting_level=0):
+def execute_gsheet_tasks(g_sheet, g_service, gsheet_tasks=[], task_defs={}, worksheet_names=[], worksheet_names_excluded=[], destination_gsheet_names=[], nesting_level=0):
     for count, gsheet_task in enumerate(gsheet_tasks):
         if count:
             print()
@@ -44,6 +44,9 @@ def execute_gsheet_tasks(g_sheet, g_service, gsheet_tasks=[], task_defs={}, work
                     else:
                         args_dict[k] = worksheet_names
 
+                elif k == 'destination_gsheet_names' and v == True:
+                    args_dict[k] = destination_gsheet_names
+
                 else:
                     args_dict[k] = v
 
@@ -60,9 +63,10 @@ def execute_gsheet_tasks(g_sheet, g_service, gsheet_tasks=[], task_defs={}, work
                     debug(f"worksheets to work on {args_dict['worksheet_names']}", nesting_level=nesting_level)
                     for x in args_dict['worksheet_names']:
                         trace(f"{x}", nesting_level=nesting_level)
-
+                
                 task(nesting_level=nesting_level+1, **args_dict)
                 info(f"executed  task [{task_name}]", nesting_level=nesting_level)
+
             except Exception as e:
                 error(str(e), nesting_level=nesting_level)
 
@@ -176,6 +180,9 @@ if __name__ == '__main__':
     worksheet_names_excluded = config.get('worksheet-names-excluded', [])
     if worksheet_names_excluded is None: worksheet_names_excluded = []
 
+    destination_gsheet_names = config.get('destination-gsheet-names', [])
+    if destination_gsheet_names is None: destination_gsheet_names = []
+
     g_service = GoogleService(service_account_json_path=credential_json, config=config)
 
     wait_for = config.get('wait-for', 60)
@@ -196,7 +203,7 @@ if __name__ == '__main__':
             # raise e
 
         if g_sheet:
-            execute_gsheet_tasks(g_sheet=g_sheet, g_service=g_service, gsheet_tasks=gsheet_tasks, task_defs=task_defs, worksheet_names=worksheet_names, worksheet_names_excluded=worksheet_names_excluded, nesting_level=nesting_level+1)
+            execute_gsheet_tasks(g_sheet=g_sheet, g_service=g_service, gsheet_tasks=gsheet_tasks, task_defs=task_defs, worksheet_names=worksheet_names, worksheet_names_excluded=worksheet_names_excluded, destination_gsheet_names=destination_gsheet_names, nesting_level=nesting_level+1)
             # work_on_gsheet(g_sheet=g_sheet, g_service=g_service, worksheet_names=worksheet_names, worksheet_names_excluded=worksheet_names_excluded, nesting_level=nesting_level+1)
             info(f"processed  {count:>4}/{num_gsheets} gsheet {gsheet_name}", nesting_level=nesting_level)
 

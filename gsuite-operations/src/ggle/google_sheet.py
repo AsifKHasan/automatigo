@@ -614,7 +614,10 @@ class GoogleSheet(object):
         for worksheet_name in worksheet_names:
             worksheet = self.worksheet_by_name(worksheet_name, suppress_log=False, nesting_level=nesting_level+1)
             if worksheet:
-                condition_satisfied = worksheet.check_condition(check_condition=check_condition, conditions=conditions, nesting_level=nesting_level+1)
+                condition_satisfied = True
+                if check_condition:
+                    condition_satisfied = worksheet.check_condition(check_condition=check_condition, conditions=conditions, nesting_level=nesting_level+1)
+
                 if condition_satisfied:
                     reqs = worksheet.dimension_add_requests(cols_to_add_at=cols_to_add_at, cols_to_add=cols_to_add)
                     requests = requests + reqs
@@ -642,13 +645,18 @@ class GoogleSheet(object):
 
     ''' copy worksheets to another gsheet
     '''
-    def copy_worksheets_to_other_gsheets(self, worksheet_names, destination_gsheet_names, nesting_level=0):
+    def copy_worksheets_to_other_gsheets(self, worksheet_names, destination_gsheet_names, check_condition=False, conditions=[], nesting_level=0):
         for destination_gsheet_name in destination_gsheet_names:
-            destination_gsheet = self.service.open(gsheet_name=destination_gsheet_name)
+            destination_gsheet = self.service.open_gsheet(gsheet_name=destination_gsheet_name, nesting_level=nesting_level+1)
             if destination_gsheet:
                 for worksheet_name in worksheet_names:
-                    info(f"copying [{worksheet_name}] to gsheet [{destination_gsheet_name}]", nesting_level=nesting_level+1)
-                    self.copy_worksheet_to_gsheet(destination_gsheet=destination_gsheet, worksheet_name_to_copy=worksheet_name)
+                    condition_satisfied = True
+                    if check_condition:
+                        condition_satisfied = worksheet.check_condition(check_condition=check_condition, conditions=conditions, nesting_level=nesting_level+1)
+    
+                    if condition_satisfied:
+                        info(f"copying [{worksheet_name}] to gsheet [{destination_gsheet_name}]", nesting_level=nesting_level+1)
+                        self.copy_worksheet_to_gsheet(destination_gsheet=destination_gsheet, worksheet_name_to_copy=worksheet_name)
             
             else:
                 warn(f"destination gsheet [{destination_gsheet_name}] not found", nesting_level=nesting_level+1)
