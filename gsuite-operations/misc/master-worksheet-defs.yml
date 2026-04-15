@@ -1,420 +1,1377 @@
 # worksheet structure definition for creating and formatting worksheets
 worksheet-defs:
-  '-toc':
-    index: 0
-    num-rows: 3
-    num-columns: 27
-    frozen-rows: 2
-    frozen-columns: 0
-    
-    columns:
-      A:
-        halign: center
-        size: 60
-      B:
-        halign: left
-        size: 200
-      C:
-        halign: center
-        size: 80
-      D:
-        halign: center
-        size: 80
-      E:
-        halign: center
-        size: 80
-      F:
-        halign: left
-        size: 200
-      G:
-        halign: center
-        size: 80
-      H:
-        halign: center
-        size: 80
-      I:
-        halign: left
-        size: 80
-      J:
-        halign: center
-        size: 80
-      K:
-        halign: center
-        size: 100
-      L:
-        halign: center
-        size: 80
-      M:
-        halign: center
-        size: 80
-      N:
-        halign: center
-        size: 80
-      O:
-        halign: left
-        size: 80
-      P:
-        halign: left
-        size: 80
-      Q:
-        halign: left
-        size: 80
-      R:
-        halign: left
-        size: 80
-      S:
-        halign: left
-        size: 80
-      T:
-        halign: left
-        size: 80
-      U:
-        halign: center
-        size: 80
-      V:
-        halign: center
-        size: 80
-      W:
-        halign: left
-        size: 100
-      X:
-        halign: left
-        size: 80
-      Y:
-        halign: left
-        size: 80
-      Z:
-        halign: left
-        size: 160
-      AA:
-        halign: left
-        size: 300
+  # -toc worksheet
+    '-toc':
+      index:            0
+      num-rows:         8
+      num-columns:      29
+      frozen-rows:      2
+      frozen-columns:   0
+      
+      columns:
+        # section
+        A:
+          halign: center
+          size: 60
 
-    ranges:
-      # column lables in row 2
-      A2:
-        value:  'section'
-      B2:
-        value:  'heading'
-      C2:
-        value:  'process'
-      D2:
-        value:  'level'
-      E2:
-        value:  'content-type'
-      F2:
-        value:  'link'
-      G2:
-        value:  'break'
-      H2:
-        value:  'landscape'
-      I2:
-        value:  'bookmark'
-      J2:
-        value:  'page-spec'
-      K2:
-        value:  'margin-spec'
-      M2:
-        value:  'hide-heading'
-      O2:
-        value:  'header-first'
-      P2:
-        value:  'header-odd'
-      Q2:
-        value:  'header-even'
-      R2:
-        value:  'footer-first'
-      S2:
-        value:  'footer-odd'
-      T2:
-        value:  'footer-even'
-      U2:
-        value:  'override-header'
-      V2:
-        value:  'override-footer'
-      W2:
-        value:  'background-image'
-      X2:
-        value:  'responsible'
-      Y2:
-        value:  'reviewer'
-      Z2:
-        value:  'status'
-      AA2:
-        value:  'comment'
-    
-      # column level data validations from row 3
-      'C3:C':
-        validation-list:
-          - 'Yes'
-      'D3:D':
-        validation-list:
-          - '0'
-          - '1'
-          - '2'
-          - '3'
-          - '4'
-          - '5'
-          - '6'
-      'E3:E':
-        validation-list:
-          - table
-          - pdf
-          - gsheet
-          - toc
-          - lof
-          - lot
-      'G3:G':
-        validation-list:
-          - page
-          - section
-      'H3:H':
-        validation-list:
-          - 'Yes'
-      'J3:J':
-        validation-list:
-          - A4
-          - A3
-          - Letter
-          - Legal
-      'I3:I':
-        validation-list:
-          - wide
-          - medium
-          - narrow
-          - none
-          - book-bind
-          - secl-pad
-          - doer-pad
-          - stamp
-          - narrow-no-header
-          - narrow-no-footer
-          - narrow-no-header-footer
-      'L3:L':
-        validation-list:
-          - 'Yes'
-      'M3:M':
-        validation-list:
-          - 'Yes'
-      'N3:N':
-        validation-list:
-          - 'Yes'
-      'U3:U':
-        validation-list:
-          - 'Yes'
-      'V3:V':
-        validation-list:
-          - 'Yes'
-      'Z3:Z':
-        validation-list:
-          - pending
-          - under-documentation
-          - ready-for-review
-          - under-review
-          - finalized
+        # heading
+        B:
+          halign: left
+          size: 300
 
-      # column value count in row 1 
-      A1:
-        value:  '=subtotal(3, A3:A)'
-      B1:
-        value:  '=subtotal(3, B3:B)'
-      C1:
-        value:  '=subtotal(3, C3:C)'
-      D1:
-        value:  '=subtotal(3, D3:D)'
-      E1:
-        value:  '=subtotal(3, E3:E)'
-      F1:
-        value:  '=subtotal(3, F3:F)'
-      G1:
-        value:  '=subtotal(3, G3:G)'
-      H1:
-        value:  '=subtotal(3, H3:H)'
-      I1:
-        value:  '=subtotal(3, I3:I)'
-      J1:
-        value:  '=subtotal(3, J3:J)'
-      K1:
-        value:  '=subtotal(3, K3:K)'
-      L1:
-        value:  '=subtotal(3, L3:L)'
-      M1:
-        value:  '=subtotal(3, M3:M)'
-      N1:
-        value:  '=subtotal(3, N3:N)'
-      O1:
-        value:  '=subtotal(3, O3:O)'
-      P1:
-        value:  '=subtotal(3, P3:P)'
-      Q1:
-        value:  '=subtotal(3, Q3:Q)'
-      R1:
-        value:  '=subtotal(3, R3:R)'
-      S1:
-        value:  '=subtotal(3, S3:S)'
-      T1:
-        value:  '=subtotal(3, T3:T)'
-      U1:
-        value:  '=subtotal(3, U3:U)'
-      V1:
-        value:  '=subtotal(3, V3:V)'
-      W1:
-        value:  '=subtotal(3, W3:W)'
-      X1:
-        value:  '=subtotal(3, X3:X)'
-      Y1:
-        value:  '=subtotal(3, Y3:Y)'
-      Z1:
-        value:  '=subtotal(3, Z3:Z)'
-      AA1:
-        value:  '=subtotal(3, AA3:AA)'
+        # process
+        C:
+          halign: center
+          size: 80
 
-      # row 1 is center aligned
-      'A1:AA1':
-        halign: center
+        # level
+        D:
+          halign: center
+          size: 80
 
-      # row 2 labels are bold
-      'A2:AA2':
-        bold:   true
+        # content-type
+        E:
+          halign: center
+          size: 80
 
-    cell-empty-markers:
-      - 'X3:Z'
+        # link
+        F:
+          halign: left
+          size: 200
 
-  'z-head':
-    num-rows: 3
-    num-columns: 3
-    frozen-rows: 2
-    frozen-columns: 0
-    columns:
-      'A':
-        size: 100
-        halign: left
-        wrap: true
-      'B':
-        size: 700
-        halign: left
-        wrap: true
-      'C':
-        size: 100
-        halign: right
-        wrap: true
-    review-notes: true
-    ranges:
-      # the worksheet wide specs
-      'A1:C':
-        font-family       : Arial
-        font-size         : 11
-        valign            : top
+        # break
+        G:
+          halign: center
+          size: 80
 
-      # row 1 is center aligned
-      'A1:C1':
-        halign: center
-      'A1':
-        value: '-toc'
-        ws-name-to-link: '-toc'
-      'B1':
-        value: 700
-      'C1':
-        value: 100
+        # page-spec
+        H:
+          halign: center
+          size: 80
 
-      # row 2 labels are bold
-      'A2:C2':
-        bold:   true
-      'A2':
-        value: review-notes
-      'B2:C2':
-        value: content
-        merge: true
-        halign: left
+        # margin-spec
+        I:
+          halign: center
+          size: 100
 
-      # row 3 onwards fonts are size 9, light color
-      'A3:C':
-        font-family       : Arial
-        font-size         : 9
-        fgcolor           : '#666666' 
+        # landscape
+        J:
+          halign: center
+          size: 80
 
-      'B3:C':
-        border-color  : '#B7B7B7'
-        inner-border  : False
-        border-list   :
-          - bottom
-        border-style  : SOLID
+        # heading-style
+        K:
+          halign: left
+          size: 100
 
-      'B3':
-        value: ''
-      'C3':
-        value: >-
-          =image("https://spectrum-bd.biz/data/artifacts/res/logo/spectrum-logo-small-111x89.png",1)
-        halign: right
+        # bookmark
+        L:
+          halign: left
+          size: 80
 
-    cell-empty-markers:
-      - 'B3:C'
+        # jpeg-quality
+        M:
+          halign: center
+          size: 80
 
-  'z-foot':
-    num-rows: 3
-    num-columns: 3
-    frozen-rows: 2
-    frozen-columns: 0
-    columns:
-      'A':
-        size: 100
-        halign: left
-        wrap: true
-      'B':
-        size: 600
-        halign: left
-        wrap: true
-      'C':
-        size: 200
-        halign: right
-        wrap: true
-    review-notes: true
-    ranges:
-      # the worksheet wide specs
-      'A1:C':
-        font-family       : Arial
-        font-size         : 11
-        valign            : top
+        # page-list
+        N:
+          halign: left
+          size: 80
 
-      # row 1 is center aligned
-      'A1:C1':
-        halign: center
-      'A1':
-        value: '-toc'
-        ws-name-to-link: '-toc'
-      'B1':
-        value: 600
-      'C1':
-        value: 200
+        # autocrop
+        O:
+          halign: center
+          size: 80
 
-      # row 2 labels are bold
-      'A2:C2':
-        bold:   true
-      'A2':
-        value: review-notes
-      'B2:C2':
-        value: content
-        merge: true
-        halign: left
+        # page-bg
+        P:
+          halign: center
+          size: 80
 
-      # row 3 onwards fonts are size 9, light color
-      'A3:C':
-        font-family       : Arial
-        font-size         : 9
-        fgcolor           : '#666666' 
+        # hide-heading
+        Q:
+          halign: center
+          size: 80
 
-      'B3:C':
-        border-color  : '#B7B7B7'
-        inner-border  : False
-        border-list   :
-          - top
-        border-style  : SOLID
+        # header-first
+        R:
+          halign: left
+          size: 80
 
-      'B3':
-        value: ''
-      'C3':
-        value: 'Page PAGE{} of PAGE{*}'
-        halign: right
+        # header-odd
+        S:
+          halign: left
+          size: 80
 
-    cell-empty-markers:
-      - 'B3:C'
+        # header-even
+        T:
+          halign: left
+          size: 80
+
+        # footer-first
+        U:
+          halign: left
+          size: 80
+
+        # footer-odd
+        V:
+          halign: left
+          size: 80
+
+        # footer-even
+        W:
+          halign: left
+          size: 100
+
+        # override-header
+        X:
+          halign: center
+          size: 80
+
+        # override-footer
+        Y:
+          halign: center
+          size: 80
+
+        # responsible
+        Z:
+          halign: left
+          size: 80
+
+        # reviewer
+        AA:
+          halign: left
+          size: 80
+
+        # status
+        AB:
+          halign: left
+          size: 160
+
+        # comment
+        AC:
+          halign: left
+          size: 300
+
+      ranges:
+        # the worksheet wide specs
+        'A1:AC':
+          font-family       : Arial
+          font-size         : 10
+          valign            : top
+
+        # row 1 - column pixel size 
+          # center align row 1
+          'A1:AC1':
+            halign: center
+
+          A1:
+            value:  60
+          B1:
+            value:  300
+          C1:
+            value:  80
+          D1:
+            value:  80
+          E1:
+            value:  80
+          F1:
+            value:  200
+          G1:
+            value:  80
+          H1:
+            value:  80
+          I1:
+            value:  100
+          J1:
+            value:  80
+          K1:
+            value:  80
+          L1:
+            value:  80
+          M1:
+            value:  80
+          N1:
+            value:  80
+          O1:
+            value:  80
+          P1:
+            value:  80
+          Q1:
+            value:  80
+          R1:
+            value:  80
+          S1:
+            value:  80
+          T1:
+            value:  80
+          U1:
+            value:  80
+          V1:
+            value:  80
+          W1:
+            value:  80
+          X1:
+            value:  80
+          Y1:
+            value:  80
+          Z1:
+            value:  80
+          AA1:
+            value:  80
+          AB1:
+            value:  160
+          AC1:
+            value:  300
+
+        # row 2 - column labels
+          # labels are bold
+          'A2:AC2':
+            bold:   true
+
+          A2:
+            value:  'section'
+          B2:
+            value:  'heading'
+          C2:
+            value:  'process'
+          D2:
+            value:  'level'
+          E2:
+            value:  'content-type'
+          F2:
+            value:  'link'
+          G2:
+            value:  'break'
+          H2:
+            value:  'page-spec'
+          I2:
+            value:  'margin-spec'
+          J2:
+            value:  'landscape'
+          K2:
+            value:  'heading-style'
+          L2:
+            value:  'bookmark'
+          M2:
+            value:  'jpeg-quality'
+          N2:
+            value:  'page-list'
+          O2:
+            value:  'autocrop'
+          P2:
+            value:  'page-bg'
+          Q2:
+            value:  'hide-heading'
+          R2:
+            value:  'header-first'
+          S2:
+            value:  'header-odd'
+          T2:
+            value:  'header-even'
+          U2:
+            value:  'footer-first'
+          V2:
+            value:  'footer-odd'
+          W2:
+            value:  'footer-even'
+          X2:
+            value:  'override-header'
+          Y2:
+            value:  'override-footer'
+          Z2:
+            value:  'responsible'
+          AA2:
+            value:  'reviewer'
+          AB2:
+            value:  'status'
+          AC2:
+            value:  'comment'
+      
+        # row 3 - data validations
+          # process
+          'C3:C':
+            validation-list:
+              - 'Yes'
+
+          # level
+          'D3:D':
+            validation-list:
+              - '0'
+              - '1'
+              - '2'
+              - '3'
+              - '4'
+              - '5'
+              - '6'
+
+          # content-type
+          'E3:E':
+            validation-list:
+              - table
+              - pdf
+              - gsheet
+              - toc
+              - lof
+              - lot
+
+          # break
+          'G3:G':
+            validation-list:
+              - page
+              - section
+
+          # page-spec
+          'H3:H':
+            validation-list:
+              - A4
+              - A3
+              - Letter
+              - Legal
+
+          # margin-spec
+          'I3:I':
+            validation-list:
+              - wide
+              - medium
+              - narrow
+              - none
+              - book-bind
+              - secl-pad
+              - doer-pad
+              - stamp
+              - narrow-no-header
+              - narrow-no-footer
+              - narrow-no-header-footer
+
+          # landscape
+          'J3:J':
+            validation-list:
+              - 'Yes'
+
+          # autocrop
+          'O3:O':
+            validation-list:
+              - 'Yes'
+
+          # page-bg
+          'P3:P':
+            validation-list:
+              - 'Yes'
+
+          # hide-heading
+          'Q3:Q':
+            validation-list:
+              - 'Yes'
+
+          # override-header
+          'X3:X':
+            validation-list:
+              - 'Yes'
+
+          # override-footer
+          'Y3:Y':
+            validation-list:
+              - 'Yes'
+
+          # status
+          'AB3:AB':
+            validation-list:
+              - pending
+              - under-documentation
+              - ready-for-review
+              - under-review
+              - finalized
+
+      cell-empty-markers:
+        # responsible, reviewer and status should not be empty
+        - 'Z3:AB'
+
+  # z-blank worksheet
+    'z-blank':
+      num-rows:         3
+      num-columns:      3
+      frozen-rows:      2
+      frozen-columns:   0
+      review-notes:     true
+
+      columns:
+        # review-notes
+        'A':
+          size: 100
+          halign: left
+          wrap: true
+
+        # content
+        'B':
+          size: 40
+          halign: left
+          wrap: true
+
+        'C':
+          size: 760
+          halign: left
+          wrap: true
+
+      ranges:
+        # the worksheet wide specs
+          'A1:C':
+            font-family       : Arial
+            font-size         : 10
+            valign            : top
+
+        # row 1 - column pixel size 
+          # center align row 1
+          'A1:C1':
+            halign: center
+
+          'A1':
+            value: '-toc'
+            ws-name-to-link: '-toc'
+
+          'B1':
+            value: 40
+
+          'C1':
+            value: 760
+
+        # row 2 - column labels
+          # labels are bold
+          'A2:C2':
+            bold:   true
+
+          'A2':
+            value: review-notes
+
+          'B2:C2':
+            value: content
+            merge: true
+            halign: left
+
+  # z-head worksheet
+    'z-head':
+      num-rows:         3
+      num-columns:      3
+      frozen-rows:      2
+      frozen-columns:   0
+      review-notes:     true
+
+      columns:
+        # review-notes
+        'A':
+          size: 100
+          halign: left
+          wrap: true
+
+        # content
+        'B':
+          size: 700
+          halign: left
+          wrap: true
+
+        'C':
+          size: 100
+          halign: right
+          wrap: true
+
+      ranges:
+        # the worksheet wide specs
+          'A1:C':
+            font-family       : Arial
+            font-size         : 10
+            valign            : top
+
+        # row 1 - column pixel size 
+          # center align row 1
+          'A1:C1':
+            halign: center
+
+          'A1':
+            value: '-toc'
+            ws-name-to-link: '-toc'
+
+          'B1':
+            value: 700
+
+          'C1':
+            value: 100
+
+        # row 2 - column labels
+          # labels are bold
+          'A2:C2':
+            bold:   true
+
+          'A2':
+            value: review-notes
+
+          'B2:C2':
+            value: content
+            merge: true
+            halign: left
+
+        # row 3 
+          # onwards fonts are size 9, light color
+          'A3:C':
+            font-family       : Arial
+            font-size         : 9
+            fgcolor           : '#666666' 
+
+          'B3:C':
+            border-color  : '#B7B7B7'
+            inner-border  : False
+            border-list   :
+              - bottom
+            border-style  : SOLID
+
+          'B3':
+            value: '[Header Text]'
+
+          'C3':
+            value: >-
+              =image("https://spectrum-bd.biz/data/artifacts/res/logo/spectrum-logo-small-111x89.png",1)
+            halign: right
+
+      cell-empty-markers:
+        - 'B3:C'
+
+  # z-foot worksheet
+    'z-foot':
+      num-rows:         3
+      num-columns:      3
+      frozen-rows:      2
+      frozen-columns:   0
+      review-notes:     true
+
+      columns:
+        # review-notes
+        'A':
+          size: 100
+          halign: left
+          wrap: true
+
+        # content
+        'B':
+          size: 600
+          halign: left
+          wrap: true
+
+        'C':
+          size: 200
+          halign: right
+          wrap: true
+
+      ranges:
+        # the worksheet wide specs
+          'A1:C':
+            font-family       : Arial
+            font-size         : 10
+            valign            : top
+
+        # row 1 - column pixel size 
+          # center align row 1
+          'A1:C1':
+            halign: center
+          
+          'A1':
+            value: '-toc'
+            ws-name-to-link: '-toc'
+
+          'B1':
+            value: 600
+
+          'C1':
+            value: 200
+
+        # row 2 - column labels
+          # labels are bold
+          'A2:C2':
+            bold:   true
+
+          'A2':
+            value: 'review-notes'
+          
+          'B2:C2':
+            value: 'content'
+            merge: true
+            halign: left
+
+        # row 3 
+          # onwards fonts are size 9, light color
+          'A3:C':
+            font-family       : Arial
+            font-size         : 9
+            fgcolor           : '#666666' 
+
+          'B3:C':
+            border-color  : '#B7B7B7'
+            inner-border  : False
+            border-list   :
+              - top
+            border-style  : SOLID
+
+          'B3':
+            value: '[Footer Text]'
+
+          'C3':
+            value: 'Page PAGE{} of PAGE{*}'
+            halign: right
+
+      cell-empty-markers:
+        - 'B3:C'
+
+  # zz-page-specs worksheet
+    'zz-page-specs':
+      num-rows:         6
+      num-columns:      4
+      frozen-rows:      2
+      frozen-columns:   0
+
+      columns:
+        # key
+        A:
+          halign: left
+          size: 100
+
+        # width
+        B:
+          halign: center
+          size: 100
+
+        # height
+        C:
+          halign: center
+          size: 100
+
+        # name
+        D:
+          halign: left
+          size: 100
+
+      ranges:
+        # the worksheet wide specs
+          'A1:D':
+            font-family       : Arial
+            font-size         : 10
+            valign            : top
+
+        #  row 1 
+          'A1':
+            value: '-toc'
+            ws-name-to-link: '-toc'
+            halign: left
+
+          'B1:C1':
+            value: 'all values are in inches'
+            merge: true
+            halign: center
+
+        #  row 2 
+          # labels are bold
+          'A2:D2':
+            bold:   true
+
+          A2:
+            value:  'key'
+          B2:
+            value:  'width'
+          C2:
+            value:  'height'
+          D2:
+            value:  'name'
+
+        #  row 3 
+          A3:
+            value:  'A4'
+          B3:
+            value:  '8.27'
+          C3:
+            value:  '11.69'
+          D3:
+            value:  'a4paper'
+
+        #  row 4 
+          A4:
+            value:  'A3'
+          B4:
+            value:  '11.69'
+          C4:
+            value:  '16.54'
+          D4:
+            value:  'a3paper'
+
+        #  row 5 
+          A5:
+            value:  'Letter'
+          B5:
+            value:  '8.50'
+          C5:
+            value:  '11.00'
+          D5:
+            value:  'letterpaper'
+
+        #  row 6 
+          A6:
+            value:  'Legal'
+          B6:
+            value:  '8.50'
+          C6:
+            value:  '14.00'
+          D6:
+            value:  'legalpaper'
+
+  # zz-margin-specs worksheet
+    'zz-margin-specs':
+      num-rows:         14
+      num-columns:      8
+      frozen-rows:      3
+      frozen-columns:   0
+
+      columns:
+        # key
+        A:
+          halign: left
+          size: 150
+
+        # left
+        B:
+          halign: center
+          size: 100
+
+        # right
+        C:
+          halign: center
+          size: 100
+
+        # top
+        D:
+          halign: center
+          size: 100
+
+        # bottom
+        E:
+          halign: center
+          size: 100
+
+        # gutter
+        F:
+          halign: center
+          size: 100
+
+        # distance:header
+        G:
+          halign: center
+          size: 100
+
+        # distance:footer
+        H:
+          halign: center
+          size: 100
+
+      ranges:
+        # the worksheet wide specs
+          'A1:D':
+            font-family       : Arial
+            font-size         : 10
+            valign            : top
+
+        #  row 1 
+          'A1':
+            value: '-toc'
+            ws-name-to-link: '-toc'
+            halign: left
+
+          'B1:H1':
+            value: 'all values are in inches'
+            merge: true
+            halign: center
+
+        #  row 2-3
+          # labels are bold
+          'A2:H3':
+            bold:   true
+            valign: middle
+
+          # key
+          'A2:A3':
+            value:  'key'
+            merge:  true
+
+          # left
+          'B2:B3':
+            value:  'left'
+            merge:  true
+
+          # right
+          'C2:C3':
+            value:  'right'
+            merge:  true
+
+          # top
+          'D2:D3':
+            value:  'top'
+            merge:  true
+
+          # bottom
+          'E2:E3':
+            value:  'bottom'
+            merge:  true
+
+          # gutter
+          'F2:F3':
+            value:  'gutter'
+            merge:  true
+
+          # distance
+          'G2:H2':
+            value:  'distance'
+            merge:  true
+
+          # header
+          'G3':
+            value:  'header'
+
+          # footer
+          'H3':
+            value:  'footer'
+
+        #  row 4 
+          # key
+          A4:
+            value:  'wide'
+
+          # left
+          B4:
+            value:  1.00
+
+          # right
+          C4:
+            value:  1.00
+
+          # top
+          D4:
+            value:  1.00
+
+          # bottom
+          E4:
+            value:  1.00
+
+          # gutter
+          F4:
+            value:  0.00
+
+          # distance:header
+          G4:
+            value:  0.85
+
+          # distance:footer
+          H4:
+            value:  0.85
+
+        #  row 5 
+          # key
+          A5:
+            value:  'medium'
+
+          # left
+          B5:
+            value:  0.50
+
+          # right
+          C5:
+            value:  0.50
+
+          # top
+          D5:
+            value:  0.50
+
+          # bottom
+          E5:
+            value:  0.50
+
+          # gutter
+          F5:
+            value:  0.00
+
+          # distance:header
+          G5:
+            value:  0.40
+
+          # distance:footer
+          H5:
+            value:  0.40
+
+        #  row 6 
+          # key
+          A6:
+            value:  'narrow'
+
+          # left
+          B6:
+            value:  0.50
+
+          # right
+          C6:
+            value:  0.50
+
+          # top
+          D6:
+            value:  0.25
+
+          # bottom
+          E6:
+            value:  0.25
+
+          # gutter
+          F6:
+            value:  0.00
+
+          # distance:header
+          G6:
+            value:  0.10
+
+          # distance:footer
+          H6:
+            value:  0.10
+
+        #  row 7 
+          # key
+          A7:
+            value:  'none'
+
+          # left
+          B7:
+            value:  0.00
+
+          # right
+          C7:
+            value:  0.00
+
+          # top
+          D7:
+            value:  0.00
+
+          # bottom
+          E7:
+            value:  0.00
+
+          # gutter
+          F7:
+            value:  0.00
+
+          # distance:header
+          G7:
+            value:  0.00
+
+          # distance:footer
+          H7:
+            value:  0.00
+
+        #  row 8 
+          # key
+          A8:
+            value:  'book-bind'
+
+          # left
+          B8:
+            value:  1.20
+
+          # right
+          C8:
+            value:  0.75
+
+          # top
+          D8:
+            value:  0.50
+
+          # bottom
+          E8:
+            value:  0.50
+
+          # gutter
+          F8:
+            value:  0.00
+
+          # distance:header
+          G8:
+            value:  0.35
+
+          # distance:footer
+          H8:
+            value:  0.35
+
+        #  row 9 
+          # key
+          A9:
+            value:  'secl-pad'
+
+          # left
+          B9:
+            value:  1.20
+
+          # right
+          C9:
+            value:  0.50
+
+          # top
+          D9:
+            value:  1.50
+
+          # bottom
+          E9:
+            value:  1.50
+
+          # gutter
+          F9:
+            value:  0.00
+
+          # distance:header
+          G9:
+            value:  1.35
+
+          # distance:footer
+          H9:
+            value:  1.35
+
+        #  row 10 
+          # key
+          A10:
+            value:  'doer-pad'
+
+          # left
+          B10:
+            value:  1.20
+
+          # right
+          C10:
+            value:  0.50
+
+          # top
+          D10:
+            value:  1.50
+
+          # bottom
+          E10:
+            value:  1.50
+
+          # gutter
+          F10:
+            value:  0.00
+
+          # distance:header
+          G10:
+            value:  1.35
+
+          # distance:footer
+          H10:
+            value:  1.35
+
+        #  row 11 
+          # key
+          A11:
+            value:  'stamp'
+
+          # left
+          B11:
+            value:  1.00
+
+          # right
+          C11:
+            value:  1.00
+
+          # top
+          D11:
+            value:  4.00
+
+          # bottom
+          E11:
+            value:  1.00
+
+          # gutter
+          F11:
+            value:  0.00
+
+          # distance:header
+          G11:
+            value:  3.85
+
+          # distance:footer
+          H11:
+            value:  0.85
+
+        #  row 12 
+          # key
+          A12:
+            value:  'narrow-no-header'
+
+          # left
+          B12:
+            value:  0.20
+
+          # right
+          C12:
+            value:  0.20
+
+          # top
+          D12:
+            value:  0.00
+
+          # bottom
+          E12:
+            value:  0.20
+
+          # gutter
+          F12:
+            value:  0.00
+
+          # distance:header
+          G12:
+            value:  0.00
+
+          # distance:footer
+          H12:
+            value:  0.10
+
+        #  row 13 
+          # key
+          A13:
+            value:  'narrow-no-footer'
+
+          # left
+          B13:
+            value:  0.20
+
+          # right
+          C13:
+            value:  0.20
+
+          # top
+          D13:
+            value:  0.20
+
+          # bottom
+          E13:
+            value:  0.00
+
+          # gutter
+          F13:
+            value:  0.00
+
+          # distance:header
+          G13:
+            value:  0.10
+
+          # distance:footer
+          H13:
+            value:  0.00
+
+        #  row 14 
+          # key
+          A14:
+            value:  'narrow-no-header-footer'
+
+          # left
+          B14:
+            value:  0.20
+
+          # right
+          C14:
+            value:  0.20
+
+          # top
+          D14:
+            value:  0.00
+
+          # bottom
+          E14:
+            value:  0.00
+
+          # gutter
+          F14:
+            value:  0.00
+
+          # distance:header
+          G14:
+            value:  0.00
+
+          # distance:footer
+          H14:
+            value:  0.00
+
+  # zz-font-specs worksheet
+    'zz-font-specs':
+      num-rows:         6
+      num-columns:      2
+      frozen-rows:      2
+      frozen-columns:   0
+
+      columns:
+        # key
+        A:
+          halign: left
+          size: 150
+
+        # font
+        B:
+          halign: left
+          size: 200
+
+      ranges:
+        # the worksheet wide specs
+          'A1:B':
+            font-family       : Arial
+            font-size         : 10
+            valign            : top
+
+        #  row 1 
+          'A1':
+            value: '-toc'
+            ws-name-to-link: '-toc'
+            halign: left
+
+        #  row 2 
+          # labels are bold
+          'A2:B2':
+            bold:   true
+
+          A2:
+            value:  'key'
+
+          B2:
+            value:  'font'
+
+        #  row 3 
+          # key
+          A3:
+            value:  'default'
+
+          # font
+          B3:
+            value:  'Arial'
+
+        #  row 4 
+          # key
+          A4:
+            value:  'Bree Serif'
+
+          # font
+          B4:
+            value:  'Droid Sans Fallback'
+
+        #  row 5 
+          # key
+          A5:
+            value:  'Droid Sans'
+
+          # font
+          B5:
+            value:  'Droid Sans Fallback'
+
+        #  row 6 
+          # key
+          A6:
+            value:  'Consolas'
+
+          # font
+          B6:
+            value:  'Consolas'
+
+  # zz-style-specs worksheet
+    'zz-style-specs':
+      num-rows:         6
+      num-columns:      4
+      frozen-rows:      2
+      frozen-columns:   0
+
+      columns:
+        # key
+        A:
+          halign: left
+          size: 100
+
+        # width
+        A:
+          halign: center
+          size: 100
+
+        # height
+        A:
+          halign: center
+          size: 100
+
+        # name
+        A:
+          halign: left
+          size: 100
+
+      ranges:
+        # the worksheet wide specs
+          'A1:D':
+            font-family       : Arial
+            font-size         : 11
+            valign            : top
+
+        #  row 1 
+          'A1':
+            value: '-toc'
+            ws-name-to-link: '-toc'
+            halign: left
+
+          'B1:C1':
+            value: 'all values are in inches'
+            merge: true
+            halign: center
+
+        #  row 2 
+          # labels are bold
+          'A2:D2':
+            bold:   true
+
+          A2:
+            value:  'key'
+          B2:
+            value:  'width'
+          C2:
+            value:  'height'
+          D2:
+            value:  'name'
+
+        #  row 3 
+          A3:
+            value:  'A4'
+          B3:
+            value:  '8.27'
+          C3:
+            value:  '11.69'
+          D3:
+            value:  'a4paper'
+
+        #  row 4 
+          A3:
+            value:  'A3'
+          B3:
+            value:  '11.69'
+          C3:
+            value:  '16.54'
+          D3:
+            value:  'a3paper'
+
+        #  row 5 
+          A3:
+            value:  'Letter'
+          B3:
+            value:  '8.50'
+          C3:
+            value:  '11.00'
+          D3:
+            value:  'letterpaper'
+
+        #  row 6 
+          A3:
+            value:  'Legal'
+          B3:
+            value:  '8.50'
+          C3:
+            value:  '14.00'
+          D3:
+            value:  'legalpaper'

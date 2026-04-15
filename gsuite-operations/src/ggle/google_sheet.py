@@ -687,7 +687,7 @@ class GoogleSheet(object):
         # the worksheet might exist
         worksheet = self.worksheet_by_name(worksheet_name=worksheet_name, suppress_log=True, nesting_level=nesting_level+1)
         if worksheet:
-            warn(f"worksheet [{worksheet_name}] exists, will not be creates", nesting_level=nesting_level)
+            warn(f"worksheet [{worksheet_name}] exists, will not be created", nesting_level=nesting_level)
             return []
 
 

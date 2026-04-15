@@ -4,6 +4,7 @@ import json
 import yaml
 import time
 import argparse
+from pprint import pprint
 
 from ggle.google_service import GoogleService
 
@@ -48,6 +49,8 @@ def execute_gsheet_tasks(g_sheet, g_service, gsheet_tasks=[], task_defs={}, work
                     args_dict[k] = destination_gsheet_names
 
                 else:
+                    # pprint(k)
+                    # pprint(v)
                     args_dict[k] = v
 
             # matching_worksheet_names argument is not to be passed
