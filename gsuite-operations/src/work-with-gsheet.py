@@ -18,7 +18,7 @@ from task.resume_tasks import *
 ''' execute gsheet tasks sequentially as defined in conf/data.yml *gsheet-tasks* list
     actual task parameters are defined in conf/task-defs.yml
 '''
-def execute_gsheet_tasks(g_sheet, g_service, gsheet_tasks=[], task_defs={}, worksheet_names=[], worksheet_names_excluded=[], destination_gsheet_names=[], nesting_level=0):
+def execute_gsheet_tasks(g_sheet, g_service, gsheet_tasks=[], task_defs={}, worksheet_names=[], worksheet_names_excluded=[], destination_gsheet_names=[], worksheet_defs={}, nesting_level=0):
     for count, gsheet_task in enumerate(gsheet_tasks):
         if count:
             print()
@@ -47,6 +47,9 @@ def execute_gsheet_tasks(g_sheet, g_service, gsheet_tasks=[], task_defs={}, work
 
                 elif k == 'destination_gsheet_names' and v == True:
                     args_dict[k] = destination_gsheet_names
+
+                elif k == 'worksheet_defs' and v == True:
+                    args_dict[k] = worksheet_defs
 
                 else:
                     # pprint(k)
@@ -186,6 +189,9 @@ if __name__ == '__main__':
     destination_gsheet_names = config.get('destination-gsheet-names', [])
     if destination_gsheet_names is None: destination_gsheet_names = []
 
+    worksheet_defs = config.get('worksheet-defs', {})
+    if worksheet_defs is None: worksheet_defs = {}
+
     g_service = GoogleService(service_account_json_path=credential_json, config=config)
 
     wait_for = config.get('wait-for', 60)
@@ -206,7 +212,7 @@ if __name__ == '__main__':
             # raise e
 
         if g_sheet:
-            execute_gsheet_tasks(g_sheet=g_sheet, g_service=g_service, gsheet_tasks=gsheet_tasks, task_defs=task_defs, worksheet_names=worksheet_names, worksheet_names_excluded=worksheet_names_excluded, destination_gsheet_names=destination_gsheet_names, nesting_level=nesting_level+1)
+            execute_gsheet_tasks(g_sheet=g_sheet, g_service=g_service, gsheet_tasks=gsheet_tasks, task_defs=task_defs, worksheet_names=worksheet_names, worksheet_names_excluded=worksheet_names_excluded, destination_gsheet_names=destination_gsheet_names, worksheet_defs=worksheet_defs, nesting_level=nesting_level+1)
             # work_on_gsheet(g_sheet=g_sheet, g_service=g_service, worksheet_names=worksheet_names, worksheet_names_excluded=worksheet_names_excluded, nesting_level=nesting_level+1)
             info(f"processed  {count:>4}/{num_gsheets} gsheet {gsheet_name}", nesting_level=nesting_level)
 

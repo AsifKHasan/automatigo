@@ -113,18 +113,18 @@ create_worksheets:
   task                                        : create_worksheets
   worksheet_names                             : true
   match_worksheet_names                       : false
+  worksheet_defs                              : true
   check_condition                             : false
   conditions:
-  worksheet_defs:
 
 # format_worksheets
 format_worksheets:  
   task                                        : format_worksheets
   worksheet_names                             : true
   match_worksheet_names                       : false
+  worksheet_defs                              : true
   check_condition                             : false
   conditions:
-  worksheet_defs:
 
 
 

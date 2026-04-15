@@ -59,3 +59,7 @@ destination-gsheet-names:
 
 # drive folders to work on
 drive-folders:
+
+
+# worksheet structure definition for creating and formatting worksheets
+worksheet-defs:
