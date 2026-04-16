@@ -1542,37 +1542,252 @@ worksheet-defs:
 
 # zz-style-specs worksheet
   'zz-style-specs':
-    num-rows:         6
-    num-columns:      4
-    frozen-rows:      2
-    frozen-columns:   0
+    num-rows:         11
+    num-columns:      47
+    frozen-rows:      5
+    frozen-columns:   1
 
     columns:
       # key
       A:
         halign: left
-        size: 100
+        size: 150
 
-      # width
-      A:
+      # active
+      B:
         halign: center
-        size: 100
+        size: 60
 
-      # height
-      A:
+      # comment
+      C:
         halign: center
-        size: 100
+        size: 150
 
       # name
-      A:
+      D:
         halign: left
+        size: 150
+
+      # text-properties:color
+      E:
+        halign: center
+        size: 80
+
+      # text-properties:font:family
+      F:
+        halign: center
+        size: 120
+
+      # text-properties:font:size
+      G:
+        halign: center
+        size: 70
+
+      # text-properties:font:bold
+      H:
+        halign: center
+        size: 70
+
+      # text-properties:font:italic
+      I:
+        halign: center
+        size: 70
+
+      # text-properties:font:oblique
+      J:
+        halign: center
+        size: 70
+
+      # text-properties:font:underline
+      K:
+        halign: center
+        size: 70
+
+      # text-properties:font:smallcaps
+      L:
+        halign: center
+        size: 70
+
+      # text-properties:font:allcaps
+      M:
+        halign: center
+        size: 70
+
+      # text-properties:font:strikethrough
+      N:
+        halign: center
+        size: 70
+
+      # paragraph-properties:textalign
+      O:
+        halign: center
+        size: 80
+
+      # paragraph-properties:backgroundcolor
+      P:
+        halign: center
+        size: 80
+
+      # paragraph-properties:verticalalign
+      Q:
+        halign: center
+        size: 80
+
+      # paragraph-properties:border:style:all
+      R:
+        halign: center
+        size: 100
+
+      # paragraph-properties:border:style:bottom
+      S:
+        halign: center
+        size: 100
+
+      # paragraph-properties:border:style:left
+      T:
+        halign: center
+        size: 100
+
+      # paragraph-properties:border:style:top
+      U:
+        halign: center
+        size: 100
+
+      # paragraph-properties:border:style:right
+      V:
+        halign: center
+        size: 100
+
+      # paragraph-properties:border:linewidth:all
+      W:
+        halign: center
+        size: 100
+
+      # paragraph-properties:border:linewidth:bottom
+      X:
+        halign: center
+        size: 100
+
+      # paragraph-properties:border:linewidth:left
+      Y:
+        halign: center
+        size: 100
+
+      # paragraph-properties:border:linewidth:top
+      Z:
+        halign: center
+        size: 100
+
+      # paragraph-properties:border:linewidth:right
+      AA:
+        halign: center
+        size: 100
+
+      # paragraph-properties:margin:all
+      AB:
+        halign: center
+        size: 60
+
+      # paragraph-properties:margin:bottom
+      AC:
+        halign: center
+        size: 60
+
+      # paragraph-properties:margin:left
+      AD:
+        halign: center
+        size: 60
+
+      # paragraph-properties:margin:top
+      AE:
+        halign: center
+        size: 60
+
+      # paragraph-properties:margin:right
+      AF:
+        halign: center
+        size: 60
+
+      # paragraph-properties:padding:all
+      AG:
+        halign: center
+        size: 60
+
+      # paragraph-properties:padding:bottom
+      AH:
+        halign: center
+        size: 60
+
+      # paragraph-properties:padding:left
+      AI:
+        halign: center
+        size: 60
+
+      # paragraph-properties:padding:top
+      AJ:
+        halign: center
+        size: 60
+
+      # paragraph-properties:padding:right
+      AK:
+        halign: center
+        size: 60
+
+      # page-background:url
+      AL:
+        halign: center
+        size: 200
+
+      # inline-image:url
+      AM:
+        halign: center
+        size: 200
+
+      # inline-image:type
+      AN:
+        halign: center
+        size: 100
+
+      # inline-image:fit-height-to-container
+      AO:
+        halign: center
+        size: 100
+
+      # inline-image:fit-width-to-container
+      AP:
+        halign: center
+        size: 100
+
+      # inline-image:keep-aspect-ratio
+      AQ:
+        halign: center
+        size: 100
+
+      # inline-image:extend-container-height
+      AR:
+        halign: center
+        size: 100
+
+      # inline-image:position:horizontal
+      AS:
+        halign: center
+        size: 100
+
+      # inline-image:position:vertical
+      AT:
+        halign: center
+        size: 100
+
+      # inline-image:wrap
+      AU:
+        halign: center
         size: 100
 
     ranges:
       # the worksheet wide specs
-        'A1:D':
+        'A1:AU':
           font-family       : Arial
-          font-size         : 11
+          font-size         : 10
           valign            : top
 
       #  row 1 
@@ -1581,61 +1796,285 @@ worksheet-defs:
           ws-name-to-link: '-toc'
           halign: left
 
-        'B1:C1':
-          value: 'all values are in inches'
-          merge: true
+        'B1':
+          value: 'active?'
           halign: center
 
-      #  row 2 
+        'AN1':
+          value: 'default is *background*'
+          halign: center
+
+        'AO1':
+          value: 'default is *blank/No*'
+          halign: center
+
+        'AP1':
+          value: 'default is *blank/No*'
+          halign: center
+
+        'AQ1':
+          value: 'default is *blank/No*'
+          halign: center
+
+        'AR1':
+          value: 'default is *blank/No*'
+          halign: center
+
+        'AU1':
+          value: 'default is *parallel*'
+          halign: center
+
+      #  row 2  - labels
         # labels are bold
-        'A2:D2':
-          bold:   true
+        'A2:AU5':
+          bold:     true
+          wrap:     true
+          valign:   middle
 
-        A2:
-          value:  'key'
-        B2:
-          value:  'width'
-        C2:
-          value:  'height'
-        D2:
-          value:  'name'
+        'A2:A5':
+          value:    'key'
+          merge:    true
+          bgcolor:  '#efefef'
 
-      #  row 3 
-        A3:
-          value:  'A4'
-        B3:
-          value:  '8.27'
-        C3:
-          value:  '11.69'
-        D3:
-          value:  'a4paper'
+        'B2:B5':
+          value:    'active'
+          merge:    true
+          bgcolor:  '#efefef'
 
-      #  row 4 
-        A3:
-          value:  'A3'
-        B3:
-          value:  '11.69'
-        C3:
-          value:  '16.54'
-        D3:
-          value:  'a3paper'
+        'C2:C5':
+          value:    'comment'
+          merge:    true
+          bgcolor:  '#efefef'
 
-      #  row 5 
-        A3:
-          value:  'Letter'
-        B3:
-          value:  '8.50'
-        C3:
-          value:  '11.00'
-        D3:
-          value:  'letterpaper'
+        'D2:D5':
+          value:    'name'
+          merge:    true
+          bgcolor:  '#efefef'
+          # border-color: '#666666'
+
+        'E2:N2':
+          value:    'text-properties'
+          merge:    true
+          bgcolor:  '#d9ead3'
+
+        'O2:AK2':
+          value:    'paragraph-properties'
+          merge:    true
+          bgcolor:  '#cfe2f3'
+
+        'AL2':
+          value:    'page-background'
+          bgcolor:  '#fce5cd'
+
+        'AM2:AU2':
+          value:    'inline-image'
+          merge:    true
+          bgcolor:  '#ead1dc'
+
+      #  row 3  - labels
+        'E3:E5':
+          value:    'color'
+          merge:    true
+
+        'F3:N3':
+          value:    'font'
+          merge:    true
+          bgcolor:  '#b6d7a8'
+
+        'O3:O5':
+          value:    'textalign'
+          merge:    true
+
+        'P3:P5':
+          value:    'backgroundcolor'
+          merge:    true
+
+        'Q3:Q5':
+          value:    'verticalalign'
+          merge:    true
+
+        'R3:AA3':
+          value:    'border'
+          merge:    true
+          bgcolor:  '#9fc5e8'
+
+        'AB3:AF3':
+          value:    'margin'
+          merge:    true
+          bgcolor:  '#cfe2f3'
+
+        'AG3:AK3':
+          value:    'padding'
+          merge:    true
+          bgcolor:  '#9fc5e8'
+
+        'AL3:AL5':
+          value:    'url'
+          merge:    true
+
+        'AM3:AM5':
+          value:    'url'
+          merge:    true
+
+        'AN3:AN5':
+          value:    'type'
+          merge:    true
+
+        'AO3:AO5':
+          value:    'fit-height-to-container'
+          merge:    true
+
+        'AP3:AP5':
+          value:    'fit-width-to-container'
+          merge:    true
+
+        'AQ3:AQ5':
+          value:    'keep-aspect-ratio'
+          merge:    true
+
+        'AR3:AR5':
+          value:    'extend-container-height'
+          merge:    true
+
+        'AS3:AT3':
+          value:    'position'
+          merge:    true
+          bgcolor:  '#d5a6bd'
+
+        'AU3:AU5':
+          value:    'wrap'
+          merge:    true
+
+      #  row 4  - labels
+        'F4:F5':
+          value:    'family'
+          merge:    true
+
+        'G4:G5':
+          value:    'size'
+          merge:    true
+
+        'H4:H5':
+          value:    'bold'
+          merge:    true
+
+        'I4:I5':
+          value:    'italic'
+          merge:    true
+
+        'J4:J5':
+          value:    'oblique'
+          merge:    true
+
+        'K4:K5':
+          value:    'underline'
+          merge:    true
+
+        'L4:L5':
+          value:    'smallcaps'
+          merge:    true
+
+        'M4:M5':
+          value:    'allcaps'
+          merge:    true
+
+        'N4:N5':
+          value:    'strikethrough'
+          merge:    true
+
+        'R4:V4':
+          value:    'style'
+          merge:    true
+          bgcolor:  '#d0e0e3'
+
+        'W4:AA4':
+          value:    'linewidth'
+          merge:    true
+          bgcolor:  '#d9d2e9'
+
+        'AB4:AB5':
+          value:    'all'
+          merge:    true
+
+        'AC4:AC5':
+          value:    'bottom'
+          merge:    true
+
+        'AD4:AD5':
+          value:    'left'
+          merge:    true
+
+        'AE4:AE5':
+          value:    'top'
+          merge:    true
+
+        'AF4:AF5':
+          value:    'right'
+          merge:    true
+
+        'AG4:AG5':
+          value:    'all'
+          merge:    true
+
+        'AH4:AH5':
+          value:    'bottom'
+          merge:    true
+
+        'AI4:AI5':
+          value:    'left'
+          merge:    true
+
+        'AJ4:AJ5':
+          value:    'top'
+          merge:    true
+
+        'AK4:AK5':
+          value:    'right'
+          merge:    true
+
+        'AS4:AS5':
+          value:    'horizontal'
+          merge:    true
+
+        'AT4:AT5':
+          value:    'vertical'
+          merge:    true
+
+      #  row 5  - labels
+        R5:
+          value:    'all'
+
+        S5:
+          value:    'bottom'
+
+        T5:
+          value:    'left'
+
+        U5:
+          value:    'top'
+
+        V5:
+          value:    'right'
+
+        W5:
+          value:    'all'
+
+        X5:
+          value:    'bottom'
+
+        Y5:
+          value:    'left'
+
+        Z5:
+          value:    'top'
+
+        AA5:
+          value:    'right'
 
       #  row 6 
-        A3:
-          value:  'Legal'
-        B3:
-          value:  '8.50'
-        C3:
-          value:  '14.00'
-        D3:
-          value:  'legalpaper'
+
+
+      #  borders
+        'D2:D':
+          border-color: '#666666'
+          inner-border: false
