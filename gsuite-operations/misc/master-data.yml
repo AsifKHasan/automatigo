@@ -3,6 +3,18 @@ worksheet-names:
     - '.*'
     - '-toc'
     - 'z-*'
+
+  # standard blank gsheet worksheets
+    - '-toc'
+    - '00.00-coverpage'
+    - 'z-blank'
+    - 'z-head'
+    - 'z-foot'
+    - 'zz-page-specs'
+    - 'zz-margin-specs'
+    - 'zz-font-specs'
+    - 'zz-style-specs'
+
   # resume worksheets
     - '-toc'
     - 00-layout
