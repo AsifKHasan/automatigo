@@ -26,6 +26,7 @@ LETTER_TO_COLUMN = {
 '''
 def build_repeatcell_from_work_spec(range, work_spec, gsheet, nesting_level=0):
     fields = []
+    # print(work_spec)
 
     # textFormatRuns/values
     text_format_runs = []

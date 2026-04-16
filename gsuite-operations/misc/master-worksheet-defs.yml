@@ -3,7 +3,7 @@ worksheet-defs:
 # -toc worksheet
   '-toc':
     index:            0
-    num-rows:         8
+    num-rows:         5
     num-columns:      29
     frozen-rows:      2
     frozen-columns:   0
@@ -290,6 +290,10 @@ worksheet-defs:
           value:  'comment'
     
       # row 3 - data validations
+        # section is plain text
+        'A3:A':
+          number-format: 'TEXT'
+        
         # process
         'C3:C':
           validation-list:
@@ -384,6 +388,158 @@ worksheet-defs:
             - under-review
             - finalized
 
+      # row 3 - Cover Page
+        # section
+        A3:
+          value: 
+
+        # heading
+        B3:
+          value: 'Cover Page'
+
+        # process
+        C3:
+          value: 'Yes'
+
+        # level
+        D3:
+          value: '0'
+
+        # content-type
+        E3:
+          value: 'table'
+
+        # link
+        F3:
+          value: '00.00-coverpage'
+          ws-name-to-link: '00.00-coverpage'
+
+        # break
+        G3:
+          value: 
+
+        # page-spec
+        H3:
+          value: 'A4'
+
+        # margin-spec
+        I3:
+          value: 'none'
+
+        # hide-heading
+        Q3:
+          value: 'Yes'
+
+        # header-odd
+        S3:
+          value: 
+
+        # footer-odd
+        V3:
+          value: 
+
+      # row 4 - Table of Contents
+        # section
+        A4:
+          value: 
+
+        # heading
+        B4:
+          value: 'Table of Contents'
+
+        # process
+        C4:
+          value: 'Yes'
+
+        # level
+        D4:
+          value: '0'
+
+        # content-type
+        E4:
+          value: 'toc'
+
+        # link
+        F4:
+          value: 
+
+        # break
+        G4:
+          value: 'section'
+
+        # page-spec
+        H4:
+          value: 'A4'
+
+        # margin-spec
+        I4:
+          value: 'narrow'
+
+        # hide-heading
+        Q4:
+          value: 
+
+        # header-odd
+        S4:
+          value: 'z-head'
+          ws-name-to-link: 'z-head'
+
+        # footer-odd
+        V4:
+          value: 'z-foot'
+          ws-name-to-link: 'z-foot'
+
+      # row 5 - Chapter 1
+        # section
+        A5:
+          value: '1. '
+
+        # heading
+        B5:
+          value: 'Chapter 1'
+
+        # process
+        C5:
+          value: 'Yes'
+
+        # level
+        D5:
+          value: '1'
+
+        # content-type
+        E5:
+          value: 'table'
+
+        # link
+        F5:
+          value: 
+
+        # break
+        G5:
+          value: 'section'
+
+        # page-spec
+        H5:
+          value: 'A4'
+
+        # margin-spec
+        I5:
+          value: 'narrow'
+
+        # hide-heading
+        Q5:
+          value: 
+
+        # header-odd
+        S5:
+          value: 'z-head'
+          ws-name-to-link: 'z-head'
+
+        # footer-odd
+        V5:
+          value: 'z-foot'
+          ws-name-to-link: 'z-foot'
+
     cell-empty-markers:
       # responsible, reviewer and status should not be empty
       - 'Z3:AB'
@@ -463,7 +619,7 @@ worksheet-defs:
 
       # row 16 - Title
         'B16:D16':
-          value: 'Title'
+          value: 'Document Title'
           halign: center
           valign: middle
           font-family: 'Bree Serif'
@@ -482,7 +638,7 @@ worksheet-defs:
 
       # row 16 - Subtitle
         'B18:D18':
-          value: 'Subtitle'
+          value: 'Document Subtitle'
           halign: center
           valign: middle
           font-family: 'Comfortaa'
