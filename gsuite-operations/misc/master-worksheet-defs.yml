@@ -388,6 +388,108 @@ worksheet-defs:
       # responsible, reviewer and status should not be empty
       - 'Z3:AB'
 
+# 00.00-coverpage worksheet
+  '00.00-coverpage':
+    num-rows:         20
+    num-columns:      4
+    frozen-rows:      2
+    frozen-columns:   0
+    review-notes:     true
+
+    columns:
+      # review-notes
+      'A':
+        size: 100
+        halign: left
+        wrap: true
+
+      # content
+      'B':
+        size: 100
+        halign: center
+        wrap: true
+
+      'C':
+        size: 600
+        halign: center
+        wrap: true
+
+      'D':
+        size: 100
+        halign: center
+        wrap: true
+
+    rows:
+      '17':
+        size: 30
+
+    ranges:
+      # the worksheet wide specs
+        'A1:D':
+          font-family       : Arial
+          font-size         : 10
+          valign            : top
+
+      # row 1 - column pixel size 
+        'A1':
+          value: '-toc'
+          ws-name-to-link: '-toc'
+
+        # center align row 1
+        'B1:D1':
+          halign: center
+
+        'B1':
+          value: 100
+
+        'C1':
+          value: 600
+
+        'D1':
+          value: 100
+
+      # row 2 - column labels
+        # labels are bold
+        'A2:D2':
+          bold:   true
+
+        'A2':
+          value: review-notes
+
+        'B2:D2':
+          value: content
+          merge: true
+          halign: left
+
+      # row 16 - Title
+        'B16:D16':
+          value: 'Title'
+          halign: center
+          valign: middle
+          font-family: 'Bree Serif'
+          font-size: 48
+          fgcolor: #5b0f00
+          bold: true
+          merge: true
+
+      # row 16 - Line Art
+        'B17:D17':
+          value: >-
+            =image("https://spectrum-bd.biz/data/artifacts/line-separators/hor-line-separator-01.png",1)
+          halign: center
+          valign: middle
+          merge: true
+
+      # row 16 - Subtitle
+        'B18:D18':
+          value: 'Subtitle'
+          halign: center
+          valign: middle
+          font-family: 'Comfortaa'
+          font-size: 24
+          fgcolor: #434343
+          merge: true
+
 # z-blank worksheet
   'z-blank':
     num-rows:         3
@@ -681,6 +783,9 @@ worksheet-defs:
           value:  'name'
 
       #  row 3 
+        'B3:C':
+          number-format: '#,##0.00'
+
         A3:
           value:  'A4'
         B3:
@@ -836,6 +941,9 @@ worksheet-defs:
           value:  'footer'
 
       #  row 4 
+        'B4:H':
+          number-format: '#,##0.00'
+
         # key
         A4:
           value:  'wide'

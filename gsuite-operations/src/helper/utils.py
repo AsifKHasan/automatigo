@@ -148,7 +148,11 @@ def build_repeatcell_from_work_spec(range, work_spec, gsheet, nesting_level=0):
     number_format = None
     # number-format
     if 'number-format' in work_spec:
-        number_format = {'type': 'NUMBER', 'pattern': work_spec['number-format']}
+        if work_spec['number-format'] == 'TEXT':
+            number_format = {'type': 'TEXT'}
+        else:
+            number_format = {'type': 'NUMBER', 'pattern': work_spec['number-format']}
+        
         fields.append('userEnteredFormat.numberFormat')
 
 
