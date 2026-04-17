@@ -1464,8 +1464,8 @@ worksheet-defs:
 
 # zz-font-specs worksheet
   'zz-font-specs':
-    num-rows:         6
-    num-columns:      2
+    num-rows:         7
+    num-columns:      3
     frozen-rows:      2
     frozen-columns:   0
 
@@ -1480,9 +1480,14 @@ worksheet-defs:
         halign: left
         size: 200
 
+      # fallback-font
+      C:
+        halign: left
+        size: 200
+
     ranges:
       # the worksheet wide specs
-        'A1:B':
+        'A1:C':
           font-family       : Arial
           font-size         : 10
           valign            : top
@@ -1495,7 +1500,7 @@ worksheet-defs:
 
       #  row 2 
         # labels are bold
-        'A2:B2':
+        'A2:C2':
           bold:   true
 
         A2:
@@ -1503,6 +1508,9 @@ worksheet-defs:
 
         B2:
           value:  'font'
+
+        C2:
+          value:  'fallback-font'
 
       #  row 3 
         # key
@@ -1513,6 +1521,10 @@ worksheet-defs:
         B3:
           value:  'Arial'
 
+        # fallback-font
+        C3:
+          value:  'Arial'
+
       #  row 4 
         # key
         A4:
@@ -1520,6 +1532,10 @@ worksheet-defs:
 
         # font
         B4:
+          value:  'Bree Serif'
+
+        # fallback-font
+        C4:
           value:  'Droid Sans Fallback'
 
       #  row 5 
@@ -1529,6 +1545,10 @@ worksheet-defs:
 
         # font
         B5:
+          value:  'Droid Sans'
+
+        # fallbackfont
+        C5:
           value:  'Droid Sans Fallback'
 
       #  row 6 
@@ -1539,6 +1559,23 @@ worksheet-defs:
         # font
         B6:
           value:  'Consolas'
+
+        # fallback-font
+        C6:
+          value:  'Consolas'
+
+      #  row 7 
+        # key
+        A7:
+          value:  'Comfortaa'
+
+        # font
+        B7:
+          value:  'Comfortaa'
+
+        # fallback-font
+        C7:
+          value:  'Comfortaa'
 
 # zz-style-specs worksheet
   'zz-style-specs':
