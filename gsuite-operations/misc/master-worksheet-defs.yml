@@ -1580,7 +1580,7 @@ worksheet-defs:
 # zz-style-specs worksheet
   'zz-style-specs':
     num-rows:         11
-    num-columns:      47
+    num-columns:      49
     frozen-rows:      5
     frozen-columns:   1
 
@@ -1775,61 +1775,71 @@ worksheet-defs:
         halign: center
         size: 200
 
-      # inline-image:url
+      # page-background:opacity
       AM:
+        halign: center
+        size: 60
+
+      # inline-image:url
+      AN:
         halign: center
         size: 200
 
-      # inline-image:type
-      AN:
-        halign: center
-        size: 100
-
-      # inline-image:fit-height-to-container
+      # inline-image:opacity
       AO:
         halign: center
-        size: 100
+        size: 60
 
-      # inline-image:fit-width-to-container
+      # inline-image:type
       AP:
         halign: center
         size: 100
 
-      # inline-image:keep-aspect-ratio
+      # inline-image:fit-height-to-container
       AQ:
         halign: center
         size: 100
 
-      # inline-image:extend-container-height
+      # inline-image:fit-width-to-container
       AR:
         halign: center
         size: 100
 
-      # inline-image:position:horizontal
+      # inline-image:keep-aspect-ratio
       AS:
         halign: center
         size: 100
 
-      # inline-image:position:vertical
+      # inline-image:extend-container-height
       AT:
         halign: center
         size: 100
 
-      # inline-image:wrap
+      # inline-image:position:horizontal
       AU:
+        halign: center
+        size: 100
+
+      # inline-image:position:vertical
+      AV:
+        halign: center
+        size: 100
+
+      # inline-image:wrap
+      AW:
         halign: center
         size: 100
 
     ranges:
       #  worksheet wide specs
-        'A1:AU':
+        'A1:AW':
           font-family       : Arial
           font-size         : 10
           valign            : top
 
       #  row 1 
         # labels are wrapped and middle aligned
-        'B1:AU5':
+        'B1:AW5':
           wrap:     true
           valign:   middle
 
@@ -1842,16 +1852,16 @@ worksheet-defs:
           value: 'active?'
           halign: center
 
-        'AN1':
-          value: 'default is *background*'
+        'AM1':
+          value: 'default is *100%*'
           halign: center
 
         'AO1':
-          value: 'default is *blank/No*'
+          value: 'default is *100%*'
           halign: center
 
         'AP1':
-          value: 'default is *blank/No*'
+          value: 'default is *background*'
           halign: center
 
         'AQ1':
@@ -1862,13 +1872,21 @@ worksheet-defs:
           value: 'default is *blank/No*'
           halign: center
 
-        'AU1':
+        'AS1':
+          value: 'default is *blank/No*'
+          halign: center
+
+        'AT1':
+          value: 'default is *blank/No*'
+          halign: center
+
+        'AW1':
           value: 'default is *parallel*'
           halign: center
 
       #  row 2 - labels
         # labels are bold
-        'A2:AU5':
+        'A2:AW5':
           bold:     true
           valign:   middle
 
@@ -1913,14 +1931,15 @@ worksheet-defs:
           inner-border: false
 
         # page-background label
-        'AL2':
+        'AL2:AM2':
           value:    'page-background'
+          merge:    true
           bgcolor:  '#fce5cd'
           border-color: '#666666'
           inner-border: false
 
         # inline-image label
-        'AM2:AU2':
+        'AN2:AW2':
           value:    'inline-image'
           merge:    true
           bgcolor:  '#ead1dc'
@@ -1985,38 +2004,48 @@ worksheet-defs:
           value:    'url'
           merge:    true
 
-        # inline-image:url label
+        # page-background:opacity label
         'AM3:AM5':
-          value:    'url'
+          value:    'opacity'
           merge:    true
 
         # inline-image:url label
         'AN3:AN5':
+          value:    'url'
+          merge:    true
+
+        # inline-image:opacity label
+        'AO3:AO5':
+          value:    'opacity'
+          merge:    true
+
+        # inline-image:url label
+        'AP3:AP5':
           value:    'type'
           merge:    true
 
         # inline-image:fit-height-to-container label
-        'AO3:AO5':
+        'AQ3:AQ5':
           value:    'fit-height-to-container'
           merge:    true
 
         # inline-image:fit-width-to-container label
-        'AP3:AP5':
+        'AR3:AR5':
           value:    'fit-width-to-container'
           merge:    true
 
         # inline-image:keep-aspect-ratio label
-        'AQ3:AQ5':
+        'AS3:AS5':
           value:    'keep-aspect-ratio'
           merge:    true
 
         # inline-image:extend-container-height label
-        'AR3:AR5':
+        'AT3:AT5':
           value:    'extend-container-height'
           merge:    true
 
         # inline-image:position label
-        'AS3:AT3':
+        'AU3:AV3':
           value:    'position'
           merge:    true
           bgcolor:  '#d5a6bd'
@@ -2024,7 +2053,7 @@ worksheet-defs:
           inner-border: false
 
         # inline-image:wrap label
-        'AU3:AU5':
+        'AW3:AW5':
           value:    'wrap'
           merge:    true
 
@@ -2141,12 +2170,12 @@ worksheet-defs:
           merge:    true
 
         # inline-image:position:horizontal label
-        'AS4:AS5':
+        'AU4:AU5':
           value:    'horizontal'
           merge:    true
 
         # inline-image:position:vertical label
-        'AT4:AT5':
+        'AV4:AV5':
           value:    'vertical'
           merge:    true
 
@@ -2217,18 +2246,18 @@ worksheet-defs:
           border-color: '#666666'
           inner-border: false
 
-        # page-background:url column
-        'AL3:AL':
+        # page-background:url -page-background:opacity columns
+        'AL3:AM':
           border-color: '#666666'
           inner-border: false
 
         # inline-image:url - inline-image:extend-container-height columns
-        'AM3:AR':
+        'AN3:AT':
           border-color: '#666666'
           inner-border: false
 
         # inline-image:wrap column
-        'AU3:AU':
+        'AW3:AW':
           border-color: '#666666'
           inner-border: false
 
@@ -2248,7 +2277,7 @@ worksheet-defs:
           inner-border: false
 
         # inline-image:position:horizontal - inline-image:position:vertical columns
-        'AS4:AT':
+        'AU4:AV':
           border-color: '#666666'
           inner-border: false
 
@@ -2288,39 +2317,39 @@ worksheet-defs:
             - 'bottom'
 
         # inline-image:type
-        'AN6:AN':
+        'AP6:AP':
           validation-list:
             - 'inline'
             - 'background'
 
         # inline-image:fit-height-to-container - inline-image:extend-container-height
-        'AO6:AR':
+        'AQ6:AT':
           validation-list:
             - 'Yes'
 
         # inline-image:position:horizontal
-        'AS6:AS':
+        'AU6:AU':
           validation-list:
             - 'center'
             - 'left'
             - 'right'
 
         # inline-image:position:vertical
-        'AT6:AT':
+        'AV6:AV':
           validation-list:
             - 'middle'
             - 'top'
             - 'bottom'
 
         # inline-image:wrap
-        'AU6:AU':
+        'AW6:AW':
           validation-list:
             - 'run-through'
             - 'parallel'
 
       #  row 6 - data
         # no wrap (clip) for data
-        'A6:AU':
+        'A6:AW':
           wrap:   false
 
         # comment column to be left aligned
@@ -2490,19 +2519,19 @@ worksheet-defs:
           value:  '0.00in'
 
         # inline-image:url
-        AM8:
+        AN8:
           value:  'https://spectrum-bd.biz/data/artifacts/icons/symbol/streamline-color--jump-object.png'
 
         # inline-image:type
-        AN8:
+        AP8:
           value:  'inline'
 
         # inline-image:fit-height-to-container
-        AO8:
+        AQ8:
           value:  'Yes'
 
         # inline-image:wrap
-        AU8:
+        AW8:
           value:  'run-through'
 
       #  row 9 - data
@@ -2567,7 +2596,7 @@ worksheet-defs:
           value:  '0.05in'
 
         # inline-image:url
-        AM9:
+        AN9:
           value:  'https://spectrum-bd.biz/data/artifacts/gradients/ryanlerch-light-metal-gradient__medium.png'
 
       #  row 10 - data
