@@ -1,4 +1,8 @@
 work-specs:
+  # note
+    'B3:B':
+      note: '{"style": "firstline-flush-0.25in, lineheight-100"}'
+
   # generic
     # link cell A1 to -toc
       'A1'    :
