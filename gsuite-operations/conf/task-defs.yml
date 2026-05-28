@@ -21,12 +21,12 @@ link_cells_to_worksheet:
   task                                        : link_cells_to_worksheet
   worksheet_name                              : '-toc'
   range_specs_for_cells_to_link               :
-    - 'R3:R'
     - 'S3:S'
     - 'T3:T'
     - 'U3:U'
     - 'V3:V'
     - 'W3:W'
+    - 'X3:X'
 
 # order_worksheets
 order_worksheets:
