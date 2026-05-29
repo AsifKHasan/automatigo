@@ -97,19 +97,19 @@ clear_data_validations:
   conditions:
 
 # clear_conditional_formats
-clear_conditional_formats:  
+clear_conditional_formats:
   task                                        : clear_conditional_formats
   worksheet_names                             : true
   check_condition                             : false
   conditions:
 
 # create_review_notes_conditional_formatting
-create_review_notes_conditional_formatting:  
+create_review_notes_conditional_formatting:
   task                                        : create_review_notes_conditional_formatting
   worksheet_names                             : true
 
 # create_worksheets
-create_worksheets:  
+create_worksheets:
   task                                        : create_worksheets
   worksheet_names                             : true
   match_worksheet_names                       : false
@@ -118,7 +118,7 @@ create_worksheets:
   conditions:
 
 # format_worksheets
-format_worksheets:  
+format_worksheets:
   task                                        : format_worksheets
   worksheet_names                             : true
   match_worksheet_names                       : false
