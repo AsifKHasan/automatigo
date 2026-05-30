@@ -326,5 +326,5 @@ work_on_ranges:
     #   operator                                : '=='
     #   value_is                                : 30
   work_specs:
-    'B60:B':
+    'B113:B':
       note: '{"style": "firstline-indent-0.25in, lineheight-18pt"}'
