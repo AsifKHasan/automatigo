@@ -293,16 +293,22 @@ find_and_format:
   #       red               : 0.9176
   #       green             : 0.2626
   #       blue              : 0.2078
-  - pattern               : '\[LINK{A.+?}{A\..+?} \(p\.PAGE{A.+?}\)\]'
+  # - pattern               : '\[LINK{A.+?}{A\..+?} \(p\.PAGE{A.+?}\)\]'
+  #   format:
+  #     bold                : False
+  #     italic              : True
+  #     fontFamily          : 'Consolas'
+  #     fontSize            : 10
+  #     foregroundColor:
+  #       red               : 0.9176
+  #       green             : 0.2626
+  #       blue              : 0.2078
+  - pattern               : '^[0-9]+\.'
     format:
-      bold                : False
-      italic              : True
+      bold                : True
+      italic              : False
       fontFamily          : 'Consolas'
-      fontSize            : 10
-      foregroundColor:
-        red               : 0.9176
-        green             : 0.2626
-        blue              : 0.2078
+      fontSize            : 14
 
 
 
@@ -320,5 +326,5 @@ work_on_ranges:
     #   operator                                : '=='
     #   value_is                                : 30
   work_specs:
-    'B3:B':
-      note: '{"style": "firstline-flush-0.25in, lineheight-18pt"}'
+    'B60:B':
+      note: '{"style": "firstline-indent-0.25in, lineheight-18pt"}'
