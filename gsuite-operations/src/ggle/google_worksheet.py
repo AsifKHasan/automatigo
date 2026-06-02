@@ -598,18 +598,23 @@ class GoogleWorksheet(object):
                         trace(f"matches found in [{column_to_letter(c_idx+1)}{r_idx+1}] (length: {len(text)}) for pattern '{pattern['pattern']}'", nesting_level=nesting_level)
                         current_runs = existing_runs
                         for m in matches:
-                            trace(f"{m.group()} at {m.span()}", nesting_level=nesting_level+1)
                             start, end = m.span()
+                            trace(f"[{m.group()}] at {start}-{end}", nesting_level=nesting_level+1)
                             current_runs = merge_runs(current_runs, start, end, new_style)
                             for run in current_runs:
-                                trace(f"startIndex: {run.get('startIndex', 0)}", nesting_level=nesting_level+2)
+                                pass
+                                # start_index = run.get('startIndex', 0)
+                                # print(f"length [{len(text)}], start_index [{start_index}]")
+                                # trace(f"startIndex: {run.get('startIndex', 0)}", nesting_level=nesting_level+2)
+                            
+                            filtered_runs = [item for item in current_runs if item.get('startIndex', 0) < len(text)]
                             
                             requests.append({
                                 "updateCells": {
                                     "rows": [{
                                         "values": [{
                                             "userEnteredValue": {"stringValue": text},
-                                            "textFormatRuns": current_runs,
+                                            "textFormatRuns": filtered_runs,
                                             "userEnteredFormat": cell.get('effectiveFormat', {})
                                         }]
                                     }],

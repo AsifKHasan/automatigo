@@ -309,7 +309,7 @@ find_and_format:
   #     italic              : False
   #     fontFamily          : 'Consolas'
   #     fontSize            : 14
-  - pattern               : ' ([p]{1,2}\.) (\b\d+(?:-\d+)?\b)\.'
+  - pattern               : ' ([p]{1,2}\.) (\b\d+(?:-\d+)?\b)'
     format:
       foregroundColor:
         red               : 0.9176
