@@ -21,12 +21,12 @@ link_cells_to_worksheet:
   task                                        : link_cells_to_worksheet
   worksheet_name                              : '-toc'
   range_specs_for_cells_to_link               :
-    - 'S3:S'
     - 'T3:T'
     - 'U3:U'
     - 'V3:V'
     - 'W3:W'
     - 'X3:X'
+    - 'Y3:Y'
 
 # order_worksheets
 order_worksheets:
@@ -303,12 +303,18 @@ find_and_format:
   #       red               : 0.9176
   #       green             : 0.2626
   #       blue              : 0.2078
-  - pattern               : '^[0-9]+\.'
+  # - pattern               : '^[0-9]+\.'
+  #   format:
+  #     bold                : True
+  #     italic              : False
+  #     fontFamily          : 'Consolas'
+  #     fontSize            : 14
+  - pattern               : ' ([p]{1,2}\.) (\b\d+(?:-\d+)?\b)\.'
     format:
-      bold                : True
-      italic              : False
-      fontFamily          : 'Consolas'
-      fontSize            : 14
+      foregroundColor:
+        red               : 0.9176
+        green             : 0.2626
+        blue              : 0.2078
 
 
 
