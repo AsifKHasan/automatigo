@@ -153,7 +153,6 @@ class GoogleWorksheet(object):
                     new_gspread_worksheet = destination_gsheet.gspread_sheet.worksheet(response['title'])
                     info(f"renaming worksheet [{response['title']}] to [{self.title}]")
                     new_gspread_worksheet.update_title(self.title)
-                    new_gspread_worksheet.title = self.title
                     info(f"renamed  worksheet [{response['title']}] to [{self.title}]")
 
                 except:
