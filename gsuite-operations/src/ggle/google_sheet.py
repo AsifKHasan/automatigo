@@ -272,11 +272,13 @@ class GoogleSheet(object):
     '''
     def rename_worksheet(self, worksheet_name, new_worksheet_name, check_condition=False, conditions=[], nesting_level=0):
         worksheet_to_rename = self.worksheet_by_name(worksheet_name, nesting_level=nesting_level+1)
-        if worksheet_to_rename:
+        if worksheet_to_rename is not None:
             condition_satisfied = worksheet_to_rename.check_condition(check_condition=check_condition, conditions=conditions, nesting_level=nesting_level+1)
             if condition_satisfied:
                 worksheet_to_rename.rename_worksheet(new_worksheet_name, nesting_level=nesting_level+1)
 
+        else:
+            warn(f"worksheet {worksheet_name} not found", nesting_level=nesting_level+1)
 
 
     ''' remove a worksheet
@@ -295,6 +297,8 @@ class GoogleSheet(object):
                     except:
                         warn(f"worksheet {worksheet_name} could not be removed", nesting_level=nesting_level)
 
+            else:
+                warn(f"worksheet {worksheet_name} not found", nesting_level=nesting_level+1)
 
 
     ''' bulk create multiple worksheets by duplicating a given worksheet
@@ -741,7 +745,6 @@ class GoogleSheet(object):
         number_of_rules = len(conditional_formats.get(worksheet_name, []))
         clear_conditional_formats_requests = worksheet.clear_conditional_formats_requests(number_of_rules=number_of_rules)
         requests = requests + clear_conditional_formats_requests
-
 
         # format worksheet requests
         worksheets_dict = self.worksheets_as_dict()

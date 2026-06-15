@@ -62,20 +62,6 @@ rename_worksheet:
   worksheet_name                              : '-toc-new'
   new_worksheet_name                          : '-toc'
 
-rename_worksheet__z-header:
-  task                                        : rename_worksheet
-  check_condition                             : false
-  conditions:
-  worksheet_name                              : 'z-header'
-  new_worksheet_name                          : 'z-head'
-
-rename_worksheet__z-footer:
-  task                                        : rename_worksheet
-  check_condition                             : false
-  conditions:
-  worksheet_name                              : 'z-footer'
-  new_worksheet_name                          : 'z-foot'
-
 # copy_worksheets_to_other_gsheets
 copy_worksheets_to_other_gsheets:
   task                                        : copy_worksheets_to_other_gsheets
@@ -231,19 +217,25 @@ order_columns:
 add_rows:
   task                                        : add_rows
   worksheet_names                             : true
-  rows_to_add_at                              : end
+  rows_to_add_at                              : 'end'
   rows_to_add                                 : 1
-  check_condition                             : false
+  check_condition                             : true
   conditions:
+    - method                                  : num_cols
+      operator                                : '=='
+      value_is                                : 6
 
 # add_columns
 add_columns:
   task                                        : add_columns
   worksheet_names                             : true
-  cols_to_add_at                              : 'L'
-  cols_to_add                                 : 3
-  check_condition                             : false
+  cols_to_add_at                              : 'AS'
+  cols_to_add                                 : 2
+  check_condition                             : true
   conditions:
+    - method                                  : num_cols
+      operator                                : '=='
+      value_is                                : 53
 
 
 
@@ -273,8 +265,6 @@ find_and_replace:
     #   include-formulas    : True
     #   entire-cell         : False
     #   match-case          : True
-
-
 
 # find_and_format
 find_and_format:

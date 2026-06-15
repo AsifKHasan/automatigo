@@ -498,7 +498,7 @@ class GoogleWorksheet(object):
         if 'columns' in worksheet_def:
             # requests for column resizing
             column_resize_requests = self.column_resize_requests(column_specs=worksheet_def['columns'])
-
+    
             #  requests for column formatting
             for col_a1, work_spec in worksheet_def['columns'].items():
                 range_spec = f"{col_a1}:{col_a1}"
@@ -514,6 +514,7 @@ class GoogleWorksheet(object):
 
         else:
             column_resize_requests, values, column_format_requests = [], [], []
+
 
         # get the ranges and formatting requests
         if 'ranges' in worksheet_def:

@@ -1465,32 +1465,43 @@ worksheet-defs:
 # zz-font-specs worksheet
   'zz-font-specs':
     num-rows:         7
-    num-columns:      3
-    frozen-rows:      2
+    num-columns:      5
+    frozen-rows:      3
     frozen-columns:   0
 
     columns:
       # key
-      A:
-        halign: left
-        size: 150
-
-      # font
-      B:
+      'A':
         halign: left
         size: 200
 
-      # fallback-font
-      C:
+      # font
+      'B':
+        halign: left
+        size: 200
+
+      # fallback-win32
+      'C':
+        halign: left
+        size: 200
+
+      # fallback-linux
+      'D':
+        halign: left
+        size: 200
+
+      # fallback-darwin
+      'E':
         halign: left
         size: 200
 
     ranges:
       # the worksheet wide specs
-        'A1:C':
+        'A1:E':
           font-family       : Arial
           font-size         : 10
-          valign            : top
+          valign            : middle
+          wrap              : false
 
       #  row 1 
         'A1':
@@ -1500,395 +1511,486 @@ worksheet-defs:
 
       #  row 2 
         # labels are bold
-        'A2:C2':
-          bold:   true
+        'A2:E3':
+          bold:     true
+          halign:   center
 
-        A2:
-          value:  'key'
+        'A2:A3':
+          value:    'key'
+          merge:    true
 
-        B2:
-          value:  'font'
+        'B2:B3':
+          value:    'font'
+          merge:    true
 
-        C2:
-          value:  'fallback-font'
+        'C2:E2':
+          value:    'fallback'
+          merge:    true
+          bgcolor:  '#d9d9d9'
 
       #  row 3 
-        # key
-        A3:
-          value:  'default'
+        'C3':
+          value:    'win32'
 
-        # font
-        B3:
-          value:  'Arial'
+        'D3':
+          value:    'linux'
 
-        # fallback-font
-        C3:
-          value:  'Arial'
+        'E3':
+          value:    'darwin'
 
       #  row 4 
         # key
-        A4:
-          value:  'Bree Serif'
+        'A4':
+          value:    'default'
 
         # font
-        B4:
-          value:  'Bree Serif'
+        'B4':
+          value:    'Google Sans Flex'
 
-        # fallback-font
-        C4:
-          value:  'Droid Sans Fallback'
+        # fallback-win32
+        'C4':
+          value:    'Arial'
 
-      #  row 5 
+        # fallback-linux
+        'D4':
+          value:    'FreeSans'
+
+        # fallback-darwin
+        'E4':
+          value:    'SF Pro'
+
+      #  row 5
         # key
-        A5:
-          value:  'Droid Sans'
+        'A5':
+          value:    'Roboto Serif'
 
         # font
-        B5:
-          value:  'Droid Sans'
+        'B5':
+          value:    'Roboto Serif'
 
-        # fallbackfont
-        C5:
-          value:  'Droid Sans Fallback'
+        # fallback-win32
+        'C5':
+          value:    'Times New Roman'
 
-      #  row 6 
+        # fallback-linux
+        'D5':
+          value:    'FreeSerif'
+
+        # fallback-darwin
+        'E5':
+          value:    'Palatino'
+
+      #  row 6
         # key
-        A6:
-          value:  'Consolas'
+        'A6':
+          value:    'Consolas'
 
         # font
-        B6:
-          value:  'Consolas'
+        'B6':
+          value:    'Consolas'
 
-        # fallback-font
-        C6:
-          value:  'Consolas'
+        # fallback-win32
+        'C6':
+          value:    'Consolas'
 
-      #  row 7 
+        # fallback-linux
+        'D6':
+          value:    'FreeMono'
+
+        # fallback-darwin
+        'E6':
+          value:    'SF Mono'
+
+      #  row 7
         # key
-        A7:
-          value:  'Comfortaa'
+        'A7':
+          value:    'Noto Serif Bengali'
 
         # font
-        B7:
-          value:  'Comfortaa'
+        'B7':
+          value:    'Noto Serif Bengali'
 
-        # fallback-font
-        C7:
-          value:  'Comfortaa'
+        # fallback-win32
+        'C7':
+          value:    'Times New Roman'
+
+        # fallback-linux
+        'D7':
+          value:    'FreeSerif'
+
+        # fallback-darwin
+        'E7':
+          value:    'Palatino'
 
 # zz-style-specs worksheet
   'zz-style-specs':
-    num-rows:         11
-    num-columns:      49
+    num-rows:         10
+    num-columns:      55
     frozen-rows:      5
     frozen-columns:   1
 
     columns:
       # key
-      A:
+      'A':
         halign: left
         size: 150
 
       # active
-      B:
+      'B':
         halign: center
         size: 60
 
       # comment
-      C:
-        halign: center
-        size: 150
-
-      # name
-      D:
+      'C':
         halign: left
         size: 150
 
+      # name
+      'D':
+        halign: left
+        size: 150
+
+
       # text-properties:color
-      E:
+      'E':
         halign: center
         size: 80
 
+      # text-properties:letter:spacing
+      'F':
+        halign: center
+        size: 80
+
+
       # text-properties:font:family
-      F:
+      'G':
         halign: center
         size: 120
 
       # text-properties:font:size
-      G:
+      'H':
         halign: center
         size: 70
 
       # text-properties:font:bold
-      H:
+      'I':
         halign: center
         size: 70
 
       # text-properties:font:italic
-      I:
+      'J':
         halign: center
         size: 70
 
       # text-properties:font:oblique
-      J:
+      'K':
         halign: center
         size: 70
 
       # text-properties:font:underline
-      K:
+      'L':
         halign: center
         size: 70
 
       # text-properties:font:smallcaps
-      L:
+      'M':
         halign: center
         size: 70
 
       # text-properties:font:allcaps
-      M:
+      'N':
         halign: center
         size: 70
 
       # text-properties:font:strikethrough
-      N:
+      'O':
         halign: center
         size: 70
 
+
       # paragraph-properties:textalign
-      O:
+      'P':
         halign: center
         size: 80
 
       # paragraph-properties:backgroundcolor
-      P:
+      'Q':
         halign: center
         size: 80
 
       # paragraph-properties:verticalalign
-      Q:
+      'R':
         halign: center
         size: 80
 
+
       # paragraph-properties:border:style:all
-      R:
+      'S':
         halign: center
         size: 100
 
       # paragraph-properties:border:style:bottom
-      S:
+      'T':
         halign: center
         size: 100
 
       # paragraph-properties:border:style:left
-      T:
+      'U':
         halign: center
         size: 100
 
       # paragraph-properties:border:style:top
-      U:
+      'V':
         halign: center
         size: 100
 
       # paragraph-properties:border:style:right
-      V:
+      'W':
         halign: center
         size: 100
 
+
       # paragraph-properties:border:linewidth:all
-      W:
+      'X':
         halign: center
         size: 100
 
       # paragraph-properties:border:linewidth:bottom
-      X:
+      'Y':
         halign: center
         size: 100
 
       # paragraph-properties:border:linewidth:left
-      Y:
+      'Z':
         halign: center
         size: 100
 
       # paragraph-properties:border:linewidth:top
-      Z:
+      'AA':
         halign: center
         size: 100
 
       # paragraph-properties:border:linewidth:right
-      AA:
+      'AB':
         halign: center
         size: 100
 
+
       # paragraph-properties:margin:all
-      AB:
+      'AC':
         halign: center
         size: 60
 
       # paragraph-properties:margin:bottom
-      AC:
+      'AD':
         halign: center
         size: 60
 
       # paragraph-properties:margin:left
-      AD:
+      'AE':
         halign: center
         size: 60
 
       # paragraph-properties:margin:top
-      AE:
+      'AF':
         halign: center
         size: 60
 
       # paragraph-properties:margin:right
-      AF:
+      'AG':
         halign: center
         size: 60
 
+
       # paragraph-properties:padding:all
-      AG:
+      'AH':
         halign: center
         size: 60
 
       # paragraph-properties:padding:bottom
-      AH:
+      'AI':
         halign: center
         size: 60
 
       # paragraph-properties:padding:left
-      AI:
+      'AJ':
         halign: center
         size: 60
 
       # paragraph-properties:padding:top
-      AJ:
+      'AK':
         halign: center
         size: 60
 
       # paragraph-properties:padding:right
-      AK:
+      'AL':
         halign: center
         size: 60
 
+
+      # paragraph-properties:textindent
+      'AM':
+        halign: center
+        size: 60
+
+      # paragraph-properties:line:height
+      'AN':
+        halign: center
+        size: 60
+
+      # paragraph-properties:keep:together
+      'AO':
+        halign: center
+        size: 60
+
+      # paragraph-properties:break:before
+      'AP':
+        halign: center
+        size: 60
+
+      # paragraph-properties:break:after
+      'AQ':
+        halign: center
+        size: 60
+
+
       # page-background:url
-      AL:
+      'AR':
         halign: center
         size: 200
 
       # page-background:opacity
-      AM:
+      'AS':
         halign: center
         size: 60
 
+
       # inline-image:url
-      AN:
+      'AT':
         halign: center
         size: 200
 
       # inline-image:opacity
-      AO:
+      'AU':
         halign: center
         size: 60
 
       # inline-image:type
-      AP:
+      'AV':
         halign: center
         size: 100
 
       # inline-image:fit-height-to-container
-      AQ:
+      'AW':
         halign: center
         size: 100
 
       # inline-image:fit-width-to-container
-      AR:
+      'AX':
         halign: center
         size: 100
 
       # inline-image:keep-aspect-ratio
-      AS:
+      'AY':
         halign: center
         size: 100
 
       # inline-image:extend-container-height
-      AT:
+      'AZ':
         halign: center
         size: 100
 
       # inline-image:position:horizontal
-      AU:
+      'BA':
         halign: center
         size: 100
 
       # inline-image:position:vertical
-      AV:
+      'BB':
         halign: center
         size: 100
 
       # inline-image:wrap
-      AW:
+      'BC':
         halign: center
         size: 100
 
     ranges:
       #  worksheet wide specs
-        'A1:AW':
+        'A1:BC':
           font-family       : Arial
           font-size         : 10
-          valign            : top
+          valign            : middle
+          wrap              : false
 
       #  row 1 
         # labels are wrapped and middle aligned
-        'B1:AW5':
-          wrap:     true
+        'A1:BC5':
           valign:   middle
+          wrap:     false
 
+        # link to *-toc*
         'A1':
           value: '-toc'
           ws-name-to-link: '-toc'
           halign: left
 
+        # active
         'B1':
-          value: 'active?'
+          value: 'active? docx/odt, blank means active for all'
           halign: center
 
-        'AM1':
+        # text-properties:letter:spacing
+        'F1':
           value: 'default is *100%*'
           halign: center
 
+        # paragraph-properties:line:height
+        'AN1':
+          value: 'default is *100%*'
+          halign: center
+
+        # paragraph-properties:keep:together
         'AO1':
-          value: 'default is *100%*'
+          value: 'default is always'
           halign: center
 
-        'AP1':
+        # inline-image:type
+        'AV1':
           value: 'default is *background*'
           halign: center
 
-        'AQ1':
-          value: 'default is *blank/No*'
-          halign: center
-
-        'AR1':
-          value: 'default is *blank/No*'
-          halign: center
-
-        'AS1':
-          value: 'default is *blank/No*'
-          halign: center
-
-        'AT1':
-          value: 'default is *blank/No*'
-          halign: center
-
+        # inline-image:fit-height-to-container
         'AW1':
+          value: 'False is default'
+          halign: center
+
+        # inline-image:fit-width-to-container
+        'AX1':
+          value: 'False is default'
+          halign: center
+
+        # inline-image:keep-aspect-ratio
+        'AY1':
+          value: 'True is default'
+          halign: center
+
+        # inline-image:extend-container-height
+        'AZ1':
+          value: 'False is default'
+          halign: center
+
+        # inline-image:wrap
+        'BC1':
           value: 'default is *parallel*'
           halign: center
 
       #  row 2 - labels
-        # labels are bold
-        'A2:AW5':
+        # labels are bold and wrapped
+        'A2:BC5':
           bold:     true
           valign:   middle
+          wrap:     true
 
         # key label
         'A2:A5':
@@ -1913,9 +2015,11 @@ worksheet-defs:
           value:    'name'
           merge:    true
           bgcolor:  '#efefef'
+          border-color: '#666666'
+          inner-border: false
 
         # text-properties label
-        'E2:N2':
+        'E2:O2':
           value:    'text-properties'
           merge:    true
           bgcolor:  '#d9ead3'
@@ -1923,7 +2027,7 @@ worksheet-defs:
           inner-border: false
 
         # paragraph-properties label
-        'O2:AK2':
+        'P2:AQ2':
           value:    'paragraph-properties'
           merge:    true
           bgcolor:  '#cfe2f3'
@@ -1931,7 +2035,7 @@ worksheet-defs:
           inner-border: false
 
         # page-background label
-        'AL2:AM2':
+        'AR2:AS2':
           value:    'page-background'
           merge:    true
           bgcolor:  '#fce5cd'
@@ -1939,7 +2043,7 @@ worksheet-defs:
           inner-border: false
 
         # inline-image label
-        'AN2:AW2':
+        'AT2:BC2':
           value:    'inline-image'
           merge:    true
           bgcolor:  '#ead1dc'
@@ -1949,34 +2053,46 @@ worksheet-defs:
       #  row 3 - labels
         # text-properties:color label
         'E3:E5':
-          value:    'color'
-          merge:    true
+          value:        'color'
+          merge:        true
+
+        # text-properties:letter label
+        'F3':
+          value:        'letter'
+          border-color: '#666666'
+          bgcolor:      '#d9ead3'
 
         # text-properties:font label
-        'F3:N3':
-          value:    'font'
-          merge:    true
-          bgcolor:  '#b6d7a8'
+        'G3:O3':
+          value:        'font'
+          merge:        true
+          bgcolor:      '#b6d7a8'
           border-color: '#666666'
           inner-border: false
 
-        # text-properties:color label
-        'O3:O5':
+        # text-properties:textalign label
+        'P3:P5':
           value:    'textalign'
           merge:    true
+          border-color: '#666666'
+          inner-border: false
 
         # text-properties:backgroundcolor label
-        'P3:P5':
+        'Q3:Q5':
           value:    'backgroundcolor'
           merge:    true
+          border-color: '#666666'
+          inner-border: false
 
         # text-properties:verticalalign label
-        'Q3:Q5':
+        'R3:R5':
           value:    'verticalalign'
           merge:    true
+          border-color: '#666666'
+          inner-border: false
 
         # paragraph-properties:border label
-        'R3:AA3':
+        'S3:AB3':
           value:    'border'
           merge:    true
           bgcolor:  '#9fc5e8'
@@ -1984,7 +2100,7 @@ worksheet-defs:
           inner-border: false
 
         # paragraph-properties:margin label
-        'AB3:AF3':
+        'AC3:AG3':
           value:    'margin'
           merge:    true
           bgcolor:  '#cfe2f3'
@@ -1992,60 +2108,90 @@ worksheet-defs:
           inner-border: false
 
         # paragraph-properties:padding label
-        'AG3:AK3':
-          value:    'padding'
-          merge:    true
-          bgcolor:  '#9fc5e8'
+        'AH3:AL3':
+          value:        'padding'
+          merge:        true
+          bgcolor:      '#9fc5e8'
           border-color: '#666666'
           inner-border: false
 
+        # paragraph-properties:textindent label
+        'AM3:AM5':
+          value:        'textindent'
+          merge:        true
+          border-color: '#666666'
+          inner-border: false
+
+        # paragraph-properties:line label
+        'AN3':
+          value:        'line'
+          border-color: '#666666'
+          inner-border: false
+          bgcolor:      '#cfe2f3'
+
+        # paragraph-properties:keep label
+        'AO3':
+          value:        'keep'
+          border-color: '#666666'
+          inner-border: false
+
+        # paragraph-properties:break label
+        'AP3:AQ3':
+          value:        'break'
+          merge:        true
+          border-color: '#666666'
+          inner-border: false
+          bgcolor:      '#9fc5e8'
+
+
         # page-background:url label
-        'AL3:AL5':
+        'AR3:AR5':
           value:    'url'
           merge:    true
 
         # page-background:opacity label
-        'AM3:AM5':
+        'AS3:AS5':
           value:    'opacity'
           merge:    true
 
+
         # inline-image:url label
-        'AN3:AN5':
+        'AT3:AT5':
           value:    'url'
           merge:    true
 
         # inline-image:opacity label
-        'AO3:AO5':
+        'AU3:AU5':
           value:    'opacity'
           merge:    true
 
-        # inline-image:url label
-        'AP3:AP5':
+        # inline-image:type label
+        'AV3:AV5':
           value:    'type'
           merge:    true
 
         # inline-image:fit-height-to-container label
-        'AQ3:AQ5':
+        'AW3:AW5':
           value:    'fit-height-to-container'
           merge:    true
 
         # inline-image:fit-width-to-container label
-        'AR3:AR5':
+        'AX3:AX5':
           value:    'fit-width-to-container'
           merge:    true
 
         # inline-image:keep-aspect-ratio label
-        'AS3:AS5':
+        'AY3:AY5':
           value:    'keep-aspect-ratio'
           merge:    true
 
         # inline-image:extend-container-height label
-        'AT3:AT5':
+        'AZ3:AZ5':
           value:    'extend-container-height'
           merge:    true
 
         # inline-image:position label
-        'AU3:AV3':
+        'BA3:BB3':
           value:    'position'
           merge:    true
           bgcolor:  '#d5a6bd'
@@ -2053,58 +2199,67 @@ worksheet-defs:
           inner-border: false
 
         # inline-image:wrap label
-        'AW3:AW5':
+        'BC3:BC5':
           value:    'wrap'
           merge:    true
+          border-color: '#666666'
+          inner-border: false
 
       #  row 4 - labels
-        # text-properties:font:family label
+        # text-properties:letter:spacing label
         'F4:F5':
+          value:    'spacing'
+          merge:    true
+          inner-border: false
+
+        # text-properties:font:family label
+        'G4:G5':
           value:    'family'
           merge:    true
 
         # text-properties:font:size label
-        'G4:G5':
+        'H4:H5':
           value:    'size'
           merge:    true
 
         # text-properties:font:bold label
-        'H4:H5':
+        'I4:I5':
           value:    'bold'
           merge:    true
 
         # text-properties:font:italic label
-        'I4:I5':
+        'J4:J5':
           value:    'italic'
           merge:    true
 
         # text-properties:font:oblique label
-        'J4:J5':
+        'K4:K5':
           value:    'oblique'
           merge:    true
 
         # text-properties:font:underline label
-        'K4:K5':
+        'L4:L5':
           value:    'underline'
           merge:    true
 
         # text-properties:font:smallcaps label
-        'L4:L5':
+        'M4:M5':
           value:    'smallcaps'
           merge:    true
 
         # text-properties:font:allcaps label
-        'M4:M5':
+        'N4:N5':
           value:    'allcaps'
           merge:    true
 
         # text-properties:font:strikethrough label
-        'N4:N5':
+        'O4:O5':
           value:    'strikethrough'
           merge:    true
 
+
         # paragraph-properties:border:style label
-        'R4:V4':
+        'S4:W4':
           value:    'style'
           merge:    true
           bgcolor:  '#d0e0e3'
@@ -2112,182 +2267,271 @@ worksheet-defs:
           inner-border: false
 
         # paragraph-properties:border:linewidth label
-        'W4:AA4':
+        'X4:AB4':
           value:    'linewidth'
           merge:    true
           bgcolor:  '#d9d2e9'
           border-color: '#666666'
           inner-border: false
 
+
         # paragraph-properties:margin:all label
-        'AB4:AB5':
+        'AC4:AC5':
           value:    'all'
           merge:    true
 
         # paragraph-properties:margin:bottom label
-        'AC4:AC5':
+        'AD4:AD5':
           value:    'bottom'
           merge:    true
 
         # paragraph-properties:margin:left label
-        'AD4:AD5':
+        'AE4:AE5':
           value:    'left'
           merge:    true
 
         # paragraph-properties:margin:top label
-        'AE4:AE5':
+        'AF4:AF5':
           value:    'top'
           merge:    true
 
         # paragraph-properties:margin:right label
-        'AF4:AF5':
+        'AG4:AG5':
           value:    'right'
           merge:    true
 
+
         # paragraph-properties:padding:all label
-        'AG4:AG5':
+        'AH4:AH5':
           value:    'all'
           merge:    true
 
         # paragraph-properties:padding:bottom label
-        'AH4:AH5':
+        'AI4:AI5':
           value:    'bottom'
           merge:    true
 
         # paragraph-properties:padding:left label
-        'AI4:AI5':
+        'AJ4:AJ5':
           value:    'left'
           merge:    true
 
         # paragraph-properties:padding:top label
-        'AJ4:AJ5':
+        'AK4:AK5':
           value:    'top'
           merge:    true
 
         # paragraph-properties:padding:right label
-        'AK4:AK5':
+        'AL4:AL5':
           value:    'right'
           merge:    true
 
+
+        # paragraph-properties:line:height label
+        'AN4:AN5':
+          value:    'height'
+          merge:    true
+          border-color: '#666666'
+          inner-border: false
+
+        # paragraph-properties:keep:together label
+        'AO4:AO5':
+          value:    'together'
+          merge:    true
+          border-color: '#666666'
+          inner-border: false
+
+        # paragraph-properties:break:before label
+        'AP4:AP5':
+          value:    'before'
+          merge:    true
+
+        # paragraph-properties:break:after label
+        'AQ4:AQ5':
+          value:    'after'
+          merge:    true
+
+
         # inline-image:position:horizontal label
-        'AU4:AU5':
+        'BA4:BA5':
           value:    'horizontal'
           merge:    true
 
         # inline-image:position:vertical label
-        'AV4:AV5':
+        'BB4:BB5':
           value:    'vertical'
           merge:    true
 
       #  row 5 - labels
         # paragraph-properties:border:style:all label
-        R5:
+        'S5':
           value:    'all'
 
         # paragraph-properties:border:style:bottom label
-        S5:
+        'T5':
           value:    'bottom'
 
         # paragraph-properties:border:style:left label
-        T5:
+        'U5':
           value:    'left'
 
         # paragraph-properties:border:style:top label
-        U5:
+        'V5':
           value:    'top'
 
         # paragraph-properties:border:style:right label
-        V5:
+        'W5':
           value:    'right'
 
+
         # paragraph-properties:border:linewidth:all label
-        W5:
+        'X5':
           value:    'all'
 
         # paragraph-properties:border:linewidth:bottom label
-        X5:
+        'Y5':
           value:    'bottom'
 
         # paragraph-properties:border:linewidth:left label
-        Y5:
+        'Z5':
           value:    'left'
 
         # paragraph-properties:border:linewidth:top label
-        Z5:
+        'AA5':
           value:    'top'
 
         # paragraph-properties:border:linewidth:right label
-        AA5:
+        'AB5':
           value:    'right'
 
-      #  all row borders
+      #  row 6 - all row borders
         # name column
-        'D2:D':
+        'D6:D':
           border-color: '#666666'
           inner-border: false
 
         # text-properties:color column
-        'E3:E':
+        'E6:E':
           border-color: '#666666'
           inner-border: false
 
-        # paragraph-properties:textalign column
-        'O3:O':
-          border-color: '#666666'
-          inner-border: false
-
-        # paragraph-properties:backgroundcolor column
-        'P3:P':
-          border-color: '#666666'
-          inner-border: false
-
-        # paragraph-properties:verticalalign column
-        'Q3:Q':
-          border-color: '#666666'
-          inner-border: false
-
-        # page-background:url -page-background:opacity columns
-        'AL3:AM':
-          border-color: '#666666'
-          inner-border: false
-
-        # inline-image:url - inline-image:extend-container-height columns
-        'AN3:AT':
-          border-color: '#666666'
-          inner-border: false
-
-        # inline-image:wrap column
-        'AW3:AW':
+        # text-properties:letter column
+        'F6:F':
           border-color: '#666666'
           inner-border: false
 
         # text-properties:family - text-properties:strikethrough columns
-        'F4:N':
+        'G6:O':
           border-color: '#666666'
           inner-border: false
 
-        # paragraph-properties:margin:all - paragraph-properties:margin:right columns
-        'AB4:AF':
+        # paragraph-properties:textalign column
+        'P4:P':
           border-color: '#666666'
           inner-border: false
 
-        # paragraph-properties:padding:all - paragraph-properties:padding:right columns
-        'AG4:AK':
+        # paragraph-properties:backgroundcolor column
+        'Q4:Q':
           border-color: '#666666'
           inner-border: false
 
-        # inline-image:position:horizontal - inline-image:position:vertical columns
-        'AU4:AV':
+        # paragraph-properties:verticalalign column
+        'R4:R':
           border-color: '#666666'
           inner-border: false
 
         # paragraph-properties:border:style:all - paragraph-properties:border:style:right columns
-        'R5:V':
+        'S5:W5':
+          border-color: '#666666'
+          inner-border: false
+
+        # paragraph-properties:border:style:all - paragraph-properties:border:style:right columns
+        'S6:W':
           border-color: '#666666'
           inner-border: false
 
         # paragraph-properties:border:linewidth:all - paragraph-properties:border:linewidth:right columns
-        'W5:AA':
+        'X5:AB5':
+          border-color: '#666666'
+          inner-border: false
+
+        # paragraph-properties:border:linewidth:all - paragraph-properties:border:linewidth:right columns
+        'X6:AB':
+          border-color: '#666666'
+          inner-border: false
+
+        # paragraph-properties:margin:all - paragraph-properties:margin:right columns
+        'AC4:AG5':
+          border-color: '#666666'
+          inner-border: false
+
+        # paragraph-properties:margin:all - paragraph-properties:margin:right columns
+        'AC6:AG':
+          border-color: '#666666'
+          inner-border: false
+
+        # paragraph-properties:padding:all - paragraph-properties:padding:right columns
+        'AH4:AL5':
+          border-color: '#666666'
+          inner-border: false
+
+        # paragraph-properties:padding:all - paragraph-properties:padding:right columns
+        'AH6:AL':
+          border-color: '#666666'
+          inner-border: false
+
+        # paragraph-properties:textindent column
+        'AM3:AM':
+          border-color: '#666666'
+          inner-border: false
+
+        # paragraph-properties:line:height column
+        'AN4:AN':
+          border-color: '#666666'
+          inner-border: false
+
+        # paragraph-properties:keep:together column
+        'AO4:AO':
+          border-color: '#666666'
+          inner-border: false
+
+        # paragraph-properties:break:before -paragraph-properties:break:after columns
+        'AP4:AQ':
+          border-color: '#666666'
+          inner-border: false
+
+        # page-background:url -page-background:opacity columns
+        'AR3:AS5':
+          border-color: '#666666'
+          inner-border: false
+
+        # page-background:url -page-background:opacity columns
+        'AR6:AS':
+          border-color: '#666666'
+          inner-border: false
+
+        # inline-image:url - inline-image:extend-container-height columns
+        'AT3:AZ5':
+          border-color: '#666666'
+          inner-border: false
+
+        # inline-image:url - inline-image:extend-container-height columns
+        'AT6:AZ':
+          border-color: '#666666'
+          inner-border: false
+
+        # inline-image:position:horizontal - inline-image:position:vertical columns
+        'BA4:BB5':
+          border-color: '#666666'
+          inner-border: false
+
+        # inline-image:position:horizontal - inline-image:position:vertical columns
+        'BA6:BB':
+          border-color: '#666666'
+          inner-border: false
+
+        # inline-image:wrap column
+        'BC2:BC':
           border-color: '#666666'
           inner-border: false
 
@@ -2295,319 +2539,126 @@ worksheet-defs:
         # active
         'B6:B':
           validation-list:
+            - 'docx'
+            - 'odt'
             - 'No'
 
         # text-properties:font:bold - text-properties:font:strikethrough
-        'H6:N':
+        'I6:O':
           validation-list:
             - 'Yes'
 
         # text-properties:textalign
-        'O6:O':
+        'P6:P':
           validation-list:
             - 'center'
             - 'left'
             - 'right'
+            - 'justify'
 
         # text-properties:verticalalign
-        'Q6:Q':
+        'R6:R':
           validation-list:
             - 'middle'
             - 'top'
             - 'bottom'
 
+        # paragraph-properties:keep:together
+        'AO6:AO':
+          validation-list:
+            - 'auto'
+            - 'always'
+
+        # paragraph-properties:break:before - paragraph-properties:break:after
+        'AP6:AQ':
+          validation-list:
+            - 'Yes'
+            - 'always'
+
         # inline-image:type
-        'AP6:AP':
+        'AV6:AV':
           validation-list:
             - 'inline'
             - 'background'
 
         # inline-image:fit-height-to-container - inline-image:extend-container-height
-        'AQ6:AT':
+        'AW6:AZ':
           validation-list:
             - 'Yes'
 
         # inline-image:position:horizontal
-        'AU6:AU':
+        'BA6:BA':
           validation-list:
             - 'center'
             - 'left'
             - 'right'
 
         # inline-image:position:vertical
-        'AV6:AV':
+        'BB6:BB':
           validation-list:
             - 'middle'
             - 'top'
             - 'bottom'
 
         # inline-image:wrap
-        'AW6:AW':
+        'BC6:BC':
           validation-list:
             - 'run-through'
             - 'parallel'
 
       #  row 6 - data
         # no wrap (clip) for data
-        'A6:AW':
+        'A6:BC':
           wrap:   false
 
-        # comment column to be left aligned
-        'C6:C':
-          halign: 'left'
-
         # key
-        A6:
+        'A6':
           value:  'coverpage'
 
         # comment
-        C6:
+        'C6':
           value:  'example style that creates a page background'
 
         # page-background:url
-        AL6:
+        'AR6':
           value:  'https://spectrum-bd.biz/data/artifacts/page-backgrounds/a4-page-bg-01.jpg'
 
       #  row 7 - data
         # key
-        A7:
-          value:  'separator-02'
-
-        # comment
-        C7:
-          value:  'example style for a cell - acts like a page separator to be applied on a heading level 2'
-
-        # text-properties:color
-        E7:
-          value:  '#0c1130'
-
-        # text-properties:font:family
-        F7:
-          value:  'Droid Sans'
-
-        # text-properties:font:size
-        G7:
-          value:  '14pt'
-
-        # text-properties:font:bold
-        H7:
-          value:  'Yes'
-
-        # text-properties:font:italic
-        I7:
-          value:  'Yes'
-
-        # text-properties:font:underline
-        K7:
-          value:  'Yes'
-
-        # text-properties:font:strikethrough
-        N7:
-          value:  'Yes'
-
-        # paragraph-properties:textalign
-        O7:
-          value:  'center'
-
-        # paragraph-properties:backgroundcolor
-        P7:
-          value:  '#D8D8D8'
-
-        # paragraph-properties:verticalalign
-        Q7:
-          value:  'middle'
-
-        # paragraph-properties:border:style:left
-        T7:
-          value:  '1pt double #222222 0.25in'
-
-        # paragraph-properties:border:linewidth:left
-        Y7:
-          value:  '0.5pt 2.0pt 0.5pt'
-
-        # paragraph-properties:margin:bottom
-        AC7:
-          value:  '1.00in'
-
-        # paragraph-properties:margin:left
-        AD7:
-          value:  '1.00in'
-
-        # paragraph-properties:margin:top
-        AE7:
-          value:  '1.00in'
-
-        # paragraph-properties:margin:right
-        AF7:
-          value:  '1.00in'
-
-        # paragraph-properties:padding:bottom
-        AH7:
-          value:  '0.25in'
-
-        # paragraph-properties:padding:left
-        AI7:
-          value:  '0.25in'
-
-        # paragraph-properties:padding:top
-        AJ7:
-          value:  '0.25in'
-
-        # paragraph-properties:padding:right
-        AK7:
-          value:  '0.25in'
-
-      #  row 8 - data
-        # key
-        A8:
-          value:  'section-section-1'
-
-        # comment
-        C8:
-          value:  'example style for a cell - style a section number'
-
-        # text-properties:color
-        E8:
-          value:  '#0c1130'
-
-        # text-properties:font:family
-        F8:
-          value:  'Droid Sans'
-
-        # text-properties:font:size
-        G8:
-          value:  '14pt'
-
-        # paragraph-properties:textalign
-        O8:
-          value:  'center'
-
-        # paragraph-properties:verticalalign
-        Q8:
-          value:  'middle'
-
-        # paragraph-properties:margin:bottom
-        AC8:
-          value:  '0.00in'
-
-        # paragraph-properties:margin:left
-        AD8:
-          value:  '0.00in'
-
-        # paragraph-properties:margin:top
-        AE8:
-          value:  '0.00in'
-
-        # paragraph-properties:margin:right
-        AF8:
-          value:  '0.00in'
-
-        # paragraph-properties:padding:bottom
-        AH8:
-          value:  '0.00in'
-
-        # paragraph-properties:padding:left
-        AI8:
-          value:  '0.00in'
-
-        # paragraph-properties:padding:top
-        AJ8:
-          value:  '0.00in'
-
-        # paragraph-properties:padding:right
-        AK8:
-          value:  '0.00in'
-
-        # inline-image:url
-        AN8:
-          value:  'https://spectrum-bd.biz/data/artifacts/icons/symbol/streamline-color--jump-object.png'
-
-        # inline-image:type
-        AP8:
-          value:  'inline'
-
-        # inline-image:fit-height-to-container
-        AQ8:
-          value:  'Yes'
-
-        # inline-image:wrap
-        AW8:
-          value:  'run-through'
-
-      #  row 9 - data
-        # key
-        A9:
-          value:  'section-heading-1'
-
-        # comment
-        C9:
-          value:  'example style for a cell - style a section heading'
-
-        # text-properties:color
-        E9:
-          value:  '#0c1130'
-
-        # text-properties:font:family
-        F9:
-          value:  'Droid Sans'
-
-        # text-properties:font:size
-        G9:
-          value:  '14pt'
-
-        # paragraph-properties:textalign
-        O9:
-          value:  'left'
-
-        # paragraph-properties:verticalalign
-        Q9:
-          value:  'middle'
-
-        # paragraph-properties:margin:bottom
-        AC9:
-          value:  '0.05in'
-
-        # paragraph-properties:margin:left
-        AD9:
-          value:  '0.05in'
-
-        # paragraph-properties:margin:top
-        AE9:
-          value:  '0.05in'
-
-        # paragraph-properties:margin:right
-        AF9:
-          value:  '0.05in'
-
-        # paragraph-properties:padding:bottom
-        AH9:
-          value:  '0.05in'
-
-        # paragraph-properties:padding:left
-        AI9:
-          value:  '0.05in'
-
-        # paragraph-properties:padding:top
-        AJ9:
-          value:  '0.05in'
-
-        # paragraph-properties:padding:right
-        AK9:
-          value:  '0.05in'
-
-        # inline-image:url
-        AN9:
-          value:  'https://spectrum-bd.biz/data/artifacts/gradients/ryanlerch-light-metal-gradient__medium.png'
-
-      #  row 10 - data
-        # key
-        A10:
+        'A7':
           value:  'Heading 1'
 
         # comment
-        C10:
+        'C7':
           value:  'Level 1 Heading Style'
 
         # name
-        D10:
+        'D7':
           value:  'Heading 1'
+
+      #  row 8 - data
+        # key
+        'A8':
+          value:  'Heading 2'
+
+        # comment
+        'C8':
+          value:  'Level 2 Heading Style'
+
+        # name
+        'D8':
+          value:  'Heading 2'
+
+      #  row 9 - data
+        # key
+        'A9':
+          value:  'Heading 3'
+
+        # comment
+        'C9':
+          value:  'Level 3 Heading Style'
+
+        # name
+        'D9':
+          value:  'Heading 3'
+
