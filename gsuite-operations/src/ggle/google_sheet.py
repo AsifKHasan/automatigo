@@ -364,6 +364,23 @@ class GoogleSheet(object):
 
 
 
+    ''' find and replace in cell note in worksheets
+    '''
+    def find_and_replace_in_note(self, worksheet_names, find_replace_patterns=[], check_condition=False, conditions=[], nesting_level=0):
+        requests = []
+        for worksheet_name in worksheet_names:
+            info(f"searching [{len(find_replace_patterns)}] patterns in notes in [{worksheet_name}]", nesting_level=nesting_level)
+            worksheet_to_work_on = self.worksheet_by_name(worksheet_name, nesting_level=nesting_level+1)
+            if worksheet_to_work_on:
+                reqs = worksheet_to_work_on.find_and_replace_in_note_requests(find_replace_patterns=find_replace_patterns, nesting_level=nesting_level+1)
+                info(f"found     [{len(reqs)}] patterns in notes in [{worksheet_name}]", nesting_level=nesting_level)
+                requests = requests + reqs
+
+        result = self.update_in_batch(values=[], requests=requests, requester='find_and_replace_in_note', nesting_level=nesting_level+1)
+        return result
+
+
+
     ''' find and format texts in worksheets
     '''
     def find_and_format(self, worksheet_names, check_condition=False, conditions=[], patterns=[], nesting_level=0):

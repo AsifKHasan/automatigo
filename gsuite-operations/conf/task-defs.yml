@@ -266,6 +266,24 @@ find_and_replace:
     #   entire-cell         : False
     #   match-case          : True
 
+# find_and_replace in cell note
+find_and_replace_in_note:
+  task                                        : find_and_replace_in_note
+  worksheet_names                             : true
+  check_condition                             : false
+  conditions:
+  find_replace_patterns:
+    - find                : 'firstline-indent-0.25in'
+      replace-with        : 'first-line-indent-0.30in'
+    - find                : 'lineheight-18pt'
+      replace-with        : 'line-height-18pt'
+    - find                : 'smallcaps-1'
+      replace-with        : 'smallcaps'
+    - find                : 'firstline-indent-0.50in'
+      replace-with        : 'first-line-indent-0.50in'
+    - find                : 'firstline-flush-0.25in'
+      replace-with        : 'first-line-flush-0.25in'
+
 # find_and_format
 find_and_format:
   task                                        : find_and_format
@@ -299,12 +317,15 @@ find_and_format:
   #     italic              : False
   #     fontFamily          : 'Consolas'
   #     fontSize            : 14
-  - pattern               : ' ([p]{1,2}\.) (\b\d+(?:-\d+)?\b)'
+  # - pattern               : ' ([p]{1,2}\.) (\b\d+(?:-\d+)?\b)'
+  #   format:
+  #     foregroundColor:
+  #       red               : 0.9176
+  #       green             : 0.2626
+  #       blue              : 0.2078
+  - pattern               : ' = '
     format:
-      foregroundColor:
-        red               : 0.9176
-        green             : 0.2626
-        blue              : 0.2078
+      bold                : False
 
 
 
@@ -322,5 +343,5 @@ work_on_ranges:
     #   operator                                : '=='
     #   value_is                                : 30
   work_specs:
-    'B233:B':
-      note: '{"style": "firstline-indent-0.25in, lineheight-18pt"}'
+    'B14:B':
+      note: '{"style": "first-line-indent-0.30in, line-height-18pt"}'

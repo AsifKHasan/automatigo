@@ -565,6 +565,63 @@ class GoogleWorksheet(object):
 
 
 
+    ''' find and replace in note in worksheet
+    '''
+    def find_and_replace_in_note_requests(self, find_replace_patterns, nesting_level=0):
+        requests = []
+
+        # Fetch cells with existing TextFormatRuns
+        range_spec = f"'{self.title}'!A1:{COLUMN_TO_LETTER[self.num_cols()]}{self.num_rows()}"
+        result = self.service.gsheet_service.spreadsheets().get(
+            spreadsheetId=self.gsheet.id,
+            ranges=range_spec,
+            fields="sheets(properties(sheetId),data(rowData(values(note))))"
+        ).execute()
+
+        sheet_data = result['sheets'][0]['data'][0]
+        rows = sheet_data.get('rowData', [])
+        start_row = sheet_data.get('startRow', 0)
+        start_col = sheet_data.get('startColumn', 0)
+
+        compiled_patterns = [(re.compile(pattern['find']), pattern['replace-with']) for pattern in find_replace_patterns]
+
+        for r_idx, row in enumerate(rows):
+            values = row.get('values', [])
+            for c_idx, cell in enumerate(values):
+                note = cell.get('note', '')
+                
+                if note:
+                    original_note = note
+
+                    # sequentially apply every regex pattern to the note text
+                    for pattern, replacement in compiled_patterns:
+                        note = pattern.sub(replacement, note)
+                    
+                    # If any of the regex rules actually changed the text, queue an update
+                    if note != original_note:
+                        req = {
+                            "updateCells": {
+                                "range": {
+                                    "sheetId": self.id,
+                                    "startRowIndex": r_idx,
+                                    "endRowIndex": r_idx + 1,
+                                    "startColumnIndex": c_idx,
+                                    "endColumnIndex": c_idx + 1
+                                },
+                                "rows": [{
+                                    "values": [{
+                                        "note": note
+                                    }]
+                                }],
+                                "fields": "note"
+                            }
+                        }
+                        requests.append(req)
+
+        return requests
+
+
+
     ''' find and replace in worksheet
     '''
     def find_and_format_requests(self, patterns, nesting_level=0):
