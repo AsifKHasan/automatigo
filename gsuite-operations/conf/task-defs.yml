@@ -273,16 +273,8 @@ find_and_replace_in_note:
   check_condition                             : false
   conditions:
   find_replace_patterns:
-    - find                : 'firstline-indent-0.25in'
-      replace-with        : 'first-line-indent-0.30in'
-    - find                : 'lineheight-18pt'
-      replace-with        : 'line-height-18pt'
-    - find                : 'smallcaps-1'
-      replace-with        : 'smallcaps'
-    - find                : 'firstline-indent-0.50in'
-      replace-with        : 'first-line-indent-0.50in'
-    - find                : 'firstline-flush-0.25in'
-      replace-with        : 'first-line-flush-0.25in'
+    - find                : 'line-height-18pt'
+      replace-with        : 'line-height-115%'
 
 # find_and_format
 find_and_format:
